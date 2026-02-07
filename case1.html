@@ -2,54 +2,78 @@
 <html lang="fa">
 <head>
     <meta charset="UTF-8">
-    <title>پرونده – کیس اول</title>
+    <title>پرونده جنایی</title>
 
     <style>
         body {
             margin: 0;
             padding: 0;
-            font-family: Tahoma, sans-serif;
-            height: 100vh;
             background-image: url("IMG_20260201_160043_920.jpg");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .overlay {
-            background: rgba(0, 0, 0, 0.65);
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .box {
-            background: rgba(15, 15, 15, 0.85);
-            padding: 30px 25px;
-            border-radius: 14px;
+            color: #ffffff;
+            font-family: Tahoma, sans-serif;
             text-align: center;
-            color: white;
-            width: 90%;
-            max-width: 350px;
-            box-shadow: 0 0 25px rgba(0,0,0,0.8);
+            min-height: 100vh;
         }
 
         h1 {
-            margin-bottom: 15px;
+            margin-top: 40px;
+        }
+
+        .content {
+            background: rgba(0, 0, 0, 0.6);
+            margin: 40px auto;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 12px;
         }
 
         input {
-            width: 100%;
             padding: 12px;
-            margin-top: 15px;
             font-size: 16px;
+            width: 80%;
             border-radius: 8px;
             border: none;
+            margin-top: 20px;
         }
 
-        button
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #b30000;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: darkred;
+        }
+
+        #message {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>کیس اول</h1>
+
+    <div class="content">
+        <p>قاتل کیست؟</p>
+
+        <input type="text" id="answer" placeholder="پاسخ را وارد کنید">
+
+        <br>
+
+        <button onclick="checkAnswer()">بررسی</button>
+
+        <div id="message"></div
+                              
