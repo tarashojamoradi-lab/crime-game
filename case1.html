@@ -2,91 +2,54 @@
 <html lang="fa">
 <head>
     <meta charset="UTF-8">
-    <title>پرونده ۱</title>
+    <title>پرونده – کیس اول</title>
 
     <style>
         body {
             margin: 0;
-            padding: 30px;
-            background-color: #0f0f0f;
-            color: #ffffff;
+            padding: 0;
             font-family: Tahoma, sans-serif;
+            height: 100vh;
+            background-image: url("IMG_20260201_160043_920.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .overlay {
+            background: rgba(0, 0, 0, 0.65);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box {
+            background: rgba(15, 15, 15, 0.85);
+            padding: 30px 25px;
+            border-radius: 14px;
             text-align: center;
+            color: white;
+            width: 90%;
+            max-width: 350px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.8);
         }
 
-        h2 {
-            margin-top: 40px;
-        }
-
-        p {
-            margin: 20px 0;
-            line-height: 1.8;
+        h1 {
+            margin-bottom: 15px;
         }
 
         input {
-            width: 80%;
-            max-width: 300px;
+            width: 100%;
             padding: 12px;
+            margin-top: 15px;
             font-size: 16px;
             border-radius: 8px;
             border: none;
-            text-align: center;
         }
 
-        button {
-            margin-top: 20px;
-            padding: 12px 30px;
-            font-size: 16px;
-            border-radius: 25px;
-            border: 1px solid #fff;
-            background: transparent;
-            color: #fff;
-        }
-
-        .error {
-            margin-top: 15px;
-            color: #ff4c4c;
-            display: none;
-        }
-    </style>
-</head>
-
-<body>
-
-    <h2>پرونده شماره ۱</h2>
-
-    <p>
-        جسد ساعت ۲۳:۴۵ پیدا شد.  
-        درِ اتاق از داخل قفل بوده.  
-        هیچ اثری از ورود اجباری وجود ندارد.
-    </p>
-
-    <p><strong>سؤال:</strong> قاتل چه کسی است؟</p>
-
-    <input type="text" id="answer" placeholder="جواب را وارد کنید">
-
-    <br>
-
-    <button onclick="checkAnswer()">بررسی</button>
-
-    <div class="error" id="error">
-        ❌ جواب اشتباه است
-    </div>
-
-    <script>
-        function checkAnswer() {
-            var userAnswer = document.getElementById("answer").value.trim();
-
-            // جواب درست (فعلاً دمو)
-            var correctAnswer = "نریمان";
-
-            if (userAnswer === correctAnswer) {
-                window.location.href = "case2.html";
-            } else {
-                document.getElementById("error").style.display = "block";
-            }
-        }
-    </script>
-
-</body>
-</html>
+        button
