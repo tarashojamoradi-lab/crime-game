@@ -9,8 +9,44 @@
             margin: 0;
             padding: 30px;
             background-color: #0f0f0f;
-            color: #fff;
+            color: #ffffff;
             font-family: Tahoma, sans-serif;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 40px;
+        }
+
+        p {
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+
+        input {
+            width: 80%;
+            max-width: 300px;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+            text-align: center;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 25px;
+            border: 1px solid #fff;
+            background: transparent;
+            color: #fff;
+        }
+
+        .error {
+            margin-top: 15px;
+            color: #ff4c4c;
+            display: none;
         }
     </style>
 </head>
@@ -20,9 +56,37 @@
     <h2>پرونده شماره ۱</h2>
 
     <p>
-        جسد در ساعت ۲۳:۴۵ پیدا شد.  
-        هیچ اثری از درگیری وجود ندارد…
+        جسد ساعت ۲۳:۴۵ پیدا شد.  
+        درِ اتاق از داخل قفل بوده.  
+        هیچ اثری از ورود اجباری وجود ندارد.
     </p>
+
+    <p><strong>سؤال:</strong> قاتل چه کسی است؟</p>
+
+    <input type="text" id="answer" placeholder="جواب را وارد کنید">
+
+    <br>
+
+    <button onclick="checkAnswer()">بررسی</button>
+
+    <div class="error" id="error">
+        ❌ جواب اشتباه است
+    </div>
+
+    <script>
+        function checkAnswer() {
+            var userAnswer = document.getElementById("answer").value.trim();
+
+            // جواب درست (فعلاً دمو)
+            var correctAnswer = "نریمان";
+
+            if (userAnswer === correctAnswer) {
+                window.location.href = "case2.html";
+            } else {
+                document.getElementById("error").style.display = "block";
+            }
+        }
+    </script>
 
 </body>
 </html>
