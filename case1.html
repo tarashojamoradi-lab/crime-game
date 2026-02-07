@@ -1,58 +1,97 @@
-<style>
-* {
-    box-sizing: border-box;
-}
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>کیس اول</title>
 
-body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: Tahoma, sans-serif;
-    background: url("IMG_20260201_160043_920.jpg") no-repeat center center fixed;
-    background-size: cover;
-}
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0f0f0f;
+            color: #fff;
+            font-family: Tahoma, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-.wrapper {
-    min-height: 100vh;
-    background: rgba(0,0,0,0.6);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-}
+        .box {
+            background: rgba(0,0,0,0.75);
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
 
-h1 {
-    color: white;
-    margin-top: 30px;
-}
+        h1 {
+            margin-bottom: 20px;
+        }
 
-.box {
-    margin-top: 40px;
-    background: rgba(0,0,0,0.85);
-    padding: 25px;
-    width: 100%;
-    max-width: 380px;
-    border-radius: 14px;
-    text-align: center;
-}
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+            margin-bottom: 15px;
+            text-align: center;
+        }
 
-.box p {
-    color: white;
-    font-size: 18px;
-}
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background-color: #b30000;
+            color: white;
+            cursor: pointer;
+        }
 
-input {
-    width: 100%;
-    height: 45px;
-    padding: 10px;
-    font-size: 18px;
-    margin-top: 15px;
-    border-radius: 8px;
-    border: none;
-    direction: rtl;
-    color: black;
-}
+        button:hover {
+            background-color: #e60000;
+        }
 
-button {
-    width: 100%;
-    height: 45px;
-    margin-top: 15px
+        .msg {
+            margin-top: 15px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h1>کیس اول</h1>
+    <p>قاتل کیست؟</p>
+
+    <input type="text" id="answer" placeholder="جواب را وارد کنید">
+
+    <button onclick="checkAnswer()">بررسی</button>
+
+    <div class="msg" id="message"></div>
+</div>
+
+<script>
+    function checkAnswer() {
+        const userAnswer = document.getElementById("answer").value.trim();
+        const message = document.getElementById("message");
+
+        if (userAnswer === "نریمان") {
+            message.style.color = "lightgreen";
+            message.innerText = "درست است ✔";
+            setTimeout(() => {
+                window.location.href = "case2.html";
+            }, 800);
+        } else {
+            message.style.color = "red";
+            message.innerText = "❌ اشتباه است";
+        }
+    }
+</script>
+
+</body>
+</html>
