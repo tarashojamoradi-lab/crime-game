@@ -5,61 +5,44 @@
     <title>پرونده جنایی</title>
 
     <style>
-        html, body {
+        body {
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        body {
-            background-image: url("InShot_20260208_014002267.jpg");
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: contain;
             background-color: #000;
             font-family: Tahoma, sans-serif;
         }
 
-        /* موبایل عمودی = فول اسکرین */
-        @media (orientation: portrait) {
-            body {
-                background-size: cover;
-            }
+        .container {
+            position: relative;
+            width: 100%;
         }
 
-        .overlay {
+        .container img {
             width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.35);
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            padding-bottom: 80px;
-            box-sizing: border-box;
+            height: auto;
+            display: block;
         }
 
         .start-btn {
-            background: rgba(0,0,0,0.7);
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.75);
             color: #fff;
             border: 1px solid #fff;
-            padding: 16px 36px;
-            font-size: 18px;
-            border-radius: 40px;
+            padding: 14px 32px;
+            font-size: 17px;
+            border-radius: 30px;
             text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .start-btn:hover {
-            background: #fff;
-            color: #000;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="overlay">
+    <div class="container">
+        <img src="InShot_20260208_014002267.jpg" alt="welcome">
         <a href="case1.html" class="start-btn">شروع پرونده</a>
     </div>
 
