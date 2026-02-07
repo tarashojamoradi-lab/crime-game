@@ -5,23 +5,81 @@
     <title>پرونده – کیس اول</title>
 
     <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: Tahoma, sans-serif;
+        * {
+            box-sizing: border-box;
         }
 
         body {
-            background-image: url("IMG_20260201_160043_920.jpg");
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: Tahoma, sans-serif;
+            background: url("IMG_20260201_160043_920.jpg") no-repeat center center fixed;
             background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            color: white;
         }
 
-        /* لایه تیره روی عکس */
-        .overlay {
+        .wrapper {
             min-height: 100vh;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0,0,0,0.65);
             display: flex;
             flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            margin-top: 40px;
+        }
+
+        .box {
+            margin-top: 40px;
+            background: rgba(0,0,0,0.85);
+            padding: 30px 25px;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            margin-top: 20px;
+            border-radius: 8px;
+            border: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background-color: #b30000;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: darkred;
+        }
+
+        #message {
+            margin-top: 18px;
+            font-size: 18px;
+            min-height: 24px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="wrapper">
+    <h1>کیس اول</h1>
+
+    <div class="box">
+        <p>قاتل کیست؟</p>
+
+        <
