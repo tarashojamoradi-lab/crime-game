@@ -36,20 +36,16 @@ body {
     width: 85%;
 }
 
-.audio-btn {
-    margin-bottom: 15px;
-    padding: 10px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 10px;
-    cursor: pointer;
+.audio-title {
     font-size: 14px;
+    margin-bottom: 6px;
 }
 
 .dots {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-bottom: 15px;
+    margin: 15px 0;
 }
 
 .dot {
@@ -84,7 +80,6 @@ button {
     font-size: 14px;
 }
 
-/* افکت لرزش */
 .shake {
     animation: shake 0.4s;
 }
@@ -104,9 +99,12 @@ button {
 <div class="phone" id="phone">
     <div class="lock">
 
-        <div class="audio-btn" onclick="playVoice()">
-            ▶️ برای شنیدن فایل صوتی ضربه بزن
-        </div>
+        <div class="audio-title">🎧 فایل صوتی افسر کایا</div>
+
+        <!-- ویس داخل خود سایت -->
+        <audio id="voice" controls style="width:100%;">
+            <source src="kaya_voice.mp3" type="audio/mpeg">
+        </audio>
 
         <div class="dots">
             <div class="dot"></div>
@@ -121,7 +119,7 @@ button {
     </div>
 </div>
 
-<audio id="voice" src="kaya_voice.mp3"></audio>
+<!-- صدای باز شدن قفل -->
 <audio id="unlockSound" src="iphone_unlock_style_sound.wav"></audio>
 
 <script>
@@ -129,36 +127,24 @@ const correctCode = "1022";
 const msg = document.getElementById("msg");
 const phone = document.getElementById("phone");
 
-function playVoice() {
-    document.getElementById("voice").play().catch(()=>{});
-}
-
 function unlock() {
     const input = document.getElementById("code").value;
 
     if (input === correctCode) {
         msg.innerText = "درست است";
-        const sound = document.getElementById("unlockSound");
-        sound.play();
 
-        sound.onended = () => {
-            window.location.href = "phone-locked.html";
-        };
+        document.getElementById("unlockSound").play();
+
+        setTimeout(() => {
+            window.location.href = "locked-phone.html";
+        }, 600);
 
     } else {
         msg.innerText = "رمز اشتباه است";
 
-        // لرزش واقعی موبایل
         if (navigator.vibrate) {
             navigator.vibrate([200, 100, 200]);
         }
 
-        // لرزش تصویری
         phone.classList.add("shake");
-        setTimeout(() => phone.classList.remove("shake"), 400);
-    }
-}
-</script>
-
-</body>
-</html>
+        setTimeout(() => phone.classList.remove
