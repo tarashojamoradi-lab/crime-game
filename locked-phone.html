@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>Locked Phone</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Tahoma, sans-serif;
+}
+
+/* قاب گوشی */
+.phone {
+    width: 320px;
+    height: 640px;
+    background: url("background.jpg") center/cover no-repeat;
+    border-radius: 35px;
+    box-shadow: 0 0 40px rgba(0,0,0,0.9);
+    position: relative;
+    overflow: hidden;
+}
+
+/* لایه تار */
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+}
+
+/* محتوا */
+.content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: normal;
+    opacity: 0.9;
+}
+
+input {
+    width: 140px;
+    font-size: 24px;
+    text-align: center;
+    padding: 8px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    margin-bottom: 15px;
+}
+
+button {
+    background: #1DB954;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #000;
+    font-weight: bold;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.message {
+    margin-top: 15px;
+    font-size: 14px;
+    min-height: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+    <div class="overlay"></div>
+
+    <div class="content">
+        <h2>رمز عبور را وارد کنید</h2>
+
+        <input type="password" id="code" maxlength="4" placeholder="••••">
+
+        <button onclick="checkCode()">باز کردن</button>
+
+        <div class="message" id="msg"></div>
+    </div>
+</div>
+
+<!-- صداها -->
+<audio id="kayaVoice" src="kaya_voice.mp3"></audio>
+<audio id="unlockSound" src="iphone_unlock_style_sound.wav"></audio>
+
+<script>
+window.onload = function () {
+    document.getElementById("kayaVoice").play();
+};
+
+function checkCode() {
+    const input = document.getElementById("code").value;
+    const msg = document.getElementById("msg");
+
+    if (input === "1022") {
+        msg.style.color = "#1DB954";
+        msg.innerText = "دستگاه باز شد";
+
+        document.getElementById("unlockSound").play();
+
+        setTimeout(() => {
+            window.location.href = "evidence.html";
+        }, 1200);
+
+    } else {
+        msg.style.color = "#ff4c4c";
+        msg.innerText = "رمز اشتباه است";
+    }
+}
+</script>
+
+</body>
+</html>
