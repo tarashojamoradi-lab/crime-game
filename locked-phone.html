@@ -2,158 +2,96 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>Locked Phone</title>
+<title>Phone Locked</title>
 
 <style>
-body {
-    margin: 0;
-    height: 100vh;
-    background: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Tahoma, sans-serif;
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#000 url("background.jpg") center/cover no-repeat;
+  font-family:tahoma;
 }
 
-.phone {
-    width: 320px;
-    height: 640px;
-    background: url('background.jpg') center/cover no-repeat;
-    border-radius: 42px;
-    box-shadow: 0 0 40px rgba(0,0,0,0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.phone{
+  width:260px;
+  padding:20px;
+  border-radius:30px;
+  background:rgba(0,0,0,0.6);
+  text-align:center;
+  color:#fff;
 }
 
-.lock-box {
-    width: 85%;
-    background: rgba(0,0,0,0.65);
-    backdrop-filter: blur(6px);
-    padding: 22px;
-    border-radius: 18px;
-    text-align: center;
-    color: #fff;
+.dots{
+  display:flex;
+  justify-content:space-between;
+  margin:20px 40px;
+}
+.dot{
+  width:14px;
+  height:14px;
+  border:2px solid #fff;
+  border-radius:50%;
 }
 
-.lock-box h3 {
-    margin: 0 0 10px;
-    font-size: 14px;
-    font-weight: normal;
+input{
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  text-align:center;
+  font-size:18px;
 }
 
-.dots {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin: 18px 0;
+button{
+  margin-top:10px;
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  background:#2e7d32;
+  color:#fff;
+  font-size:16px;
 }
 
-.dot {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: 1px solid #fff;
-}
-
-input {
-    width: 100%;
-    padding: 10px;
-    font-size: 18px;
-    text-align: center;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-}
-
-button {
-    margin-top: 14px;
-    padding: 10px;
-    width: 100%;
-    font-size: 16px;
-    background: #1db954;
-    border: none;
-    border-radius: 8px;
-    color: #fff;
-    cursor: pointer;
-}
-
-.message {
-    margin-top: 10px;
-    font-size: 14px;
-}
-
-.shake {
-    animation: shake 0.4s;
-}
-
-@keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-6px); }
-    50% { transform: translateX(6px); }
-    75% { transform: translateX(-6px); }
-    100% { transform: translateX(0); }
-}
+.msg{margin-top:10px;}
 </style>
 </head>
 
 <body>
 
-<div class="phone" id="phone">
-    <div class="lock-box">
+<div class="phone">
 
-        <h3>🎧 برای شنیدن گزارش افسر کایا پلی را بزنید</h3>
+  <p>🔒 گوشی قفل است</p>
 
-        <!-- ویس افسر کایا (با ضربه کاربر پلی می‌شود) -->
-        <audio controls style="width:100%;">
-            <source src="kaya_voice.mp3" type="audio/mpeg">
-        </audio>
+  <button onclick="playVoice()">▶️ پخش گزارش افسر کایا</button>
 
-        <div class="dots">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-        </div>
+  <audio id="voice">
+    <source src="kaya-voice.mp3" type="audio/mpeg">
+  </audio>
 
-        <input type="password" id="passcode" maxlength="4" placeholder="Enter Passcode">
-        <button onclick="unlockPhone()">Unlock</button>
+  <input type="password" id="pass" placeholder="رمز را وارد کنید">
 
-        <div class="message" id="msg"></div>
-    </div>
+  <button onclick="unlock()">باز کردن قفل</button>
+
+  <div class="msg" id="msg"></div>
+
 </div>
 
-<!-- صدای باز شدن قفل -->
-<audio id="unlockSound" src="iphone_unlock_style_sound.wav"></audio>
-
 <script>
-const correctCode = "1022";
-const msg = document.getElementById("msg");
-const phone = document.getElementById("phone");
+function playVoice(){
+  document.getElementById("voice").play();
+}
 
-function unlockPhone() {
-    const input = document.getElementById("passcode").value;
-
-    if (input === correctCode) {
-        msg.innerText = "درست است";
-
-        document.getElementById("unlockSound").play();
-
-        setTimeout(() => {
-            // صفحه بعد از باز شدن قفل
-            window.location.href = "Phone_locked.html";
-        }, 600);
-
-    } else {
-        msg.innerText = "رمز اشتباه است";
-
-        if (navigator.vibrate) {
-            navigator.vibrate([200, 100, 200]);
-        }
-
-        phone.classList.add("shake");
-        setTimeout(() => phone.classList.remove("shake"), 400);
-    }
+function unlock(){
+  const pass = document.getElementById("pass").value;
+  if(pass === "1022"){
+    window.location.href = "Phone_locked.html";
+  }else{
+    document.getElementById("msg").innerText = "رمز اشتباه است";
+  }
 }
 </script>
 
