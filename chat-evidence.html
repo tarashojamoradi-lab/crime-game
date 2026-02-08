@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>Chat Evidence</title>
+
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  background:#000;
+  font-family:tahoma;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
+}
+
+.wrapper{
+  width:90%;
+  max-width:420px;
+}
+
+.screenshot{
+  width:100%;
+  border-radius:14px;
+  display:block;
+  margin-bottom:20px;
+}
+
+.box{
+  background:rgba(0,0,0,0.8);
+  padding:18px;
+  border-radius:14px;
+  text-align:center;
+}
+
+.box p{
+  line-height:1.9;
+  margin-bottom:15px;
+  font-size:14px;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  text-align:center;
+  font-size:15px;
+}
+
+button{
+  margin-top:10px;
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  background:#2e7d32;
+  color:#fff;
+  font-size:15px;
+}
+
+.msg{
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+  <img src="Screenshot.jpg" class="screenshot" alt="Chat Screenshot">
+
+  <div class="box">
+    <p>
+در دل کلمات، نشانه‌ای است که تو به یاد نمی‌آوری،  
+اما اگر از آن بگذری، آن را در هر گوشه پیدا خواهی کرد  
+هیچ‌وقت واقعاً در عمل به آن‌ها وفادار نمی‌مانی
+    </p>
+
+    <input id="answer" placeholder="پاسخ را وارد کنید">
+
+    <button onclick="check()">بررسی</button>
+
+    <div class="msg" id="msg"></div>
+  </div>
+
+</div>
+
+<script>
+function normalize(t){
+  return t.replace(/\s+/g,'').toLowerCase();
+}
+
+function check(){
+  const v = normalize(document.getElementById("answer").value);
+  const correct = [
+    "قولانگشتکوچیکه",
+    "قولانگشتی",
+    "قولانگشتکوچک"
+  ];
+
+  if(correct.includes(v)){
+    document.getElementById("msg").innerText = "درست است";
+    setTimeout(()=>{
+      window.location.href = "dead.html";
+    },800);
+  }else{
+    document.getElementById("msg").innerText = "پاسخ اشتباه است";
+  }
+}
+</script>
+
+</body>
+</html>
