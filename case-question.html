@@ -2,66 +2,81 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>Case Question</title>
+<title>معما</title>
 
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        background: #000;
-        color: #fff;
-        font-family: Tahoma, sans-serif;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: url("wallpaper.jpg.png") no-repeat center center fixed;
+    background-size: cover;
+}
 
-    .box {
-        background: rgba(0,0,0,0.75);
-        padding: 30px;
-        border-radius: 12px;
-        max-width: 500px;
-        width: 90%;
-        text-align: center;
-        box-shadow: 0 0 25px rgba(0,0,0,0.8);
-    }
+/* لایه محو روی بک‌گراند */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(6px);
+}
 
-    .question {
-        line-height: 1.9;
-        margin-bottom: 20px;
-        font-size: 16px;
-    }
+/* باکس اصلی */
+.container {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    margin: 15vh auto;
+    background: rgba(0, 0, 0, 0.75);
+    padding: 25px;
+    border-radius: 14px;
+    color: #fff;
+}
 
-    input {
-        width: 90%;
-        padding: 10px;
-        border-radius: 6px;
-        border: none;
-        font-size: 15px;
-        margin-bottom: 15px;
-    }
+/* متن معما */
+.question {
+    line-height: 2;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
 
-    button {
-        padding: 10px 25px;
-        border: none;
-        border-radius: 6px;
-        background: #b30000;
-        color: #fff;
-        font-size: 15px;
-        cursor: pointer;
-    }
+/* ورودی */
+input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    margin-bottom: 15px;
+}
 
-    .msg {
-        margin-top: 15px;
-        font-size: 14px;
-    }
+/* دکمه */
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background: #ffffff;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* پیام */
+#message {
+    margin-top: 15px;
+    font-weight: bold;
+    text-align: center;
+}
 </style>
 </head>
 
 <body>
 
-<div class="box">
+<div class="overlay"></div>
+
+<div class="container">
     <div class="question">
         چهار سخن در دلنوشته جاری‌است<br>
         که نه فریادند و نه خاموشی؛<br>
@@ -71,27 +86,30 @@
         که صنم جرأت گفتنش را نداشت.
     </div>
 
-    <input type="text" id="answer" placeholder="پاسخ را وارد کنید">
-    <br>
+    <input id="answer" type="text" placeholder="پاسخ را بنویس…">
+
     <button onclick="checkAnswer()">بررسی</button>
 
-    <div class="msg" id="msg"></div>
+    <div id="message"></div>
 </div>
 
 <script>
 function checkAnswer() {
     const userAnswer = document.getElementById("answer").value.trim();
-    const msg = document.getElementById("msg");
+    const correctAnswer = "سکوت بلندترین فریاد است";
+    const message = document.getElementById("message");
 
-    if (userAnswer === "سکوت بلندترین فریاد است") {
-        msg.style.color = "#4CAF50";
-        msg.innerText = "درست است";
+    if (userAnswer === correctAnswer) {
+        message.style.color = "#00ff99";
+        message.innerText = "درست است";
+
         setTimeout(() => {
             window.location.href = "evidence.html";
-        }, 1000);
+        }, 900);
+
     } else {
-        msg.style.color = "#ff4444";
-        msg.innerText = "پاسخ اشتباه است";
+        message.style.color = "#ff4d4d";
+        message.innerText = "پاسخ اشتباه است";
     }
 }
 </script>
