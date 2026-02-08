@@ -8,36 +8,45 @@
 body{
   margin:0;
   height:100vh;
+  background:#000 url("background.jpg") center/cover no-repeat;
   display:flex;
   justify-content:center;
   align-items:center;
-  background:#000 url("background.jpg") center/cover no-repeat;
   font-family:tahoma;
 }
 
 .phone{
-  width:260px;
-  padding:20px;
+  width:280px;
+  height:520px;
+  background:rgba(0,0,0,0.65);
   border-radius:30px;
-  background:rgba(0,0,0,0.6);
-  text-align:center;
+  padding:25px 20px;
+  box-sizing:border-box;
   color:#fff;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  text-align:center;
+}
+
+.title{
+  margin-bottom:20px;
 }
 
 .dots{
   display:flex;
   justify-content:space-between;
-  margin:20px 40px;
+  margin:15px 50px;
 }
 .dot{
-  width:14px;
-  height:14px;
+  width:16px;
+  height:16px;
   border:2px solid #fff;
   border-radius:50%;
 }
 
 input{
-  width:100%;
+  margin-top:15px;
   padding:10px;
   border:none;
   border-radius:8px;
@@ -46,17 +55,22 @@ input{
 }
 
 button{
-  margin-top:10px;
-  width:100%;
+  margin-top:12px;
   padding:10px;
   border:none;
   border-radius:8px;
   background:#2e7d32;
   color:#fff;
-  font-size:16px;
+  font-size:15px;
 }
 
-.msg{margin-top:10px;}
+.voice-btn{
+  background:#444;
+}
+
+.msg{
+  margin-top:10px;
+}
 </style>
 </head>
 
@@ -64,15 +78,22 @@ button{
 
 <div class="phone">
 
-  <p>🔒 گوشی قفل است</p>
+  <div class="title">🔒 گوشی قفل است</div>
 
-  <button onclick="playVoice()">▶️ پخش گزارش افسر کایا</button>
+  <button class="voice-btn" onclick="playVoice()">▶️ پخش گزارش افسر کایا</button>
 
   <audio id="voice">
     <source src="kaya-voice.mp3" type="audio/mpeg">
   </audio>
 
-  <input type="password" id="pass" placeholder="رمز را وارد کنید">
+  <div class="dots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <input type="password" id="pass" placeholder="رمز عبور">
 
   <button onclick="unlock()">باز کردن قفل</button>
 
@@ -88,7 +109,7 @@ function playVoice(){
 function unlock(){
   const pass = document.getElementById("pass").value;
   if(pass === "1022"){
-    window.location.href = "Phone_locked.html";
+    window.location.href = "chat-evidence.html";
   }else{
     document.getElementById("msg").innerText = "رمز اشتباه است";
   }
