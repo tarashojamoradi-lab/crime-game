@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>Phone Unlocked</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            font-family: sans-serif;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .image-container {
+            margin-top: 30px;
+        }
+
+        .image-container img {
+            max-width: 90%;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.15);
+        }
+
+        .box {
+            margin-top: 30px;
+            background: rgba(0, 0, 0, 0.75);
+            padding: 25px;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(255,255,255,0.15);
+        }
+
+        .question {
+            margin-bottom: 15px;
+            line-height: 1.9;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background-color: #2ecc71;
+            color: #000;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="image-container">
+        <img src="Screenshot.jpg" alt="Screenshot">
+    </div>
+
+    <div class="box">
+        <div class="question">
+            در دل کلمات، نشانه‌ای است که تو به یاد نمی‌آوری،  
+            اما اگر از آن بگذری، آن را در هر گوشه پیدا خواهی کرد.  
+            هیچ‌وقت واقعاً در عمل به آن‌ها وفادار نمی‌مانی
+        </div>
+
+        <input type="text" id="answer" placeholder="پاسخ را وارد کن">
+
+        <button onclick="checkAnswer()">بررسی</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function normalize(text) {
+            return text.replace(/\s+/g, '').trim();
+        }
+
+        function checkAnswer() {
+            const input = normalize(document.getElementById("answer").value);
+            const result = document.getElementById("result");
+
+            const correctAnswers = [
+                "قولانگشتکوچیکه",
+                "قولانگشتی",
+                "قولانگشتکوچک"
+            ];
+
+            if (correctAnswers.includes(input)) {
+                result.style.color = "#2ecc71";
+                result.innerText = "درست است";
+                setTimeout(() => {
+                    window.location.href = "dead.html";
+                }, 800);
+            } else {
+                result
