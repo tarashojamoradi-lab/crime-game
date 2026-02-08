@@ -16,40 +16,37 @@ body {
 }
 
 .phone {
-    width: 300px;
-    height: 600px;
+    width: 320px;
+    height: 640px;
     background: url('background.jpg') center/cover no-repeat;
-    border-radius: 40px;
-    box-shadow: 0 0 30px rgba(0,0,0,0.9);
+    border-radius: 42px;
+    box-shadow: 0 0 40px rgba(0,0,0,0.9);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.lock {
-    background: rgba(0,0,0,0.6);
+.lock-box {
+    width: 85%;
+    background: rgba(0,0,0,0.65);
     backdrop-filter: blur(6px);
-    padding: 25px;
+    padding: 22px;
     border-radius: 18px;
     text-align: center;
     color: #fff;
-    width: 85%;
 }
 
-.audio-btn {
-    margin-bottom: 15px;
-    padding: 10px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 10px;
-    cursor: pointer;
+.lock-box h3 {
+    margin: 0 0 10px;
     font-size: 14px;
+    font-weight: normal;
 }
 
 .dots {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin-bottom: 15px;
+    gap: 12px;
+    margin: 18px 0;
 }
 
 .dot {
@@ -66,10 +63,11 @@ input {
     text-align: center;
     border-radius: 8px;
     border: none;
+    outline: none;
 }
 
 button {
-    margin-top: 15px;
+    margin-top: 14px;
     padding: 10px;
     width: 100%;
     font-size: 16px;
@@ -77,6 +75,7 @@ button {
     border: none;
     border-radius: 8px;
     color: #fff;
+    cursor: pointer;
 }
 
 .message {
@@ -84,16 +83,15 @@ button {
     font-size: 14px;
 }
 
-/* افکت لرزش */
 .shake {
     animation: shake 0.4s;
 }
 
 @keyframes shake {
     0% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-    75% { transform: translateX(-5px); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-6px); }
     100% { transform: translateX(0); }
 }
 </style>
@@ -102,11 +100,14 @@ button {
 <body>
 
 <div class="phone" id="phone">
-    <div class="lock">
+    <div class="lock-box">
 
-        <div class="audio-btn" onclick="playVoice()">
-            ▶️ برای شنیدن فایل صوتی ضربه بزن
-        </div>
+        <h3>🎧 برای شنیدن گزارش افسر کایا پلی را بزنید</h3>
+
+        <!-- ویس افسر کایا (با ضربه کاربر پلی می‌شود) -->
+        <audio controls style="width:100%;">
+            <source src="kaya_voice.mp3" type="audio/mpeg">
+        </audio>
 
         <div class="dots">
             <div class="dot"></div>
@@ -115,13 +116,14 @@ button {
             <div class="dot"></div>
         </div>
 
-        <input type="password" id="code" maxlength="4" placeholder="Enter Passcode">
-        <button onclick="unlock()">Unlock</button>
+        <input type="password" id="passcode" maxlength="4" placeholder="Enter Passcode">
+        <button onclick="unlockPhone()">Unlock</button>
+
         <div class="message" id="msg"></div>
     </div>
 </div>
 
-<audio id="voice" src="kaya_voice.mp3"></audio>
+<!-- صدای باز شدن قفل -->
 <audio id="unlockSound" src="iphone_unlock_style_sound.wav"></audio>
 
 <script>
@@ -129,31 +131,26 @@ const correctCode = "1022";
 const msg = document.getElementById("msg");
 const phone = document.getElementById("phone");
 
-function playVoice() {
-    document.getElementById("voice").play().catch(()=>{});
-}
-
-function unlock() {
-    const input = document.getElementById("code").value;
+function unlockPhone() {
+    const input = document.getElementById("passcode").value;
 
     if (input === correctCode) {
         msg.innerText = "درست است";
-        const sound = document.getElementById("unlockSound");
-        sound.play();
 
-        sound.onended = () => {
-            window.location.href = "phone-locked.html";
-        };
+        document.getElementById("unlockSound").play();
+
+        setTimeout(() => {
+            // صفحه بعد از باز شدن قفل
+            window.location.href = "Phone_locked.html";
+        }, 600);
 
     } else {
         msg.innerText = "رمز اشتباه است";
 
-        // لرزش واقعی موبایل
         if (navigator.vibrate) {
             navigator.vibrate([200, 100, 200]);
         }
 
-        // لرزش تصویری
         phone.classList.add("shake");
         setTimeout(() => phone.classList.remove("shake"), 400);
     }
