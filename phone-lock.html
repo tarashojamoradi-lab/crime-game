@@ -1,113 +1,164 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-    <meta charset="UTF-8">
-    <title>Phone Unlocked</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            font-family: sans-serif;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
+<meta charset="UTF-8">
+<title>Locked Phone</title>
 
-        .image-container {
-            margin-top: 30px;
-        }
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Tahoma, sans-serif;
+}
 
-        .image-container img {
-            max-width: 90%;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(255,255,255,0.15);
-        }
+.phone {
+    width: 300px;
+    height: 600px;
+    background: url('background.jpg') center/cover no-repeat;
+    border-radius: 40px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        .box {
-            margin-top: 30px;
-            background: rgba(0, 0, 0, 0.75);
-            padding: 25px;
-            width: 90%;
-            max-width: 500px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 0 25px rgba(255,255,255,0.15);
-        }
+.lock {
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(6px);
+    padding: 25px;
+    border-radius: 18px;
+    text-align: center;
+    color: #fff;
+    width: 85%;
+}
 
-        .question {
-            margin-bottom: 15px;
-            line-height: 1.9;
-        }
+.audio-btn {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
 
-        input {
-            width: 90%;
-            padding: 10px;
-            border-radius: 8px;
-            border: none;
-            font-size: 16px;
-            text-align: center;
-        }
+.dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
 
-        button {
-            margin-top: 15px;
-            padding: 10px 25px;
-            font-size: 16px;
-            border: none;
-            border-radius: 8px;
-            background-color: #2ecc71;
-            color: #000;
-            cursor: pointer;
-        }
+.dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+}
 
-        .result {
-            margin-top: 15px;
-            font-weight: bold;
-        }
-    </style>
+input {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 8px;
+    border: none;
+}
+
+button {
+    margin-top: 15px;
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    background: #1db954;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+}
+
+.message {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* افکت لرزش */
+.shake {
+    animation: shake 0.4s;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+</style>
 </head>
+
 <body>
 
-    <div class="image-container">
-        <img src="Screenshot.jpg" alt="Screenshot">
-    </div>
+<div class="phone" id="phone">
+    <div class="lock">
 
-    <div class="box">
-        <div class="question">
-            در دل کلمات، نشانه‌ای است که تو به یاد نمی‌آوری،  
-            اما اگر از آن بگذری، آن را در هر گوشه پیدا خواهی کرد.  
-            هیچ‌وقت واقعاً در عمل به آن‌ها وفادار نمی‌مانی
+        <div class="audio-btn" onclick="playVoice()">
+            ▶️ برای شنیدن فایل صوتی ضربه بزن
         </div>
 
-        <input type="text" id="answer" placeholder="پاسخ را وارد کن">
+        <div class="dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
 
-        <button onclick="checkAnswer()">بررسی</button>
-
-        <div class="result" id="result"></div>
+        <input type="password" id="code" maxlength="4" placeholder="Enter Passcode">
+        <button onclick="unlock()">Unlock</button>
+        <div class="message" id="msg"></div>
     </div>
+</div>
 
-    <script>
-        function normalize(text) {
-            return text.replace(/\s+/g, '').trim();
+<audio id="voice" src="kaya_voice.mp3"></audio>
+<audio id="unlockSound" src="iphone_unlock_style_sound.wav"></audio>
+
+<script>
+const correctCode = "1022";
+const msg = document.getElementById("msg");
+const phone = document.getElementById("phone");
+
+function playVoice() {
+    document.getElementById("voice").play().catch(()=>{});
+}
+
+function unlock() {
+    const input = document.getElementById("code").value;
+
+    if (input === correctCode) {
+        msg.innerText = "درست است";
+        const sound = document.getElementById("unlockSound");
+        sound.play();
+
+        sound.onended = () => {
+            window.location.href = "phone-locked.html";
+        };
+
+    } else {
+        msg.innerText = "رمز اشتباه است";
+
+        // لرزش واقعی موبایل
+        if (navigator.vibrate) {
+            navigator.vibrate([200, 100, 200]);
         }
 
-        function checkAnswer() {
-            const input = normalize(document.getElementById("answer").value);
-            const result = document.getElementById("result");
+        // لرزش تصویری
+        phone.classList.add("shake");
+        setTimeout(() => phone.classList.remove("shake"), 400);
+    }
+}
+</script>
 
-            const correctAnswers = [
-                "قولانگشتکوچیکه",
-                "قولانگشتی",
-                "قولانگشتکوچک"
-            ];
-
-            if (correctAnswers.includes(input)) {
-                result.style.color = "#2ecc71";
-                result.innerText = "درست است";
-                setTimeout(() => {
-                    window.location.href = "dead.html";
-                }, 800);
-            } else {
-                result
+</body>
+</html>
