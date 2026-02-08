@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>قفل راز</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: Tahoma, sans-serif;
+            background: url('wallpaper.jpg.png') no-repeat center center / cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* لایه محو روی پس‌زمینه */
+        .overlay {
+            position: absolute;
+            inset: 0;
+            backdrop-filter: blur(6px);
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .box {
+            position: relative;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            border-radius: 14px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.9);
+            text-align: center;
+            color: #fff;
+        }
+
+        .question {
+            line-height: 1.9;
+            font-size: 16px;
+            margin-bottom: 25px;
+            white-space: pre-line;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background: #8b0000;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #b00000;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="overlay"></div>
+
+    <div class="box">
+        <div class="question">
+چهار سخن در دلنوشته جاری‌است
+که نه فریادند و نه خاموشی؛
+اما از هر جیغی کشنده‌ترند.
+بلکه در جایی که واژه‌ها متولد می‌شوند پنهان است؛
+اگر آن را یافتی رازی را می‌شنوی
+که صنم جرأت گفتنش را نداشت.
+        </div>
+
+        <input type="text" id="answer" placeholder="پاسخ را وارد کنید">
+
+        <button onclick="checkAnswer()">بررسی</button>
+
+        <div class="message" id="msg"></div>
+    </div>
+
+    <script>
+        function checkAnswer() {
+            const userAnswer = document.getElementById("answer").value.trim();
+            const msg = document.getElementById("msg");
+
+            if (userAnswer === "سکوت بلندترین فریاد است") {
+                msg.style.color = "#00ff99";
+                msg.innerText = "درست است";
+                setTimeout(() => {
+                    window.location.href = "medrek-name.html";
+                }, 1200);
+            } else {
+                msg.style.color = "#ff4444";
+                msg.innerText = "پاسخ اشتباه است";
+            }
+        }
+    </script>
+
+</body>
+</html>
