@@ -76,7 +76,7 @@ button{
 
 <body>
 
-<div class="phone">
+<div class="phone" id="phone">
 
   <div class="title">🔒 گوشی قفل است</div>
 
@@ -84,6 +84,15 @@ button{
 
   <audio id="voice">
     <source src="kaya-voice.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- صداها فقط اضافه شدن -->
+  <audio id="unlockSound">
+    <source src="iphone_unlock_style_sound.wav" type="audio/wav">
+  </audio>
+
+  <audio id="errorSound">
+    <source src="iphone_error.wav" type="audio/wav">
   </audio>
 
   <div class="dots">
@@ -106,12 +115,24 @@ function playVoice(){
   document.getElementById("voice").play();
 }
 
+function vibrate(){
+  if(navigator.vibrate){
+    navigator.vibrate([100,50,100]);
+  }
+}
+
 function unlock(){
   const pass = document.getElementById("pass").value;
+
   if(pass === "1022"){
-    window.location.href = "chat-evidence.html";
+    document.getElementById("unlockSound").play();
+    setTimeout(()=>{
+      window.location.href = "chat-evidence.html";
+    },600);
   }else{
     document.getElementById("msg").innerText = "رمز اشتباه است";
+    document.getElementById("errorSound").play();
+    vibrate();
   }
 }
 </script>
