@@ -2,49 +2,110 @@
 <html lang="fa">
 <head>
     <meta charset="UTF-8">
-    <title>پرونده – مرحله دوم</title>
+    <title>Case 2 – شواهد تصویری</title>
 
     <style>
         body {
             margin: 0;
             padding: 0;
             background-color: #0b0b0b;
-            color: white;
+            color: #ffffff;
             font-family: Tahoma, sans-serif;
-            text-align: center;
+            min-height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 14px;
+            padding: 25px;
+            width: 95%;
+            max-width: 900px;
+            text-align: center;
         }
 
         h1 {
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            opacity: 0.7;
             margin-bottom: 20px;
         }
 
-        p {
-            font-size: 18px;
-            max-width: 600px;
-            line-height: 1.8;
+        /* عکس اصلی */
+        .main-image img {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        /* دو عکس پایینی */
+        .bottom-images {
+            display: flex;
+            gap: 12px;
+        }
+
+        .bottom-images img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .bottom-images img:hover {
+            transform: scale(1.03);
             opacity: 0.9;
         }
 
-        button {
-            margin-top: 30px;
-            padding: 12px 30px;
-            font-size: 16px;
-            border: none;
-            border-radius: 8px;
-            background-color: #b30000;
-            color: white;
-            cursor: pointer;
+        /* موبایل */
+        @media (max-width: 600px) {
+            .bottom-images {
+                flex-direction: column;
+            }
+
+            .bottom-images img {
+                height: 200px;
+            }
         }
 
-        button:hover {
-            background-color: darkred;
+        .hint {
+            margin-top: 18px;
+            font-size: 14px;
+            opacity: 0.6;
         }
     </style>
 </head>
 
 <body>
+
+<div class="container">
+
+    <h1>Case 2</h1>
+    <div class="subtitle">بررسی شواهد تصویری</div>
+
+    <!-- عکس اصلی -->
+    <div class="main-image">
+        <img src="room.jpg" alt="صحنه اصلی">
+    </div>
+
+    <!-- دو عکس زیر -->
+    <div class="bottom-images">
+        <img src="picture1.jpg" alt="مدرک فرعی ۱">
+        <img src="picture2.jpg" alt="مدرک فرعی ۲">
+    </div>
+
+    <div class="hint">
+        جزئیات مهم‌تر از چیزی هستند که در نگاه اول دیده می‌شود…
+    </div>
+
+</div>
+
+</body>
+</html>
