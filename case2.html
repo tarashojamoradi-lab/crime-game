@@ -25,9 +25,20 @@ h2{
     margin:auto;
 }
 
-.container img{
+.main-img{
     width:100%;
     margin:15px 0;
+    border-radius:14px;
+    box-shadow:0 0 18px rgba(0,0,0,0.7);
+}
+
+.small-images{
+    display:flex;
+    gap:10px;
+}
+
+.small-images img{
+    width:50%;
     border-radius:12px;
     box-shadow:0 0 15px rgba(0,0,0,0.7);
 }
@@ -42,9 +53,16 @@ h2{
 </h2>
 
 <div class="container">
-    <img src="room.jpg" alt="سرنخ اصلی">
-    <img src="family.jpg" alt="سرنخ فرعی">
-    <img src="love.jpg" alt="سرنخ فرعی">
+
+    <!-- تصویر بزرگ -->
+    <img src="room.jpg" class="main-img" alt="سرنخ اصلی">
+
+    <!-- تصاویر کوچکتر -->
+    <div class="small-images">
+        <img src="family.jpg" alt="سرنخ فرعی">
+        <img src="love.jpg" alt="سرنخ فرعی">
+    </div>
+
 </div>
 
 </body>
