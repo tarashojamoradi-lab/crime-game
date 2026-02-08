@@ -1,94 +1,50 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-    <meta charset="UTF-8">
-    <title>شواهد تصویری</title>
+<meta charset="UTF-8">
+<title>پرونده – سرنخ‌ها</title>
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #0b0b0b;
-            color: #ffffff;
-            font-family: Tahoma, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+<style>
+body{
+    margin:0;
+    background:#0f0f0f;
+    color:#fff;
+    font-family:Tahoma,sans-serif;
+    text-align:center;
+}
 
-        .container {
-            width: 90%;
-            max-width: 900px;
-            background: #111;
-            padding: 20px;
-            border-radius: 14px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.8);
-        }
+h2{
+    margin:20px 10px;
+    font-size:20px;
+    line-height:1.8;
+}
 
-        .title {
-            font-size: 22px;
-            margin-bottom: 15px;
-            font-weight: bold;
-            text-align: center;
-        }
+.container{
+    width:100%;
+    max-width:500px;
+    margin:auto;
+}
 
-        .main-image img {
-            width: 100%;
-            border-radius: 12px;
-            margin-bottom: 15px;
-        }
-
-        .sub-images {
-            display: flex;
-            gap: 10px;
-        }
-
-        .sub-images img {
-            width: 50%;
-            border-radius: 10px;
-        }
-
-        @media (max-width: 600px) {
-            .sub-images {
-                flex-direction: column;
-            }
-
-            .sub-images img {
-                width: 100%;
-            }
-        }
-
-        .hint {
-            margin-top: 15px;
-            font-size: 14px;
-            opacity: 0.7;
-            text-align: center;
-        }
-    </style>
+.container img{
+    width:100%;
+    margin:15px 0;
+    border-radius:12px;
+    box-shadow:0 0 15px rgba(0,0,0,0.7);
+}
+</style>
 </head>
 
 <body>
 
+<h2>
+سه تصویر در این پرونده وجود دارد.<br>
+هرکدام حقیقتی را پنهان کرده‌اند.
+</h2>
+
 <div class="container">
-
-    <div class="title">
-        بررسی شواهد تصویری
-    </div>
-
-    <div class="main-image">
-        <img src="room.jpg" alt="Room">
-    </div>
-
-    <div class="sub-images">
-        <img src="Family.jpg" alt="Family">
-        <img src="Love.jpg" alt="Love">
-    </div>
-
-    <div class="hint">
-        هر تصویر ممکن است سرنخی پنهان داشته باشد…
-    </div>
-
+    <img src="room.jpg" alt="سرنخ اصلی">
+    <img src="family.jpg" alt="سرنخ فرعی">
+    <img src="love.jpg" alt="سرنخ فرعی">
 </div>
 
 </body>
