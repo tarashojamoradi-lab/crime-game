@@ -2,149 +2,122 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>Locked Phone</title>
+<title>Evidence</title>
 
 <style>
 body {
     margin: 0;
-    height: 100vh;
+    min-height: 100vh;
     background: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-family: Tahoma, sans-serif;
-}
-
-.phone {
-    width: 300px;
-    height: 600px;
-    background: url('background.jpg') center/cover no-repeat;
-    border-radius: 40px;
-    box-shadow: 0 0 30px rgba(0,0,0,0.9);
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.lock {
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(6px);
-    padding: 25px;
-    border-radius: 18px;
-    text-align: center;
     color: #fff;
-    width: 85%;
 }
 
-.audio-title {
-    font-size: 14px;
-    margin-bottom: 6px;
+.container {
+    width: 90%;
+    max-width: 500px;
 }
 
-.dots {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 15px 0;
+.screenshot {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.85);
 }
 
-.dot {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: 1px solid #fff;
+.box {
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(6px);
+    padding: 18px;
+    border-radius: 14px;
+}
+
+.question {
+    text-align: center;
+    line-height: 1.9;
+    margin-bottom: 15px;
+    font-size: 15px;
 }
 
 input {
     width: 100%;
     padding: 10px;
-    font-size: 18px;
-    text-align: center;
+    font-size: 15px;
     border-radius: 8px;
     border: none;
+    box-sizing: border-box;
 }
 
 button {
-    margin-top: 15px;
-    padding: 10px;
     width: 100%;
-    font-size: 16px;
+    margin-top: 12px;
+    padding: 10px;
+    font-size: 15px;
     background: #1db954;
     border: none;
     border-radius: 8px;
     color: #fff;
+    cursor: pointer;
 }
 
 .message {
     margin-top: 10px;
     font-size: 14px;
-}
-
-.shake {
-    animation: shake 0.4s;
-}
-
-@keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-    75% { transform: translateX(-5px); }
-    100% { transform: translateX(0); }
+    text-align: center;
 }
 </style>
 </head>
 
 <body>
 
-<div class="phone" id="phone">
-    <div class="lock">
+<div class="container">
 
-        <div class="audio-title">🎧 فایل صوتی افسر کایا</div>
+    <!-- اسکرین‌شات -->
+    <img src="Screenshot.jpg" alt="Screenshot" class="screenshot">
 
-        <!-- ویس داخل خود سایت -->
-        <audio id="voice" controls style="width:100%;">
-            <source src="kaya_voice.mp3" type="audio/mpeg">
-        </audio>
-
-        <div class="dots">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
+    <!-- باکس سؤال -->
+    <div class="box">
+        <div class="question">
+            در دل کلمات، نشانه‌ای است که تو به یاد نمی‌آوری،  
+            اما اگر از آن بگذری، آن را در هر گوشه پیدا خواهی کرد  
+            هیچ‌وقت واقعاً در عمل به آن‌ها وفادار نمی‌مانی
         </div>
 
-        <input type="password" id="code" maxlength="4" placeholder="Enter Passcode">
-        <button onclick="unlock()">Unlock</button>
+        <input type="text" id="answer" placeholder="پاسخ را وارد کنید">
+        <button onclick="checkAnswer()">بررسی</button>
         <div class="message" id="msg"></div>
     </div>
+
 </div>
 
-<!-- صدای باز شدن قفل -->
-<audio id="unlockSound" src="iphone_unlock_style_sound.wav"></audio>
-
 <script>
-const correctCode = "1022";
-const msg = document.getElementById("msg");
-const phone = document.getElementById("phone");
+function normalize(text) {
+    return text.replace(/\s+/g, "").trim();
+}
 
-function unlock() {
-    const input = document.getElementById("code").value;
+function checkAnswer() {
+    const input = normalize(document.getElementById("answer").value);
+    const msg = document.getElementById("msg");
 
-    if (input === correctCode) {
+    const correctAnswers = [
+        "قولانگشتکوچیکه",
+        "قولانگشتی",
+        "قولانگشتکوچک"
+    ];
+
+    if (correctAnswers.includes(input)) {
         msg.innerText = "درست است";
-
-        document.getElementById("unlockSound").play();
-
         setTimeout(() => {
-            window.location.href = "locked-phone.html";
-        }, 600);
-
+            window.location.href = "dead.html";
+        }, 700);
     } else {
-        msg.innerText = "رمز اشتباه است";
+        msg.innerText = "پاسخ اشتباه است";
+    }
+}
+</script>
 
-        if (navigator.vibrate) {
-            navigator.vibrate([200, 100, 200]);
-        }
-
-        phone.classList.add("shake");
-        setTimeout(() => phone.classList.remove
+</body>
+</html>
