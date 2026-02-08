@@ -1,118 +1,110 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-<meta charset="UTF-8">
-<title>معما</title>
+    <meta charset="UTF-8">
+    <title>Case Question</title>
 
-<style>
-body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background: url("wallpaper.jpg.png") no-repeat center center fixed;
-    background-size: cover;
-}
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: url('wallpaper.jpg.png') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Tahoma, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
 
-/* لایه محو روی بک‌گراند */
-.overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(6px);
-}
+        .overlay {
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            padding: 30px;
+            border-radius: 14px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(0,0,0,0.7);
+        }
 
-/* باکس اصلی */
-.container {
-    position: relative;
-    z-index: 2;
-    max-width: 600px;
-    margin: 15vh auto;
-    background: rgba(0, 0, 0, 0.75);
-    padding: 25px;
-    border-radius: 14px;
-    color: #fff;
-}
+        .question {
+            font-size: 16px;
+            line-height: 1.9;
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-/* متن معما */
-.question {
-    line-height: 2;
-    font-size: 16px;
-    margin-bottom: 20px;
-}
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 15px;
+            margin-bottom: 15px;
+            outline: none;
+        }
 
-/* ورودی */
-input {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-    margin-bottom: 15px;
-}
+        button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #1faa59; /* سبز */
+            color: #fff;
+            transition: 0.3s;
+        }
 
-/* دکمه */
-button {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    background: #ffffff;
-    color: #000;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
+        button:hover {
+            background-color: #168f48;
+        }
 
-/* پیام */
-#message {
-    margin-top: 15px;
-    font-weight: bold;
-    text-align: center;
-}
-</style>
+        .message {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="overlay"></div>
+    <div class="overlay">
+        <div class="question">
+            چهار سخن در دلنوشته جاری‌است<br>
+            که نه فریادند و نه خاموشی؛<br>
+            اما از هر جیغی کشنده‌ترند.<br>
+            بلکه در جایی که واژه‌ها متولد می‌شوند پنهان است؛<br>
+            اگر آن را یافتی رازی را می‌شنوی<br>
+            که صنم جرأت گفتنش را نداشت.
+        </div>
 
-<div class="container">
-    <div class="question">
-        چهار سخن در دلنوشته جاری‌است<br>
-        که نه فریادند و نه خاموشی؛<br>
-        اما از هر جیغی کشنده‌ترند.<br>
-        بلکه در جایی که واژه‌ها متولد می‌شوند پنهان است؛<br>
-        اگر آن را یافتی رازی را می‌شنوی<br>
-        که صنم جرأت گفتنش را نداشت.
+        <input type="text" id="answer" placeholder="پاسخ را وارد کنید">
+
+        <button onclick="checkAnswer()">بررسی</button>
+
+        <div class="message" id="message"></div>
     </div>
 
-    <input id="answer" type="text" placeholder="پاسخ را بنویس…">
+    <script>
+        function checkAnswer() {
+            const userAnswer = document.getElementById("answer").value.trim();
+            const message = document.getElementById("message");
 
-    <button onclick="checkAnswer()">بررسی</button>
-
-    <div id="message"></div>
-</div>
-
-<script>
-function checkAnswer() {
-    const userAnswer = document.getElementById("answer").value.trim();
-    const correctAnswer = "سکوت بلندترین فریاد است";
-    const message = document.getElementById("message");
-
-    if (userAnswer === correctAnswer) {
-        message.style.color = "#00ff99";
-        message.innerText = "درست است";
-
-        setTimeout(() => {
-            window.location.href = "evidence.html";
-        }, 900);
-
-    } else {
-        message.style.color = "#ff4d4d";
-        message.innerText = "پاسخ اشتباه است";
-    }
-}
-</script>
+            if (userAnswer === "سکوت بلندترین فریاد است") {
+                message.style.color = "#7CFF9B";
+                message.innerText = "درست است";
+                setTimeout(() => {
+                    window.location.href = "evidence.html";
+                }, 1000);
+            } else {
+                message.style.color = "#ff7a7a";
+                message.innerText = "پاسخ اشتباه است";
+            }
+        }
+    </script>
 
 </body>
 </html>
