@@ -26,14 +26,37 @@ body {
     align-items: center;
 }
 
-.lock-box {
+.lock {
     background: rgba(0,0,0,0.6);
     backdrop-filter: blur(6px);
     padding: 25px;
-    border-radius: 16px;
+    border-radius: 18px;
     text-align: center;
     color: #fff;
-    width: 80%;
+    width: 85%;
+}
+
+.audio-btn {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid #fff;
 }
 
 input {
@@ -60,51 +83,79 @@ button {
     margin-top: 10px;
     font-size: 14px;
 }
+
+/* افکت لرزش */
+.shake {
+    animation: shake 0.4s;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
 </style>
 </head>
 
 <body>
 
-<div class="phone">
-    <div class="lock-box">
-        <input type="password" id="code" maxlength="4" placeholder="Passcode">
-        <button onclick="unlockPhone()">Unlock</button>
+<div class="phone" id="phone">
+    <div class="lock">
+
+        <div class="audio-btn" onclick="playVoice()">
+            ▶️ برای شنیدن فایل صوتی ضربه بزن
+        </div>
+
+        <div class="dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+
+        <input type="password" id="code" maxlength="4" placeholder="Enter Passcode">
+        <button onclick="unlock()">Unlock</button>
         <div class="message" id="msg"></div>
     </div>
 </div>
 
-<audio id="kayaVoice" src="kaya_voice.mp3"></audio>
+<audio id="voice" src="kaya_voice.mp3"></audio>
 <audio id="unlockSound" src="iphone_unlock_style_sound.wav"></audio>
 
 <script>
 const correctCode = "1022";
-const voice = document.getElementById("kayaVoice");
-const unlockSound = document.getElementById("unlockSound");
 const msg = document.getElementById("msg");
+const phone = document.getElementById("phone");
 
-// پخش خودکار ویس هنگام ورود
-window.addEventListener("load", () => {
-    voice.play().catch(()=>{});
-});
+function playVoice() {
+    document.getElementById("voice").play().catch(()=>{});
+}
 
-function unlockPhone() {
+function unlock() {
     const input = document.getElementById("code").value;
 
     if (input === correctCode) {
         msg.innerText = "درست است";
-        unlockSound.play();
+        const sound = document.getElementById("unlockSound");
+        sound.play();
 
-        // بعد از اتمام ویس افسر کایا برو صفحه بعد
-        if (voice.ended) {
+        sound.onended = () => {
             window.location.href = "phone-locked.html";
-        } else {
-            voice.onended = () => {
-                window.location.href = "phone-locked.html";
-            };
-        }
+        };
 
     } else {
         msg.innerText = "رمز اشتباه است";
+
+        // لرزش واقعی موبایل
+        if (navigator.vibrate) {
+            navigator.vibrate([200, 100, 200]);
+        }
+
+        // لرزش تصویری
+        phone.classList.add("shake");
+        setTimeout(() => phone.classList.remove("shake"), 400);
     }
 }
 </script>
