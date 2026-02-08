@@ -9,7 +9,7 @@
             margin: 0;
             padding: 0;
             background-color: #0f0f0f;
-            color: #fff;
+            color: #ffffff;
             font-family: Tahoma, sans-serif;
             display: flex;
             justify-content: center;
@@ -18,16 +18,28 @@
         }
 
         .box {
-            background: rgba(0,0,0,0.75);
+            background: rgba(0, 0, 0, 0.75);
             padding: 30px;
             border-radius: 12px;
             width: 90%;
-            max-width: 400px;
+            max-width: 420px;
             text-align: center;
         }
 
         h1 {
+            margin-bottom: 10px;
+        }
+
+        .hint {
+            margin-bottom: 10px;
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        .subhint {
             margin-bottom: 20px;
+            font-size: 14px;
+            opacity: 0.6;
         }
 
         input {
@@ -58,6 +70,7 @@
         .msg {
             margin-top: 15px;
             font-size: 16px;
+            min-height: 22px;
         }
     </style>
 </head>
@@ -66,9 +79,16 @@
 
 <div class="box">
     <h1>کیس اول</h1>
-    <p>قاتل کیست؟</p>
 
-    <input type="text" id="answer" placeholder="جواب را وارد کنید">
+    <div class="hint">
+        در تصویر چیزی پنهان است
+    </div>
+
+    <div class="subhint">
+        همه چیز آن‌طور که به نظر می‌رسد نیست.
+    </div>
+
+    <input type="text" id="answer" placeholder="پاسخ را وارد کنید">
 
     <button onclick="checkAnswer()">بررسی</button>
 
@@ -80,15 +100,17 @@
         const userAnswer = document.getElementById("answer").value.trim();
         const message = document.getElementById("message");
 
-        if (userAnswer === "نریمان") {
+        if (userAnswer === "صندوق" || userAnswer === "صندوقچه") {
             message.style.color = "lightgreen";
-            message.innerText = "درست است ✔";
+            message.innerText = "سرنخ تأیید شد. پرونده در حال به‌روزرسانی…";
+
             setTimeout(() => {
                 window.location.href = "case2.html";
             }, 800);
+
         } else {
             message.style.color = "red";
-            message.innerText = "❌ اشتباه است";
+            message.innerText = "پاسخ اشتباه است";
         }
     }
 </script>
