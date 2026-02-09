@@ -32,9 +32,16 @@
     .text {
         opacity: 0;
         transition: opacity 2s ease;
-        margin: 30px 0;
+        margin: 25px 0;
         line-height: 2;
         font-size: 16px;
+    }
+
+    .title {
+        font-size: 17px;
+        margin-bottom: 10px;
+        opacity: 0;
+        transition: opacity 2s ease;
     }
 
     .date {
@@ -47,10 +54,20 @@
         opacity: 1;
     }
 
-    .divider {
-        margin: 40px 0;
-        opacity: 0.4;
+    button {
+        background: transparent;
+        border: 1px solid #777;
+        color: #e0e0e0;
+        padding: 10px 20px;
         font-size: 14px;
+        cursor: pointer;
+        margin-top: 15px;
+        opacity: 0;
+        transition: opacity 1.5s ease, background 0.3s;
+    }
+
+    button:hover {
+        background: #1a1a1a;
     }
 </style>
 </head>
@@ -64,45 +81,54 @@
 
     <!-- تصویر مرگ -->
     <img id="sadImage" src="sad.jpg" alt="">
-
     <div class="date">۱۵ شهریور ۱۴۰۴</div>
 
-    <!-- متن روایی -->
-    <div id="storyText" class="text">
-        بعضی حقیقت‌ها پایین‌تر دفن شده‌اند.<br>
-        روزنامه‌ای که هیچ‌وقت چاپ نشد
+    <!-- تیتر روزنامه -->
+    <div id="newsTitle" class="title">
+        روزنامه‌ای که پیش از دیده‌شدن، ناپدید شد
     </div>
 
-    <div class="divider">— — —</div>
-
     <!-- روزنامه -->
-    <img id="news1" src="news.jpg" alt="روزنامه">
-    <img id="news2" src="photo.jpg" alt="روزنامه">
+    <img id="newsImage" src="news.jpg" alt="روزنامه">
+
+    <!-- متن زیر روزنامه -->
+    <div id="truthText" class="text">
+        و اما حقیقت، در سایه ماند
+    </div>
+
+    <!-- دکمه رفتن -->
+    <button id="nextBtn" onclick="goNext()">ادامه</button>
 
 </div>
 
 <script>
-    // زمان‌بندی سینمایی بدون اسکرول
-
     setTimeout(() => {
-        document.getElementById("deadPoster").classList.add("show");
+        deadPoster.classList.add("show");
     }, 500);
 
     setTimeout(() => {
-        document.getElementById("sadImage").classList.add("show");
+        sadImage.classList.add("show");
     }, 2500);
 
     setTimeout(() => {
-        document.getElementById("storyText").classList.add("show");
+        newsTitle.classList.add("show");
     }, 5000);
 
     setTimeout(() => {
-        document.getElementById("news1").classList.add("show");
-    }, 8000);
+        newsImage.classList.add("show");
+    }, 7000);
 
     setTimeout(() => {
-        document.getElementById("news2").classList.add("show");
-    }, 10000);
+        truthText.classList.add("show");
+    }, 9000);
+
+    setTimeout(() => {
+        nextBtn.classList.add("show");
+    }, 10500);
+
+    function goNext() {
+        window.location.href = "hidden-truth.html";
+    }
 </script>
 
 </body>
