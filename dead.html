@@ -2,96 +2,107 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>مرگ سپیده</title>
+<title>dead</title>
 
 <style>
     body {
         margin: 0;
-        background: #0b0b0b;
-        color: #eaeaea;
-        font-family: serif;
+        padding: 0;
+        background: #0e0e0e;
+        color: #e0e0e0;
+        font-family: "Tahoma", sans-serif;
         direction: rtl;
+        text-align: center;
     }
 
-    .section {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+    .container {
+        max-width: 700px;
+        margin: auto;
         padding: 40px 20px;
-        transition: opacity 1.5s ease;
     }
 
     img {
-        max-width: 90%;
-        border-radius: 8px;
-        margin-bottom: 20px;
+        width: 100%;
+        border-radius: 6px;
+        margin: 20px 0;
+        opacity: 0;
+        transition: opacity 2s ease;
     }
 
-    h1 {
-        font-size: 22px;
-        letter-spacing: 1px;
-        margin-bottom: 10px;
+    .text {
+        opacity: 0;
+        transition: opacity 2s ease;
+        margin: 30px 0;
+        line-height: 2;
+        font-size: 16px;
     }
 
     .date {
+        margin-top: 10px;
         font-size: 14px;
-        opacity: 0.7;
-        margin-bottom: 30px;
+        opacity: 0.6;
     }
 
-    /* بخش مرگ */
-    #death {
+    .show {
         opacity: 1;
     }
 
-    /* بخش روزنامه */
-    #news {
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    .news-img {
-        margin: 30px 0;
+    .divider {
+        margin: 40px 0;
+        opacity: 0.4;
+        font-size: 14px;
     }
 </style>
 </head>
 
 <body>
 
-<!-- 🔴 بخش اول: مرگ سپیده -->
-<div class="section" id="death">
-    <img src="dead.jpg" alt="اعلامیه مرگ">
-    <h1>مرگ آرامِ سپیده</h1>
-    <div class="date">۱۵ شهریور ۱۴۰۴</div>
-    <img src="sad.jpg" alt="تصویر مرگ">
-</div>
+<div class="container">
 
-<!-- 📰 بخش دوم: روزنامه -->
-<div class="section" id="news">
-    <img class="news-img" src="news.jpg" alt="روزنامه">
-    <img class="news-img" src="photo.jpg" alt="تصویر روزنامه">
+    <!-- اعلامیه مرگ -->
+    <img id="deadPoster" src="dead.jpg" alt="اعلامیه مرگ">
+
+    <!-- تصویر مرگ -->
+    <img id="sadImage" src="sad.jpg" alt="">
+
+    <div class="date">۱۵ شهریور ۱۴۰۴</div>
+
+    <!-- متن روایی -->
+    <div id="storyText" class="text">
+        بعضی حقیقت‌ها پایین‌تر دفن شده‌اند.<br>
+        روزنامه‌ای که هیچ‌وقت چاپ نشد
+    </div>
+
+    <div class="divider">— — —</div>
+
+    <!-- روزنامه -->
+    <img id="news1" src="news.jpg" alt="روزنامه">
+    <img id="news2" src="photo.jpg" alt="روزنامه">
+
 </div>
 
 <script>
-    window.addEventListener("scroll", () => {
-        const scrollY = window.scrollY;
-        const windowH = window.innerHeight;
+    // زمان‌بندی سینمایی بدون اسکرول
 
-        const deathSection = document.getElementById("death");
-        const newsSection = document.getElementById("news");
+    setTimeout(() => {
+        document.getElementById("deadPoster").classList.add("show");
+    }, 500);
 
-        if (scrollY > windowH / 2) {
-            deathSection.style.opacity = "0";
-            newsSection.style.opacity = "1";
-            newsSection.style.pointerEvents = "auto";
-        } else {
-            deathSection.style.opacity = "1";
-            newsSection.style.opacity = "0";
-            newsSection.style.pointerEvents = "none";
-        }
-    });
+    setTimeout(() => {
+        document.getElementById("sadImage").classList.add("show");
+    }, 2500);
+
+    setTimeout(() => {
+        document.getElementById("storyText").classList.add("show");
+    }, 5000);
+
+    setTimeout(() => {
+        document.getElementById("news1").classList.add("show");
+    }, 8000);
+
+    setTimeout(() => {
+        document.getElementById("news2").classList.add("show");
+    }, 10000);
 </script>
 
 </body>
