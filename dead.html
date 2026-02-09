@@ -1,1 +1,98 @@
-dead
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>مرگ سپیده</title>
+
+<style>
+    body {
+        margin: 0;
+        background: #0b0b0b;
+        color: #eaeaea;
+        font-family: serif;
+        direction: rtl;
+    }
+
+    .section {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 20px;
+        transition: opacity 1.5s ease;
+    }
+
+    img {
+        max-width: 90%;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    h1 {
+        font-size: 22px;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+    }
+
+    .date {
+        font-size: 14px;
+        opacity: 0.7;
+        margin-bottom: 30px;
+    }
+
+    /* بخش مرگ */
+    #death {
+        opacity: 1;
+    }
+
+    /* بخش روزنامه */
+    #news {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .news-img {
+        margin: 30px 0;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- 🔴 بخش اول: مرگ سپیده -->
+<div class="section" id="death">
+    <img src="dead.jpg" alt="اعلامیه مرگ">
+    <h1>مرگ آرامِ سپیده</h1>
+    <div class="date">۱۵ شهریور ۱۴۰۴</div>
+    <img src="sad.jpg" alt="تصویر مرگ">
+</div>
+
+<!-- 📰 بخش دوم: روزنامه -->
+<div class="section" id="news">
+    <img class="news-img" src="news.jpg" alt="روزنامه">
+    <img class="news-img" src="photo.jpg" alt="تصویر روزنامه">
+</div>
+
+<script>
+    window.addEventListener("scroll", () => {
+        const scrollY = window.scrollY;
+        const windowH = window.innerHeight;
+
+        const deathSection = document.getElementById("death");
+        const newsSection = document.getElementById("news");
+
+        if (scrollY > windowH / 2) {
+            deathSection.style.opacity = "0";
+            newsSection.style.opacity = "1";
+            newsSection.style.pointerEvents = "auto";
+        } else {
+            deathSection.style.opacity = "1";
+            newsSection.style.opacity = "0";
+            newsSection.style.pointerEvents = "none";
+        }
+    });
+</script>
+
+</body>
+</html>
