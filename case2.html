@@ -32,6 +32,19 @@ h2{
     box-shadow:0 0 18px rgba(0,0,0,0.7);
 }
 
+/* اگر تصویر لود نشد، یه باکس خاکستری نشون بده */
+.main-img:before{
+    content:"سرنخ اصلی";
+    display:block;
+    width:100%;
+    height:300px;
+    background:#333;
+    color:#fff;
+    line-height:300px;
+    font-size:20px;
+    border-radius:14px;
+}
+
 .small-images{
     display:flex;
     gap:10px;
@@ -54,10 +67,10 @@ h2{
 
 <div class="container">
 
-    <!-- تصویر بزرگ -->
-    <img src="pedram.jpg" class="main-img" alt="سرنخ اصلی">
+    <!-- تصویر بزرگ سرنخ اصلی -->
+    <img src="de.png" class="main-img" alt="سرنخ اصلی" onerror="this.src='de.png'">
 
-    <!-- تصاویر کوچکتر -->
+    <!-- تصاویر کوچکتر سرنخ فرعی -->
     <div class="small-images">
         <img src="family.jpg" alt="سرنخ فرعی">
         <img src="love.jpg" alt="سرنخ فرعی">
