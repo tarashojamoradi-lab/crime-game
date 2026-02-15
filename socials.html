@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <title>شبکه‌های اجتماعی – پرونده</title>
 <style>
-/* فونت خوشگل */
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
+/* فونت ساده و خوانا */
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@700&display=swap');
 
 * {
     box-sizing: border-box;
@@ -27,74 +27,69 @@ body {
     justify-content: flex-start;
     align-items: center;
     text-align: center;
-    padding: 20px;
+    padding: 10px;
 }
 
-/* لوگوی بازی بالا */
+/* لوگوی بازی بسیار بزرگ */
 .logo {
-    width: 70%;
-    max-width: 250px;
+    width: 90%;
+    max-width: 400px;
     height: auto;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
 }
 
-/* بخش شبکه‌ها */
+/* بخش شبکه‌ها بسیار بزرگ */
 .section {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 30px;
     width: 100%;
-    max-width: 400px;
-    margin-bottom: 40px;
+    max-width: 500px;
+    margin-bottom: 50px;
 }
 
 .section img {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     object-fit: contain;
 }
 
-/* Glow روی نوشته‌ها */
 .section .ids {
     display: flex;
     flex-direction: column;
     text-align: left;
-    font-size: 26px;
+    font-size: 32px;
     font-weight: bold;
-}
-
-.section .ids span {
-    text-shadow: 0 0 8px #fff, 0 0 12px #1da1f2;
+    line-height: 1.5;
 }
 
 /* ارتباط با ما گوشه صفحه */
 .contact {
     position: fixed;
-    bottom: 15px;
-    right: 15px;
-    font-size: 20px;
+    bottom: 20px;
+    right: 20px;
+    font-size: 24px;
     background: rgba(255,255,255,0.1);
-    padding: 10px 15px;
+    padding: 15px 20px;
     border-radius: 12px;
     cursor: pointer;
-    transition: 0.3s;
-}
-
-.contact:hover {
-    background: rgba(255,255,255,0.25);
 }
 
 /* ریسپانسیو موبایل */
 @media (max-width: 500px) {
+    .logo {
+        width: 95%;
+    }
     .section img {
-        width: 120px;
-        height: 120px;
+        width: 180px;
+        height: 180px;
     }
     .section .ids {
-        font-size: 28px;
+        font-size: 36px;
     }
-    .logo {
-        width: 80%;
+    .contact {
+        font-size: 26px;
+        padding: 16px 22px;
     }
 }
 </style>
