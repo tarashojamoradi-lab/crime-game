@@ -18,7 +18,7 @@
         overflow: hidden;
     }
 
-    /* بک گراند تار */
+    /* بک گراند تار با تاری کمتر */
     body::before {
         content: "";
         position: fixed;
@@ -30,7 +30,7 @@
             linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
             url("red.png") no-repeat center center;
         background-size: cover;
-        filter: blur(8px);
+        filter: blur(4px); /* قبلاً 8px بود، الان کمتر شده */
         z-index: -1;
     }
 
