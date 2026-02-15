@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>جواب معما – پرونده</title>
+<style>
+body {
+    margin:0;
+    padding:0;
+    font-family: Tahoma, sans-serif;
+    background: url('ke.png') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 15px;
+    font-size: 6vw;
+}
+
+p {
+    font-size: 4vw;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 80%;
+    padding: 12px;
+    margin: 10px 0;
+    font-size: 4vw;
+    border-radius: 8px;
+    border: none;
+    text-align: center;
+}
+
+button {
+    width: 80%;
+    padding: 12px;
+    font-size: 4vw;
+    border: none;
+    border-radius: 8px;
+    background-color: #b30000;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e60000;
+}
+
+.msg {
+    margin-top: 15px;
+    font-size: 4vw;
+    min-height: 22px;
+}
+</style>
+</head>
+<body>
+
+<h1>جواب درست را وارد کنید</h1>
+<p>قاتل کیست و همدست قاتل کیست</p>
+
+<input type="text" id="killer" placeholder="قاتل کیست">
+<input type="text" id="assistant" placeholder="همدست قاتل کیست">
+<button onclick="checkAnswer()">بررسی</button>
+
+<div class="msg" id="message"></div>
+
+<script>
+function checkAnswer() {
+    const killer = document.getElementById("killer").value.trim();
+    const assistant = document.getElementById("assistant").value.trim();
+    const msg = document.getElementById("message");
+
+    if(killer === "لیدیا" && assistant === "پدرام") {
+        msg.style.color = "lightgreen";
+        msg.innerText = "جواب درست است. در حال رفتن به صفحه بعد...";
+        setTimeout(() => {
+            window.location.href = "next.html"; // صفحه بعدی
+        }, 800);
+    } else {
+        msg.style.color = "red";
+        msg.innerText = "پاسخ اشتباه است. دوباره تلاش کنید";
+    }
+}
+</script>
+
+</body>
+</html>
