@@ -18,20 +18,21 @@
         overflow: hidden;
     }
 
-    /* بک گراند تار با تاری کمتر */
+    /* بک گراند تار با افکت دورتر */
     body::before {
         content: "";
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
+        width: 120%; /* بزرگتر از صفحه برای حس دور بودن */
+        height: 120%;
         background:
             linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
             url("red.png") no-repeat center center;
-        background-size: cover;
-        filter: blur(4px); /* قبلاً 8px بود، الان کمتر شده */
+        background-size: cover; /* یا می‌تونی بگی contain اگه میخوای کامل دیده شه */
+        filter: blur(4px);
         z-index: -1;
+        transform: translate(-10%, -10%); /* مرکز تصویر روی صفحه */
     }
 
     .box {
