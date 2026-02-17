@@ -1,49 +1,54 @@
-مپانی، سال‌ها بود که از انسان‌ها به‌عنوان نمونه استفاده می‌کرد؛
-شکارهایی تصادفی، تنها، آسیب‌پذیر.
-کسانی که کسی دنبالشـان نمی‌گشت،
-یا اگر هم می‌گشت، خیلی دیر می‌رسید.
-صنم فقط یکی از آن انتخاب‌ها بود؛
-دختری تنها، با گذشته‌ای پر از فقدان،
-و آینده‌ای که هرگز به او نرسید.
-او در چرخه‌ای افتاد که برایش طراحی شده بود؛
-تهدید، کنترل، نزدیکی، اعتماد…
-و در نهایت حذف.
-بی‌صدا، بی‌رد، بی‌رحم.
-مرگ صنم یک حادثه نبود.
-یک اشتباه هم نبود.
-او بخشی از یک روند بود؛
-روندی که قبل از او شروع شده بود
-و اگر متوقف نمی‌شد، بعد از او هم ادامه پیدا می‌کرد.
-این پرونده، فقط درباره‌ی صنم نیست.
-درباره‌ی دنیایی است که در آن،
-یک لینک می‌تواند آغاز پایان باشد
-و تاریکی، پشت چهره‌ای کاملاً عادی پنهان شده است.
-</div>
-
-<!-- امضا -->
-<div class="signature">Weareweoo</div>
-
-<script>
-// قطره بارون قرمز
-function createRain() {
-    const count = 80;
-    for(let i=0;i<count;i++){
-        const drop = document.createElement("div");
-        drop.classList.add("rain-drop");
-        drop.style.left = Math.random()*100 + "vw";
-        drop.style.animationDuration = 0.5 + Math.random()*1.5 + "s";
-        document.body.appendChild(drop);
-    }
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>Interview Next</title>
+<style>
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: url("red.png") no-repeat center center;
+    background-size: cover;
+    font-family: Tahoma, sans-serif;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
 }
-createRain();
 
-// دکمه پخش صدا
-const audioBtn = document.getElementById("playAudioBtn");
-const bgAudio = document.getElementById("bgAudio");
-audioBtn.addEventListener("click", ()=>{
-    bgAudio.play();
-});
-</script>
+.top-image {
+    margin-top: 20px;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+}
+
+.audio-container {
+    margin-top: 20px;
+}
+
+audio {
+    width: 90%;
+    max-width: 400px;
+}
+</style>
+</head>
+
+<body>
+
+<img src="phone.png" alt="تصویر" class="top-image">
+
+<div class="audio-container">
+    <audio controls>
+        <source src="an.aac" type="audio/aac">
+        مرورگر شما از پخش این فایل صوتی پشتیبانی نمی‌کند.
+    </audio>
+</div>
 
 </body>
 </html>
