@@ -2,105 +2,99 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Final Answer</title>
 
 <style>
-body {
+html, body {
+    width: 100%;
+    height: 100%;
     margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background: url('ke.png') no-repeat center center;
-    background-size: contain; /* تغییر مهم اینجاست */
-    background-color: black; /* اگر اطراف خالی موند مشکی باشه */
-    height: 100vh;
+}
+
+body{
+    background: url("ke.png") no-repeat center center;
+    background-size: contain;
+    background-color: #000;
+    font-family: Tahoma, sans-serif;
+    color: #fff;
     display: flex;
-    justify-content: center;
     align-items: center;
-    direction: rtl;
-}
-
-.container {
-    background: rgba(0, 0, 0, 0.75);
-    padding: 25px;
-    border-radius: 15px;
+    justify-content: center;
     text-align: center;
-    width: 85%;
-    max-width: 380px;
-    color: white;
 }
 
-h2 {
-    margin-bottom: 20px;
+.box{
+    background: rgba(0,0,0,0.75);
+    padding: 25px;
+    border-radius: 14px;
+    width: 90%;
+    max-width: 420px;
 }
 
-input {
+h2{
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+input{
     width: 100%;
     padding: 12px;
-    margin: 10px 0;
+    margin: 8px 0;
     border-radius: 8px;
     border: none;
     font-size: 16px;
     text-align: center;
 }
 
-button {
+button{
     width: 100%;
     padding: 12px;
-    margin-top: 15px;
+    margin-top: 12px;
     border: none;
     border-radius: 8px;
-    background: crimson;
-    color: white;
+    background: #b30000;
+    color: #fff;
     font-size: 16px;
     cursor: pointer;
 }
 
-.error {
-    margin-top: 10px;
-    color: red;
-    font-size: 14px;
+.msg{
+    margin-top: 12px;
+    min-height: 22px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="box">
     <h2>جواب درست را وارد کنید</h2>
 
     <input type="text" id="killer" placeholder="قاتل کیست؟">
-    <input type="text" id="assistant" placeholder="همدست قاتل کیست؟">
+    <input type="text" id="helper" placeholder="همدست قاتل کیست؟">
 
-    <button onclick="checkAnswer()">تایید جواب</button>
-
-    <div class="error" id="errorMsg"></div>
+    <button onclick="check()">بررسی</button>
+    <div class="msg" id="msg"></div>
 </div>
 
 <script>
-function normalize(text) {
-    return text.trim().toLowerCase();
-}
+function check(){
+    const killer = document.getElementById("killer").value.trim();
+    const helper = document.getElementById("helper").value.trim();
+    const msg = document.getElementById("msg");
 
-function checkAnswer() {
-    let killer = normalize(document.getElementById("killer").value);
-    let assistant = normalize(document.getElementById("assistant").value);
+    const killerOK = (killer === "لیدیا" || killer === "لیدیا ایوانف");
+    const helperOK = (helper === "پدرام" || helper === "پدرام بابایی");
 
-    let killerCorrect = 
-        killer === "لیدیا" || 
-        killer === "لیدیا ایوانف";
-
-    let assistantCorrect = 
-        assistant === "پدرام" || 
-        assistant === "پدرام بابایی";
-
-    if (killerCorrect && assistantCorrect) {
-        window.location.href = "next.html";
+    if(killerOK && helperOK){
+        msg.style.color = "lightgreen";
+        msg.innerText = "پاسخ صحیح است...";
+        setTimeout(() => {
+            window.location.href = "next.html";
+        }, 800);
     } else {
-        document.getElementById("errorMsg").innerText = "جواب نادرست است!";
-        if (navigator.vibrate) {
-            navigator.vibrate([200, 100, 200]);
-        }
+        msg.style.color = "red";
+        msg.innerText = "پاسخ نادرست است";
     }
 }
 </script>
