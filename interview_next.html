@@ -2,83 +2,62 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مصاحبه – پری</title>
-
+<title>مصاحبه بعدی</title>
 <style>
 html, body {
+    width: 100%;
+    height: 100%;
     margin: 0;
     padding: 0;
-    height: 100%;
-}
-
-body{
-    background: url("red.png") no-repeat center center;
-    background-size: cover;
-    background-color: #000;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
     font-family: Tahoma, sans-serif;
     color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     text-align: center;
+    padding-top: 20px;
 }
 
-.container{
-    background: rgba(0,0,0,0.75);
-    padding: 20px;
-    border-radius: 15px;
+.main-image {
     width: 90%;
-    max-width: 500px;
+    max-width: 400px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
 }
 
-.main-img{
-    width: 100%;
-    border-radius: 14px;
-    margin-bottom: 15px;
-}
-
-audio{
-    width: 100%;
-    margin-bottom: 15px;
-}
-
-button{
-    width: 100%;
-    padding: 14px;
+.audio-btn {
+    padding: 12px 24px;
+    margin: 15px 0;
     font-size: 16px;
     border: none;
-    border-radius: 10px;
-    background: #b30000;
+    border-radius: 8px;
+    background-color: #b30000;
     color: #fff;
     cursor: pointer;
 }
-
-button:hover{
-    background: #e60000;
+.audio-btn:hover {
+    background-color: #e60000;
 }
 </style>
 </head>
-
 <body>
 
-<div class="container">
+<!-- تصویر بزرگ -->
+<img src="phone.png" alt="تصویر اصلی" class="main-image">
 
-    <!-- عکس -->
-    <img src="ka.png" class="main-img" alt="مصاحبه پری">
+<!-- دکمه پخش صدا -->
+<button class="audio-btn" onclick="playAudio()">پخش ویس</button>
+<audio id="voice" src="li.acc"></audio>
 
-    <!-- صدا -->
-    <audio controls>
-        <source src="pari.aac" type="audio/aac">
-        مرورگر شما از پخش صدا پشتیبانی نمی‌کند
-    </audio>
-
-    <!-- دکمه -->
-    <button onclick="location.href='interview_next.html'">
-        مصاحبه بعدی
-    </button>
-
-</div>
+<script>
+function playAudio(){
+    const audio = document.getElementById("voice");
+    audio.play().catch(()=>{console.log("برای پخش صدا نیاز به تعامل کاربر است")});
+}
+</script>
 
 </body>
 </html>
