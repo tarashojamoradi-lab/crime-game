@@ -1,1 +1,84 @@
-salam pigi
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مصاحبه – پری</title>
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body{
+    background: url("red.png") no-repeat center center;
+    background-size: cover;
+    background-color: #000;
+    font-family: Tahoma, sans-serif;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.container{
+    background: rgba(0,0,0,0.75);
+    padding: 20px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+}
+
+.main-img{
+    width: 100%;
+    border-radius: 14px;
+    margin-bottom: 15px;
+}
+
+audio{
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+button{
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    background: #b30000;
+    color: #fff;
+    cursor: pointer;
+}
+
+button:hover{
+    background: #e60000;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- عکس -->
+    <img src="ka.png" class="main-img" alt="مصاحبه پری">
+
+    <!-- صدا -->
+    <audio controls>
+        <source src="pari.aac" type="audio/aac">
+        مرورگر شما از پخش صدا پشتیبانی نمی‌کند
+    </audio>
+
+    <!-- دکمه -->
+    <button onclick="location.href='interview_next.html'">
+        مصاحبه بعدی
+    </button>
+
+</div>
+
+</body>
+</html>
