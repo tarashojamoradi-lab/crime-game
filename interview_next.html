@@ -11,42 +11,47 @@ html, body {
     padding: 0;
     background: url("red.png") no-repeat center center;
     background-size: cover;
-    font-family: Tahoma, sans-serif;
+    font-family: "Tahoma", sans-serif;
     color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     text-align: center;
+    overflow-x: hidden;
 }
 
 .top-image {
-    margin-top: 20px;
-    width: 90%;
-    max-width: 500px;
+    margin-top: 30px;
+    max-width: 90%;
+    width: 400px;
     border-radius: 12px;
     box-shadow: 0 0 20px rgba(0,0,0,0.8);
 }
 
 .audio-container {
-    margin-top: 20px;
+    margin-top: 25px;
+    width: 90%;
+    max-width: 420px;
+    background: rgba(0,0,0,0.75);
+    padding: 20px;
+    border-radius: 14px;
 }
 
 audio {
-    width: 90%;
-    max-width: 400px;
+    width: 100%;
 }
 </style>
 </head>
-
 <body>
 
-<img src="phone.png" alt="تصویر" class="top-image">
+<img src="phone.png" alt="Interview Image" class="top-image">
 
 <div class="audio-container">
+    <p>روی صدا کلیک کنید تا پلی شود</p>
     <audio controls>
-        <source src="an.aac" type="audio/aac">
-        مرورگر شما از پخش این فایل صوتی پشتیبانی نمی‌کند.
+        <source src="an.aacc" type="audio/aac">
+        مرورگر شما از پخش صدا پشتیبانی نمی‌کند.
     </audio>
 </div>
 
