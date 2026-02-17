@@ -4,15 +4,18 @@
 <meta charset="UTF-8">
 <title>Final Answer</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
 html, body {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
     background: #000;
-    font-family: 'Vazir', cursive;
+    font-family: 'Pacifico', cursive; /* فونت تحریری */
     color: #fff;
     overflow-x: hidden;
+    direction: ltr; /* متن از چپ به راست */
 }
 
 body {
@@ -20,7 +23,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    text-align: justify;
+    text-align: left;
     padding: 20px 10px;
     position: relative;
 }
@@ -45,11 +48,11 @@ body {
 .story-text {
     width: 95%;
     max-width: 700px;
-    font-size: 20px;
-    line-height: 2;
+    font-size: 22px; /* متن بزرگتر */
+    line-height: 2.2;
 }
 
-/* قطره‌های بارون قرمز */
+/* افکت قطره بارون قرمز */
 .rain-drop {
     position: absolute;
     top: -10px;
@@ -66,9 +69,16 @@ body {
     }
 }
 
-/* صدا */
-audio {
-    display: none;
+/* دکمه پخش صدا */
+#play-btn {
+    padding: 12px 25px;
+    margin: 15px 0;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    background: #b30000;
+    color: #fff;
+    cursor: pointer;
 }
 </style>
 </head>
@@ -79,6 +89,10 @@ audio {
     <img src="Red.png" alt="تصویر 1">
     <img src="ah.png" alt="تصویر 2">
 </div>
+
+<!-- دکمه پخش صدا -->
+<button id="play-btn">کلیک کن و آروم بهش گوش کن</button>
+<audio id="bg-audio" src="background.mp3" loop></audio>
 
 <!-- متن داستان -->
 <div class="story-text">
@@ -117,9 +131,6 @@ audio {
 این پرونده داستان یک اشتباه ساده نبود.
 </div>
 
-<!-- صدا -->
-<audio id="bg-audio" src="background.mp3" loop></audio>
-
 <script>
 // ایجاد قطره‌های بارون قرمز
 function createRain() {
@@ -134,16 +145,14 @@ function createRain() {
 }
 createRain();
 
-// پخش صدا با اسکرول
-let audioPlayed = false;
-window.addEventListener("scroll", () => {
-    const audio = document.getElementById("bg-audio");
-    if(!audioPlayed){
-        audio.play().catch(()=>{console.log("User interaction needed for audio")});
-        audioPlayed = true;
-    }
+// پخش صدا با کلیک روی دکمه
+const audtElementById("bg-audio");
+const btn = document.getElementById("play-btn");
+btn.addEventListener("click", ()=>{
+    audio.play();
 });
 </script>
 
 </body>
-</html>
+</html>io = document.ge
+    
