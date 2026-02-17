@@ -11,7 +11,8 @@ body {
     padding: 0;
     font-family: sans-serif;
     background: url('ke.png') no-repeat center center;
-    background-size: cover;
+    background-size: contain; /* تغییر مهم اینجاست */
+    background-color: black; /* اگر اطراف خالی موند مشکی باشه */
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -21,11 +22,11 @@ body {
 
 .container {
     background: rgba(0, 0, 0, 0.75);
-    padding: 30px;
+    padding: 25px;
     border-radius: 15px;
     text-align: center;
     width: 85%;
-    max-width: 400px;
+    max-width: 380px;
     color: white;
 }
 
@@ -53,10 +54,6 @@ button {
     color: white;
     font-size: 16px;
     cursor: pointer;
-}
-
-button:hover {
-    background: darkred;
 }
 
 .error {
@@ -101,8 +98,6 @@ function checkAnswer() {
         window.location.href = "next.html";
     } else {
         document.getElementById("errorMsg").innerText = "جواب نادرست است!";
-        
-        // ویبره موبایل اگر پشتیبانی کند
         if (navigator.vibrate) {
             navigator.vibrate([200, 100, 200]);
         }
