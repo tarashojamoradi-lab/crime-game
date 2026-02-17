@@ -2,25 +2,24 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>مصاحبه بعدی</title>
+<title>Interview Next</title>
 <style>
 html, body {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
-    background: #000;
+    background: url('red.png') no-repeat center center;
+    background-size: cover;
+    font-family: Tahoma, sans-serif;
+    color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    font-family: Tahoma, sans-serif;
-    color: #fff;
-    text-align: center;
-    padding-top: 20px;
+    justify-content: center;
 }
 
-.main-image {
+.main-img {
     width: 90%;
     max-width: 400px;
     margin-bottom: 20px;
@@ -28,36 +27,22 @@ html, body {
     box-shadow: 0 0 20px rgba(0,0,0,0.8);
 }
 
-.audio-btn {
-    padding: 12px 24px;
-    margin: 15px 0;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    background-color: #b30000;
-    color: #fff;
-    cursor: pointer;
-}
-.audio-btn:hover {
-    background-color: #e60000;
+audio {
+    width: 90%;
+    max-width: 400px;
 }
 </style>
 </head>
 <body>
 
 <!-- تصویر بزرگ -->
-<img src="phone.png" alt="تصویر اصلی" class="main-image">
+<img src="phone.png" alt="phone" class="main-img">
 
-<!-- دکمه پخش صدا -->
-<button class="audio-btn" onclick="playAudio()">پخش ویس</button>
-<audio id="voice" src="li.acc"></audio>
-
-<script>
-function playAudio(){
-    const audio = document.getElementById("voice");
-    audio.play().catch(()=>{console.log("برای پخش صدا نیاز به تعامل کاربر است")});
-}
-</script>
+<!-- ویس که کاربر کلیک کنه پلی بشه -->
+<audio controls>
+  <source src="li.acc" type="audio/aac">
+  مرورگر شما از پخش صدا پشتیبانی نمی‌کند.
+</audio>
 
 </body>
 </html>
