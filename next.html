@@ -4,15 +4,17 @@
 <meta charset="UTF-8">
 <title>صفحه آخر پرونده</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Scheherazade+New&display=swap');
+
 html, body {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
     background: #000;
-    overflow-x: hidden;
-    font-family: Tahoma, sans-serif;
+    font-family: 'Scheherazade New', Tahoma, sans-serif;
     color: #fff;
+    overflow-x: hidden;
 }
 
 body {
@@ -20,58 +22,59 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    position: relative;
-    text-align: center;
-    padding-top: 20px;
+    text-align: right;
+    direction: rtl;
+    padding: 10px;
 }
 
-/* تصاویر بالای صفحه */
+/* تصاویر بالای صفحه خیلی بزرگ */
 .top-images {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 5px;
     margin-bottom: 20px;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .top-images img {
-    width: 45%;
-    max-width: 400px;
+    width: 48%;
+    max-width: 100%;
+    height: auto;
     border-radius: 12px;
     box-shadow: 0 0 20px rgba(0,0,0,0.8);
 }
 
-/* متن داستان */
+/* متن داستان بزرگتر و تحریری */
 .story-text {
-    width: 90%;
-    max-width: 700px;
-    font-size: 18px;
-    line-height: 1.8;
+    width: 95%;
+    font-size: 20px;
+    line-height: 2;
     margin-bottom: 30px;
-    text-align: justify;
+    text-align: right;
+    direction: rtl;
+    font-family: 'Scheherazade New', serif;
 }
 
-/* افکت قطره بارون قرمز */
-.rain-drop {
-    position: absolute;
-    top: -10px;
-    width: 2px;
-    height: 15px;
-    background: red;
-    opacity: 0.8;
-    animation: fall linear infinite;
+/* صدا */
+.audio-btn {
+    padding: 12px 24px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    background-color: #b30000;
+    color: #fff;
+    cursor: pointer;
 }
-
-@keyframes fall {
-    to {
-        transform: translateY(110vh);
-    }
+.audio-btn:hover {
+    background-color: #e60000;
 }
 </style>
 </head>
 <body>
 
-<!-- تصاویر بالا -->
+<!-- تصاویر بزرگ بالا -->
 <div class="top-images">
     <img src="Red.png" alt="تصویر 1">
     <img src="ah.png" alt="تصویر 2">
@@ -79,59 +82,21 @@ body {
 
 <!-- متن داستان -->
 <div class="story-text">
-صنم دختری بود که با ازدواج دوباره‌ی پدرش با ساغر، آرام‌آرام از زندگی کنار گذاشته شد.
-خانه‌ای که باید امن‌ترین جای دنیا می‌بود، برایش سرد و غریبه شد و تنها کسی که برایش مانده بود، ایلماز بود؛ تنها همدم، تنها پناه.
-اما حتی این دلخوشی کوچک هم از نگاه پدر قابل‌تحمل نبود.
-پدری که دیگر اولویتش دخترش نبود بلکه زندگی تازه‌ای بود که با ساغر ساخته بود.
-او تصمیم گرفت صنم را از این مسیر کنار بزند نه از روی نفرت، بلکه از ترس به‌هم‌ریختن آرامشی که تازه به دست آورده بود.
-نمی‌خواست او را بکشد…
-فقط می‌خواست نباشد.
-گم شود.
-دور شود.
-تا دیگر دخالتی در این رابطه نداشته باشد.
-او با خودش فکر می‌کرد:
-«بعد از گم و گورش، می‌تونم یه زندگی دیگه براش بسازم.»
-اما چیزی که نمی‌دانست این بود که بعضی تصمیم‌ها، بازگشتی ندارند.
-او نمی‌دانست این غیبت، به مرگ ختم می‌شود.
-نمی‌دانست که دارد دختر عزیزش را برای همیشه از دست می‌دهد.
-صنم، که پیش‌تر مادرش را از دست داده بود، حالا بیش از هر زمان دیگری تنها شده بود.
-برای فرار از این دنیا، از دردها و از واقعیتی که مدام به او فشار می‌آورد، به فضای مجازی پناه برد
-دنیایی که قرار بود نجاتش دهد اما تنها چیزی که برایش باقی گذاشت… رد خون بود.
-با یک کلیک ساده روی لینکی ناشناس زندگی‌اش فرو ریخت.
-هک شد.
-زیر نظر گرفته شد.
-تهدیدها یکی‌یکی از راه رسیدند
-نامه‌هایی که در باکس‌های ناشناس ظاهر می‌شدند
-حس تعقیب، حس دیده‌شدن، حس اینکه هیچ‌جا امن نیست.
-و بعد… لیدیا وارد زندگی‌اش شد.
-همسایه‌ای جدید، آرام، صمیمی و بیش از حد قابل‌اعتماد.
-اما لیدیا تصادفی نبود.
-او از طرف همان سایت آمده بود؛ بخشی از یک کمپانی بزرگ و تاریک که از همان ابتدا، قصد کشتن صنم را داشت.
-با نزدیک شدن، با دوست شدن، با نفوذ به زندگی‌اش… موفق شد.
-و مجسمه‌هایی که صنم از آن‌ها حرف می‌زد خیال یا توهم نبودند
-آن‌ها زبان تهدید بودند.
-نشانه‌هایی خاموش که فریاد می‌زدند لیدیا هم جزئی از این بازی مرگبار است.
-این پرونده داستان یک اشتباه ساده نبود.
-...</div>
+صنم دختری بود که با ازدواج دوباره‌ی پدرش با ساغر، آرام‌آرام از زندگی کنار گذاشته شد. خانه‌ای که باید امن‌ترین جای دنیا می‌بود، برایش سرد و غریبه شد و تنها کسی که برایش مانده بود، ایلماز بود؛ تنها همدم، تنها پناه.
+اما حتی این دلخوشی کوچک هم از نگاه پدر قابل‌تحمل نبود. پدری که دیگر اولویتش دخترش نبود بلکه زندگی تازه‌ای بود که با ساغر ساخته بود...
+</div>
 
-<!-- صدا -->
+<!-- دکمه برای پلی صدا -->
+<button class="audio-btn" onclick="playAudio()">پخش صدای بارون</button>
 <audio id="bg-audio" src="background.mp3" loop></audio>
 
 <script>
-// افکت بارون
-function createRain() {
-    const count = 80;
-    for(let i=0;i<count;i++){
-        const drop = document.createElement("div");
-        drop.classList.add("rain-drop");
-        drop.style.left = Math.random()*100 + "vw";
-        drop.style.animationDuration = 0.5 + Math.random()*1.5 + "s";
-        document.body.appendChild(drop);
-    }
+function playAudio() {
+    const audio = document.getElementById("bg-audio");
+    audio.play().catch(()=>{console.log("User interaction needed for audio")});
 }
-createRain();
 
-// پخش صدا با اسکرول
+// پخش خودکار با اسکرول (اگر کاربر لمس کرد، شروع میشه)
 let audioPlayed = false;
 window.addEventListener("scroll", () => {
     const audio = document.getElementById("bg-audio");
