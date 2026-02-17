@@ -2,107 +2,110 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Final Answer</title>
 
 <style>
-body{
-    margin:0;
-    padding:0;
-    height:100vh;
-    background:url("ke.png") no-repeat center center;
-    background-size:contain;
-    background-color:#000;
-    font-family:Tahoma,sans-serif;
-    display:flex;
-    justify-content:center;
-    align-items:flex-end;
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: url('ke.png') no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    direction: rtl;
 }
 
-.box{
-    background:rgba(0,0,0,0.65);
-    width:90%;
-    max-width:360px;
-    margin-bottom:20px;
-    padding:15px;
-    border-radius:14px;
-    text-align:center;
+.container {
+    background: rgba(0, 0, 0, 0.75);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    width: 85%;
+    max-width: 400px;
+    color: white;
 }
 
-h2{
-    margin:5px 0 10px;
-    font-size:17px;
+h2 {
+    margin-bottom: 20px;
 }
 
-label{
-    display:block;
-    margin-top:8px;
-    font-size:14px;
-    opacity:0.85;
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    text-align: center;
 }
 
-input{
-    width:100%;
-    margin-top:5px;
-    padding:10px;
-    font-size:15px;
-    border-radius:8px;
-    border:none;
-    text-align:center;
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+    background: crimson;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
 }
 
-button{
-    width:100%;
-    margin-top:12px;
-    padding:10px;
-    font-size:15px;
-    border:none;
-    border-radius:10px;
-    background:#b30000;
-    color:#fff;
-    cursor:pointer;
+button:hover {
+    background: darkred;
 }
 
-.msg{
-    margin-top:8px;
-    min-height:18px;
-    font-size:14px;
+.error {
+    margin-top: 10px;
+    color: red;
+    font-size: 14px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
-    <h2>پاسخ نهایی را وارد کنید</h2>
+<div class="container">
+    <h2>جواب درست را وارد کنید</h2>
 
-    <label>قاتل کیست؟</label>
-    <input type="text" id="killer">
+    <input type="text" id="killer" placeholder="قاتل کیست؟">
+    <input type="text" id="assistant" placeholder="همدست قاتل کیست؟">
 
-    <label>همدست قاتل کیست؟</label>
-    <input type="text" id="helper">
+    <button onclick="checkAnswer()">تایید جواب</button>
 
-    <button onclick="check()">بررسی</button>
-    <div class="msg" id="msg"></div>
+    <div class="error" id="errorMsg"></div>
 </div>
 
 <script>
-function check(){
-    const killer = document.getElementById("killer").value.trim();
-    const helper = document.getElementById("helper").value.trim();
-    const msg = document.getElementById("msg");
+function normalize(text) {
+    return text.trim().toLowerCase();
+}
 
-    const killerAnswers = ["لیدیا", "لیدیا ایوانف"];
-    const helperAnswers = ["پدرام", "پدرام بابایی"];
+function checkAnswer() {
+    let killer = normalize(document.getElementById("killer").value);
+    let assistant = normalize(document.getElementById("assistant").value);
 
-    if(killerAnswers.includes(killer) && helperAnswers.includes(helper)){
-        msg.style.color="lightgreen";
-        msg.innerText="پاسخ صحیح است";
-        setTimeout(()=>{
-            window.location.href="next.html";
-        },800);
-    }else{
-        msg.style.color="red";
-        msg.innerText="پاسخ اشتباه است";
+    let killerCorrect = 
+        killer === "لیدیا" || 
+        killer === "لیدیا ایوانف";
+
+    let assistantCorrect = 
+        assistant === "پدرام" || 
+        assistant === "پدرام بابایی";
+
+    if (killerCorrect && assistantCorrect) {
+        window.location.href = "next.html";
+    } else {
+        document.getElementById("errorMsg").innerText = "جواب نادرست است!";
+        
+        // ویبره موبایل اگر پشتیبانی کند
+        if (navigator.vibrate) {
+            navigator.vibrate([200, 100, 200]);
+        }
     }
 }
 </script>
