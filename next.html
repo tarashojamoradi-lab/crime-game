@@ -2,20 +2,18 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>Final Answer</title>
+<title>صفحه آخر پرونده</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-
 html, body {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
     background: #000;
-    font-family: 'Pacifico', cursive; /* فونت تحریری */
-    color: #fff;
     overflow-x: hidden;
-    direction: ltr; /* متن از چپ به راست */
+    font-family: 'Scheherazade', cursive; /* فونت تحریری */
+    color: #fff;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -23,40 +21,56 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    text-align: left;
-    padding: 20px 10px;
     position: relative;
+    text-align: right; /* متن از چپ به راست */
+    padding-top: 20px;
 }
 
-/* تصاویر بالای صفحه */
-.top-images {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
-
-.top-images img {
-    width: 95%;
+/* تصویر بزرگ بالا */
+.top-image {
+    width: 90%;
     max-width: 500px;
     border-radius: 12px;
-    box-shadow: 0 0 20px rgba(255,0,0,0.6);
+    margin-bottom: 20px;
+    box-shadow: 0 0 20px rgba(255,0,0,0.8);
 }
 
 /* متن داستان */
 .story-text {
-    width: 95%;
+    width: 90%;
     max-width: 700px;
-    font-size: 22px; /* متن بزرگتر */
-    line-height: 2.2;
+    font-size: 20px; /* متن بزرگ */
+    line-height: 2;
+    text-align: right;
+    direction: rtl;
+    margin-bottom: 20px;
 }
 
-/* افکت قطره بارون قرمز */
+/* دکمه پخش صدا */
+.audio-btn {
+    background: #b30000;
+    color: #fff;
+    font-size: 18px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+/* امضا */
+.signature {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 28px;
+    margin-top: 20px;
+    color: #ff4444;
+}
+
+/* قطره بارون قرمز */
 .rain-drop {
     position: absolute;
     top: -10px;
-    width: 2px;
+    width: 3px;
     height: 15px;
     background: red;
     opacity: 0.8;
@@ -64,35 +78,18 @@ body {
 }
 
 @keyframes fall {
-    to {
-        transform: translateY(110vh);
-    }
-}
-
-/* دکمه پخش صدا */
-#play-btn {
-    padding: 12px 25px;
-    margin: 15px 0;
-    font-size: 18px;
-    border: none;
-    border-radius: 10px;
-    background: #b30000;
-    color: #fff;
-    cursor: pointer;
+    to { transform: translateY(110vh); }
 }
 </style>
 </head>
 <body>
 
-<!-- تصاویر بالای صفحه -->
-<div class="top-images">
-    <img src="Red.png" alt="تصویر 1">
-    <img src="ah.png" alt="تصویر 2">
-</div>
+<!-- تصویر بالا -->
+<img src="Phone.png" alt="Phone" class="top-image">
 
 <!-- دکمه پخش صدا -->
-<button id="play-btn">کلیک کن و آروم بهش گوش کن</button>
-<audio id="bg-audio" src="background.mp3" loop></audio>
+<button class="audio-btn" id="playAudioBtn">کلیک کن و آروم به صدا گوش کن</button>
+<audio id="bgAudio" src="background.mp3"></audio>
 
 <!-- متن داستان -->
 <div class="story-text">
@@ -129,10 +126,45 @@ body {
 آن‌ها زبان تهدید بودند.
 نشانه‌هایی خاموش که فریاد می‌زدند لیدیا هم جزئی از این بازی مرگبار است.
 این پرونده داستان یک اشتباه ساده نبود.
+داستان تصمیم‌هایی بود که دیر فهمیده شدند.
+و دختری که فقط می‌خواست دیده شود…
+اما در تاریکی برای همیشه محو شد.
+اما حقیقت، از آنچه در ظاهر دیده می‌شد تاریک‌تر بود.
+صنم اولین قربانی این فضا نبود.
+اولین کسی نبود که با یک کلیک ساده وارد جهنمی بی‌خروجی شد.
+او حتی اولین قربانی هکرها هم نبود؛
+و بدتر از همه… اولین آزمایش آن‌ها نبود.
+پیش از صنم، افراد دیگری هم بودند؛
+آدم‌هایی که نامشان هرگز جایی ثبت نشد،
+پرونده‌هایشان نیمه‌کاره ماند،
+و ناپدید شدنشان به «اتفاقی مشکوک» تقلیل داده شد.
+این کمپانی، سال‌ها بود که از انسان‌ها به‌عنوان نمونه استفاده می‌کرد؛
+شکارهایی تصادفی، تنها، آسیب‌پذیر.
+کسانی که کسی دنبالشـان نمی‌گشت،
+یا اگر هم می‌گشت، خیلی دیر می‌رسید.
+صنم فقط یکی از آن انتخاب‌ها بود؛
+دختری تنها، با گذشته‌ای پر از فقدان،
+و آینده‌ای که هرگز به او نرسید.
+او در چرخه‌ای افتاد که برایش طراحی شده بود؛
+تهدید، کنترل، نزدیکی، اعتماد…
+و در نهایت حذف.
+بی‌صدا، بی‌رد، بی‌رحم.
+مرگ صنم یک حادثه نبود.
+یک اشتباه هم نبود.
+او بخشی از یک روند بود؛
+روندی که قبل از او شروع شده بود
+و اگر متوقف نمی‌شد، بعد از او هم ادامه پیدا می‌کرد.
+این پرونده، فقط درباره‌ی صنم نیست.
+درباره‌ی دنیایی است که در آن،
+یک لینک می‌تواند آغاز پایان باشد
+و تاریکی، پشت چهره‌ای کاملاً عادی پنهان شده است.
 </div>
 
+<!-- امضا -->
+<div class="signature">Weareweoo</div>
+
 <script>
-// ایجاد قطره‌های بارون قرمز
+// قطره بارون قرمز
 function createRain() {
     const count = 80;
     for(let i=0;i<count;i++){
@@ -145,14 +177,14 @@ function createRain() {
 }
 createRain();
 
-// پخش صدا با کلیک روی دکمه
-const audtElementById("bg-audio");
-const btn = document.getElementById("play-btn");
-btn.addEventListener("click", ()=>{
-    audio.play();
+// دکمه پخش صدا
+const audioBtn = document.getElementById("playAudioBtn");
+const bgAudio = document.getElementById("bgAudio");
+audioBtn.addEventListener("click", ()=>{
+    bgAudio.play();
 });
 </script>
 
 </body>
-</html>io = document.ge
+</html>
     
