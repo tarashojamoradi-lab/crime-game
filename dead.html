@@ -5,70 +5,70 @@
 <title>dead</title>
 
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        background: #0e0e0e;
-        color: #e0e0e0;
-        font-family: "Tahoma", sans-serif;
-        direction: rtl;
-        text-align: center;
-    }
+body {
+margin: 0;
+padding: 0;
+background: #0e0e0e;
+color: #e0e0e0;
+font-family: "Tahoma", sans-serif;
+direction: rtl;
+text-align: center;
+}
 
-    .container {
-        max-width: 700px;
-        margin: auto;
-        padding: 40px 20px;
-    }
+.container {
+max-width: 700px;
+margin: auto;
+padding: 40px 20px;
+}
 
-    img {
-        width: 100%;
-        border-radius: 6px;
-        margin: 20px 0;
-        opacity: 0;
-        transition: opacity 2s ease;
-    }
+img {
+width: 100%;
+border-radius: 6px;
+margin: 20px 0;
+opacity: 0;
+transition: opacity 2s ease;
+}
 
-    .text {
-        opacity: 0;
-        transition: opacity 2s ease;
-        margin: 25px 0;
-        line-height: 2;
-        font-size: 16px;
-    }
+.text {
+opacity: 0;
+transition: opacity 2s ease;
+margin: 25px 0;
+line-height: 2;
+font-size: 16px;
+}
 
-    .title {
-        font-size: 17px;
-        margin-bottom: 10px;
-        opacity: 0;
-        transition: opacity 2s ease;
-    }
+.title {
+font-size: 17px;
+margin-bottom: 10px;
+opacity: 0;
+transition: opacity 2s ease;
+}
 
-    .date {
-        margin-top: 10px;
-        font-size: 14px;
-        opacity: 0.6;
-    }
+.date {
+margin-top: 10px;
+font-size: 14px;
+opacity: 0.6;
+}
 
-    .show {
-        opacity: 1;
-    }
+.show {
+opacity: 1;
+}
 
-    button {
-        background: transparent;
-        border: 1px solid #777;
-        color: #e0e0e0;
-        padding: 10px 20px;
-        font-size: 14px;
-        cursor: pointer;
-        margin-top: 15px;
-        opacity: 0;
-        transition: opacity 1.5s ease, background 0.3s;
-    }
+button {
+background: transparent;
+border: 1px solid #777;
+color: #e0e0e0;
+padding: 10px 20px;
+font-size: 14px;
+cursor: pointer;
+margin-top: 15px;
+opacity: 0;
+transition: opacity 1.5s ease, background 0.3s;
+}
 
-    button:hover {
-        background: #1a1a1a;
-    }
+button:hover {
+background: #1a1a1a;
+}
 </style>
 </head>
 
@@ -76,59 +76,59 @@
 
 <div class="container">
 
-    <!-- اعلامیه مرگ -->
-    <img id="deadPoster" src="dead.jpg" alt="اعلامیه مرگ">
+<!-- اعلامیه مرگ -->
+<img id="deadPoster" src="dead.jpg" alt="اعلامیه مرگ">
 
-    <!-- تصویر مرگ -->
-    <img id="sadImage" src="sad.jpg" alt="">
-    <div class="date">۱۵ شهریور ۱۴۰۴</div>
+<!-- تصویر مرگ -->
+<img id="sadImage" src="sad.jpg" alt="">
+<div class="date">۱۵ شهریور ۱۴۰۴</div>
 
-    <!-- تیتر روزنامه -->
-    <div id="newsTitle" class="title">
-        روزنامه‌ای که پیش از دیده‌شدن، ناپدید شد
-    </div>
+<!-- تیتر روزنامه -->
+<div id="newsTitle" class="title">
+روزنامه‌ای که پیش از دیده‌شدن، ناپدید شد
+</div>
 
-    <!-- روزنامه -->
-    <img id="newsImage" src="news.jpg" alt="روزنامه">
+<!-- روزنامه -->
+<img id="newsImage" src="hand.jpg" alt="روزنامه">
 
-    <!-- متن زیر روزنامه -->
-    <div id="truthText" class="text">
-        و اما حقیقت، در سایه ماند
-    </div>
+<!-- متن زیر روزنامه -->
+<div id="truthText" class="text">
+و اما حقیقت، در سایه ماند
+</div>
 
-    <!-- دکمه رفتن -->
-    <button id="nextBtn" onclick="goNext()">ادامه</button>
+<!-- دکمه رفتن -->
+<button id="nextBtn" onclick="goNext()">ادامه</button>
 
 </div>
 
 <script>
-    setTimeout(() => {
-        deadPoster.classList.add("show");
-    }, 500);
+setTimeout(() => {
+deadPoster.classList.add("show");
+}, 500);
 
-    setTimeout(() => {
-        sadImage.classList.add("show");
-    }, 2500);
+setTimeout(() => {
+sadImage.classList.add("show");
+}, 2500);
 
-    setTimeout(() => {
-        newsTitle.classList.add("show");
-    }, 5000);
+setTimeout(() => {
+newsTitle.classList.add("show");
+}, 5000);
 
-    setTimeout(() => {
-        newsImage.classList.add("show");
-    }, 7000);
+setTimeout(() => {
+newsImage.classList.add("show");
+}, 7000);
 
-    setTimeout(() => {
-        truthText.classList.add("show");
-    }, 9000);
+setTimeout(() => {
+truthText.classList.add("show");
+}, 9000);
 
-    setTimeout(() => {
-        nextBtn.classList.add("show");
-    }, 10500);
+setTimeout(() => {
+nextBtn.classList.add("show");
+}, 10500);
 
-    function goNext() {
-        window.location.href = "hidden-truth.html";
-    }
+function goNext() {
+window.location.href = "hidden-truth.html";
+}
 </script>
 
 </body>
