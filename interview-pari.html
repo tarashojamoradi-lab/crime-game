@@ -16,7 +16,7 @@ body{
 background: url("red.png") no-repeat center center;
 background-size: cover;
 background-color: #000;
-font-family: Tahoma, sans-serif;
+font-family: "Vazir", cursive; /* فونت تحریری فارسی */
 color: #fff;
 display: flex;
 justify-content: center;
@@ -66,20 +66,24 @@ background: rgba(255,255,255,0.1);
 padding: 15px;
 border-radius: 10px;
 margin-top: 15px;
-text-align: left;
+text-align: center; /* وسط متن */
+font-family: "Vazir", cursive;
+font-size: 16px;
+line-height: 1.6;
 }
 
-.riddle-container textarea{
-width: 100%;
+.riddle-container input{
+width: 80%;
 border-radius: 8px;
 border: none;
 padding: 10px;
 font-size: 16px;
-margin-top: 8px;
+margin-top: 12px;
+text-align: center;
 }
 
 .riddle-container .riddle-msg{
-margin-top: 8px;
+margin-top: 10px;
 height:20px;
 font-weight:bold;
 }
@@ -111,7 +115,7 @@ font-weight:bold;
 بی‌آنکه حتی یک‌بار نامش برده شود.
 </p>
 
-<input type="text" id="riddleAnswer" placeholder="جواب معما را وارد کنید">
+<input type="text" id="riddleAnswer" placeholder="جواب را اینجا وارد کنید">
 <div class="riddle-msg" id="riddleMsg"></div>
 </div>
 
@@ -128,7 +132,6 @@ function goNext(){
     if(answer === "کنترل"){
         msg.style.color = "lightgreen";
         msg.innerText = "درسته ✅";
-        // اجازه رفتن به صفحه بعد
         window.location.href='interview_next.html';
     } else {
         msg.style.color = "red";
