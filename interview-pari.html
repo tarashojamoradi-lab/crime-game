@@ -7,57 +7,81 @@
 
 <style>
 html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
+margin: 0;
+padding: 0;
+height: 100%;
 }
 
 body{
-    background: url("red.png") no-repeat center center;
-    background-size: cover;
-    background-color: #000;
-    font-family: Tahoma, sans-serif;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+background: url("red.png") no-repeat center center;
+background-size: cover;
+background-color: #000;
+font-family: Tahoma, sans-serif;
+color: #fff;
+display: flex;
+justify-content: center;
+align-items: center;
+text-align: center;
 }
 
 .container{
-    background: rgba(0,0,0,0.75);
-    padding: 20px;
-    border-radius: 15px;
-    width: 90%;
-    max-width: 500px;
-    text-align: center;
-    color: #fff;
+background: rgba(0,0,0,0.75);
+padding: 20px;
+border-radius: 15px;
+width: 90%;
+max-width: 500px;
+text-align: center;
+color: #fff;
 }
 
 .main-img{
-    width: 100%;
-    border-radius: 14px;
-    margin-bottom: 15px;
+width: 100%;
+border-radius: 14px;
+margin-bottom: 15px;
 }
 
 audio{
-    width: 100%;
-    margin-bottom: 15px;
+width: 100%;
+margin-bottom: 15px;
 }
 
 button{
-    width: 100%;
-    padding: 14px;
-    font-size: 16px;
-    border: none;
-    border-radius: 10px;
-    background: #b30000;
-    color: #fff;
-    cursor: pointer;
+width: 100%;
+padding: 14px;
+font-size: 16px;
+border: none;
+border-radius: 10px;
+background: #b30000;
+color: #fff;
+cursor: pointer;
 }
 
 button:hover{
-    background: #e60000;
+background: #e60000;
+}
+
+/* معما */
+.riddle-container{
+background: rgba(255,255,255,0.1);
+padding: 15px;
+border-radius: 10px;
+margin-top: 15px;
+text-align: left;
+}
+
+.riddle-container textarea{
+width: 100%;
+border-radius: 8px;
+border: none;
+padding: 10px;
+font-size: 16px;
+margin-top: 8px;
+}
+
+.riddle-container .riddle-msg{
+margin-top: 8px;
+height:20px;
+font-weight:bold;
 }
 </style>
 </head>
@@ -66,21 +90,52 @@ button:hover{
 
 <div class="container">
 
-    <!-- عکس وسط -->
-    <img src="lili.png" class="main-img" alt="مصاحبه پری">
+<!-- عکس وسط -->
+<img src="lili.png" class="main-img" alt="مصاحبه پری">
 
-    <!-- صدا -->
-    <audio controls>
-        <source src="pari.aac" type="audio/aac">
-        مرورگر شما از پخش صدا پشتیبانی نمی‌کند
-    </audio>
+<!-- صدا -->
+<audio controls>
+<source src="pari.aac" type="audio/aac">
+مرورگر شما از پخش صدا پشتیبانی نمی‌کند
+</audio>
 
-    <!-- دکمه صفحه بعد -->
-    <button onclick="location.href='interview_next.html'">
-        مصاحبه بعدی
-    </button>
+<!-- معما -->
+<div class="riddle-container">
+<p>
+در این بازجویی، کودک از گرگ‌ها گفت.<br>
+از جنگل گفت.<br>
+از پرنسس بودن و نبودن گفت.<br>
+اما اگر همه استعاره‌ها را حذف کنیم<br>
+و فقط واقعیت پنهان را ببینیم،<br>
+یک مفهوم در تمام حرف‌ها تکرار می‌شود<br>
+بی‌آنکه حتی یک‌بار نامش برده شود.
+</p>
+
+<input type="text" id="riddleAnswer" placeholder="جواب معما را وارد کنید">
+<div class="riddle-msg" id="riddleMsg"></div>
+</div>
+
+<!-- دکمه صفحه بعد -->
+<button id="nextBtn" onclick="goNext()">مصاحبه بعدی</button>
 
 </div>
+
+<script>
+function goNext(){
+    const answer = document.getElementById("riddleAnswer").value.trim();
+    const msg = document.getElementById("riddleMsg");
+    
+    if(answer === "کنترل"){
+        msg.style.color = "lightgreen";
+        msg.innerText = "درسته ✅";
+        // اجازه رفتن به صفحه بعد
+        window.location.href='interview_next.html';
+    } else {
+        msg.style.color = "red";
+        msg.innerText = "نادرست ❌";
+    }
+}
+</script>
 
 </body>
 </html>
