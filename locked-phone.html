@@ -6,70 +6,70 @@
 
 <style>
 body{
-  margin:0;
-  height:100vh;
-  background:#000 url("background.jpg") center/cover no-repeat;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-family:tahoma;
+margin:0;
+height:100vh;
+background:#000 url("background.jpg") center/cover no-repeat;
+display:flex;
+justify-content:center;
+align-items:center;
+font-family:tahoma;
 }
 
 .phone{
-  width:280px;
-  height:520px;
-  background:rgba(0,0,0,0.65);
-  border-radius:30px;
-  padding:25px 20px;
-  box-sizing:border-box;
-  color:#fff;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  text-align:center;
+width:280px;
+height:520px;
+background:rgba(0,0,0,0.65);
+border-radius:30px;
+padding:25px 20px;
+box-sizing:border-box;
+color:#fff;
+display:flex;
+flex-direction:column;
+justify-content:center;
+text-align:center;
 }
 
 .title{
-  margin-bottom:20px;
+margin-bottom:20px;
 }
 
 .dots{
-  display:flex;
-  justify-content:space-between;
-  margin:15px 50px;
+display:flex;
+justify-content:space-between;
+margin:15px 50px;
 }
 .dot{
-  width:16px;
-  height:16px;
-  border:2px solid #fff;
-  border-radius:50%;
+width:16px;
+height:16px;
+border:2px solid #fff;
+border-radius:50%;
 }
 
 input{
-  margin-top:15px;
-  padding:10px;
-  border:none;
-  border-radius:8px;
-  text-align:center;
-  font-size:18px;
+margin-top:15px;
+padding:10px;
+border:none;
+border-radius:8px;
+text-align:center;
+font-size:18px;
 }
 
 button{
-  margin-top:12px;
-  padding:10px;
-  border:none;
-  border-radius:8px;
-  background:#2e7d32;
-  color:#fff;
-  font-size:15px;
+margin-top:12px;
+padding:10px;
+border:none;
+border-radius:8px;
+background:#2e7d32;
+color:#fff;
+font-size:15px;
 }
 
 .voice-btn{
-  background:#444;
+background:#444;
 }
 
 .msg{
-  margin-top:10px;
+margin-top:10px;
 }
 </style>
 </head>
@@ -78,62 +78,62 @@ button{
 
 <div class="phone" id="phone">
 
-  <div class="title">🔒 گوشی قفل است</div>
+<div class="title">🔒 گوشی قفل است</div>
 
-  <button class="voice-btn" onclick="playVoice()">▶️ پخش گزارش افسر کایا</button>
+<button class="voice-btn" onclick="playVoice()">▶️ پخش گزارش افسر کایا</button>
 
-  <audio id="voice">
-    <source src="kaya-voice.mp3" type="audio/mpeg">
-  </audio>
+<audio id="voice">
+<source src="kaya-voice.mp3" type="audio/mpeg">
+</audio>
 
-  <!-- صداها فقط اضافه شدن -->
-  <audio id="unlockSound">
-    <source src="iphone_unlock_style_sound.wav" type="audio/wav">
-  </audio>
+<!-- صداها فقط اضافه شدن -->
+<audio id="unlockSound">
+<source src="iphone_unlock_style_sound.wav" type="audio/wav">
+</audio>
 
-  <audio id="errorSound">
-    <source src="iphone_error.wav" type="audio/wav">
-  </audio>
+<audio id="errorSound">
+<source src="iphone_error.wav" type="audio/wav">
+</audio>
 
-  <div class="dots">
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-  </div>
+<div class="dots">
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+</div>
 
-  <input type="password" id="pass" placeholder="رمز عبور">
+<input type="password" id="pass" placeholder="رمز عبور">
 
-  <button onclick="unlock()">باز کردن قفل</button>
+<button onclick="unlock()">باز کردن قفل</button>
 
-  <div class="msg" id="msg"></div>
+<div class="msg" id="msg"></div>
 
 </div>
 
 <script>
 function playVoice(){
-  document.getElementById("voice").play();
+document.getElementById("voice").play();
 }
 
 function vibrate(){
-  if(navigator.vibrate){
-    navigator.vibrate([100,50,100]);
-  }
+if(navigator.vibrate){
+navigator.vibrate([100,50,100]);
+}
 }
 
 function unlock(){
-  const pass = document.getElementById("pass").value;
+const pass = document.getElementById("pass").value;
 
-  if(pass === "1022"){
-    document.getElementById("unlockSound").play();
-    setTimeout(()=>{
-      window.location.href = "chat-evidence.html";
-    },600);
-  }else{
-    document.getElementById("msg").innerText = "رمز اشتباه است";
-    document.getElementById("errorSound").play();
-    vibrate();
-  }
+if(pass === "781022"){
+document.getElementById("unlockSound").play();
+setTimeout(()=>{
+window.location.href = "chat-evidence.html";
+},600);
+}else{
+document.getElementById("msg").innerText = "رمز اشتباه است";
+document.getElementById("errorSound").play();
+vibrate();
+}
 }
 </script>
 
