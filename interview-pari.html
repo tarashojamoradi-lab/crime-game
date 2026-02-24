@@ -99,19 +99,25 @@ font-weight:bold;
 
 <!-- صدا -->
 <audio controls>
-<source src="pari.aac" type="audio/aac">
+<source src="parii.mp3" type="audio/mpeg">
 مرورگر شما از پخش صدا پشتیبانی نمی‌کند
 </audio>
 
 <!-- معما -->
 <div class="riddle-container">
 <p>
-در این بازجویی، کودک از گرگ‌ها گفت.<br>
-از جنگل گفت.<br>
-از پرنسس بودن و نبودن گفت.<br>
-اما اگر همه استعاره‌ها را حذف کنیم<br>
-و فقط واقعیت پنهان را ببینیم،<br>
-یک مفهوم در تمام حرف‌ها تکرار می‌شود<br>
+در این بازجویی، کودک از گرگ‌ها گفت.
+
+از جنگل گفت.
+
+از پرنسس بودن و نبودن گفت.
+
+اما اگر همه استعاره‌ها را حذف کنیم
+
+و فقط واقعیت پنهان را ببینیم،
+
+یک مفهوم در تمام حرف‌ها تکرار می‌شود
+
 بی‌آنکه حتی یک‌بار نامش برده شود.
 </p>
 
@@ -126,17 +132,17 @@ font-weight:bold;
 
 <script>
 function goNext(){
-    const answer = document.getElementById("riddleAnswer").value.trim();
-    const msg = document.getElementById("riddleMsg");
-    
-    if(answer === "کنترل"){
-        msg.style.color = "lightgreen";
-        msg.innerText = "درسته ✅";
-        window.location.href='interview_next.html';
-    } else {
-        msg.style.color = "red";
-        msg.innerText = "نادرست ❌";
-    }
+const answer = document.getElementById("riddleAnswer").value.trim();
+const msg = document.getElementById("riddleMsg");
+
+if(answer === "کنترل"){
+msg.style.color = "lightgreen";
+msg.innerText = "درسته ✅";
+window.location.href='interview_next.html';
+} else {
+msg.style.color = "red";
+msg.innerText = "نادرست ❌";
+}
 }
 </script>
 
