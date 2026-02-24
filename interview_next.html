@@ -36,20 +36,9 @@ html, body {
   margin-bottom: 15px;
 }
 
-button{
+audio{
   width: 100%;
-  padding: 14px;
-  font-size: 16px;
-  border: none;
-  border-radius: 10px;
-  background: #b30000;
-  color: #fff;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-button:hover{
-  background: #e60000;
+  margin-top: 15px;
 }
 </style>
 </head>
@@ -60,14 +49,11 @@ button:hover{
 <!-- عکس بزرگ روی پس زمینه -->
 <img src="phonee.png" class="main-img" alt="مصاحبه بعدی">
 
-<!-- ویس بدون کنترل مرورگر -->
-<audio id="voice">
+<!-- ویس با نوار استاندارد -->
+<audio controls>
   <source src="mari.acc" type="audio/aac">
   مرورگر شما از پخش صدا پشتیبانی نمی‌کند
 </audio>
-
-<!-- دکمه پلی -->
-<button onclick="document.getElementById('voice').play()">▶️ پخش ویس</button>
 
 </div>
 
