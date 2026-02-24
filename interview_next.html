@@ -44,48 +44,6 @@ audio{
 width: 100%;
 margin-bottom: 15px;
 }
-
-button{
-width: 100%;
-padding: 14px;
-font-size: 16px;
-border: none;
-border-radius: 10px;
-background: #b30000;
-color: #fff;
-cursor: pointer;
-}
-
-button:hover{
-background: #e60000;
-}
-
-.riddle-container{
-background: rgba(255,255,255,0.1);
-padding: 15px;
-border-radius: 10px;
-margin-top: 15px;
-text-align: center;
-font-family: "Vazir", cursive;
-font-size: 16px;
-line-height: 1.6;
-}
-
-.riddle-container input{
-width: 80%;
-border-radius: 8px;
-border: none;
-padding: 10px;
-font-size: 16px;
-margin-top: 12px;
-text-align: center;
-}
-
-.riddle-container .riddle-msg{
-margin-top: 10px;
-height:20px;
-font-weight:bold;
-}
 </style>
 </head>
 
@@ -93,54 +51,15 @@ font-weight:bold;
 
 <div class="container">
 
-<img src="lili.png" class="main-img" alt="مصاحبه پری">
+<img src="phonee.png" class="main-img" alt="مصاحبه پری">
 
-<!-- ویس -->
-<audio controls>
+<!-- ویس با پخش تکراری -->
+<audio controls loop>
   <source src="lid.m4a" type="audio/mp4">
   مرورگر شما از پخش صدا پشتیبانی نمی‌کند
 </audio>
 
-<div class="riddle-container">
-<p>
-در این بازجویی، کودک از گرگ‌ها گفت.
-
-از جنگل گفت.
-
-از پرنسس بودن و نبودن گفت.
-
-اما اگر همه استعاره‌ها را حذف کنیم
-
-و فقط واقعیت پنهان را ببینیم،
-
-یک مفهوم در تمام حرف‌ها تکرار می‌شود
-
-بی‌آنکه حتی یک‌بار نامش برده شود.
-</p>
-
-<input type="text" id="riddleAnswer" placeholder="جواب را اینجا وارد کنید">
-<div class="riddle-msg" id="riddleMsg"></div>
 </div>
-
-<button id="nextBtn" onclick="goNext()">مصاحبه بعدی</button>
-
-</div>
-
-<script>
-function goNext(){
-const answer = document.getElementById("riddleAnswer").value.trim();
-const msg = document.getElementById("riddleMsg");
-
-if(answer === "کنترل"){
-msg.style.color = "lightgreen";
-msg.innerText = "درسته ✅";
-window.location.href='interview_next.html';
-} else {
-msg.style.color = "red";
-msg.innerText = "نادرست ❌";
-}
-}
-</script>
 
 </body>
 </html>
