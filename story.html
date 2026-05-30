@@ -1,2 +1,65 @@
-salam ana
-omadii??
+<!-- فقط این قسمت را در بخش script جایگزین کن -->
+
+<script>
+
+const scenes = [
+
+"حقیقت از آنچه همه تصور می‌کردند پیچیده‌تر بود...",
+
+"الیوت گناهکار بود...\n\nاما قاتل نبود.",
+
+"وقتی الیزابت از خیانت همسرش آگاه شد...\n\nچیزی در درونش فرو ریخت.",
+
+"سال‌ها تحقیر...\n\nسال‌ها سکوت...\n\nسال‌ها رنج...",
+
+"او سال‌ها برای دیگران زندگی کرد...\n\nاما هرگز دوست داشته نشد.",
+
+'<div class="redReveal">قاتل...<br><br>الیزابت بومونت بود.</div>',
+
+"اما این تنها بخشی از حقیقت بود..."
+
+];
+
+let currentScene = 0;
+let isAnimating = false;
+
+const sceneText = document.getElementById("sceneText");
+const finalStory = document.getElementById("finalStory");
+const hint = document.getElementById("hint");
+
+document.body.addEventListener("click", () => {
+
+if (isAnimating) return;
+
+if (currentScene < scenes.length - 1) {
+
+isAnimating = true;
+
+sceneText.classList.remove("show");
+
+setTimeout(() => {
+
+currentScene++;
+sceneText.innerHTML = scenes[currentScene];
+sceneText.classList.add("show");
+
+isAnimating = false;
+
+}, 400);
+
+} else {
+
+sceneText.style.display = "none";
+hint.style.display = "none";
+finalStory.style.display = "block";
+
+window.scrollTo({
+top: 0,
+behavior: "smooth"
+});
+
+}
+
+});
+
+</script>
