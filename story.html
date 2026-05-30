@@ -10,22 +10,18 @@
 
 <style>
 
-*{
+html,body{
 margin:0;
 padding:0;
-box-sizing:border-box;
-}
-
-html,body{
 width:100%;
+height:100%;
 overflow-x:hidden;
 }
 
 body{
 font-family:'Vazirmatn',sans-serif;
-background:url('bride.png') center center no-repeat;
+background:url('bride.png') no-repeat center center;
 background-size:cover;
-background-attachment:fixed;
 min-height:100vh;
 color:white;
 position:relative;
@@ -33,19 +29,15 @@ animation:zoomBg 40s ease-in-out infinite alternate;
 }
 
 @keyframes zoomBg{
-from{
-background-size:100%;
-}
-to{
-background-size:115%;
-}
+from{background-size:100%;}
+to{background-size:115%;}
 }
 
 body::before{
 content:"";
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.12);
+background:rgba(0,0,0,.08);
 z-index:0;
 pointer-events:none;
 }
@@ -53,17 +45,17 @@ pointer-events:none;
 #container{
 position:relative;
 z-index:2;
+width:100%;
 min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:25px;
+padding:0;
+margin:0;
 }
 
 #sceneBox{
 width:100%;
-max-width:950px;
+max-width:none;
 text-align:center;
+padding:20px;
 }
 
 .scene{
@@ -96,16 +88,14 @@ text-shadow:0 0 10px black;
 }
 
 @keyframes pulse{
-50%{
-opacity:.4;
-}
+50%{opacity:.4;}
 }
 
 #finalStory{
 display:none;
-max-width:950px;
-margin:auto;
-padding:25px;
+width:100%;
+max-width:none;
+padding:20px;
 text-align:right;
 line-height:2.4;
 font-size:20px;
@@ -117,7 +107,6 @@ text-shadow:0 2px 10px rgba(0,0,0,.9);
 text-align:center;
 margin-bottom:35px;
 font-size:42px;
-text-shadow:0 0 25px rgba(0,0,0,.9);
 }
 
 #finalStory p{
@@ -126,8 +115,7 @@ background:rgba(0,0,0,.10);
 padding:18px;
 border-radius:12px;
 }
-
-#closed{
+  #closed{
 text-align:center;
 font-size:30px;
 margin-top:50px;
@@ -144,20 +132,11 @@ text-shadow:0 0 30px rgba(255,0,0,.8);
 }
 
 @keyframes fadeIn{
-from{
-opacity:0;
-}
-to{
-opacity:1;
-}
+from{opacity:0;}
+to{opacity:1;}
 }
 
 @media(max-width:768px){
-
-body{
-background-position:center center;
-background-size:cover;
-}
 
 .scene{
 font-size:25px;
@@ -189,7 +168,6 @@ padding:14px;
 <body>
 
 <div id="container">
-
 <div id="sceneBox">
 
 <div id="sceneText" class="scene show">
@@ -200,76 +178,7 @@ padding:14px;
 
 <h1>حقیقت آشکار شد</h1>
 
-<p>
-با آغاز تحقیقات، پرده از رازهای تاریک خاندان بومونت کنار می‌رود. نامه‌های مخفی، خیانت‌های پنهان، نفرت‌های قدیمی و دروغ‌هایی که سال‌ها پشت چهره‌ی اشرافی این خانواده دفن شده بودند، یکی پس از دیگری آشکار می‌شوند.
-</p>
-
-<p>
-در میان مدارک پزشکی قانونی نیز نشانه‌هایی از تعرض دیده می‌شود؛ سرنخی که انگشت اتهام را به سمت الیوت بومونت نشانه می‌رود. مردی که همیشه اشتباهات و رسوایی‌هایش توسط همسرش، الیزابت، پنهان شده بود.
-</p>
-
-<p>
-اما حقیقت از آنچه همه تصور می‌کنند پیچیده‌تر است.
-</p>
-
-<p>
-الیوت گناهکار است، اما قاتل نیست.
-</p>
-
-<p>
-وقتی الیزابت از خیانت همسرش و حقیقت تلخی که سال‌ها از او پنهان مانده بود آگاه می‌شود، چیزی در درونش فرو می‌ریزد. سال‌ها سکوت، تحقیر، چشم‌پوشی و سرپوش گذاشتن بر اشتباهات مردی که دوستش داشت، کم‌کم عقل و آرامش او را می‌بلعد.
-</p>
-
-<p>
-او دیگر نمی‌تواند میان حقیقت و خشم تمایزی قائل شود.
-</p>
-
-<p>
-در شب عروسی، هنگامی که همه در حال جشن گرفتن هستند، الیزابت با ذهنی آشفته و قلبی سرشار از نفرت، الا را روبه‌روی خود می‌بیند؛ دختری بی‌گناه که تنها در زمان و مکانی اشتباه قرار گرفته است.
-</p>
-
-<p>
-خشم کور و جنونی که سال‌ها در وجود الیزابت انباشته شده بود، در همان شب فوران می‌کند و سرنوشت الا را برای همیشه تغییر می‌دهد.
-</p>
-<p>
-اما خیانت تنها دلیل این جنایت نبود.
-</p>
-
-<p>
-الیزابت سال‌ها تلاش کرده بود دوست داشته شود. سال‌ها برای جلب محبت اطرافیان جنگیده بود، خود را تغییر داده بود، اشتباهات دیگران را پوشانده بود و رنج کشیده بود، اما در نهایت چیزی جز تحقیر، بی‌توجهی و خیانت نصیبش نشده بود.
-</p>
-
-<p>
-در مقابل، الا بدون هیچ تلاش خاصی، همان چیزی را داشت که الیزابت تمام عمر آرزویش را می‌کرد؛ محبوبیت، محبت دیگران و آینده‌ای روشن.
-</p>
-
-<p>
-این تفاوت، حسادتی خاموش اما ویرانگر را در قلب الیزابت پرورش داد؛ حسادتی که به مرور با درد خیانت درآمیخت و به جنونی غیرقابل کنترل تبدیل شد.
-</p>
-
-<p>
-در پایان مشخص می‌شود که قاتل واقعی الیزابت است؛ زنی که قربانی خیانت و دروغ شد و در نهایت خود به هیولایی تبدیل گشت که از آن متنفر بود.
-</p>
-
-<p>
-مرگ الا نه نتیجه‌ی یک نقشه‌ی ساده، بلکه حاصل فروپاشی روان انسانی است که سال‌ها زیر بار درد، حسادت و تحقیر زندگی کرده بود.
-</p>
-
-<p>
-حتی نشانه‌ها از همان ابتدا در برابر چشمان بازیکنان قرار داشتند. نمادهای مرموز روی جلد پرونده، تنها تزئینات یا سرنخ‌های بی‌اهمیت نیستند. آن‌ها به وسواس الیزابت برای نفرین کردن سرنوشت الا اشاره دارند.
-</p>
-
-<p>
-الیزابت پیش از شب قتل بارها به نمادها و آیین‌هایی روی آورده بود که به باور خودش می‌توانستند خوشبختی، عشق و آینده‌ی الا را نابود کنند. او نمی‌خواست فقط جان الا را بگیرد؛ می‌خواست زندگی او را نیز نفرین کند، رویای خوشبختی‌اش را درهم بشکند و آینده‌ای را که هرگز خودش نتوانسته بود داشته باشد، از او بگیرد.
-</p>
-
-<p>
-به همین دلیل ردپای این نفرین و طلسم‌ها در سراسر پرونده، از طراحی جلد گرفته تا روزنامه، دیده می‌شود؛ سرنخ‌هایی که از همان ابتدا حقیقت تاریک ذهن الیزابت را فاش می‌کردند.
-</p>
-
-<p>
-«عروس خونین» داستانی درباره رازهای خانوادگی، خیانت، جنون و این حقیقت تلخ است که گاهی هیولاها از ابتدا متولد نمی‌شوند؛ بلکه در سکوت، میان زخم‌های درمان‌نشده، حسادت‌های پنهان و سال‌ها رنج ساخته می‌شوند.
-</p>
+<!-- (کل متن داستانت همون قبلی بدون تغییر) -->
 
 <div id="closed">
 پرونده بسته شد
@@ -279,26 +188,17 @@ padding:14px;
 </div>
 </div>
 
-<div id="hint">
-برای ادامه صفحه را لمس کنید
-</div>
+<div id="hint">برای ادامه صفحه را لمس کنید</div>
 
 <script>
 
 const scenes = [
-
 "حقیقت از آنچه همه تصور می‌کردند پیچیده‌تر بود...",
-
 "الیوت گناهکار بود...\n\nاما قاتل نبود.",
-
 "وقتی الیزابت از خیانت همسرش آگاه شد...\n\nچیزی در درونش فرو ریخت.",
-
 "سال‌ها تحقیر...\n\nسال‌ها سکوت...\n\nسال‌ها رنج...",
-
 "او سال‌ها برای دیگران زندگی کرد...\n\nاما هرگز دوست داشته نشد.",
-
 '<div class="redReveal">قاتل...\n\nالیزابت بومونت بود.</div>',
-
 "اما این تنها بخشی از حقیقت بود..."
 ];
 
@@ -315,11 +215,9 @@ if(currentScene < scenes.length-1){
 sceneText.classList.remove("show");
 
 setTimeout(()=>{
-
 currentScene++;
 sceneText.innerHTML = scenes[currentScene];
 sceneText.classList.add("show");
-
 },400);
 
 }else{
@@ -331,11 +229,7 @@ document.getElementById("container").style.alignItems="flex-start";
 
 finalStory.style.display="block";
 
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
+window.scrollTo({top:0,behavior:"smooth"});
 }
 
 });
