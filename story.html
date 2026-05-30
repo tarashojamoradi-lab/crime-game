@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>حقیقت آشکار شد</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -15,11 +16,17 @@ padding:0;
 box-sizing:border-box;
 }
 
+html,body{
+width:100%;
+overflow-x:hidden;
+}
+
 body{
 font-family:'Vazirmatn',sans-serif;
-background:url('bride.png') center center/cover no-repeat;
+background:url('bride.png') center center no-repeat;
+background-size:cover;
+background-attachment:fixed;
 min-height:100vh;
-overflow-x:hidden;
 color:white;
 position:relative;
 animation:zoomBg 40s ease-in-out infinite alternate;
@@ -38,8 +45,9 @@ body::before{
 content:"";
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.18);
+background:rgba(0,0,0,.12);
 z-index:0;
+pointer-events:none;
 }
 
 #container{
@@ -54,18 +62,19 @@ padding:25px;
 
 #sceneBox{
 width:100%;
-max-width:900px;
+max-width:950px;
 text-align:center;
 }
 
 .scene{
-font-size:32px;
+font-size:34px;
 line-height:2;
 font-weight:600;
 opacity:0;
-transform:translateY(20px);
+transform:translateY(25px);
 transition:1s;
 white-space:pre-line;
+text-shadow:0 0 20px rgba(0,0,0,.8);
 }
 
 .scene.show{
@@ -80,9 +89,10 @@ left:0;
 right:0;
 text-align:center;
 font-size:15px;
-color:#ddd;
+color:white;
 animation:pulse 2s infinite;
-z-index:5;
+z-index:10;
+text-shadow:0 0 10px black;
 }
 
 @keyframes pulse{
@@ -93,35 +103,44 @@ opacity:.4;
 
 #finalStory{
 display:none;
-max-width:900px;
+max-width:950px;
 margin:auto;
-background:rgba(0,0,0,.08);
-backdrop-filter:blur(2px);
-padding:35px;
-border-radius:20px;
+padding:25px;
 text-align:right;
-line-height:2.3;
-font-size:18px;
+line-height:2.4;
+font-size:20px;
 animation:fadeIn 1.5s;
-border:1px solid rgba(255,255,255,.15);
+text-shadow:0 2px 10px rgba(0,0,0,.9);
 }
 
 #finalStory h1{
 text-align:center;
-margin-bottom:30px;
-font-size:40px;
+margin-bottom:35px;
+font-size:42px;
+text-shadow:0 0 25px rgba(0,0,0,.9);
 }
 
 #finalStory p{
-margin-bottom:22px;
+margin-bottom:26px;
+background:rgba(0,0,0,.10);
+padding:18px;
+border-radius:12px;
 }
 
 #closed{
 text-align:center;
-font-size:28px;
-margin-top:40px;
+font-size:30px;
+margin-top:50px;
 font-weight:bold;
-color:#ffdddd;
+color:#ffe0e0;
+text-shadow:0 0 15px rgba(255,0,0,.4);
+}
+
+.redReveal{
+font-size:54px;
+color:#ff4b4b;
+font-weight:bold;
+text-shadow:0 0 30px rgba(255,0,0,.8);
 }
 
 @keyframes fadeIn{
@@ -133,30 +152,33 @@ opacity:1;
 }
 }
 
-.redReveal{
-font-size:48px;
-color:#ff4b4b;
-font-weight:bold;
-text-shadow:0 0 20px rgba(255,0,0,.7);
-}
-
 @media(max-width:768px){
 
+body{
+background-position:center center;
+background-size:cover;
+}
+
 .scene{
-font-size:24px;
+font-size:25px;
 }
 
 .redReveal{
-font-size:36px;
+font-size:38px;
 }
 
 #finalStory{
-font-size:16px;
-padding:25px;
+font-size:17px;
+padding:15px;
+line-height:2.2;
 }
 
 #finalStory h1{
 font-size:30px;
+}
+
+#finalStory p{
+padding:14px;
 }
 
 }
@@ -177,6 +199,7 @@ font-size:30px;
 <div id="finalStory">
 
 <h1>حقیقت آشکار شد</h1>
+
 <p>
 با آغاز تحقیقات، پرده از رازهای تاریک خاندان بومونت کنار می‌رود. نامه‌های مخفی، خیانت‌های پنهان، نفرت‌های قدیمی و دروغ‌هایی که سال‌ها پشت چهره‌ی اشرافی این خانواده دفن شده بودند، یکی پس از دیگری آشکار می‌شوند.
 </p>
@@ -194,7 +217,11 @@ font-size:30px;
 </p>
 
 <p>
-وقتی الیزابت از خیانت همسرش و حقیقت تلخی که سال‌ها از او پنهان مانده بود آگاه می‌شود، چیزی در درونش فرو می‌ریزد. سال‌ها سکوت، تحقیر، چشم‌پوشی و سرپوش گذاشتن بر اشتباهات مردی که دوستش داشت، کم‌کم عقل و آرامش او را می‌بلعد. او دیگر نمی‌تواند میان حقیقت و خشم تمایزی قائل شود.
+وقتی الیزابت از خیانت همسرش و حقیقت تلخی که سال‌ها از او پنهان مانده بود آگاه می‌شود، چیزی در درونش فرو می‌ریزد. سال‌ها سکوت، تحقیر، چشم‌پوشی و سرپوش گذاشتن بر اشتباهات مردی که دوستش داشت، کم‌کم عقل و آرامش او را می‌بلعد.
+</p>
+
+<p>
+او دیگر نمی‌تواند میان حقیقت و خشم تمایزی قائل شود.
 </p>
 
 <p>
@@ -204,7 +231,6 @@ font-size:30px;
 <p>
 خشم کور و جنونی که سال‌ها در وجود الیزابت انباشته شده بود، در همان شب فوران می‌کند و سرنوشت الا را برای همیشه تغییر می‌دهد.
 </p>
-
 <p>
 اما خیانت تنها دلیل این جنایت نبود.
 </p>
@@ -250,9 +276,7 @@ font-size:30px;
 </div>
 
 </div>
-
 </div>
-
 </div>
 
 <div id="hint">
@@ -276,7 +300,6 @@ const scenes = [
 '<div class="redReveal">قاتل...\n\nالیزابت بومونت بود.</div>',
 
 "اما این تنها بخشی از حقیقت بود..."
-
 ];
 
 let currentScene = 0;
@@ -294,9 +317,7 @@ sceneText.classList.remove("show");
 setTimeout(()=>{
 
 currentScene++;
-
 sceneText.innerHTML = scenes[currentScene];
-
 sceneText.classList.add("show");
 
 },400);
@@ -305,6 +326,8 @@ sceneText.classList.add("show");
 
 sceneText.style.display="none";
 hint.style.display="none";
+
+document.getElementById("container").style.alignItems="flex-start";
 
 finalStory.style.display="block";
 
