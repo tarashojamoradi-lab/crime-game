@@ -18,54 +18,56 @@ background:url('marg.png') center center/cover no-repeat;
 display:flex;
 justify-content:center;
 align-items:center;
-font-family:Tahoma, sans-serif;
+font-family:Tahoma,sans-serif;
 padding:20px;
 overflow:hidden;
+position:relative;
 }
 
 body::before{
 content:"";
-position:fixed;
+position:absolute;
 inset:0;
-background:rgba(0,0,0,0.65);
+background:rgba(0,0,0,0.25);
 }
 
 .overlay{
 position:relative;
 z-index:2;
-background:rgba(0,0,0,0.55);
 width:100%;
-max-width:450px;
-padding:35px;
+max-width:320px;
+padding:25px;
 border-radius:18px;
 text-align:center;
-backdrop-filter:blur(5px);
-border:1px solid rgba(255,255,255,0.15);
+background:rgba(0,0,0,0.25);
+backdrop-filter:blur(3px);
+border:1px solid rgba(255,255,255,0.2);
 }
 
 .confidential{
 color:#ff4d4d;
-letter-spacing:3px;
 font-weight:bold;
-margin-bottom:8px;
+letter-spacing:3px;
+margin-bottom:10px;
 }
 
 .casefile{
-color:#cfcfcf;
+color:#ddd;
 font-size:14px;
 margin-bottom:20px;
+line-height:1.7;
 }
 
 #typewriter{
 color:white;
-min-height:110px;
+font-size:20px;
 line-height:1.8;
-font-size:22px;
+min-height:120px;
 margin-bottom:20px;
 }
 
 .cursor{
-animation:blink 0.8s infinite;
+animation:blink 1s infinite;
 }
 
 @keyframes blink{
@@ -79,7 +81,7 @@ border:none;
 border-radius:10px;
 font-size:16px;
 text-align:center;
-margin-bottom:15px;
+margin-bottom:12px;
 }
 
 button{
@@ -87,16 +89,15 @@ width:100%;
 padding:14px;
 border:none;
 border-radius:10px;
-cursor:pointer;
 font-size:16px;
 font-weight:bold;
+cursor:pointer;
 }
 
 .message{
 margin-top:15px;
-font-size:16px;
 font-weight:bold;
-min-height:25px;
+min-height:24px;
 }
 
 .success{
@@ -108,9 +109,16 @@ color:#ff4c4c;
 }
 
 .counter{
-color:#d6d6d6;
 margin-top:10px;
+color:#ddd;
 font-size:14px;
+}
+
+#finalMessage{
+display:none;
+margin-top:15px;
+color:#4cff4c;
+line-height:1.8;
 }
 
 .shake{
@@ -119,10 +127,9 @@ animation:shake 0.4s;
 
 @keyframes shake{
 0%{transform:translateX(0);}
-20%{transform:translateX(-8px);}
-40%{transform:translateX(8px);}
-60%{transform:translateX(-8px);}
-80%{transform:translateX(8px);}
+25%{transform:translateX(-8px);}
+50%{transform:translateX(8px);}
+75%{transform:translateX(-8px);}
 100%{transform:translateX(0);}
 }
 
@@ -132,15 +139,8 @@ animation:flashSuccess 1s ease;
 
 @keyframes flashSuccess{
 0%{box-shadow:0 0 0 rgba(0,255,0,0);}
-50%{box-shadow:0 0 50px rgba(0,255,0,0.8);}
+50%{box-shadow:0 0 35px rgba(0,255,0,.9);}
 100%{box-shadow:0 0 0 rgba(0,255,0,0);}
-}
-
-#finalMessage{
-margin-top:15px;
-color:#4cff4c;
-line-height:1.8;
-display:none;
 }
 </style>
 </head>
@@ -152,8 +152,7 @@ display:none;
 <div class="confidential">CONFIDENTIAL</div>
 
 <div class="casefile">
-پرونده بسته شد
-
+پرونده بسته شد<br>
 آخرین گزارش بازپرس
 </div>
 
@@ -162,8 +161,7 @@ display:none;
 <input
 type="text"
 id="answer"
-placeholder="نام قاتل را وارد کنید"
->
+placeholder="نام قاتل را وارد کنید">
 
 <button onclick="checkAnswer()">
 بررسی پاسخ
@@ -180,6 +178,7 @@ placeholder="نام قاتل را وارد کنید"
 </div>
 
 <script>
+
 const text =
 `پس از بررسی تمام مدارک...
 
@@ -190,16 +189,14 @@ const text =
 let i = 0;
 let attempts = 0;
 
-function typeWriter() {
-
+function typeWriter(){
 if(i < text.length){
-
 document.getElementById("typewriter").innerHTML =
 text.substring(0,i+1) +
 '<span class="cursor">|</span>';
 
 i++;
-setTimeout(typeWriter,45);
+setTimeout(typeWriter,40);
 }
 }
 
@@ -207,8 +204,11 @@ typeWriter();
 
 function checkAnswer(){
 
-const input = document.getElementById("answer");
-const answer = input.value.trim().toLowerCase();
+const answer = document
+.getElementById("answer")
+.value
+.trim()
+.toLowerCase();
 
 const message = document.getElementById("message");
 const finalMessage = document.getElementById("finalMessage");
@@ -216,23 +216,23 @@ const box = document.getElementById("box");
 
 if(
 answer === "الیزابت" ||
-answer === "الیزابت بومونت"
+answer === "الیزابت بومونت" ||
+answer === "elizabeth" ||
+answer === "elizabeth beaumont"
 ){
 
 message.className = "message success";
-message.innerText = "✓ پاسخ درست است";
+message.innerHTML = "✓ پاسخ درست است";
 
 box.classList.add("flash");
 
 finalMessage.style.display = "block";
 finalMessage.innerHTML =
-"در حال تأیید نتیجه تحقیقات...
-
-هویت قاتل تأیید شد.";
+"در حال تأیید نتیجه تحقیقات...<br><br>هویت قاتل تأیید شد.";
 
 setTimeout(function(){
 window.location.href = "story.html";
-},2500);
+},3000);
 
 }else{
 
@@ -240,7 +240,7 @@ attempts++;
 document.getElementById("attempts").innerText = attempts;
 
 message.className = "message error";
-message.innerText = "✗ پاسخ غلط است";
+message.innerHTML = "✗ پاسخ غلط است";
 
 box.classList.remove("shake");
 void box.offsetWidth;
@@ -248,13 +248,12 @@ box.classList.add("shake");
 }
 }
 
-document.getElementById("answer").addEventListener("keypress",function(e){
-
+document.getElementById("answer").addEventListener("keydown",function(e){
 if(e.key === "Enter"){
 checkAnswer();
 }
-
 });
+
 </script>
 
 </body>
