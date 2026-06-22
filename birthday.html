@@ -141,14 +141,7 @@ body.flashBW {
   opacity: 0.8;
   z-index: 10;
 }
-
-/* صفحه 2 ملایم‌تر (بدون فلیکر شدید) */
-.soft {
-  filter: none !important;
-  animation: none !important;
-}
 </style>
-
 </head>
 
 <body>
@@ -160,13 +153,13 @@ body.flashBW {
 <div id="s1" class="screen active" style="background-image:url('maz.png')">
   <div class="box lowBox">
 
-    <p>
-      تحت نظر از مدت ها قبل...<br>
-      ارتباط با افراد ناشناس تایید شد.<br>
-      تاریخ مهم: ۱۳۸۷/۴/۶
-    </p>
+    <h2>CASE BOARD</h2>
 
-    <h2>عملیات:</h2>
+    <!-- اضافه شد -->
+    <p>تحت نظر از مدت ها قبل...</p>
+    <p>ارتباط با افراد ناشناس تایید شد.</p>
+    <p>تاریخ مهم: ۱۳۸۷/۴/۶</p>
+    <p><b>تیتر معما: عملیات</b></p>
 
     <p>
       یک شب در قطار، خواب و هذیان دست به دست هم دادند.<br>
@@ -185,7 +178,7 @@ body.flashBW {
 </div>
 
 <!-- ⚠ صفحه 2 -->
-<div id="s2" class="screen" style="background:black">
+<div id="s2" class="screen glitch shake" style="background:black">
   <div class="box">
     <p>⚠ پرونده اشتباهی باز شد…</p>
     <p>یا شاید… همان کسی که باید می‌بود وارد شد.</p>
@@ -220,18 +213,27 @@ body.flashBW {
     <p>اتهامات:</p>
     <p id="accusations"></p>
 
-    <button onclick="showFinal()">مشاهده مدرک نهایی</button>
+    <!-- اضافه شد -->
+    <button onclick="next(5)">ادامه</button>
 
-    <p id="finalMsg" style="display:none; margin-top:15px; line-height:1.9;">
+  </div>
+</div>
+
+<!-- 📌 صفحه آخر اضافه شد -->
+<div id="s5" class="screen" style="background:black">
+  <div class="box">
+
+    <p>
       تمام سرنخ‌ها از اول به یک نفر ختم می‌شد...<br>
       نه مجرم.. نه قربانی...<br>
-      فقط کسی که ارزش ساختن یک پرونده برایش وجود داشت.<br><br>
-
-      این پرونده برای پیدا کردن قاتل نبود..<br>
-      برای یادآوری آن بود که بعضی آدم‌ها آنقدر مهم اند که ارزش ساخت یک پرونده محرمانه را دارند.<br><br>
-
-      تولدت مبارک مطهره♥️
+      فقط کسی که ارزش ساختن یک پرونده برایش وجود داشت.
     </p>
+
+    <button onclick="alert('این پرونده برای پیدا کردن قاتل نبود.. برای یادآوری آن بود که بعضی آدم‌ها آنقدر مهم اند که ارزش ساخت یک پرونده محرمانه را دارند.')">
+      مشاهده مدرک نهایی
+    </button>
+
+    <p style="margin-top:15px;">تولدت مبارک مطهره♥️</p>
 
   </div>
 </div>
@@ -247,7 +249,7 @@ const accList = [
   "همیشه پشتم بود حتی وقتی همه منو مقصر می‌دونستن",
   "جا نزد وقتی خیلی‌ها رفتن...",
   "حتی وقتی دنیا ساکت بود، اون بود...",
-  "مطهره... همیشه پشتم بودی..."
+  "مطهره... همیشه پشتم بودی حتی وقتی همه منو مقصر می‌دونستن، خیلی وقتا تو منو باور داشتی و کلا جا نزدی وقتایی که خیلیای دیگه براشون مهم نبود..."
 ];
 
 let i=0, j=0;
@@ -283,7 +285,9 @@ function next(n){
   document.getElementById("s"+n).classList.add("active");
 
   if(n === 2){
+    document.body.classList.add("flashBW");
     flashFX();
+    setTimeout(()=>document.body.classList.remove("flashBW"), 400);
   }
 
   if(n === 3){
@@ -301,12 +305,6 @@ function next(n){
   }
 }
 
-/* پایان نهایی */
-function showFinal(){
-  document.getElementById("finalMsg").style.display = "block";
-}
-
-/* چک معما */
 function checkRiddle(){
   let val = document.getElementById("riddle").value.trim();
 
