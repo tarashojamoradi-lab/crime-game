@@ -6,165 +6,136 @@
 
 <style>
 body {
-  margin: 0;
-  font-family: sans-serif;
-  overflow: hidden;
-  color: white;
-  background:black;
+  margin: 0;
+  font-family: sans-serif;
+  overflow: hidden;
+  color: white;
+  background:black;
 }
 
-/* صفحه‌ها */
+/* همه صفحه‌ها */
 .screen {
-  display: none;
-  width: 100vw;
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  flex-direction: column;
-  position: absolute;
-  transition: all 1s ease;
-  filter: brightness(0.9);
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  position: absolute;
+  transition: all 0.8s ease;
 }
 
 .active {
-  display: flex;
-  animation: fadeIn 1.2s ease;
+  display: flex;
+  animation: fadeIn 1s ease;
 }
 
 @keyframes fadeIn {
-  from {opacity:0; transform: scale(1.03);}
-  to {opacity:1; transform: scale(1);}
+  from {opacity:0; transform: scale(1.02);}
+  to {opacity:1; transform: scale(1);}
 }
 
-/* بک‌گراند سینمایی تیره */
-.screen::before {
-  content:"";
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.45);
-  top:0;
-  left:0;
-}
-
-/* باکس */
+/* باکس متن */
 .box {
-  background: rgba(0,0,0,0.72);
-  padding: 20px;
-  border-radius: 14px;
-  max-width: 80%;
-  backdrop-filter: blur(6px);
-  z-index:2;
-
-  animation: floatIn 1.2s ease;
+  background: rgba(0,0,0,0.7);
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 80%;
+  backdrop-filter: blur(4px);
+  animation: floatIn 1s ease;
 }
 
 @keyframes floatIn {
-  from {opacity:0; transform: translateY(25px);}
-  to {opacity:1; transform: translateY(0);}
+  from {opacity:0; transform: translateY(20px);}
+  to {opacity:1; transform: translateY(0);}
 }
 
 /* دکمه */
 button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  background: crimson;
-  border: none;
-  color: white;
-  cursor: pointer;
-  transition: 0.3s;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: crimson;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px crimson;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px crimson;
 }
 
 /* input */
 input {
-  padding: 10px;
-  font-size: 16px;
+  padding: 10px;
+  font-size: 16px;
+  outline:none;
 }
 
 /* glitch */
 .glitch {
-  animation: flicker 0.12s infinite;
+  animation: flicker 0.1s infinite;
 }
 
 @keyframes flicker {
-  0% {opacity: 1;}
-  50% {opacity: 0.4;}
-  100% {opacity: 1;}
+  0% {opacity: 1;}
+  50% {opacity: 0.4;}
+  100% {opacity: 1;}
 }
 
-/* shake */
+/* تایپ افکت */
+.type {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid white;
+  animation: typing 2s steps(40,end), blink 0.7s infinite;
+}
+
+@keyframes typing {
+  from {width: 0;}
+  to {width: 100%;}
+}
+
+@keyframes blink {
+  50% {border-color: transparent;}
+}
+
+/* لرزش صفحه */
 .shake {
-  animation: shake 0.25s infinite;
+  animation: shake 0.2s infinite;
 }
 
 @keyframes shake {
-  0% {transform: translate(1px,1px);}
-  25% {transform: translate(-1px,2px);}
-  50% {transform: translate(-2px,-1px);}
-  75% {transform: translate(2px,1px);}
-  100% {transform: translate(1px,-1px);}
+  0% {transform: translate(1px,1px);}
+  25% {transform: translate(-1px,2px);}
+  50% {transform: translate(-2px,-1px);}
+  75% {transform: translate(2px,1px);}
+  100% {transform: translate(1px,-1px);}
 }
 
-/* شمارنده */
+/* شمارنده مظنون */
 .counter {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 14px;
-  opacity: 0.8;
-  z-index: 10;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 14px;
+  opacity: 0.8;
+  z-index: 10;
 }
 
-/* فلاش سینمایی */
+/* فلش نور */
 .flash {
-  position: fixed;
-  width:100%;
-  height:100%;
-  background:white;
-  opacity:0;
-  pointer-events:none;
-  z-index:999;
-  transition:0.1s;
+  position: fixed;
+  width:100%;
+  height:100%;
+  background:white;
+  opacity:0;
+  pointer-events:none;
 }
-
-/* اتهامات */
-#accusations {
-  margin-top: 10px;
-  line-height: 1.9;
-  font-size: 15px;
-}
-
-/* کارت عکس شخصیت */
-.profile {
-  width: 180px;
-  height: 240px;
-  object-fit: cover;
-  border-radius: 10px;
-  border: 2px solid white;
-  margin-top: 10px;
-  opacity:0;
-  transform: scale(1.05);
-  transition: 1.2s ease;
-}
-
-.profile.show {
-  opacity:1;
-  transform: scale(1);
-}
-
-/* صفحه 1 پایین‌تر */
-.lowBox {
-  margin-top: 80px;
-}
-
 </style>
 </head>
 
@@ -175,190 +146,144 @@ input {
 
 <!-- 🖤 مرحله 1 -->
 <div id="s1" class="screen active" style="background-image:url('maz.png')">
-  <div class="box lowBox">
-    <h2>CASE BOARD</h2>
+  <div class="box">
+    <h2>CASE BOARD</h2>
 
-    <p>تحت نظر از مدت‌ها قبل…</p>
-    <p>ارتباط با افراد ناشناس تأیید شد.</p>
+    <p>تحت نظر از مدت‌ها قبل…</p>
+    <p>ارتباط با افراد ناشناس تأیید شد.</p>
 
-    <p><b>تاریخ مهم:</b> ۱۳۸۷/۴/۶</p>
+    <p><b>تاریخ مهم:</b> ۱۳۸۷/۴/۶</p>
 
-    <p>یک شب در قطار...</p>
+    <p>
+    یک شب در قطار، خواب و هذیان دست به دست هم دادند...
+    </p>
 
-    <input id="riddle" placeholder="پاسخ">
-    <br>
-    <button onclick="checkRiddle()">ورود به پرونده</button>
+    <input id="riddle" placeholder="پاسخ">
+    <br>
+    <button onclick="checkRiddle()">ورود به پرونده</button>
 
-    <p id="msg"></p>
-  </div>
+    <p id="msg"></p>
+  </div>
 </div>
 
 <!-- ⚠ مرحله 2 -->
 <div id="s2" class="screen glitch shake" style="background:black">
-  <div class="box">
-    <p>⚠ پرونده اشتباهی باز شد…</p>
-    <p>یا شاید… همان کسی که باید می‌بود وارد شد.</p>
+  <div class="box">
+    <p class="type">⚠ پرونده اشتباهی باز شد…</p>
+    <p>یا شاید… همان کسی که باید می‌بود وارد شد.</p>
 
-    <button onclick="next(3)">ادامه</button>
-  </div>
+    <button onclick="next(3)">ادامه</button>
+  </div>
 </div>
 
 <!-- 🧠 مرحله 3 -->
-<div id="s3" class="screen" style="background-image:url('back.png')">
-  <div class="box">
+<div id="s3" class="screen" style="background:#111">
+  <div class="box">
 
-    <p class="type">نام شناسایی شد...</p>
-    <h2 class="type">مطهره</h2>
+    <p class="type">نام شناسایی شد...</p>
+    <h2 class="type">مطهره</h2>
 
-    <img src="mot.jpg" class="profile" id="profile">
+    <p>سن: ۱۳۸۷/۴/۶</p>
+    <p>وضعیت: تحت نظارت</p>
 
-    <p>سن: ۱۳۸۷/۴/۶</p>
-    <p>وضعیت: تحت نظارت</p>
-
-    <button onclick="next(4)">باز کردن پرونده</button>
-  </div>
+    <button onclick="next(4)">باز کردن پرونده</button>
+  </div>
 </div>
 
 <!-- 📁 مرحله 4 -->
 <div id="s4" class="screen" style="background-image:url('mot.jpg')">
-  <div class="box">
-    <h2>پرونده BD-0623</h2>
+  <div class="box">
+    <h2>پرونده BD-0623</h2>
 
-    <p>مظنون: مطهره</p>
+    <p>مظنون: مطهره</p>
 
-    <p>اتهامات:</p>
-    <p id="accusations"></p>
+    <p>
+    - ساختن خاطرات فراموش‌نشدنی<br>
+    - خنداندن اطرافیان<br>
+    - تبدیل شدن به یک نقطه مهم در زندگی دیگران
+    </p>
 
-    <button onclick="next(5)">ادامه تحلیل</button>
-  </div>
+    <button onclick="next(5)">ادامه تحلیل</button>
+  </div>
 </div>
 
 <!-- 🎂 مرحله 5 -->
 <div id="s5" class="screen" style="background-image:url('back.png')">
-  <div class="box">
+  <div class="box">
 
-    <p class="type">تحقیقات تکمیل شد…</p>
+    <p class="type">تحقیقات تکمیل شد…</p>
 
-    <p>مظنون مجرم نیست.</p>
-    <p>قربانی هم نیست.</p>
+    <p>مظنون مجرم نیست.</p>
+    <p>قربانی هم نیست.</p>
 
-    <p>پس چرا این پرونده تشکیل شد؟</p>
+    <p>پس چرا این پرونده تشکیل شد؟</p>
 
-    <button onclick="next(6)">CASE CLOSED</button>
-  </div>
+    <button onclick="next(6)">CASE CLOSED</button>
+  </div>
 </div>
 
 <!-- 🎉 مرحله 6 -->
 <div id="s6" class="screen" style="background-image:url('bar.png')">
-  <div class="box">
+  <div class="box">
 
-    <h2 class="type">CASE CLOSED</h2>
+    <h2 class="type">CASE CLOSED</h2>
 
-    <p>
-    نه مجرم… نه قربانی…<br><br>
-    فقط کسی که ارزش ساختن یک پرونده برایش وجود داشت.
-    </p>
+    <p>
+    نه مجرم… نه قربانی…<br><br>
+    فقط کسی که ارزش ساختن یک پرونده برایش وجود داشت.
+    </p>
 
-    <h2>🎂 تولدت مبارک مطهره</h2>
+    <h2>🎂 تولدت مبارک مطهره</h2>
 
-    <button onclick="finalLetter()">مشاهده مدرک نهایی</button>
+    <button onclick="finalLetter()">مشاهده مدرک نهایی</button>
 
-    <p id="final"></p>
-  </div>
+    <p id="final"></p>
+  </div>
 </div>
 
 <script>
 
 let counter = 4;
 
-/* اتهامات */
-const accList = [
-  "ساختن خاطرات فراموش‌نشدنی",
-  "خنداندن اطرافیان",
-  "مهم شدن برای عده‌ای از افراد",
-  "همیشه پشتم بود حتی وقتی همه منو مقصر می‌دونستن",
-  "جا نزد وقتی خیلی‌ها رفتن...",
-  "حتی وقتی دنیا ساکت بود، اون بود..."
-];
-
-let i = 0;
-let j = 0;
-
-function typeAcc(){
-  const el = document.getElementById("accusations");
-
-  if(i >= accList.length) return;
-
-  let text = accList[i];
-
-  if(j < text.length){
-    el.innerHTML += text[j];
-    j++;
-    setTimeout(typeAcc, 22);
-  } else {
-    el.innerHTML += "<br><br>";
-    i++;
-    j = 0;
-    setTimeout(typeAcc, 600);
-  }
-}
-
-/* فلاش */
-function flash(){
-  const f = document.getElementById("flash");
-  f.style.opacity = 0.6;
-  setTimeout(()=>f.style.opacity=0,120);
-}
-
-/* شمارنده */
 function updateCounter(){
-  document.getElementById("counter").innerText = "مظنون‌ها: " + counter;
-  flash();
+  document.getElementById("counter").innerText = "مظنون‌ها: " + counter;
+
+  // فلش سینمایی
+  document.getElementById("flash").style.opacity = 0.4;
+  setTimeout(()=>document.getElementById("flash").style.opacity = 0,100);
 }
 
 function next(n){
-  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-  document.getElementById("s"+n).classList.add("active");
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById("s"+n).classList.add("active");
 
-  counter--;
-  if(counter >= 0) updateCounter();
+  counter--;
+  if(counter >= 0) updateCounter();
 
-  /* 🎬 نمایش عکس با فید */
-  if(n === 3){
-    setTimeout(()=>{
-      document.getElementById("profile").classList.add("show");
-    }, 600);
-  }
-
-  /* 🎬 شروع اتهامات */
-  if(n === 4){
-    setTimeout(()=>{
-      document.getElementById("accusations").innerHTML = "";
-      i=0; j=0;
-      typeAcc();
-    }, 900);
-  }
+  // لرزش لحظه‌ای
+  document.body.classList.add("shake");
+  setTimeout(()=>document.body.classList.remove("shake"),200);
 }
 
 function checkRiddle(){
-  let val = document.getElementById("riddle").value.trim();
+  let val = document.getElementById("riddle").value.trim();
 
-  if(val === "شهروک"){
-    document.getElementById("msg").innerText = "درسته ✓";
-    setTimeout(()=> next(2), 700);
-  } else {
-    document.getElementById("msg").innerText = "نادرست است ✗";
-  }
+  if(val === "شهروک"){
+    document.getElementById("msg").innerText = "درسته ✓";
+    setTimeout(()=> next(2), 800);
+  } else {
+    document.getElementById("msg").innerText = "نادرست است ✗";
+  }
 }
 
 function finalLetter(){
-  document.getElementById("final").innerHTML = `
-  <br>
-  این پرونده برای پیدا کردن مجرم نبود…<br><br>
-  فقط برای این بود که یادآوری شود:<br>
-  بعضی آدم‌ها، خودشان یک “اتفاق” هستند.<br><br>
-  تولدت مبارک مطهره ❤️
-  `;
+  document.getElementById("final").innerHTML = `
+  <br>
+  این پرونده برای پیدا کردن مجرم نبود…<br><br>
+  فقط برای این بود که یادآوری شود:<br>
+  بعضی آدم‌ها، خودشان یک “اتفاق” هستند.<br><br>
+  تولدت مبارک مطهره ❤️
+  `;
 }
 
 </script>
