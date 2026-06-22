@@ -36,18 +36,15 @@ body{
   to{opacity:1;}
 }
 
-/* باکس (پایین‌تر واقعی) */
 .box{
   background:rgba(0,0,0,0.75);
   padding:20px;
   border-radius:12px;
   max-width:80%;
-
   position:relative;
-  top:140px; /* 👈 مهم: پایین‌تر واقعی */
+  top:140px;
 }
 
-/* دکمه */
 button{
   margin-top:15px;
   padding:10px 20px;
@@ -57,7 +54,6 @@ button{
   cursor:pointer;
 }
 
-/* لرزش */
 .shake{animation:shake .25s infinite;}
 @keyframes shake{
   0%{transform:translate(1px,1px);}
@@ -65,7 +61,6 @@ button{
   100%{transform:translate(1px,-1px);}
 }
 
-/* فلاش */
 .flash{
   position:fixed;
   width:100%;
@@ -76,11 +71,7 @@ button{
   transition:0.15s;
 }
 
-/* سیاه سفید */
-.gray{
-  filter:grayscale(1);
-}
-
+.gray{filter:grayscale(1);}
 </style>
 </head>
 
@@ -120,37 +111,28 @@ button{
 <!-- 3 -->
 <div id="s3" class="screen" style="background-image:url('back.png')">
   <div class="box">
-
     <h2>مطهره</h2>
     <p>وضعیت: تحت نظارت</p>
-
     <button onclick="next(4)">باز کردن پرونده</button>
-
   </div>
 </div>
 
 <!-- 4 -->
 <div id="s4" class="screen" style="background-image:url('mot.jpg')">
   <div class="box">
-
     <h2>اتهامات</h2>
     <div id="acc"></div>
-
     <button onclick="next(5)">ادامه</button>
-
   </div>
 </div>
 
 <!-- 5 -->
 <div id="s5" class="screen" style="background-image:url('back.png')">
   <div class="box">
-
     <p>تحقیقات تکمیل شد…</p>
     <p>مظنون مجرم نیست.</p>
     <p>قربانی هم نیست.</p>
-
     <button onclick="next(6)">CASE CLOSED</button>
-
   </div>
 </div>
 
@@ -176,22 +158,7 @@ function flashFX(){
   },200);
 }
 
-function next(n){
-  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-  document.getElementById("s"+n).classList.add("active");
-
-  flashFX();
-}
-
-function check(){
-  if(document.getElementById("riddle").value.trim()==="شهروک"){
-    next(2);
-  }else{
-    document.getElementById("msg").innerText="نادرست است";
-  }
-}
-
-/* اتهامات تایپی پایدار */
+/* کنترل تایپ */
 let list=[
 "ساختن خاطرات فراموش‌نشدنی",
 "خنداندن اطرافیان",
@@ -199,9 +166,12 @@ let list=[
 "مطهره... همیشه پشتم بودی حتی وقتی همه منو مقصر میدونستن، خیلی وقتا منو باور داشتی و جا نزدی..."
 ];
 
-let i=0,j=0;
+let i=0, j=0;
+let typingTimer;
 
 function type(){
+  clearTimeout(typingTimer);
+
   let el=document.getElementById("acc");
   if(!el) return;
 
@@ -209,21 +179,46 @@ function type(){
 
   if(j<list[i].length){
     el.innerHTML+=list[i][j++];
-    setTimeout(type,18);
+    typingTimer=setTimeout(type,18);
   }else{
     el.innerHTML+="<br><br>";
     i++; j=0;
-    setTimeout(type,450);
+    typingTimer=setTimeout(type,450);
   }
 }
 
-document.getElementById("s4").addEventListener("transitionend",()=>{
-  if(document.getElementById("s4").classList.contains("active")){
-    document.getElementById("acc").innerHTML="";
-    i=0;j=0;
+function resetType(){
+  let el=document.getElementById("acc");
+  if(el) el.innerHTML="";
+  i=0; j=0;
+}
+
+/* تغییر صفحه */
+function next(n){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById("s"+n).classList.add("active");
+
+  flashFX();
+
+  if(n===4){
+    resetType();
     setTimeout(type,500);
   }
-});
+}
+
+/* معما */
+function check(){
+  const val=document.getElementById("riddle").value.trim().toLowerCase();
+
+  if(val==="شهروک"){
+    next(2);
+  }else{
+    document.getElementById("msg").innerText="نادرست است";
+    setTimeout(()=>{
+      document.getElementById("msg").innerText="";
+    },2000);
+  }
+}
 
 </script>
 
