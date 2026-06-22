@@ -38,16 +38,16 @@ body {
   to {opacity:1; transform: scale(1);}
 }
 
-/* باکس */
+/* باکس اصلی */
 .box {
-  background: rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.72);
   padding: 20px;
   border-radius: 12px;
   max-width: 80%;
   backdrop-filter: blur(4px);
   animation: floatIn 1s ease;
 
-  margin-top: 120px; /* 🟢 پایین‌تر شدن صفحه اول */
+  margin-top: 120px; /* 🟢 پایین‌تر شدن صفحه اصلی */
 }
 
 @keyframes floatIn {
@@ -73,13 +73,13 @@ input {
 
 /* glitch */
 .glitch {
-  animation: flicker 0.1s infinite;
+  animation: flicker 0.12s infinite;
 }
 
 @keyframes flicker {
-  0% {opacity: 1;}
-  50% {opacity: 0.4;}
-  100% {opacity: 1;}
+  0% {opacity:1;}
+  50% {opacity:0.4;}
+  100% {opacity:1;}
 }
 
 /* shake */
@@ -95,7 +95,7 @@ input {
   100% {transform: translate(1px,-1px);}
 }
 
-/* فلش */
+/* فلاش نور */
 .flash {
   position: fixed;
   width:100%;
@@ -103,39 +103,35 @@ input {
   background:white;
   opacity:0;
   pointer-events:none;
+  transition:0.1s;
 }
 
-/* grayscale flash */
+/* سیاه سفید سریع */
 .flashGray {
   filter: grayscale(1);
-  animation: grayFlash 0.6s ease;
-}
-
-@keyframes grayFlash {
-  0% {filter: grayscale(0);}
-  50% {filter: grayscale(1);}
-  100% {filter: grayscale(0);}
 }
 
 /* اتهامات */
 #accusations {
   margin-top: 10px;
-  line-height: 1.8;
+  line-height: 1.9;
 }
 
-/* عکس پروفایل */
+/* عکس شخصیت */
 .profile {
-  width: 140px;
-  height: 200px;
+  width: 120px;
+  height: 160px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 8px;
   border: 2px solid white;
-  opacity: 0;
-  transform: translateX(30px);
-  transition: 1s ease;
+
   position:absolute;
   right:40px;
   top:120px;
+
+  opacity:0;
+  transform: translateX(20px);
+  transition: 1s ease;
 }
 
 .profile.show {
@@ -153,18 +149,19 @@ input {
 <!-- 🖤 مرحله 1 -->
 <div id="s1" class="screen active" style="background-image:url('maz.png')">
   <div class="box">
+
     <h2>CASE BOARD</h2>
 
     <p>تحت نظر از مدت‌ها قبل…</p>
     <p>ارتباط با افراد ناشناس تأیید شد.</p>
 
-    <p><b>تاریخ مهم:</b> ۱۳۸۷/۴/۶</p>
+    <p><b>تاریخ:</b> ۱۳۸۷/۴/۶</p>
 
     <p>
-      یک شب در قطار، خواب و هذیان دست به دست هم دادند.<br>
-      بازیگر فیلمی که در سفر نهم دیده بودیم،<br>
-      با مشهورترین کارآگاه جهان یکی شد.<br>
-      حاصل این پیوند پنج‌حرفی چیست؟
+    یک شب در قطار، خواب و هذیان دست به دست هم دادند.<br>
+    بازیگر فیلمی که در سفر نهم دیده بودیم،<br>
+    با مشهورترین کارآگاه جهان یکی شد.<br>
+    حاصل این پیوند پنج‌حرفی چیست؟
     </p>
 
     <input id="riddle">
@@ -194,78 +191,87 @@ input {
     <img src="mot.png" class="profile" id="profile">
 
     <p>وضعیت: تحت نظارت</p>
-
-    <button onclick="next(4)">باز کردن پرونده</button>
   </div>
 </div>
 
 <!-- 📁 مرحله 4 -->
 <div id="s4" class="screen" style="background-image:url('mot.jpg')">
   <div class="box">
-    <h2>پرونده BD-0623</h2>
 
-    <p>مظنون: مطهره</p>
+    <p>اتهامات:</p>
 
     <div id="accusations"></div>
 
-    <button onclick="next(5)">ادامه</button>
   </div>
 </div>
 
-<!-- 🎂 مرحله 5 -->
-<div id="s5" class="screen" style="background-image:url('back.png')">
-  <div class="box">
+<!-- 🎬 مرحله اتهامات -->
+<script>
 
-    <p>تحقیقات تکمیل شد…</p>
+let acc = [
+"ساختن خاطرات فراموش‌نشدنی",
+"خنداندن اطرافیان",
+"مهم شدن برای عده‌ای از افراد",
+"مطهره... همیشه پشتم بودی حتی وقتی همه منو مقصر میدونستن، خیلی وقتا تو منو باور داشتی و جا نزدی..."
+];
 
-    <p>مظنون مجرم نیست.</p>
-    <p>قربانی هم نیست.</p>
+let i=0, j=0;
 
-    <button onclick="next(6)">CASE CLOSED</button>
-  </div>
-</div>
+function typeAcc(){
+  const el = document.getElementById("accusations");
 
-<!-- 🎉 مرحله 6 -->
-<div id="s6" class="screen" style="background-image:url('bar.png')">
-  <div class="box">
+  if(i >= acc.length) return;
 
-    <h2>CASE CLOSED</h2>
+  if(j < acc[i].length){
+    el.innerHTML += acc[i][j];
+    j++;
+    setTimeout(typeAcc, 25);
+  } else {
+    el.innerHTML += "<br><br>";
+    i++; j=0;
+    setTimeout(typeAcc, 600);
+  }
+}
 
-    <p>تولدت مبارک مطهره</p>
-  </div>
-</div>
+function startAcc(){
+  document.getElementById("accusations").innerHTML="";
+  i=0; j=0;
+  typeAcc();
+}
 
+</script>
+
+<!-- 🧠 JS اصلی -->
 <script>
 
 function checkRiddle(){
   let v = document.getElementById("riddle").value.trim();
+
   if(v === "شهروک"){
     next(2);
   } else {
-    document.getElementById("msg").innerText = "نادرست است";
+    document.getElementById("msg").innerText="نادرست است";
   }
 }
 
-/* لرزش + فلاش + سیاه سفید */
-function flashEffect(){
-  document.getElementById("flash").style.opacity = 1;
+/* افکت سینمایی */
+function cinematicFlash(){
+  const f = document.getElementById("flash");
+
+  f.style.opacity = 1;
   document.body.classList.add("flashGray");
 
   setTimeout(()=>{
-    document.getElementById("flash").style.opacity = 0;
+    f.style.opacity = 0;
     document.body.classList.remove("flashGray");
-  }, 400);
+  }, 300);
 }
-
-let counter = 4;
 
 function next(n){
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
   document.getElementById("s"+n).classList.add("active");
 
-  counter--;
-
-  flashEffect();
+  cinematicFlash();
 
   if(n === 3){
     setTimeout(()=>{
@@ -274,39 +280,8 @@ function next(n){
   }
 
   if(n === 4){
-    startAccusations();
+    setTimeout(startAcc, 800);
   }
-}
-
-/* اتهامات تایپی */
-let acc = [
-"ساختن خاطرات فراموش‌نشدنی",
-"خنداندن اطرافیان",
-"مهم شدن برای عده‌ای از افراد",
-"همیشه پشتم بودی حتی وقتی همه منو مقصر می‌دونستن، خیلی وقتا تو منو باور داشتی و کلا جا نزد وقتی خیلیا نبودن"
-];
-
-let i=0, j=0;
-
-function startAccusations(){
-  const el = document.getElementById("accusations");
-  el.innerHTML="";
-
-  function type(){
-    if(i >= acc.length) return;
-
-    if(j < acc[i].length){
-      el.innerHTML += acc[i][j];
-      j++;
-      setTimeout(type,20);
-    } else {
-      el.innerHTML += "<br><br>";
-      i++; j=0;
-      setTimeout(type,500);
-    }
-  }
-
-  type();
 }
 
 </script>
