@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>CLASSIFIED CASE</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: sans-serif;
+  overflow: hidden;
+  color: white;
+}
+
+/* همه صفحه‌ها */
+.screen {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  position: absolute;
+}
+
+.active {
+  display: flex;
+}
+
+/* باکس متن */
+.box {
+  background: rgba(0,0,0,0.65);
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 80%;
+}
+
+/* دکمه */
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: crimson;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* input */
+input {
+  padding: 10px;
+  font-size: 16px;
+}
+
+/* glitch */
+.glitch {
+  animation: flicker 0.12s infinite;
+}
+
+@keyframes flicker {
+  0% {opacity: 1;}
+  50% {opacity: 0.6;}
+  100% {opacity: 1;}
+}
+
+/* شمارنده مظنون */
+.counter {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="counter" class="counter">مظنون‌ها: 4</div>
+
+<!-- 🖤 مرحله 1: تخته -->
+<div id="s1" class="screen active" style="background-image:url('maz.png')">
+  <div class="box">
+    <h2>CASE BOARD</h2>
+
+    <p>تحت نظر از مدت‌ها قبل…</p>
+    <p>ارتباط با افراد ناشناس تأیید شد.</p>
+
+    <p><b>تاریخ مهم:</b> ۱۳۸۷/۴/۶</p>
+
+    <p><b>عملیات:</b></p>
+    <p>
+    یک شب در قطار، خواب و هذیان دست به دست هم دادند.<br>
+    بازیگر فیلمی که در سفر نهم دیده بودیم،<br>
+    با مشهورترین کارآگاه جهان یکی شد.<br><br>
+
+    حاصل این پیوند پنج‌حرفی چیست؟
+    </p>
+
+    <input id="riddle" placeholder="پاسخ">
+    <br>
+    <button onclick="checkRiddle()">ورود به پرونده</button>
+
+    <p id="msg"></p>
+  </div>
+</div>
+
+<!-- ⚠ مرحله 2 -->
+<div id="s2" class="screen glitch" style="background:black">
+  <div class="box">
+    <p>⚠ پرونده اشتباهی باز شد…</p>
+    <p>یا شاید… همان کسی که باید می‌بود وارد شد.</p>
+
+    <button onclick="next(3)">ادامه</button>
+  </div>
+</div>
+
+<!-- 🧠 مرحله 3 -->
+<div id="s3" class="screen" style="background:#111">
+  <div class="box">
+    <p>نام شناسایی شد:</p>
+    <h2>مطهره</h2>
+
+    <p>سن: ۱۳۸۷/۴/۶</p>
+    <p>وضعیت: تحت نظارت</p>
+
+    <button onclick="next(4)">باز کردن پرونده</button>
+  </div>
+</div>
+
+<!-- 📁 مرحله 4 -->
+<div id="s4" class="screen" style="background-image:url('mot.jpg')">
+  <div class="box">
+    <h2>پرونده BD-0623</h2>
+
+    <p><b>مظنون:</b> مطهره</p>
+
+    <p>
+    اتهامات:<br>
+    - ساختن خاطرات فراموش‌نشدنی<br>
+    - خنداندن اطرافیان<br>
+    - مهم شدن برای آدم‌ها<br>
+    - اضافه کردن یک سال جدید به زندگی
+    </p>
+
+    <button onclick="next(5)">ادامه تحلیل</button>
+  </div>
+</div>
+
+<!-- 🎂 مرحله 5 -->
+<div id="s5" class="screen" style="background:#000">
+  <div class="box">
+    <p>تحقیقات تکمیل شد…</p>
+
+    <p>نتیجه:</p>
+    <p>مظنون مجرم نیست.</p>
+    <p>قربانی هم نیست.</p>
+
+    <p>پس چرا پرونده تشکیل شد؟</p>
+
+    <button onclick="next(6)">CASE CLOSED</button>
+  </div>
+</div>
+
+<!-- 🎉 مرحله 6 -->
+<div id="s6" class="screen" style="background-image:url('bar.png')">
+  <div class="box">
+    <h2>CASE CLOSED</h2>
+
+    <p>
+    تمام سرنخ‌ها از ابتدا به یک نفر ختم می‌شد…<br><br>
+
+    نه مجرم… نه قربانی…<br><br>
+
+    فقط کسی که ارزش ساختن یک پرونده برایش وجود داشت.
+    </p>
+
+    <h2>🎂 تولدت مبارک مطهره</h2>
+
+    <button onclick="finalLetter()">مشاهده مدرک نهایی</button>
+
+    <p id="final"></p>
+  </div>
+</div>
+
+<script>
+
+let counter = 4;
+
+function updateCounter(){
+  document.getElementById("counter").innerText = "مظنون‌ها: " + counter;
+}
+
+function next(n){
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById("s"+n).classList.add("active");
+
+  counter--;
+  if(counter >= 0) updateCounter();
+}
+
+function checkRiddle(){
+  let val = document.getElementById("riddle").value.trim();
+
+  if(val === "شهروک"){
+    document.getElementById("msg").innerText = "درسته ✓";
+    setTimeout(()=> next(2), 800);
+  } else {
+    document.getElementById("msg").innerText = "نادرست است ✗";
+  }
+}
+
+function finalLetter(){
+  document.getElementById("final").innerHTML = `
+  <br>
+  این پرونده برای پیدا کردن مجرم نبود…<br><br>
+  برای یادآوری این بود که بعضی آدم‌ها آن‌قدر مهم‌اند<br>
+  که ارزش ساختن یک پرونده محرمانه را دارند.<br><br>
+  تولدت مبارک مطهره ❤️
+  `;
+}
+
+</script>
+
+</body>
+</html>
