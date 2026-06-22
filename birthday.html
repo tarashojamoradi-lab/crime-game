@@ -5,138 +5,80 @@
 <title>CLASSIFIED CASE</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: sans-serif;
-  overflow: hidden;
-  color: white;
+body{
+  margin:0;
+  font-family:sans-serif;
+  overflow:hidden;
   background:black;
+  color:white;
 }
 
-/* صفحه‌ها */
-.screen {
-  display: none;
-  width: 100vw;
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  flex-direction: column;
-  position: absolute;
-  transition: all 0.8s ease;
+/* صفحات */
+.screen{
+  display:none;
+  width:100vw;
+  height:100vh;
+  background-size:cover;
+  background-position:center;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  position:absolute;
 }
 
-.active {
-  display: flex;
-  animation: fadeIn 1s ease;
+.active{
+  display:flex;
+  animation:fade 0.8s ease;
 }
 
-@keyframes fadeIn {
-  from {opacity:0; transform: scale(1.02);}
-  to {opacity:1; transform: scale(1);}
+@keyframes fade{
+  from{opacity:0;}
+  to{opacity:1;}
 }
 
-/* باکس اصلی */
-.box {
-  background: rgba(0,0,0,0.72);
-  padding: 20px;
-  border-radius: 12px;
-  max-width: 80%;
-  backdrop-filter: blur(4px);
-  animation: floatIn 1s ease;
+/* باکس (پایین‌تر واقعی) */
+.box{
+  background:rgba(0,0,0,0.75);
+  padding:20px;
+  border-radius:12px;
+  max-width:80%;
 
-  margin-top: 120px; /* 🟢 پایین‌تر شدن صفحه اصلی */
-}
-
-@keyframes floatIn {
-  from {opacity:0; transform: translateY(20px);}
-  to {opacity:1; transform: translateY(0);}
+  position:relative;
+  top:140px; /* 👈 مهم: پایین‌تر واقعی */
 }
 
 /* دکمه */
-button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  background: crimson;
-  border: none;
-  color: white;
-  cursor: pointer;
+button{
+  margin-top:15px;
+  padding:10px 20px;
+  background:crimson;
+  color:white;
+  border:none;
+  cursor:pointer;
 }
 
-/* input */
-input {
-  padding: 10px;
-  font-size: 16px;
+/* لرزش */
+.shake{animation:shake .25s infinite;}
+@keyframes shake{
+  0%{transform:translate(1px,1px);}
+  50%{transform:translate(-2px,1px);}
+  100%{transform:translate(1px,-1px);}
 }
 
-/* glitch */
-.glitch {
-  animation: flicker 0.12s infinite;
-}
-
-@keyframes flicker {
-  0% {opacity:1;}
-  50% {opacity:0.4;}
-  100% {opacity:1;}
-}
-
-/* shake */
-.shake {
-  animation: shake 0.25s infinite;
-}
-
-@keyframes shake {
-  0% {transform: translate(1px,1px);}
-  25% {transform: translate(-1px,2px);}
-  50% {transform: translate(-2px,-1px);}
-  75% {transform: translate(2px,1px);}
-  100% {transform: translate(1px,-1px);}
-}
-
-/* فلاش نور */
-.flash {
-  position: fixed;
+/* فلاش */
+.flash{
+  position:fixed;
   width:100%;
   height:100%;
   background:white;
   opacity:0;
   pointer-events:none;
-  transition:0.1s;
+  transition:0.15s;
 }
 
-/* سیاه سفید سریع */
-.flashGray {
-  filter: grayscale(1);
-}
-
-/* اتهامات */
-#accusations {
-  margin-top: 10px;
-  line-height: 1.9;
-}
-
-/* عکس شخصیت */
-.profile {
-  width: 120px;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 2px solid white;
-
-  position:absolute;
-  right:40px;
-  top:120px;
-
-  opacity:0;
-  transform: translateX(20px);
-  transition: 1s ease;
-}
-
-.profile.show {
-  opacity:1;
-  transform: translateX(0);
+/* سیاه سفید */
+.gray{
+  filter:grayscale(1);
 }
 
 </style>
@@ -146,16 +88,11 @@ input {
 
 <div class="flash" id="flash"></div>
 
-<!-- 🖤 مرحله 1 -->
+<!-- 1 -->
 <div id="s1" class="screen active" style="background-image:url('maz.png')">
   <div class="box">
 
     <h2>CASE BOARD</h2>
-
-    <p>تحت نظر از مدت‌ها قبل…</p>
-    <p>ارتباط با افراد ناشناس تأیید شد.</p>
-
-    <p><b>تاریخ:</b> ۱۳۸۷/۴/۶</p>
 
     <p>
     یک شب در قطار، خواب و هذیان دست به دست هم دادند.<br>
@@ -165,124 +102,128 @@ input {
     </p>
 
     <input id="riddle">
-    <button onclick="checkRiddle()">ورود</button>
-
+    <button onclick="check()">ورود</button>
     <p id="msg"></p>
+
   </div>
 </div>
 
-<!-- ⚠ مرحله 2 -->
-<div id="s2" class="screen glitch shake" style="background:black">
+<!-- 2 -->
+<div id="s2" class="screen shake" style="background:black">
   <div class="box">
     <p>⚠ پرونده اشتباهی باز شد…</p>
-    <p>یا شاید… همان کسی که باید می‌بود وارد شد.</p>
-
+    <p>سیستم در حال پردازش مجدد…</p>
     <button onclick="next(3)">ادامه</button>
   </div>
 </div>
 
-<!-- 🧠 مرحله 3 -->
+<!-- 3 -->
 <div id="s3" class="screen" style="background-image:url('back.png')">
   <div class="box">
 
-    <p>نام شناسایی شد...</p>
     <h2>مطهره</h2>
-
-    <img src="mot.png" class="profile" id="profile">
-
     <p>وضعیت: تحت نظارت</p>
+
+    <button onclick="next(4)">باز کردن پرونده</button>
+
   </div>
 </div>
 
-<!-- 📁 مرحله 4 -->
+<!-- 4 -->
 <div id="s4" class="screen" style="background-image:url('mot.jpg')">
   <div class="box">
 
-    <p>اتهامات:</p>
+    <h2>اتهامات</h2>
+    <div id="acc"></div>
 
-    <div id="accusations"></div>
+    <button onclick="next(5)">ادامه</button>
 
   </div>
 </div>
 
-<!-- 🎬 مرحله اتهامات -->
+<!-- 5 -->
+<div id="s5" class="screen" style="background-image:url('back.png')">
+  <div class="box">
+
+    <p>تحقیقات تکمیل شد…</p>
+    <p>مظنون مجرم نیست.</p>
+    <p>قربانی هم نیست.</p>
+
+    <button onclick="next(6)">CASE CLOSED</button>
+
+  </div>
+</div>
+
+<!-- 6 -->
+<div id="s6" class="screen" style="background-image:url('bar.png')">
+  <div class="box">
+    <h2>CASE CLOSED</h2>
+    <p>تولدت مبارک 🎂</p>
+  </div>
+</div>
+
 <script>
 
-let acc = [
-"ساختن خاطرات فراموش‌نشدنی",
-"خنداندن اطرافیان",
-"مهم شدن برای عده‌ای از افراد",
-"مطهره... همیشه پشتم بودی حتی وقتی همه منو مقصر میدونستن، خیلی وقتا تو منو باور داشتی و جا نزدی..."
-];
+function flashFX(){
+  const f=document.getElementById("flash");
 
-let i=0, j=0;
-
-function typeAcc(){
-  const el = document.getElementById("accusations");
-
-  if(i >= acc.length) return;
-
-  if(j < acc[i].length){
-    el.innerHTML += acc[i][j];
-    j++;
-    setTimeout(typeAcc, 25);
-  } else {
-    el.innerHTML += "<br><br>";
-    i++; j=0;
-    setTimeout(typeAcc, 600);
-  }
-}
-
-function startAcc(){
-  document.getElementById("accusations").innerHTML="";
-  i=0; j=0;
-  typeAcc();
-}
-
-</script>
-
-<!-- 🧠 JS اصلی -->
-<script>
-
-function checkRiddle(){
-  let v = document.getElementById("riddle").value.trim();
-
-  if(v === "شهروک"){
-    next(2);
-  } else {
-    document.getElementById("msg").innerText="نادرست است";
-  }
-}
-
-/* افکت سینمایی */
-function cinematicFlash(){
-  const f = document.getElementById("flash");
-
-  f.style.opacity = 1;
-  document.body.classList.add("flashGray");
+  f.style.opacity=1;
+  document.body.classList.add("gray");
 
   setTimeout(()=>{
-    f.style.opacity = 0;
-    document.body.classList.remove("flashGray");
-  }, 300);
+    f.style.opacity=0;
+    document.body.classList.remove("gray");
+  },200);
 }
 
 function next(n){
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
   document.getElementById("s"+n).classList.add("active");
 
-  cinematicFlash();
+  flashFX();
+}
 
-  if(n === 3){
-    setTimeout(()=>{
-      document.getElementById("profile").classList.add("show");
-    },500);
-  }
-
-  if(n === 4){
-    setTimeout(startAcc, 800);
+function check(){
+  if(document.getElementById("riddle").value.trim()==="شهروک"){
+    next(2);
+  }else{
+    document.getElementById("msg").innerText="نادرست است";
   }
 }
+
+/* اتهامات تایپی پایدار */
+let list=[
+"ساختن خاطرات فراموش‌نشدنی",
+"خنداندن اطرافیان",
+"مهم شدن برای عده‌ای از افراد",
+"مطهره... همیشه پشتم بودی حتی وقتی همه منو مقصر میدونستن، خیلی وقتا منو باور داشتی و جا نزدی..."
+];
+
+let i=0,j=0;
+
+function type(){
+  let el=document.getElementById("acc");
+  if(!el) return;
+
+  if(i>=list.length) return;
+
+  if(j<list[i].length){
+    el.innerHTML+=list[i][j++];
+    setTimeout(type,18);
+  }else{
+    el.innerHTML+="<br><br>";
+    i++; j=0;
+    setTimeout(type,450);
+  }
+}
+
+document.getElementById("s4").addEventListener("transitionend",()=>{
+  if(document.getElementById("s4").classList.contains("active")){
+    document.getElementById("acc").innerHTML="";
+    i=0;j=0;
+    setTimeout(type,500);
+  }
+});
 
 </script>
 
