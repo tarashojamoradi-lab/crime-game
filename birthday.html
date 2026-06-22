@@ -11,15 +11,13 @@ body {
   overflow: hidden;
   color: white;
   background:black;
-  transition: 0.2s;
+  transition: 0.3s;
 }
 
-/* سیاه و سفید لحظه‌ای */
 body.flashBW {
   filter: grayscale(1);
 }
 
-/* صفحه‌ها */
 .screen {
   display: none;
   width: 100vw;
@@ -64,36 +62,20 @@ body.flashBW {
   z-index:2;
 }
 
-/* پایین‌تر شدن صفحه اول */
-.lowBox {
-  margin-top: 170px;
-}
-
-/* glitch */
-.glitch {
-  animation: flicker 0.12s infinite;
-}
-
+.glitch { animation: flicker 0.25s infinite; }
 @keyframes flicker {
   0% {opacity:1;}
-  50% {opacity:0.3;}
+  50% {opacity:0.6;}
   100% {opacity:1;}
 }
 
-/* shake */
-.shake {
-  animation: shake 0.25s infinite;
-}
-
+.shake { animation: shake 0.4s infinite; }
 @keyframes shake {
   0% {transform: translate(1px,1px);}
-  25% {transform: translate(-1px,2px);}
-  50% {transform: translate(-2px,-1px);}
-  75% {transform: translate(2px,1px);}
+  50% {transform: translate(-1px,2px);}
   100% {transform: translate(1px,-1px);}
 }
 
-/* فلاش سینمایی قوی */
 .flash {
   position: fixed;
   width:100%;
@@ -102,20 +84,12 @@ body.flashBW {
   opacity:0;
   pointer-events:none;
   z-index:999;
-  transition:0.12s;
+  transition:0.2s;
 }
 
-/* اتهامات */
-#accusations {
-  margin-top: 10px;
-  line-height: 1.9;
-  font-size: 15px;
-}
-
-/* عکس سه‌درچهار درست */
 .profile {
-  width: 160px;
-  height: 210px;
+  width: 180px;
+  height: 240px;
   object-fit: cover;
   border-radius: 10px;
   border: 2px solid white;
@@ -124,14 +98,7 @@ body.flashBW {
   transition: 1s;
 }
 
-/* گوشه‌ای شدن */
-#s3 .profile.show {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  width: 120px;
-  height: 160px;
-}
+.profile.show { opacity:1; }
 
 .counter {
   position: absolute;
@@ -141,145 +108,99 @@ body.flashBW {
   opacity: 0.8;
   z-index: 10;
 }
-
-/* دکمه نهایی */
-.finalBtn {
-  margin-top: 15px;
-  padding: 12px 20px;
-  background: crimson;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
 </style>
 </head>
 
 <body>
 
 <div class="flash" id="flash"></div>
-<div id="counter" class="counter">مظنون‌ها: 4</div>
 
-<!-- 🖤 صفحه 1 -->
 <div id="s1" class="screen active" style="background-image:url('maz.png')">
-  <div class="box lowBox">
+  <div class="box">
 
-    <h2>عملیات</h2>
-
-    <p>
-      تحت نظر از مدت‌ها قبل...<br>
-      ارتباط با افراد ناشناس تأیید شد.<br>
-      تاریخ مهم: ۱۳۸۷/۴/۶
-    </p>
+    <h3>تحت نظر از مدت ها قبل...</h3>
 
     <p>
-      یک شب در قطار، خواب و هذیان دست به دست هم دادند.<br>
-      بازیگر فیلمی که در سفر نهم دیده بودیم،<br>
-      با مشهورترین کارآگاه جهان یکی شد.<br>
-      حاصل این پیوند پنج‌حرفی چیست؟
+      یک شب در قطار...<br>
+      بازیگر فیلمی + کارآگاه معروف...<br>
+      حاصل ۵ حرفی؟
     </p>
 
     <input id="riddle" placeholder="پاسخ">
-    <br>
-    <button onclick="checkRiddle()">ورود به پرونده</button>
+    <br><br>
+
+    <button id="btn" onclick="checkRiddle()">ورود</button>
+
+    <p id="msg"></p>
 
   </div>
 </div>
 
-<!-- ⚠ صفحه 2 -->
-<div id="s2" class="screen glitch shake" style="background:black">
+<div id="s2" class="screen glitch shake">
   <div class="box">
     <p>⚠ پرونده اشتباهی باز شد…</p>
-    <p>یا شاید… همان کسی که باید می‌بود وارد شد.</p>
     <button onclick="next(3)">ادامه</button>
   </div>
 </div>
 
-<!-- 🧠 صفحه 3 -->
 <div id="s3" class="screen" style="background-image:url('back.png')">
   <div class="box">
 
     <h2>مطهره</h2>
-
     <img src="mot.jpg" class="profile" id="profile">
-
-    <p>وضعیت: تحت نظارت</p>
 
     <button onclick="next(4)">باز کردن پرونده</button>
 
   </div>
 </div>
 
-<!-- 📁 صفحه 4 -->
 <div id="s4" class="screen" style="background-image:url('mot.jpg')">
   <div class="box">
 
     <h2>پرونده BD-0623</h2>
 
-    <p>مظنون: مطهره</p>
-
-    <p>اتهامات:</p>
     <p id="accusations"></p>
 
-  </div>
-</div>
-
-<!-- 🎉 صفحه آخر -->
-<div id="s5" class="screen" style="background-image:url('back.png')">
-  <div class="box">
-
-    <h2>CASE CLOSED</h2>
-
-    <p>
-      تمام سرنخ‌ها از اول به یک نفر ختم می‌شد...<br>
-      نه مجرم.. نه قربانی...<br>
-      فقط کسی که ارزش ساختن یک پرونده برایش وجود داشت.
-    </p>
-
-    <button class="finalBtn" onclick="finalLetter()">مشاهده مدرک نهایی</button>
-
-    <p id="final"></p>
+    <button onclick="finalReveal()">مدرک نهایی</button>
+    <p id="finalText"></p>
 
   </div>
 </div>
 
 <script>
 
-let counter = 4;
+let used = false;
 
 const accList = [
   "ساختن خاطرات فراموش‌نشدنی",
   "خنداندن اطرافیان",
-  "مهم شدن برای عده‌ای از افراد",
-  "همیشه پشتم بود حتی وقتی همه منو مقصر می‌دونستن",
-  "جا نزد وقتی خیلی‌ها رفتن...",
-  "حتی وقتی دنیا ساکت بود، اون بود...",
-  "مطهره... همیشه پشتم بودی حتی وقتی همه منو مقصر می‌دونستن، خیلی وقتا تو منو باور داشتی و کلا جا نزدی وقتایی که خیلیای دیگه براشون مهم نبود..."
+  "همیشه حمایت کردن",
+  "جا نزدن وقتی همه رفتن",
+  "بودن وقتی کسی نبود"
 ];
 
 let i=0, j=0;
 
 function typeAcc(){
   const el = document.getElementById("accusations");
-
   if(i >= accList.length) return;
 
   let text = accList[i];
 
   if(j < text.length){
-    el.innerHTML += text[j];
-    j++;
-    setTimeout(typeAcc, 20);
+    el.innerHTML += text[j++];
+    setTimeout(typeAcc, 25);
   } else {
     el.innerHTML += "<br><br>";
     i++; j=0;
-    setTimeout(typeAcc, 500);
+    setTimeout(typeAcc, 400);
   }
 }
 
 function flashFX(){
   const f = document.getElementById("flash");
-  f.style.opacity = 0.8;
-  setTimeout(()=>f.style.opacity=0,120);
+  f.style.opacity = 0.6;
+  setTimeout(()=>f.style.opacity=0,150);
 }
 
 function next(n){
@@ -289,38 +210,42 @@ function next(n){
   if(n === 2){
     document.body.classList.add("flashBW");
     flashFX();
-    setTimeout(()=>document.body.classList.remove("flashBW"), 400);
+    setTimeout(()=>document.body.classList.remove("flashBW"), 700);
   }
 
   if(n === 3){
-    setTimeout(()=>{
-      document.getElementById("profile").classList.add("show");
-    }, 600);
+    setTimeout(()=>document.getElementById("profile").classList.add("show"),600);
   }
 
   if(n === 4){
-    setTimeout(()=>{
-      document.getElementById("accusations").innerHTML="";
-      i=0; j=0;
-      typeAcc();
-    }, 800);
+    document.getElementById("accusations").innerHTML="";
+    i=0; j=0;
+    setTimeout(typeAcc, 500);
   }
 }
 
 function checkRiddle(){
+  if(used) return;
+
   let val = document.getElementById("riddle").value.trim();
+  const msg = document.getElementById("msg");
+
   if(val === "شهروک"){
+    used = true;
+    msg.innerHTML = "درست بود...";
     setTimeout(()=>next(2), 600);
+  } else {
+    msg.innerHTML = "اشتباهه...";
   }
 }
 
-function finalLetter(){
-  document.getElementById("final").innerHTML = `
-  این پرونده برای پیدا کردن قاتل نبود..<br>
-  برای یادآوری آن بود که بعضی آدم‌ها آنقدر مهم اند<br>
-  که ارزش ساخت یک پرونده محرمانه را دارند.<br><br>
-  ❤️ تولدت مبارک مطهره ❤️
-  `;
+document.getElementById("riddle").addEventListener("keydown", e=>{
+  if(e.key === "Enter") checkRiddle();
+});
+
+function finalReveal(){
+  document.getElementById("finalText").innerHTML =
+  "این پرونده برای قاتل نبود...<br>برای یادآوری بود...<br><br>تولدت مبارک مطهره ♥️";
 }
 
 </script>
