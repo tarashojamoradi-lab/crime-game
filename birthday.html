@@ -13,7 +13,7 @@ body {
   background:black;
 }
 
-/* همه صفحه‌ها */
+/* صفحه‌ها */
 .screen {
   display: none;
   width: 100vw;
@@ -25,26 +25,46 @@ body {
   text-align: center;
   flex-direction: column;
   position: absolute;
-  transition: all 0.8s ease;
+  transition: all 1s ease;
+  filter: brightness(0.9);
 }
 
 .active {
   display: flex;
-  animation: fadeIn 1s ease;
+  animation: fadeIn 1.2s ease;
 }
 
 @keyframes fadeIn {
-  from {opacity:0; transform: scale(1.02);}
+  from {opacity:0; transform: scale(1.03);}
   to {opacity:1; transform: scale(1);}
 }
 
-/* باکس متن */
+/* بک‌گراند سینمایی تیره */
+.screen::before {
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.45);
+  top:0;
+  left:0;
+}
+
+/* باکس */
 .box {
-  background: rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.72);
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 14px;
   max-width: 80%;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(6px);
+  z-index:2;
+
+  animation: floatIn 1.2s ease;
+}
+
+@keyframes floatIn {
+  from {opacity:0; transform: translateY(25px);}
+  to {opacity:1; transform: translateY(0);}
 }
 
 /* دکمه */
@@ -60,19 +80,18 @@ button {
 
 button:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 15px crimson;
+  box-shadow: 0 0 20px crimson;
 }
 
 /* input */
 input {
   padding: 10px;
   font-size: 16px;
-  outline:none;
 }
 
 /* glitch */
 .glitch {
-  animation: flicker 0.1s infinite;
+  animation: flicker 0.12s infinite;
 }
 
 @keyframes flicker {
@@ -81,26 +100,9 @@ input {
   100% {opacity: 1;}
 }
 
-/* تایپ */
-.type {
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 2px solid white;
-  animation: typing 2s steps(40,end), blink 0.7s infinite;
-}
-
-@keyframes typing {
-  from {width: 0;}
-  to {width: 100%;}
-}
-
-@keyframes blink {
-  50% {border-color: transparent;}
-}
-
-/* لرزش */
+/* shake */
 .shake {
-  animation: shake 0.2s infinite;
+  animation: shake 0.25s infinite;
 }
 
 @keyframes shake {
@@ -121,7 +123,7 @@ input {
   z-index: 10;
 }
 
-/* فلش */
+/* فلاش سینمایی */
 .flash {
   position: fixed;
   width:100%;
@@ -129,14 +131,40 @@ input {
   background:white;
   opacity:0;
   pointer-events:none;
+  z-index:999;
+  transition:0.1s;
 }
 
 /* اتهامات */
 #accusations {
   margin-top: 10px;
-  line-height: 1.8;
+  line-height: 1.9;
   font-size: 15px;
 }
+
+/* کارت عکس شخصیت */
+.profile {
+  width: 180px;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid white;
+  margin-top: 10px;
+  opacity:0;
+  transform: scale(1.05);
+  transition: 1.2s ease;
+}
+
+.profile.show {
+  opacity:1;
+  transform: scale(1);
+}
+
+/* صفحه 1 پایین‌تر */
+.lowBox {
+  margin-top: 80px;
+}
+
 </style>
 </head>
 
@@ -147,7 +175,7 @@ input {
 
 <!-- 🖤 مرحله 1 -->
 <div id="s1" class="screen active" style="background-image:url('maz.png')">
-  <div class="box">
+  <div class="box lowBox">
     <h2>CASE BOARD</h2>
 
     <p>تحت نظر از مدت‌ها قبل…</p>
@@ -168,7 +196,7 @@ input {
 <!-- ⚠ مرحله 2 -->
 <div id="s2" class="screen glitch shake" style="background:black">
   <div class="box">
-    <p class="type">⚠ پرونده اشتباهی باز شد…</p>
+    <p>⚠ پرونده اشتباهی باز شد…</p>
     <p>یا شاید… همان کسی که باید می‌بود وارد شد.</p>
 
     <button onclick="next(3)">ادامه</button>
@@ -176,11 +204,13 @@ input {
 </div>
 
 <!-- 🧠 مرحله 3 -->
-<div id="s3" class="screen" style="background:#111">
+<div id="s3" class="screen" style="background-image:url('back.png')">
   <div class="box">
 
     <p class="type">نام شناسایی شد...</p>
     <h2 class="type">مطهره</h2>
+
+    <img src="mot.jpg" class="profile" id="profile">
 
     <p>سن: ۱۳۸۷/۴/۶</p>
     <p>وضعیت: تحت نظارت</p>
@@ -241,14 +271,14 @@ input {
 
 let counter = 4;
 
-/* 🔥 اتهامات تایپی سینمایی */
+/* اتهامات */
 const accList = [
   "ساختن خاطرات فراموش‌نشدنی",
   "خنداندن اطرافیان",
   "مهم شدن برای عده‌ای از افراد",
   "همیشه پشتم بود حتی وقتی همه منو مقصر می‌دونستن",
   "جا نزد وقتی خیلی‌ها رفتن...",
-  "حتی وقتی مهم نبودم براشون، اون هنوز بود..."
+  "حتی وقتی دنیا ساکت بود، اون بود..."
 ];
 
 let i = 0;
@@ -264,20 +294,26 @@ function typeAcc(){
   if(j < text.length){
     el.innerHTML += text[j];
     j++;
-    setTimeout(typeAcc, 25);
+    setTimeout(typeAcc, 22);
   } else {
     el.innerHTML += "<br><br>";
     i++;
     j = 0;
-    setTimeout(typeAcc, 700);
+    setTimeout(typeAcc, 600);
   }
 }
 
+/* فلاش */
+function flash(){
+  const f = document.getElementById("flash");
+  f.style.opacity = 0.6;
+  setTimeout(()=>f.style.opacity=0,120);
+}
+
+/* شمارنده */
 function updateCounter(){
   document.getElementById("counter").innerText = "مظنون‌ها: " + counter;
-
-  document.getElementById("flash").style.opacity = 0.4;
-  setTimeout(()=>document.getElementById("flash").style.opacity = 0,100);
+  flash();
 }
 
 function next(n){
@@ -287,13 +323,20 @@ function next(n){
   counter--;
   if(counter >= 0) updateCounter();
 
+  /* 🎬 نمایش عکس با فید */
+  if(n === 3){
+    setTimeout(()=>{
+      document.getElementById("profile").classList.add("show");
+    }, 600);
+  }
+
+  /* 🎬 شروع اتهامات */
   if(n === 4){
     setTimeout(()=>{
       document.getElementById("accusations").innerHTML = "";
-      i = 0;
-      j = 0;
+      i=0; j=0;
       typeAcc();
-    }, 800);
+    }, 900);
   }
 }
 
@@ -302,7 +345,7 @@ function checkRiddle(){
 
   if(val === "شهروک"){
     document.getElementById("msg").innerText = "درسته ✓";
-    setTimeout(()=> next(2), 800);
+    setTimeout(()=> next(2), 700);
   } else {
     document.getElementById("msg").innerText = "نادرست است ✗";
   }
