@@ -1,1 +1,121 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>CASE LOG</title>
 
+<style>
+body{
+  margin:0;
+  background:black;
+  color:#00ffcc;
+  font-family:monospace;
+  overflow:hidden;
+}
+
+/* صفحه خاموش */
+.screen{
+  width:100%;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+
+/* متن تایپ */
+#text{
+  width:80%;
+  text-align:center;
+  font-size:18px;
+  white-space:pre-line;
+}
+
+/* cursor */
+.cursor::after{
+  content:"|";
+  animation:blink 0.8s infinite;
+}
+
+@keyframes blink{
+  0%,50%{opacity:1;}
+  51%,100%{opacity:0;}
+}
+
+/* دکمه ادامه */
+.btn{
+  margin-top:30px;
+  padding:10px 20px;
+  background:red;
+  color:white;
+  border:none;
+  cursor:pointer;
+  display:none;
+}
+
+.btn:hover{
+  background:#aa0000;
+}
+</style>
+</head>
+
+<body>
+
+<div class="screen">
+  <div id="text" class="cursor"></div>
+  <button id="nextBtn" class="btn" onclick="goNext()">ادامه</button>
+</div>
+
+<script>
+
+const lines = [
+"⚠ پرونده اشتباهی باز شد...",
+"",
+"یا شاید...",
+"",
+"دقیقاً همان کسی وارد این پرونده شده که باید می‌شد."
+];
+
+let i = 0;
+let char = 0;
+let current = "";
+let box = document.getElementById("text");
+
+function type(){
+
+  if(i >= lines.length){
+    document.getElementById("nextBtn").style.display = "block";
+    return;
+  }
+
+  let line = lines[i];
+
+  if(char < line.length){
+    current += line.charAt(char);
+    box.innerHTML = current;
+    char++;
+    setTimeout(type, 40);
+  } else {
+    current += "\n";
+    box.innerHTML = current;
+    i++;
+    char = 0;
+    setTimeout(type, 800);
+  }
+}
+
+window.onload = ()=>{
+  setTimeout(type, 1200);
+
+  // اینجا اگر خواستی صدای تیک:
+  // new Audio("tick.mp3").play();
+};
+
+function goNext(){
+  window.location.href = "night.html";
+}
+
+</script>
+
+</body>
+</html>
