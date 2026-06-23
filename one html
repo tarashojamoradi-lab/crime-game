@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>DAY FILE</title>
+
+<style>
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:url("maz.png") no-repeat center center fixed;
+  background-size:cover;
+  color:white;
+  overflow:hidden;
+}
+
+/* لایه تاریک */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.75);
+}
+
+/* متن‌های تکی وسط صفحه */
+.text{
+  position:absolute;
+  top:40%;
+  width:100%;
+  text-align:center;
+  font-size:18px;
+  opacity:0;
+  transform:scale(1.05);
+}
+
+/* انیمیشن ظاهر و محو */
+.show{
+  animation: fadeText 3s forwards;
+}
+
+@keyframes fadeText{
+  0%{opacity:0;}
+  20%{opacity:1;}
+  70%{opacity:1;}
+  100%{opacity:0;}
+}
+
+/* باکس معما پایین */
+.puzzle-box{
+  position:absolute;
+  bottom:-200px;
+  left:50%;
+  transform:translateX(-50%);
+  width:80%;
+  background:rgba(0,0,0,0.85);
+  border:1px solid #444;
+  padding:15px;
+  transition:0.8s;
+}
+
+.puzzle-box.show{
+  bottom:40px;
+}
+
+input{
+  width:70%;
+  padding:10px;
+  text-align:center;
+  border:none;
+}
+
+button{
+  padding:10px;
+  background:red;
+  color:white;
+  border:none;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<!-- متن‌های یکی‌یکی -->
+<div id="t1" class="text">تحت نظر از مدت‌ها قبل...</div>
+<div id="t2" class="text">ارتباط با افراد ناشناس تأیید شد.</div>
+<div id="t3" class="text">تاریخ مهم: ۱۳۸۷/۴/۶</div>
+
+<div id="t4" class="text">
+یک شب در قطار، خواب و هذیان دست به دست هم دادند.
+</div>
+
+<div id="t5" class="text">
+بازیگر فیلمی که در سفر نهم دیده بودیم،
+با مشهورترین کارآگاه جهان یکی شد.
+</div>
+
+<div id="t6" class="text">
+حاصل این پیوند پنج‌حرفی چیست؟
+</div>
+
+<!-- باکس معما پایین -->
+<div class="puzzle-box" id="box">
+  <div>پاسخ معما:</div><br>
+  <input id="answer" placeholder="جواب...">
+  <button onclick="check()">تأیید</button>
+</div>
+
+<script>
+
+const texts = ["t1","t2","t3","t4","t5","t6"];
+
+let i = 0;
+
+function showNext(){
+  if(i > 0){
+    document.getElementById(texts[i-1]).style.opacity = 0;
+  }
+
+  if(i < texts.length){
+    let el = document.getElementById(texts[i]);
+    el.classList.add("show");
+    i++;
+
+    setTimeout(showNext, 2500);
+  } else {
+    // بعد از متن‌ها، معما بیاد پایین
+    document.getElementById("box").classList.add("show");
+  }
+}
+
+window.onload = ()=>{
+  setTimeout(showNext, 800);
+};
+
+// چک جواب
+function check(){
+  let val = document.getElementById("answer").value.trim();
+
+  if(val === "شهروک"){
+    alert("✔ دسترسی تأیید شد");
+    window.location.href = "day.html";
+  } else {
+    alert("✖ پاسخ اشتباه است");
+  }
+}
+
+</script>
+
+</body>
+</html>
