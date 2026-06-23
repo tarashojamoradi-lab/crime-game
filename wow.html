@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>SUBJECT FILE</title>
+
+<style>
+body{
+  margin:0;
+  background:black;
+  color:white;
+  font-family:sans-serif;
+  overflow:hidden;
+}
+
+.container{
+  width:100%;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.file{
+  width:80%;
+  max-width:800px;
+  border:1px solid #333;
+  background:#0b0b0b;
+  padding:25px;
+  box-shadow:0 0 40px rgba(0,0,0,0.8);
+  position:relative;
+}
+
+.photo{
+  position:absolute;
+  top:20px;
+  right:20px;
+  width:120px;
+  height:160px;
+  background:url("maz.jpg") no-repeat center center;
+  background-size:cover;
+  border:2px solid white;
+  filter:contrast(1.1) brightness(0.9);
+}
+
+.title{
+  font-size:18px;
+  margin-bottom:15px;
+  color:#ff3b3b;
+  letter-spacing:1px;
+}
+
+.text{
+  font-size:15px;
+  line-height:2;
+  margin-bottom:10px;
+}
+
+.list div{
+  margin-bottom:8px;
+  opacity:0.9;
+}
+
+.note{
+  margin-top:20px;
+  padding-top:15px;
+  border-top:1px solid #333;
+  font-size:14px;
+  color:#ccc;
+  line-height:2;
+}
+
+/* دکمه ادامه */
+.btn{
+  margin-top:20px;
+  padding:10px 20px;
+  background:red;
+  color:white;
+  border:none;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.btn:hover{
+  background:#aa0000;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="file">
+
+    <div class="photo"></div>
+
+    <div class="title">پرونده شماره BD-XXXX</div>
+
+    <div class="text"><b>مظنون:</b> [اسم دختر]</div>
+
+    <div class="text"><b>اتهامات:</b></div>
+
+    <div class="list">
+      <div>• ساختن خاطرات فراموش‌نشدنی</div>
+      <div>• خنداندن اطرافیان</div>
+      <div>• مهم شدن برای عده‌ای از افراد</div>
+      <div>• اضافه کردن یک سال جدید به زندگی خود</div>
+    </div>
+
+    <div class="note">
+
+      مطهره...<br><br>
+
+      همیشه پشتم بودی حتی وقتی همه منو مقصر می‌دونستن.<br>
+      خیلی وقتا تو منو باور داشتی و کلا جا نزدی.<br>
+      وقتایی که خیلیای دیگه براشون مهم نبود…<br><br>
+
+      این پرونده برای محکوم کردن نبود.<br>
+      برای ثبت کردن بود.
+
+    </div>
+
+    <!-- دکمه ادامه -->
+    <button class="btn" onclick="goNext()">ادامه</button>
+
+  </div>
+
+</div>
+
+<script>
+function goNext(){
+  window.location.href = "bar.html";
+}
+</script>
+
+</body>
+</html>
