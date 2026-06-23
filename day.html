@@ -2,7 +2,7 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>CASE LOG</title>
+<title>CASE ERROR</title>
 
 <style>
 body{
@@ -11,9 +11,21 @@ body{
   color:#00ffcc;
   font-family:monospace;
   overflow:hidden;
+  transition:0.1s;
 }
 
-/* صفحه خاموش */
+/* افکت هک (فلش سریع) */
+.flash{
+  animation: flashAnim 0.12s infinite;
+}
+
+@keyframes flashAnim{
+  0%{background:black; filter:brightness(0.2);}
+  50%{background:#111; filter:brightness(1.8);}
+  100%{background:black; filter:brightness(0.3);}
+}
+
+/* صفحه */
 .screen{
   width:100%;
   height:100vh;
@@ -31,17 +43,6 @@ body{
   white-space:pre-line;
 }
 
-/* cursor */
-.cursor::after{
-  content:"|";
-  animation:blink 0.8s infinite;
-}
-
-@keyframes blink{
-  0%,50%{opacity:1;}
-  51%,100%{opacity:0;}
-}
-
 /* دکمه ادامه */
 .btn{
   margin-top:30px;
@@ -52,17 +53,13 @@ body{
   cursor:pointer;
   display:none;
 }
-
-.btn:hover{
-  background:#aa0000;
-}
 </style>
 </head>
 
 <body>
 
 <div class="screen">
-  <div id="text" class="cursor"></div>
+  <div id="text"></div>
   <button id="nextBtn" class="btn" onclick="goNext()">ادامه</button>
 </div>
 
@@ -84,6 +81,7 @@ let box = document.getElementById("text");
 function type(){
 
   if(i >= lines.length){
+    document.body.classList.remove("flash");
     document.getElementById("nextBtn").style.display = "block";
     return;
   }
@@ -94,21 +92,28 @@ function type(){
     current += line.charAt(char);
     box.innerHTML = current;
     char++;
-    setTimeout(type, 40);
+    setTimeout(type, 35);
   } else {
     current += "\n";
     box.innerHTML = current;
     i++;
     char = 0;
-    setTimeout(type, 800);
+    setTimeout(type, 700);
   }
 }
 
 window.onload = ()=>{
-  setTimeout(type, 1200);
 
-  // اینجا اگر خواستی صدای تیک:
-  // new Audio("tick.mp3").play();
+  // شروع افکت هک
+  document.body.classList.add("flash");
+
+  // لرزش نوری تصادفی برای حس هک
+  setInterval(()=>{
+    let r = Math.random();
+    document.body.style.filter = `brightness(${0.3 + r}) contrast(${1 + r})`;
+  }, 80);
+
+  setTimeout(type, 1200);
 };
 
 function goNext(){
