@@ -14,10 +14,12 @@ body {
   transition: 0.2s;
 }
 
+/* سیاه و سفید لحظه‌ای */
 body.flashBW {
   filter: grayscale(1);
 }
 
+/* صفحه‌ها */
 .screen {
   display: none;
   width: 100vw;
@@ -35,6 +37,12 @@ body.flashBW {
 
 .active {
   display: flex;
+  animation: fadeIn 1.2s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity:0; transform: scale(1.03);}
+  to {opacity:1; transform: scale(1);}
 }
 
 .screen::before {
@@ -52,23 +60,40 @@ body.flashBW {
   padding: 20px;
   border-radius: 14px;
   max-width: 80%;
+  backdrop-filter: blur(6px);
   z-index:2;
 }
 
-.lowBox { margin-top: 170px; }
-
-.glitch { animation: flicker 0.12s infinite; }
-@keyframes flicker { 0%{opacity:1;} 50%{opacity:0.3;} 100%{opacity:1;} }
-
-.shake { animation: shake 0.25s infinite; }
-@keyframes shake {
-  0%{transform:translate(1px,1px);}
-  25%{transform:translate(-1px,2px);}
-  50%{transform:translate(-2px,-1px);}
-  75%{transform:translate(2px,1px);}
-  100%{transform:translate(1px,-1px);}
+/* پایین‌تر شدن صفحه اول */
+.lowBox {
+  margin-top: 170px;
 }
 
+/* glitch */
+.glitch {
+  animation: flicker 0.12s infinite;
+}
+
+@keyframes flicker {
+  0% {opacity:1;}
+  50% {opacity:0.3;}
+  100% {opacity:1;}
+}
+
+/* shake */
+.shake {
+  animation: shake 0.25s infinite;
+}
+
+@keyframes shake {
+  0% {transform: translate(1px,1px);}
+  25% {transform: translate(-1px,2px);}
+  50% {transform: translate(-2px,-1px);}
+  75% {transform: translate(2px,1px);}
+  100% {transform: translate(1px,-1px);}
+}
+
+/* فلاش */
 .flash {
   position: fixed;
   width:100%;
@@ -80,34 +105,41 @@ body.flashBW {
   transition:0.1s;
 }
 
+/* اتهامات */
 #accusations {
   margin-top: 10px;
   line-height: 1.9;
+  font-size: 15px;
 }
 
+/* عکس */
 .profile {
   width: 180px;
   height: 240px;
   object-fit: cover;
   border-radius: 10px;
   border: 2px solid white;
+  margin-top: 10px;
   opacity:0;
-  transition:1s;
+  transition: 1s;
 }
 
+/* گوشه‌ای شدن در صفحه 3 */
 #s3 .profile.show {
-  position:absolute;
-  top:20px;
-  left:20px;
-  width:120px;
-  height:160px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 120px;
+  height: 160px;
 }
 
 .counter {
-  position:absolute;
-  top:10px;
-  right:10px;
-  font-size:14px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 14px;
+  opacity: 0.8;
+  z-index: 10;
 }
 </style>
 </head>
@@ -115,41 +147,41 @@ body.flashBW {
 <body>
 
 <div class="flash" id="flash"></div>
-<div class="counter">مظنون‌ها: 4</div>
+<div id="counter" class="counter">مظنون‌ها: 4</div>
 
-<!-- صفحه 1 -->
+<!-- 🖤 صفحه 1 -->
 <div id="s1" class="screen active" style="background-image:url('maz.png')">
   <div class="box lowBox">
 
     <h2>CASE BOARD</h2>
 
-    <!-- فقط اضافه شد -->
-    <p>تحت نظر از مدت ها قبل...</p>
-    <p>ارتباط با افراد ناشناس تایید شد.</p>
-    <p>تاریخ مهم: ۱۳۸۷/۴/۶</p>
-
-    <h3>عملیات:</h3>
-
     <p>
-      یک شب در قطار، خواب و هذیان...<br>
-      سوال معما...
+      یک شب در قطار، خواب و هذیان دست به دست هم دادند.<br>
+      بازیگر فیلمی که در سفر نهم دیده بودیم،<br>
+      با مشهورترین کارآگاه جهان یکی شد.<br>
+      حاصل این پیوند پنج‌حرفی چیست؟
     </p>
 
-    <input id="riddle">
+    <input id="riddle" placeholder="پاسخ">
+    <br>
     <button onclick="checkRiddle()">ورود به پرونده</button>
+
+    <p id="msg"></p>
 
   </div>
 </div>
 
-<!-- صفحه 2 -->
+<!-- ⚠ صفحه 2 -->
 <div id="s2" class="screen glitch shake" style="background:black">
   <div class="box">
     <p>⚠ پرونده اشتباهی باز شد…</p>
+    <p>یا شاید… همان کسی که باید می‌بود وارد شد.</p>
+
     <button onclick="next(3)">ادامه</button>
   </div>
 </div>
 
-<!-- صفحه 3 -->
+<!-- 🧠 صفحه 3 -->
 <div id="s3" class="screen" style="background-image:url('back.png')">
   <div class="box">
 
@@ -164,7 +196,7 @@ body.flashBW {
   </div>
 </div>
 
-<!-- صفحه 4 -->
+<!-- 📁 صفحه 4 -->
 <div id="s4" class="screen" style="background-image:url('mot.jpg')">
   <div class="box">
 
@@ -175,45 +207,28 @@ body.flashBW {
     <p>اتهامات:</p>
     <p id="accusations"></p>
 
-    <!-- فقط اضافه شد -->
-    <button onclick="next(5)">مشاهده مدرک نهایی</button>
-
-  </div>
-</div>
-
-<!-- صفحه 5 (فقط اضافه طبق خواسته تو) -->
-<div id="s5" class="screen" style="background:black">
-  <div class="box">
-
-    <p>
-      تمام سرنخ‌ها از اول به یک نفر ختم می‌شد...<br>
-      نه مجرم.. نه قربانی...<br>
-      فقط کسی که ارزش ساختن یک پرونده برایش وجود داشت.
-    </p>
-
-    <p style="margin-top:15px;">
-      این پرونده برای پیدا کردن قاتل نبود.. برای یادآوری آن بود که بعضی آدم‌ها آنقدر مهم اند که ارزش ساخت یک پرونده محرمانه را دارند.
-    </p>
-
-    <h3>تولدت مبارک مطهره♥️</h3>
-
   </div>
 </div>
 
 <script>
 
-let i=0, j=0;
+let counter = 4;
 
 const accList = [
   "ساختن خاطرات فراموش‌نشدنی",
   "خنداندن اطرافیان",
-  "مهم شدن برای عده‌ای",
-  "همیشه پشتم بود...",
-  "جا نزد وقتی خیلی‌ها رفتن..."
+  "مهم شدن برای عده‌ای از افراد",
+  "همیشه پشتم بود حتی وقتی همه منو مقصر می‌دونستن",
+  "جا نزد وقتی خیلی‌ها رفتن...",
+  "حتی وقتی دنیا ساکت بود، اون بود...",
+  "مطهره... همیشه پشتم بودی حتی وقتی همه منو مقصر می‌دونستن، خیلی وقتا تو منو باور داشتی و کلا جا نزدی وقتایی که خیلیای دیگه براشون مهم نبود..."
 ];
+
+let i=0, j=0;
 
 function typeAcc(){
   const el = document.getElementById("accusations");
+
   if(i >= accList.length) return;
 
   let text = accList[i];
@@ -229,24 +244,45 @@ function typeAcc(){
   }
 }
 
+/* فلش */
+function flashFX(){
+  const f = document.getElementById("flash");
+  f.style.opacity = 0.7;
+  setTimeout(()=>f.style.opacity=0,120);
+}
+
+/* تغییر صفحه */
 function next(n){
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
   document.getElementById("s"+n).classList.add("active");
 
+  if(n === 2){
+    document.body.classList.add("flashBW");
+    flashFX();
+    setTimeout(()=>document.body.classList.remove("flashBW"), 400);
+  }
+
   if(n === 3){
-    setTimeout(()=>document.getElementById("profile").classList.add("show"),600);
+    setTimeout(()=>{
+      document.getElementById("profile").classList.add("show");
+    }, 600);
   }
 
   if(n === 4){
-    document.getElementById("accusations").innerHTML="";
-    i=0; j=0;
-    typeAcc();
+    setTimeout(()=>{
+      document.getElementById("accusations").innerHTML="";
+      i=0; j=0;
+      typeAcc();
+    }, 800);
   }
 }
 
 function checkRiddle(){
   let val = document.getElementById("riddle").value.trim();
-  if(val === "شهروک") next(2);
+
+  if(val === "شهروک"){
+    setTimeout(()=>next(2), 600);
+  }
 }
 
 </script>
