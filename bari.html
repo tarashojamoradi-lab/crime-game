@@ -13,7 +13,7 @@ body{
   overflow:hidden;
 }
 
-/* بک‌گراند بدون محو */
+/* بک‌گراند کامل */
 .bg{
   position:fixed;
   inset:0;
@@ -22,7 +22,7 @@ body{
   z-index:-2;
 }
 
-/* لایه تیره */
+/* لایه تار */
 .overlay{
   position:fixed;
   inset:0;
@@ -49,31 +49,44 @@ body{
   transition:1s;
 }
 
-/* کیس کلوزد فول اسکرین */
+/* CASE CLOSED واقعی */
 #closed{
   position:fixed;
   inset:0;
   display:flex;
   justify-content:center;
   align-items:center;
-  font-size:50px;
+  font-size:70px;
   font-weight:bold;
+  color:red;
+  background:rgba(0,0,0,0.9);
   opacity:0;
-  background:rgba(0,0,0,0.7);
-  z-index:10;
+  z-index:999;
 }
 
-/* لرزش */
+/* لرزش واقعی */
 .shake{
-  animation: shake 0.1s infinite;
+  animation: shake 0.08s infinite;
 }
 
 @keyframes shake{
   0%{transform:translate(0,0);}
-  25%{transform:translate(2px,-2px);}
-  50%{transform:translate(-2px,2px);}
-  75%{transform:translate(2px,2px);}
+  25%{transform:translate(5px,-5px);}
+  50%{transform:translate(-5px,5px);}
+  75%{transform:translate(5px,5px);}
   100%{transform:translate(0,0);}
+}
+
+/* پایان */
+#end{
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  opacity:0;
+  transition:1.5s;
 }
 </style>
 </head>
@@ -86,13 +99,9 @@ body{
 <div class="container">
 
   <div id="t1" class="text">تحقیقات تکمیل شد…</div>
-
   <div id="t2" class="text">نتیجه:</div>
-
   <div id="t3" class="text">مظنون مجرم نیست.</div>
-
   <div id="t4" class="text">قربانی هم نیست.</div>
-
   <div id="t5" class="text">پس چرا این پرونده تشکیل شد؟</div>
 
 </div>
@@ -101,8 +110,8 @@ body{
 <div id="closed">CASE CLOSED</div>
 
 <!-- پایان -->
-<div id="end" class="container" style="opacity:0;">
-  <div class="text" id="finalText">
+<div id="end">
+  <div class="text">
     تمام سرنخ‌ها از ابتدا به یک نفر ختم می‌شد…<br><br>
 
     نه یک مجرم.<br>
@@ -114,41 +123,46 @@ body{
   </div>
 </div>
 
+<!-- صدا -->
+<audio id="sound" src="stamp.mp3"></audio>
+
 <script>
 
 const texts = ["t1","t2","t3","t4","t5"];
 let i = 0;
 
-function showText(){
+function show(){
 
   if(i < texts.length){
     document.getElementById(texts[i]).style.opacity = 1;
     i++;
-
-    setTimeout(showText, 2200);
+    setTimeout(show, 2000);
   } else {
-    triggerCaseClosed();
+    triggerClosed();
   }
 }
 
-function triggerCaseClosed(){
+function triggerClosed(){
 
   let closed = document.getElementById("closed");
-  closed.style.opacity = 1;
+  let sound = document.getElementById("sound");
 
+  // صدا
+  sound.play();
+
+  // نمایش ناگهانی
+  closed.style.opacity = 1;
   document.body.classList.add("shake");
 
-  // بعد از 2.5 ثانیه محو
   setTimeout(()=>{
     closed.style.opacity = 0;
     document.body.classList.remove("shake");
 
-    showFinal();
+    showEnd();
   }, 2500);
 }
 
-function showFinal(){
-
+function showEnd(){
   document.querySelector(".container").style.opacity = 0;
 
   setTimeout(()=>{
@@ -157,7 +171,7 @@ function showFinal(){
 }
 
 window.onload = ()=>{
-  setTimeout(showText, 1200);
+  setTimeout(show, 1200);
 };
 
 </script>
