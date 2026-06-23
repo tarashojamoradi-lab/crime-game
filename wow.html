@@ -9,8 +9,19 @@ body{
   margin:0;
   background:black;
   color:white;
-  font-family:sans-serif;
+  font-family:"Tahoma","Vazirmatn","Arial";
+  direction:rtl; /* 👈 مهم: راست به چپ */
   overflow:hidden;
+}
+
+/* بک‌گراند */
+.bg{
+  position:fixed;
+  inset:0;
+  background:url("back.png") no-repeat center center;
+  background-size:cover;
+  filter:blur(6px) brightness(0.3);
+  z-index:-1;
 }
 
 .container{
@@ -31,46 +42,49 @@ body{
   position:relative;
 }
 
+/* عکس متهم */
 .photo{
   position:absolute;
   top:20px;
   right:20px;
   width:120px;
   height:160px;
-  background:url("maz.jpg") no-repeat center center;
+  background:url("mot.jpg") no-repeat center center;
   background-size:cover;
   border:2px solid white;
-  filter:contrast(1.1) brightness(0.9);
 }
 
+/* تیتر */
 .title{
-  font-size:18px;
+  font-size:20px; /* 👈 کمی درشت‌تر */
   margin-bottom:15px;
   color:#ff3b3b;
-  letter-spacing:1px;
 }
 
+/* متن‌ها */
 .text{
-  font-size:15px;
+  font-size:17px; /* 👈 درشت‌تر و خواناتر */
   line-height:2;
   margin-bottom:10px;
 }
 
+/* لیست */
 .list div{
   margin-bottom:8px;
-  opacity:0.9;
+  font-size:16px;
 }
 
+/* متن احساسی */
 .note{
   margin-top:20px;
   padding-top:15px;
   border-top:1px solid #333;
-  font-size:14px;
+  font-size:15px;
   color:#ccc;
   line-height:2;
 }
 
-/* دکمه ادامه */
+/* دکمه */
 .btn{
   margin-top:20px;
   padding:10px 20px;
@@ -88,6 +102,8 @@ body{
 </head>
 
 <body>
+
+<div class="bg"></div>
 
 <div class="container">
 
@@ -109,7 +125,6 @@ body{
     </div>
 
     <div class="note">
-
       مطهره...<br><br>
 
       همیشه پشتم بودی حتی وقتی همه منو مقصر می‌دونستن.<br>
@@ -118,10 +133,8 @@ body{
 
       این پرونده برای محکوم کردن نبود.<br>
       برای ثبت کردن بود.
-
     </div>
 
-    <!-- دکمه ادامه -->
     <button class="btn" onclick="goNext()">ادامه</button>
 
   </div>
