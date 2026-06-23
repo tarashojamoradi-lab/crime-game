@@ -9,8 +9,7 @@ body{
   margin:0;
   background:black;
   color:white;
-  font-family:"Tahoma","Vazirmatn","Arial";
-  direction:rtl; /* 👈 مهم: راست به چپ */
+  font-family:sans-serif;
   overflow:hidden;
 }
 
@@ -42,49 +41,46 @@ body{
   position:relative;
 }
 
-/* عکس متهم */
+/* 👇 فقط جابجایی عکس به راست (واضح‌تر) */
 .photo{
   position:absolute;
   top:20px;
-  right:20px;
+  right:20px; /* تأکید روی سمت راست */
   width:120px;
   height:160px;
   background:url("mot.jpg") no-repeat center center;
   background-size:cover;
   border:2px solid white;
+  filter:contrast(1.1) brightness(0.9);
 }
 
-/* تیتر */
 .title{
-  font-size:20px; /* 👈 کمی درشت‌تر */
+  font-size:18px;
   margin-bottom:15px;
   color:#ff3b3b;
 }
 
-/* متن‌ها */
 .text{
-  font-size:17px; /* 👈 درشت‌تر و خواناتر */
+  font-size:15px;
   line-height:2;
   margin-bottom:10px;
 }
 
-/* لیست */
 .list div{
   margin-bottom:8px;
-  font-size:16px;
+  opacity:0.9;
 }
 
-/* متن احساسی */
 .note{
   margin-top:20px;
   padding-top:15px;
   border-top:1px solid #333;
-  font-size:15px;
+  font-size:14px;
   color:#ccc;
   line-height:2;
 }
 
-/* دکمه */
+/* دکمه ادامه */
 .btn{
   margin-top:20px;
   padding:10px 20px;
@@ -143,7 +139,7 @@ body{
 
 <script>
 function goNext(){
-  window.location.href = "bar.html";
+  window.location.href = "bari.html";
 }
 </script>
 
