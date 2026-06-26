@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
+
+<title>Clown Phone</title>
+
+<link rel="stylesheet" href="phone.css">
+
+</head>
+
+<body>
+
+<div class="phone">
+
+<div class="screen">
+
+<!-- والپیپر -->
+
+<img
+src="oh.png"
+class="wallpaper">
+
+<!-- لایه تیره -->
+
+<div class="dark-layer"></div>
+
+<!-- Status Bar -->
+
+<div class="status-bar">
+
+<div class="left-status">
+
+<span id="clock">
+22:41
+</span>
+
+</div>
+
+<div class="right-status">
+
+<span class="signal">
+📶
+</span>
+
+<span class="network">
+4G
+</span>
+
+<span class="wifi">
+📡
+</span>
+
+<span class="battery">
+87%
+🔋
+</span>
+
+</div>
+
+</div>
+
+<!-- وسط صفحه -->
+
+<div class="lock-center">
+
+<div class="lock-title">
+
+Harley's Phone
+
+</div>
+
+<div class="lock-date"
+id="date">
+
+Friday
+
+</div>
+
+<div class="lock-time"
+id="bigClock">
+
+22:41
+
+</div>
+
+</div>
+
+<!-- نوتیفیکیشن -->
+
+<div class="notifications">
+
+<div class="notify">
+
+🎭
+۱ پیام خوانده نشده
+
+</div>
+
+</div>
+
+<!-- قسمت Pattern -->
+
+<div class="pattern-area">
+
+<div id="pattern">
+
+<!--
+در قسمت بعد
+۹ نقطه واقعی
+اینجا قرار می‌گیرند
+-->
+
+</div>
+  <div id="pattern" class="pattern-grid">
+
+<div class="pattern-dot" data-id="1"></div>
+<div class="pattern-dot" data-id="2"></div>
+<div class="pattern-dot" data-id="3"></div>
+
+<div class="pattern-dot" data-id="4"></div>
+<div class="pattern-dot" data-id="5"></div>
+<div class="pattern-dot" data-id="6"></div>
+
+<div class="pattern-dot" data-id="7"></div>
+<div class="pattern-dot" data-id="8"></div>
+<div class="pattern-dot" data-id="9"></div>
+
+<svg
+id="patternLines"
+class="pattern-lines"
+width="100%"
+height="100%">
+
+<polyline
+id="line"
+points=""
+fill="none"
+stroke="#ffffff"
+stroke-width="8"
+stroke-linecap="round"
+stroke-linejoin="round"/>
+
+</svg>
+
+</div>
+
+<!-- دکمه اضطراری -->
+
+<div class="emergency-button">
+
+☎ تماس اضطراری
+
+</div>
+
+<!-- دوربین -->
+
+<div class="camera-shortcut">
+
+📷
+
+</div>
+
+<!-- چراغ قوه -->
+
+<div class="flash-shortcut">
+
+🔦
+
+</div>
+
+<!-- اثر نور روی صفحه -->
+
+<div class="screen-light"></div>
+
+<!-- افکت روشن بودن OLED -->
+
+<div class="oled-overlay"></div>
+
+<!-- صدای ویبره -->
+
+<audio
+id="unlockSound">
+
+<source
+src="unlock.mp3"
+type="audio/mpeg">
+
+</audio>
+
+<audio
+id="errorSound">
+
+<source
+src="error.mp3"
+type="audio/mpeg">
+
+</audio>
+
+</div>
+
+</div>
+
+<script src="phone.js"></script>
+
+</body>
+
+</html>
+
+</div>
+
+<!-- پایین صفحه -->
+
+<div class="bottom-text">
+
+برای باز کردن قفل
+الگو را رسم کنید
+
+</div>
+
+</div>
+
+</div>
+
+<script src="phone.js"></script>
+
+</body>
+
+</html>
