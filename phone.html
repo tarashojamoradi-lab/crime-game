@@ -132,6 +132,27 @@ body{
   color:white;
   padding:20px;
 }
+
+/* ===== NEW: FAKE NOTIFICATION ===== */
+#notif{
+  position:absolute;
+  top:110px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(20,20,20,0.9);
+  padding:10px 14px;
+  border-radius:12px;
+  font-size:12px;
+  z-index:5;
+  display:none;
+  animation:fadeIn 0.5s ease;
+  border:1px solid rgba(255,255,255,0.1);
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateX(-50%) translateY(-10px);}
+  to{opacity:1; transform:translateX(-50%) translateY(0);}
+}
 </style>
 </head>
 
@@ -153,6 +174,9 @@ body{
       <div id="time">00:00</div>
       <div id="date">---</div>
     </div>
+
+    <!-- NEW NOTIFICATION -->
+    <div id="notif">📩 Message from Unknown: "Don't unlock it..."</div>
 
     <!-- PATTERN -->
     <div id="patternBox">
@@ -194,6 +218,11 @@ function updateTime(){
 }
 setInterval(updateTime,1000);
 updateTime();
+
+/* ===== SHOW FAKE NOTIFICATION ===== */
+setTimeout(()=>{
+  document.getElementById("notif").style.display = "block";
+}, 2000);
 
 /* ===== PATTERN ===== */
 const correctPattern = ["1","4","7","5","3","6","9"];
