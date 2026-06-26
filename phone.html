@@ -323,9 +323,11 @@ function reset(){
   dots.forEach(d=>d.classList.remove("active"));
 }
 
-function unlock(){
+  function unlock(){
   document.getElementById("lock").style.display = "none";
   document.getElementById("home").style.display = "block";
+
+  window.location.href = "home.html";
 }
 
 </script>
