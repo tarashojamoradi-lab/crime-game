@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camera</title>
+
+<style>
+body{
+  margin:0;
+  background:black;
+  overflow:hidden;
+  font-family:sans-serif;
+}
+
+/* CAMERA */
+video{
+  width:100vw;
+  height:100vh;
+  object-fit:cover;
+  transform:scaleX(-1);
+}
+
+/* VHS NOISE */
+#vhs{
+  position:fixed;
+  inset:0;
+  background:url("https://i.imgur.com/3ZQ3Z9m.gif");
+  opacity:0;
+  mix-blend-mode:screen;
+  pointer-events:none;
+}
+
+/* SHAKE */
+.shake{
+  animation: shake 0.1s infinite;
+}
+
+@keyframes shake{
+  0%{transform:translate(0,0)}
+  25%{transform:translate(2px,-2px)}
+  50%{transform:translate(-2px,2px)}
+  75%{transform:translate(2px,2px)}
+  100%{transform:translate(0,0)}
+}
+
+/* FLASH (blink effect) */
+.flash{
+  position:fixed;
+  inset:0;
+  background:white;
+  opacity:0;
+  pointer-events:none;
+}
+
+/* CLOWN random frames */
+#clown{
+  position:fixed;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  opacity:0;
+  pointer-events:none;
+}
+
+/* ghost overlay behind user */
+#ghost{
+  position:fixed;
+  inset:0;
+  background:url("https://i.imgur.com/8QfQX9Q.png") center/cover no-repeat;
+  opacity:0;
+  mix-blend-mode:screen;
+  pointer-events:none;
+  filter:blur(1px);
+}
+
+/* black message screen */
+#black{
+  position:fixed;
+  inset:0;
+  background:black;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:18px;
+  opacity:0;
+  padding:20px;
+}
+</style>
+</head>
+
+<body>
+
+<video id="cam" autoplay></video>
+
+<div id="vhs"></div>
+<div id="ghost"></div>
+<div id="clown"></div>
+<div id="flash"></div>
+<div id="black"></div>
+
+<audio id="laugh" src="https://www.soundjay.com/human/sounds/laugh-1.mp3"></audio>
+
+<script>
+
+const video = document.getElementById("cam");
+const vhs = document.getElementById("vhs");
+const ghost = document.getElementById("ghost");
+const clown = document.getElementById("clown");
+const flash = document.getElementById("flash");
+const black = document.getElementById("black");
+const laugh = document.getElementById("laugh");
+
+// CAMERA START
+navigator.mediaDevices.getUserMedia({ video:true })
+.then(stream=>{
+  video.srcObject = stream;
+})
+.catch(()=>{
+  alert("Camera access denied");
+});
+
+// ghost always faintly visible
+setTimeout(()=>{
+  ghost.style.opacity = "0.15";
+}, 2000);
+
+// sequence start
+setTimeout(()=>{
+
+  // VHS ON
+  vhs.style.opacity = "0.8";
+
+  // SHAKE ON
+  document.body.classList.add("shake");
+
+  // FLASH BLINK
+  let blinkCount = 0;
+  const blink = setInterval(()=>{
+    flash.style.opacity = "1";
+    setTimeout(()=> flash.style.opacity="0", 80);
+    blinkCount++;
+    if(blinkCount > 6) clearInterval(blink);
+  }, 300);
+
+  // random clown frames
+  const clownImages = [
+    "https://i.imgur.com/8QfQX9Q.png",
+    "https://i.imgur.com/6YQZ1aB.png",
+    "https://i.imgur.com/2pQ9H0m.png"
+  ];
+
+  let clownInterval = setInterval(()=>{
+    clown.style.backgroundImage = `url('${clownImages[Math.floor(Math.random()*clownImages.length)]}')`;
+    clown.style.opacity = "1";
+
+    setTimeout(()=>{
+      clown.style.opacity = "0";
+    }, 200);
+
+  }, 400);
+
+  // sound laugh
+  laugh.volume = 1;
+  laugh.play();
+
+  // STOP AFTER 3.5 sec
+  setTimeout(()=>{
+
+    clearInterval(clownInterval);
+    document.body.classList.remove("shake");
+    vhs.style.opacity = "0";
+
+    clown.style.opacity = "0";
+    ghost.style.opacity = "0.4";
+
+    // BLACK SCREEN MESSAGE
+    black.style.opacity = "1";
+    black.innerHTML = "او متوجه شد که به پرونده نگاه کردی.";
+
+    setTimeout(()=>{
+      black.style.opacity = "0";
+    }, 3000);
+
+  }, 3500);
+
+}, 3000);
+
+</script>
+
+</body>
+</html>
