@@ -203,7 +203,7 @@ body{
 
   <div class="chat" onclick="openChat('rose.html')">
     <div class="left">
-      <img src="dar.png" class="avatar" onclick="openImg(event,'dar.png')">
+      <img src="dar.jpg" class="avatar" onclick="openImg(event,'dar.jpg')">
       <div>
         <div class="name">گل سفید</div>
         <div class="preview">دیر گفتی</div>
@@ -221,12 +221,10 @@ body{
 
 <script>
 
-/* NAV */
 function openChat(url){
   window.location.href = url;
 }
 
-/* NOTIF AUTO SHOW + AUTO HIDE */
 setTimeout(()=>{
   const n=document.getElementById("notif");
   n.classList.add("show");
@@ -237,12 +235,10 @@ setTimeout(()=>{
 
 },2000);
 
-/* NOTIF CLICK */
 document.getElementById("notif").addEventListener("click",()=>{
   window.location.href="joke.html";
 });
 
-/* IMAGE ZOOM */
 function openImg(e,src){
   e.stopPropagation();
   document.getElementById("modal").style.display="flex";
