@@ -32,7 +32,7 @@ body{
   color:white;
 }
 
-/* dark overlay like real phones */
+/* dark overlay */
 #lock::before{
   content:"";
   position:absolute;
@@ -40,7 +40,23 @@ body{
   background:rgba(0,0,0,0.45);
 }
 
-/* content on top */
+/* ===== STATUS BAR ===== */
+#statusBar{
+  position:absolute;
+  top:10px;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:space-between;
+  padding:0 15px;
+  font-size:12px;
+  opacity:0.9;
+  z-index:3;
+  color:white;
+  font-weight:300;
+}
+
+/* ===== TOP TIME ===== */
 #top{
   position:relative;
   margin-top:80px;
@@ -59,7 +75,7 @@ body{
   opacity:0.8;
 }
 
-/* ===== PATTERN AREA ===== */
+/* ===== PATTERN ===== */
 #patternBox{
   position:relative;
   z-index:2;
@@ -94,7 +110,7 @@ body{
   opacity:0.7;
 }
 
-/* shake animation */
+/* shake */
 .shake{
   animation:shake 0.3s;
 }
@@ -107,7 +123,7 @@ body{
   100%{transform:translateX(0)}
 }
 
-/* ===== HOME SCREEN ===== */
+/* ===== HOME ===== */
 #home{
   position:absolute;
   inset:0;
@@ -123,9 +139,16 @@ body{
 
 <div id="phone">
 
-  <!-- LOCK SCREEN -->
+  <!-- LOCK -->
   <div id="lock">
 
+    <!-- STATUS BAR -->
+    <div id="statusBar">
+      <div class="left">📶 LTE</div>
+      <div class="right">📡 📶 🔋 85%</div>
+    </div>
+
+    <!-- TIME -->
     <div id="top">
       <div id="time">00:00</div>
       <div id="date">---</div>
@@ -172,7 +195,7 @@ function updateTime(){
 setInterval(updateTime,1000);
 updateTime();
 
-/* ===== PATTERN LOGIC ===== */
+/* ===== PATTERN ===== */
 const correctPattern = ["1","4","7","5","3","6","9"];
 let userPattern = [];
 let drawing = false;
@@ -189,24 +212,43 @@ function addDot(dot){
   }
 }
 
-/* mouse */
+/* TOUCH + MOUSE FIX */
 dots.forEach(dot=>{
   dot.addEventListener("mousedown", ()=>{
     drawing = true;
     addDot(dot);
   });
 
-  dot.addEventListener("mouseenter", ()=>{
-    if(drawing) addDot(dot);
-  });
-
-  dot.addEventListener("touchstart", ()=>{
+  dot.addEventListener("touchstart", (e)=>{
     drawing = true;
     addDot(dot);
+    e.preventDefault();
   });
 });
 
-/* finish draw */
+/* DRAG DETECTION */
+document.addEventListener("touchmove", (e)=>{
+  if(!drawing) return;
+
+  const touch = e.touches[0];
+  const element = document.elementFromPoint(touch.clientX, touch.clientY);
+
+  if(element && element.classList.contains("dot")){
+    addDot(element);
+  }
+});
+
+document.addEventListener("mousemove", (e)=>{
+  if(!drawing) return;
+
+  const element = document.elementFromPoint(e.clientX, e.clientY);
+
+  if(element && element.classList.contains("dot")){
+    addDot(element);
+  }
+});
+
+/* END */
 document.addEventListener("mouseup", check);
 document.addEventListener("touchend", check);
 
@@ -215,7 +257,7 @@ function check(){
 
   if(userPattern.join("") === correctPattern.join("")){
     unlock();
-  }else{
+  } else {
     wrong();
   }
 
@@ -226,7 +268,7 @@ function wrong(){
   lock.classList.add("shake");
 
   if(navigator.vibrate){
-    navigator.vibrate([100,50,100]);
+    navigator.vibrate([120,60,120]);
   }
 
   setTimeout(()=>{
