@@ -53,26 +53,28 @@ video{
   pointer-events:none;
 }
 
-/* 👻 CLOWN (always present from start) */
+/* 👻 CLOWN (REAL PRESENCE BEHIND USER - FIXED CINEMATIC STYLE) */
 #clown{
   position:fixed;
   inset:0;
   background:url("https://i.imgur.com/8QfQX9Q.png") center/cover no-repeat;
-  opacity:0.22;
+  opacity:0.18;
   pointer-events:none;
   mix-blend-mode:screen;
-  filter:brightness(0.4) contrast(1.4) blur(0.8px);
+  filter:brightness(0.25) contrast(1.6) blur(1.2px);
+  transform:scale(1.1);
 }
 
-/* shadow ghost (ALWAYS from start) */
+/* shadow ghost (STRONGER DEPTH) */
 #ghost{
   position:fixed;
   inset:0;
   background:url("https://i.imgur.com/8QfQX9Q.png") center/cover no-repeat;
-  opacity:0.15;
+  opacity:0.28;
   pointer-events:none;
-  filter:blur(3px);
+  filter:blur(6px);
   mix-blend-mode:screen;
+  transform:scale(1.2);
 }
 
 /* black message */
@@ -141,34 +143,31 @@ navigator.mediaDevices.getUserMedia({ video:true })
 .then(stream=>{
   video.srcObject = stream;
 
-  // 📸 SCREENSHOT IMMEDIATELY
   setTimeout(()=>{
     const canvas = document.createElement("canvas");
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     const ctx = canvas.getContext("2d");
     ctx.drawImage(video,0,0);
-    console.log("Screenshot captured");
   }, 800);
 });
 
-// 👻 EVERYTHING APPEARS FROM START
-ghost.style.opacity = "0.25";
-clown.style.opacity = "0.2";
+// 👻 CINEMATIC PRESENCE FROM START (FIXED CORE REQUEST)
+ghost.style.opacity = "0.32";
+clown.style.opacity = "0.22";
 
-// 💻 HACK SCREEN EFFECT FROM START
-let hackText = ">>> ACCESSING CAMERA...\n>>> DEVICE CONNECTED\n>>> USER DETECTED\n>>> UPLOADING FRAME...\n>>> WARNING: UNKNOWN PRESENCE DETECTED";
-hack.innerText = hackText;
+// 💻 HACK SCREEN
+hack.innerText =
+">>> ACCESSING CAMERA...\n>>> DEVICE CONNECTED\n>>> USER DETECTED\n>>> WARNING: UNKNOWN PRESENCE BEHIND YOU";
 
-// VHS START IMMEDIATELY
+// VHS FROM START
 vhs.style.opacity = "0.6";
 
-// 😈 MUSIC AUTO PLAY (penny.mp3)
+// AUDIO AUTO PLAY
 const music = document.getElementById("music");
 music.volume = 1;
 music.play().catch(()=>{});
 
-// LAUGH START IMMEDIATELY
 laugh.volume = 1;
 laugh.play().catch(()=>{});
 
@@ -188,16 +187,14 @@ setTimeout(()=>{
   setTimeout(()=>{
 
     vhs.style.opacity = "0.9";
-    clown.style.opacity = "0.45";
-    ghost.style.opacity = "0.4";
+    clown.style.opacity = "0.35";
+    ghost.style.opacity = "0.5";
 
     black.style.opacity = "1";
-    black.innerHTML = "او از همان لحظه اول اینجا بود... پشت تو.";
+    black.innerHTML = "او از همان لحظه اول پشت تو ایستاده بود...";
 
     setTimeout(()=>{
-
       black.style.opacity = "0";
-
     }, 3500);
 
   }, 2000);
