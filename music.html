@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Music</title>
+
+<style>
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:#0b0b0b;
+  color:white;
+  overflow:hidden;
+}
+
+/* HEADER */
+#topBar{
+  padding:15px;
+  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(10px);
+  text-align:center;
+  font-size:14px;
+}
+
+/* NOW PLAYING */
+#nowPlaying{
+  text-align:center;
+  padding:20px;
+}
+
+#trackName{
+  font-size:20px;
+  transition:0.3s;
+}
+
+.glitch{
+  animation:glitch 0.3s infinite;
+}
+
+@keyframes glitch{
+  0%{transform:translate(0)}
+  25%{transform:translate(1px,-1px)}
+  50%{transform:translate(-1px,1px)}
+  75%{transform:translate(1px,1px)}
+  100%{transform:translate(0)}
+}
+
+/* CONTROLS */
+#controls{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  margin:10px;
+}
+
+button{
+  background:rgba(255,255,255,0.1);
+  border:none;
+  color:white;
+  padding:10px 15px;
+  border-radius:10px;
+  font-size:18px;
+}
+
+/* PROGRESS */
+#progress{
+  width:90%;
+  height:5px;
+  background:#333;
+  margin:20px auto;
+  border-radius:5px;
+  overflow:hidden;
+}
+
+#bar{
+  height:100%;
+  width:0%;
+  background:#ff3b3b;
+}
+
+/* PLAYLIST */
+#list{
+  height:55vh;
+  overflow-y:auto;
+  padding:10px;
+}
+
+.track{
+  padding:12px;
+  margin:8px 0;
+  background:rgba(255,255,255,0.05);
+  border-radius:10px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.track:active{
+  transform:scale(0.97);
+  background:rgba(255,255,255,0.15);
+}
+
+/* SCARY TEXT */
+#warning{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:12px;
+  opacity:0;
+  transition:0.5s;
+  color:#ff4d4d;
+}
+
+#warning.show{
+  opacity:1;
+}
+</style>
+</head>
+
+<body>
+
+<div id="topBar">🎧 Music System</div>
+
+<div id="nowPlaying">
+  <div id="trackName">هیچ آهنگی انتخاب نشده</div>
+</div>
+
+<div id="controls">
+  <button onclick="prev()">⏮</button>
+  <button onclick="toggle()">▶️/⏸</button>
+  <button onclick="next()">⏭</button>
+</div>
+
+<div id="progress">
+  <div id="bar"></div>
+</div>
+
+<div id="list"></div>
+
+<div id="warning">⚠️ این فایل صوتی رفتار غیرعادی دارد...</div>
+
+<audio id="audio"></audio>
+
+<script>
+
+const tracks = [
+"espresso.mp3",
+"romantic.mp3",
+"bauklotze.mp3",
+"dari.mp3",
+"death.mp3",
+"train.mp3",
+"mystezrious.mp3",
+"ground.mp3",
+"spaansche.mp3",
+"you..mp3",
+"put.mp3",
+"black.mp3",
+"love.mp3",
+"hunted.mp3",
+"track.mp3",
+"show.mp3",
+"chess.mp3",
+"fourth.mp3",
+"wind.mp3"
+];
+
+let index = 0;
+let audio = document.getElementById("audio");
+
+const trackName = document.getElementById("trackName");
+const bar = document.getElementById("bar");
+const warning = document.getElementById("warning");
+
+/* build list */
+tracks.forEach((t,i)=>{
+  let div = document.createElement("div");
+  div.className="track";
+  div.innerText = "🎵 " + t;
+  div.onclick = ()=>play(i);
+  document.getElementById("list").appendChild(div);
+});
+
+function play(i){
+  index = i;
+  audio.src = tracks[index];
+  audio.play();
+
+  trackName.innerText = "در حال پخش: " + tracks[index];
+
+  scaryEffects(tracks[index]);
+}
+
+/* controls */
+function toggle(){
+  if(audio.paused) audio.play();
+  else audio.pause();
+}
+
+function next(){
+  index = (index+1)%tracks.length;
+  play(index);
+}
+
+function prev(){
+  index = (index-1+tracks.length)%tracks.length;
+  play(index);
+}
+
+/* progress */
+audio.addEventListener("timeupdate", ()=>{
+  let p = (audio.currentTime / audio.duration)*100;
+  bar.style.width = p + "%";
+});
+
+/* SCARY SYSTEM */
+function scaryEffects(name){
+
+  document.body.classList.remove("glitch");
+
+  let scary = ["death.mp3","black.mp3","mystezrious.mp3","hunted.mp3","you..mp3"];
+
+  if(scary.includes(name)){
+    document.body.classList.add("glitch");
+
+    warning.classList.add("show");
+
+    if(navigator.vibrate){
+      navigator.vibrate([200,100,200]);
+    }
+
+    setTimeout(()=>{
+      warning.classList.remove("show");
+    },3000);
+
+    let texts = [
+      "⚠ این صدا نباید پخش می‌شد...",
+      "👁 کسی در حال گوش دادن است...",
+      "📡 سیگنال ناشناس شناسایی شد",
+      "☠ این فایل حذف نشده..."
+    ];
+
+    trackName.innerText = texts[Math.floor(Math.random()*texts.length)];
+  }
+}
+
+/* auto next */
+audio.onended = next;
+
+</script>
+
+</body>
+</html>
