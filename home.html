@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Device</title>
+
+<style>
+body{
+  margin:0;
+  font-family:sans-serif;
+  overflow:hidden;
+  background:black;
+}
+
+/* ===== PHONE ===== */
+#phone{
+  position:fixed;
+  inset:0;
+}
+
+/* ===== LOCK SCREEN ===== */
+#lock{
+  position:absolute;
+  inset:0;
+  background:url("oh.png") center/cover no-repeat;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  color:white;
+}
+
+#lock::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+}
+
+/* ===== STATUS BAR ===== */
+#statusBar{
+  position:absolute;
+  top:10px;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:space-between;
+  padding:0 15px;
+  font-size:12px;
+  z-index:5;
+  color:white;
+}
+
+/* ===== NOTIF ===== */
+#notif{
+  position:absolute;
+  top:80px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(30,30,30,0.9);
+  padding:10px 14px;
+  border-radius:12px;
+  font-size:12px;
+  display:none;
+  z-index:10;
+}
+
+/* ===== PATTERN ===== */
+#patternBox{
+  margin-top:120px;
+  width:240px;
+  height:240px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  z-index:2;
+}
+
+.dot{
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  border:2px solid white;
+}
+
+.dot.active{
+  background:white;
+}
+
+/* ===== HOME ===== */
+#home{
+  position:absolute;
+  inset:0;
+  background:url("red.png") center/cover no-repeat;
+  display:none;
+  flex-direction:column;
+}
+
+/* STATUS HOME */
+#homeStatus{
+  display:flex;
+  justify-content:space-between;
+  padding:10px 15px;
+  color:white;
+  font-size:12px;
+}
+
+/* ICON AREA */
+#apps{
+  flex:1;
+  overflow-y:auto;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+  padding:20px;
+}
+
+.app{
+  text-align:center;
+  color:white;
+  font-size:12px;
+}
+
+.icon{
+  width:55px;
+  height:55px;
+  background:rgba(255,255,255,0.15);
+  border-radius:15px;
+  margin:auto;
+}
+
+/* DOCK */
+#dock{
+  display:flex;
+  justify-content:space-around;
+  padding:10px;
+  background:rgba(0,0,0,0.4);
+}
+
+/* APP PAGE */
+#appPage{
+  position:absolute;
+  inset:0;
+  background:#111;
+  color:white;
+  display:none;
+  flex-direction:column;
+}
+
+#appHeader{
+  padding:15px;
+  display:flex;
+  justify-content:space-between;
+  background:#000;
+}
+
+#appContent{
+  flex:1;
+  padding:20px;
+  overflow:auto;
+}
+
+/* BACK BUTTON */
+.back{
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div id="phone">
+
+<!-- LOCK -->
+<div id="lock">
+
+  <div id="statusBar">
+    <div>📶 LTE</div>
+    <div>📡 🔋 85%</div>
+  </div>
+
+  <div id="notif">📩 پیام جدید</div>
+
+  <div id="patternBox">
+    <div class="dot" data-id="1"></div>
+    <div class="dot" data-id="2"></div>
+    <div class="dot" data-id="3"></div>
+    <div class="dot" data-id="4"></div>
+    <div class="dot" data-id="5"></div>
+    <div class="dot" data-id="6"></div>
+    <div class="dot" data-id="7"></div>
+    <div class="dot" data-id="8"></div>
+    <div class="dot" data-id="9"></div>
+  </div>
+
+</div>
+
+<!-- HOME -->
+<div id="home">
+
+  <div id="homeStatus">
+    <div>📶 LTE 4G</div>
+    <div>12:45 🔋 85%</div>
+  </div>
+
+  <div id="apps">
+
+    <div class="app" onclick="openApp('Messages')">
+      <div class="icon"></div>Messages
+    </div>
+
+    <div class="app" onclick="openApp('Phone')">
+      <div class="icon"></div>Phone
+    </div>
+
+    <div class="app" onclick="openApp('Gallery')">
+      <div class="icon"></div>Gallery
+    </div>
+
+    <div class="app" onclick="openApp('Files')">
+      <div class="icon"></div>Files
+    </div>
+
+    <div class="app" onclick="openApp('Notes')">
+      <div class="icon"></div>Notes
+    </div>
+
+    <div class="app" onclick="openApp('Browser')">
+      <div class="icon"></div>Browser
+    </div>
+
+    <div class="app" onclick="openApp('Recorder')">
+      <div class="icon"></div>Recorder
+    </div>
+
+    <div class="app" onclick="openApp('Contacts')">
+      <div class="icon"></div>Contacts
+    </div>
+
+    <div class="app" onclick="openApp('Maps')">
+      <div class="icon"></div>Maps
+    </div>
+
+    <div class="app" onclick="openApp('Settings')">
+      <div class="icon"></div>Settings
+    </div>
+
+  </div>
+
+  <div id="dock">
+    <div class="icon"></div>
+    <div class="icon"></div>
+    <div class="icon"></div>
+  </div>
+
+</div>
+
+<!-- APP PAGE -->
+<div id="appPage">
+
+  <div id="appHeader">
+    <div class="back" onclick="back()">⬅ Back</div>
+    <div id="appTitle">App</div>
+  </div>
+
+  <div id="appContent">
+    <p>Loading...</p>
+  </div>
+
+</div>
+
+</div>
+
+<script>
+
+/* ===== OPEN APP ===== */
+function openApp(name){
+  document.getElementById("home").style.display="none";
+  document.getElementById("appPage").style.display="flex";
+
+  document.getElementById("appTitle").innerText=name;
+  document.getElementById("appContent").innerHTML=
+    "<h2>"+name+"</h2><p>Data loading...</p>";
+}
+
+/* ===== BACK ===== */
+function back(){
+  document.getElementById("appPage").style.display="none";
+  document.getElementById("home").style.display="flex";
+}
+
+/* ===== UNLOCK SIMPLE ===== */
+document.querySelectorAll(".dot").forEach(d=>{
+  d.addEventListener("click",()=>{
+    d.classList.add("active");
+  });
+});
+
+</script>
+
+</body>
+</html>
