@@ -1,86 +1,105 @@
 const correctPattern = [1, 4, 7, 5, 3, 6, 9];
-let userPattern = [];
+
+let pattern = [];
+let isDrawing = false;
+let lastDot = null;
 
 const dots = document.querySelectorAll(".dot");
 const canvas = document.getElementById("patternCanvas");
 const ctx = canvas.getContext("2d");
 
-let isDrawing = false;
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
-// اندازه canvas
+// تنظیم canvas
 function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 }
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
 
-// شروع لمس
+// شروع فقط روی دات
 dots.forEach(dot => {
-  dot.addEventListener("mousedown", () => start(dot));
-  dot.addEventListener("touchstart", () => start(dot));
+  dot.addEventListener("mousedown", start);
+  dot.addEventListener("touchstart", start);
 });
 
-function start(dot) {
+function start(e) {
+  const dot = e.target;
   reset();
+
   isDrawing = true;
   addDot(dot);
 }
 
-// اضافه کردن نقطه
+// فقط اضافه کردن دات معتبر
 function addDot(dot) {
   const id = Number(dot.dataset.id);
 
-  if (!userPattern.includes(id)) {
-    userPattern.push(id);
-    dot.classList.add("active");
+  if (pattern.includes(id)) return;
+
+  pattern.push(id);
+  dot.classList.add("active");
+
+  if (lastDot) {
+    drawLine(lastDot, dot);
   }
+
+  lastDot = dot;
 }
 
-// حرکت موس / انگشت
-document.addEventListener("mousemove", e => {
+// حرکت فقط بررسی نزدیک‌ترین دات (نه elementFromPoint)
+document.addEventListener("mousemove", onMove);
+document.addEventListener("touchmove", e => onMove(e.touches[0]));
+
+function onMove(e) {
   if (!isDrawing) return;
-  handleMove(e);
-});
 
-document.addEventListener("touchmove", e => {
-  if (!isDrawing) return;
-  handleMove(e.touches[0]);
-});
+  const x = e.clientX;
+  const y = e.clientY;
 
-function handleMove(e) {
-  const element = document.elementFromPoint(e.clientX, e.clientY);
+  dots.forEach(dot => {
+    const rect = dot.getBoundingClientRect();
 
-  if (element && element.classList.contains("dot")) {
-    addDot(element);
-    drawLines();
-  }
+    const dx = rect.left + rect.width / 2;
+    const dy = rect.top + rect.height / 2;
+
+    const distance = Math.hypot(dx - x, dy - y);
+
+    // اگر خیلی نزدیک شد، انتخاب کن
+    if (distance < 25) {
+      addDot(dot);
+    }
+  });
 }
 
-// پایان لمس
-document.addEventListener("mouseup", finish);
-document.addEventListener("touchend", finish);
+// پایان
+document.addEventListener("mouseup", end);
+document.addEventListener("touchend", end);
 
-function finish() {
+function end() {
   if (!isDrawing) return;
   isDrawing = false;
 
-  if (arraysEqual(userPattern, correctPattern)) {
-    // موفقیت
+  if (isCorrect()) {
     window.location.href = "home.html";
   } else {
     vibrate();
     shake();
   }
 
-  setTimeout(reset, 500);
+  setTimeout(reset, 400);
 }
 
-// رسم خط بین نقاط
-function drawLines() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+// رسم خط دقیق بین دو نقطه
+function drawLine(dot1, dot2) {
+  const r1 = dot1.getBoundingClientRect();
+  const r2 = dot2.getBoundingClientRect();
 
-  if (userPattern.length < 2) return;
+  const x1 = r1.left + r1.width / 2;
+  const y1 = r1.top + r1.height / 2;
+
+  const x2 = r2.left + r2.width / 2;
+  const y2 = r2.top + r2.height / 2;
 
   ctx.beginPath();
   ctx.strokeStyle = "#00ffd5";
@@ -88,28 +107,19 @@ function drawLines() {
   ctx.shadowBlur = 10;
   ctx.shadowColor = "#00ffd5";
 
-  for (let i = 0; i < userPattern.length; i++) {
-    const dot = document.querySelector(`.dot[data-id="${userPattern[i]}"]`);
-    const rect = dot.getBoundingClientRect();
-
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height / 2;
-
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  }
-
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
   ctx.stroke();
 }
 
-// ویبره خطا
+// ویبره
 function vibrate() {
   if (navigator.vibrate) {
     navigator.vibrate([200, 100, 200]);
   }
 }
 
-// لرزش صفحه
+// لرزش
 function shake() {
   const screen = document.querySelector(".screen");
   screen.classList.add("shake");
@@ -119,15 +129,18 @@ function shake() {
   }, 400);
 }
 
-// ریست
+// چک رمز
+function isCorrect() {
+  return pattern.length === correctPattern.length &&
+    pattern.every((v, i) => v === correctPattern[i]);
+}
+
+// ریست کامل
 function reset() {
-  userPattern = [];
+  pattern = [];
+  lastDot = null;
+
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   dots.forEach(d => d.classList.remove("active"));
-}
-
-// مقایسه آرایه‌ها
-function arraysEqual(a, b) {
-  return a.length === b.length && a.every((v, i) => v === b[i]);
 }
