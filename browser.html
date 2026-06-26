@@ -2,13 +2,13 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>Secure Node Browser</title>
+<title>Secure Chrome</title>
 
 <style>
 body{
   margin:0;
   font-family:system-ui;
-  background:#05050a;
+  background:#0b0b10;
   color:#fff;
 }
 
@@ -16,9 +16,19 @@ body{
 .topbar{
   display:flex;
   align-items:center;
+  gap:6px;
   padding:10px;
-  background:#0f0f18;
+  background:#141420;
   border-bottom:1px solid #222;
+}
+
+.icon{
+  background:#1f1f2e;
+  border:none;
+  color:#fff;
+  padding:8px 10px;
+  border-radius:10px;
+  cursor:pointer;
 }
 
 .url{
@@ -28,37 +38,27 @@ body{
   color:#fff;
   padding:10px;
   border-radius:12px;
+  outline:none;
 }
 
-/* buttons */
-.btn{
-  margin-left:6px;
-  background:#1c1c2a;
-  border:none;
-  color:#fff;
-  padding:10px;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-/* RESULTS */
-.results{
+/* HISTORY PANEL */
+.history{
   padding:10px;
 }
 
-.card{
-  background:#141420;
+.item{
+  background:#161625;
   padding:12px;
-  margin:10px 0;
+  margin:8px 0;
   border-radius:12px;
   border-left:3px solid #00ff9d;
   cursor:pointer;
-  animation:fade .3s ease;
+  transition:.2s;
 }
 
-@keyframes fade{
-  from{opacity:0; transform:translateY(5px);}
-  to{opacity:1; transform:translateY(0);}
+.item:hover{
+  transform:scale(1.01);
+  background:#1d1d33;
 }
 
 /* LOADING */
@@ -79,7 +79,7 @@ body{
   left:0;
   right:0;
   height:60px;
-  background:#0f0f18;
+  background:#141420;
   border-top:1px solid #222;
   display:flex;
   justify-content:space-around;
@@ -88,112 +88,165 @@ body{
 
 .nav{
   color:#aaa;
-  cursor:pointer;
   font-size:13px;
+  cursor:pointer;
 }
 
 .nav:hover{
   color:#fff;
 }
 
-/* FILE VIEW */
-.file{
-  background:#0b0b12;
-  padding:15px;
-  margin:10px;
-  border-radius:12px;
-  border:1px solid #222;
-  white-space:pre-wrap;
+/* NOTIFICATION */
+.notif{
+  position:fixed;
+  top:10px;
+  right:10px;
+  background:#1c1c2a;
+  border-left:3px solid #ff2e63;
+  padding:10px;
+  border-radius:10px;
+  display:none;
+  max-width:260px;
+  font-size:13px;
+  animation:fade .3s ease;
+}
+
+@keyframes fade{
+  from{opacity:0; transform:translateY(-5px);}
+  to{opacity:1; transform:translateY(0);}
 }
 </style>
 </head>
 
 <body>
 
+<!-- NOTIFICATION -->
+<div id="notif" class="notif"></div>
+
+<!-- TOP BAR -->
 <div class="topbar">
-  <button class="btn" onclick="goHome()">🏠</button>
-  <button class="btn" onclick="goBack()">⬅</button>
-  <input id="q" class="url" placeholder="Search secure index..." />
-  <button class="btn" onclick="search()">GO</button>
+  <button class="icon" onclick="home()">🏠</button>
+  <button class="icon" onclick="back()">⬅</button>
+  <input id="search" class="url" placeholder="جستجو در تاریخچه..." />
+  <button class="icon" onclick="runSearch()">GO</button>
 </div>
 
-<div id="results" class="results"></div>
+<!-- HISTORY -->
+<div id="history" class="history"></div>
 
+<!-- BOTTOM NAV -->
 <div class="navbar">
-  <div class="nav" onclick="goHome()">Home</div>
-  <div class="nav" onclick="goBack()">Back</div>
-  <div class="nav" onclick="openTabs()">Tabs</div>
+  <div class="nav" onclick="home()">Home</div>
+  <div class="nav" onclick="back()">Back</div>
+  <div class="nav" onclick="addTab()">Tabs</div>
   <div class="nav" onclick="reload()">Reload</div>
 </div>
 
 <script>
 
-/* ===== FAKE INDEX (داستانی + ترسناک) ===== */
-const index = [
-  "system log: unknown node active at 03:33",
-  "archive file: apartment_07 memory corrupted",
-  "audio trace: breathing detected in empty room",
-  "mirror delay anomaly still unresolved",
-  "security feed: door opened with no entry event",
-  "case note: subject appears in frame twice",
-  "dark index: connection established then lost",
-  "hidden signal: triggered from browser layer"
+/* ===== HISTORY واقعی-نما (فقط داستانی) ===== */
+let historyData = [
+  "چگونه دل کسی را به دست بیاورم",
+  "چرا بعضی آدم‌ها ناگهان سرد می‌شوند",
+  "معنی سکوت طولانی در رابطه چیست",
+  "چطور فراموش کنیم کسی را",
+  "نشانه‌های تغییر رفتار ناگهانی انسان"
 ];
 
-/* ===== SEARCH ===== */
-function search(){
-  const q = document.getElementById("q").value.toLowerCase();
-  const r = document.getElementById("results");
+/* render history */
+function render(){
+  const box = document.getElementById("history");
+  box.innerHTML = "";
 
-  r.innerHTML = "<div class='loading'>connecting to secure node...</div>";
+  historyData.forEach((h, i)=>{
+    const d = document.createElement("div");
+    d.className = "item";
+    d.innerText = h;
+
+    d.onclick = ()=>{
+      showFakePage(h);
+    };
+
+    box.appendChild(d);
+  });
+}
+render();
+
+/* ===== SEARCH ===== */
+function runSearch(){
+  const q = document.getElementById("search").value;
+
+  const box = document.getElementById("history");
+  box.innerHTML = "<div class='loading'>در حال جستجو در تاریخچه...</div>";
 
   setTimeout(()=>{
-    r.innerHTML = "";
+    const newItem = q;
 
-    index
-      .filter(x => x.includes(q))
-      .forEach(x=>{
-        const d = document.createElement("div");
-        d.className = "card";
-        d.innerText = x;
+    historyData.unshift(newItem);
+    render();
 
-        d.onclick = () => openFile(x);
-        r.appendChild(d);
-      });
+    // random system event
+    systemEvent();
 
-    if(r.innerHTML === ""){
-      r.innerHTML = "<div class='card'>no match — index unstable</div>";
-      triggerGlitchEvent();
-    }
-
-    // random story event
-    randomSystemEvent();
-
-  }, 1200);
+  }, 900);
 }
 
-/* ===== FILE VIEW (خیلی مهم برای حس بازی) ===== */
-function openFile(text){
-  document.getElementById("results").innerHTML = `
-    <div class="file">
-📁 SECURE FILE OPENED
+/* ===== FAKE PAGE OPEN ===== */
+function showFakePage(text){
+  document.getElementById("history").innerHTML = `
+    <div class="item">
+📄 صفحه باز شده
 
 ${text}
 
--------------------------
-status: corrupted
-warning: memory inconsistency detected
-node: unstable
+---------------------
+وضعیت: ذخیره شده در حافظه مرورگر
+زمان همگام‌سازی: نامشخص
     </div>
   `;
 }
 
-/* ===== NAVIGATION ===== */
-function goHome(){
-  window.location.href = "home.html";
+/* ===== SYSTEM EVENTS (ترس subtle) ===== */
+function systemEvent(){
+
+  const events = [
+    "تاریخچه شما در حال همگام‌سازی با سرور ناشناخته است",
+    "یک دستگاه دیگر به این مرورگر متصل شد",
+    "داده‌های ذخیره‌شده در حال بازنویسی هستند",
+    "یک نشست قدیمی دوباره فعال شد",
+    "فعالیت غیرعادی در تاریخچه شناسایی شد"
+  ];
+
+  if(Math.random() > 0.3){
+    showNotif(events[Math.floor(Math.random()*events.length)]);
+  }
+
+  // sometimes inject fake history entry
+  if(Math.random() > 0.6){
+    setTimeout(()=>{
+      historyData.push("این جستجو از دستگاه دیگر وارد شده است");
+      render();
+    }, 1200);
+  }
 }
 
-function goBack(){
+/* ===== NOTIFICATION (فارسی) ===== */
+function showNotif(text){
+  const n = document.getElementById("notif");
+  n.innerText = "📡 " + text;
+  n.style.display = "block";
+
+  setTimeout(()=>{
+    n.style.display = "none";
+  }, 3500);
+}
+
+/* ===== NAVIGATION ===== */
+function home(){
+  location.href = "home.html";
+}
+
+function back(){
   history.back();
 }
 
@@ -201,48 +254,17 @@ function reload(){
   location.reload();
 }
 
-/* ===== TABS SYSTEM (FAKE) ===== */
-function openTabs(){
-  alert("TAB SYSTEM\nActive sessions: 1\nSecure node: connected\nHidden process: running");
+function addTab(){
+  showNotif("یک تب جدید بدون درخواست شما باز شد");
 }
 
-/* ===== RANDOM SYSTEM EVENTS ===== */
-function randomSystemEvent(){
-  const events = [
-    "SYSTEM: background scan completed",
-    "WARNING: latency spike detected",
-    "NOTE: unknown packet received",
-    "SYSTEM: memory trace unstable",
-    "ALERT: silent connection restored"
-  ];
-
-  if(Math.random() > 0.5){
-    setTimeout(()=>{
-      alert(events[Math.floor(Math.random()*events.length)]);
-    }, 800);
+/* ===== BACKGROUND RANDOM BEHAVIOR ===== */
+setInterval(()=>{
+  if(Math.random() > 0.85){
+    showNotif("همگام‌سازی پس‌زمینه فعال شد");
   }
-}
+}, 8000);
 
-/* ===== GLITCH EVENT ===== */
-function triggerGlitchEvent(){
-  setTimeout(()=>{
-    document.body.style.filter = "hue-rotate(90deg)";
-    setTimeout(()=>{
-      document.body.style.filter = "none";
-    }, 300);
-  }, 500);
-}
-
-/* ===== HIDDEN TRIGGER (ایده داستانی) ===== */
-let hiddenCounter = 0;
-
-document.addEventListener("keydown", ()=>{
-  hiddenCounter++;
-  if(hiddenCounter > 20){
-    alert("HIDDEN NODE UNLOCKED: //observer.active");
-    hiddenCounter = 0;
-  }
-});
 </script>
 
 </body>
