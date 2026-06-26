@@ -78,12 +78,6 @@ body{
   opacity:1;
 }
 
-/* 👇 NEW: fade out */
-#notif.hide{
-  top:110px;
-  opacity:0;
-}
-
 /* ===== TOP TIME ===== */
 #top{
   position:relative;
@@ -226,14 +220,14 @@ function updateTime(){
 setInterval(updateTime,1000);
 updateTime();
 
-/* ===== NOTIFICATION SHOW + AUTO HIDE */
+/* ===== NOTIFICATION ===== */
 setTimeout(()=>{
   const notif = document.getElementById("notif");
   notif.classList.add("show");
 
   setTimeout(()=>{
-    notif.classList.add("hide");
-  }, 4000);
+    notif.classList.remove("show");
+  },4000);
 
 },1500);
 
@@ -323,9 +317,9 @@ function reset(){
   dots.forEach(d=>d.classList.remove("active"));
 }
 
-  function unlock(){
-  document.getElementById("lock").style.display = "none";
-  document.getElementById("home").style.display = "block";
+/* 🔥 ONLY CHANGE: redirect to home.html */
+function unlock(){
+  window.location.href = "home.html";
 }
 
 </script>
