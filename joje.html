@@ -13,13 +13,13 @@ body{
   color:white;
 }
 
-/* TOP BAR */
+/* TOP */
 .top{
   position:sticky;
   top:0;
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
   padding:10px;
   background:rgba(20,20,30,0.85);
   backdrop-filter: blur(12px);
@@ -39,10 +39,10 @@ body{
   object-fit:cover;
 }
 
+/* CALL BUTTONS */
 .callBox{
   display:flex;
   gap:10px;
-  align-items:center;
 }
 
 .btn{
@@ -51,6 +51,7 @@ body{
   font-size:18px;
 }
 
+/* CHAT */
 #chat{
   padding:12px;
   height:calc(100vh - 140px);
@@ -60,18 +61,16 @@ body{
   gap:10px;
 }
 
-/* MESSAGES */
 .msg{
   max-width:75%;
-  padding:10px 12px;
+  padding:10px;
   border-radius:14px;
-  font-size:14px;
   animation:pop 0.2s ease;
 }
 
 @keyframes pop{
-  from{transform:scale(0.9); opacity:0;}
-  to{transform:scale(1); opacity:1;}
+  from{transform:scale(0.9);opacity:0;}
+  to{transform:scale(1);opacity:1;}
 }
 
 .other{
@@ -84,18 +83,10 @@ body{
   align-self:flex-start;
 }
 
-/* TIME */
 .time{
   font-size:10px;
   opacity:0.5;
   margin-top:4px;
-}
-
-/* SYSTEM MESSAGE */
-.system{
-  font-size:11px;
-  opacity:0.5;
-  text-align:center;
 }
 
 /* INPUT */
@@ -140,20 +131,78 @@ input{
   align-items:center;
   cursor:pointer;
 }
+
+/* CALL UI */
+.callScreen{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.9);
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.callAvatar{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  object-fit:cover;
+  animation:pulse 1.2s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.05);}
+  100%{transform:scale(1);}
+}
+
+.callBtns{
+  margin-top:20px;
+  display:flex;
+  gap:20px;
+}
+
+.callBtn{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.accept{background:green;}
+.decline{background:red;}
 </style>
 </head>
 
 <body>
 
-<audio id="ring" src="ring.mp3" preload="auto"></audio>
+<audio id="ring" src="ring.mp3"></audio>
+
+<!-- CALL SCREEN -->
+<div class="callScreen" id="callScreen">
+  <img src="kaw.png" class="callAvatar">
+  <div style="margin-top:10px;font-size:18px;">جوجه سیرکی در حال تماس...</div>
+
+  <div class="callBtns">
+    <div class="callBtn accept" onclick="acceptCall()">✔</div>
+    <div class="callBtn decline" onclick="declineCall()">✖</div>
+  </div>
+</div>
 
 <!-- TOP -->
 <div class="top">
+
   <div class="btn" onclick="location.href='home.html'">🏠</div>
 
   <div class="profile">
     <img src="kaw.png" class="avatar">
-    <div>شوخی بی‌مزه</div>
+    <div>جوجه سیرکی</div>
   </div>
 
   <div class="callBox">
@@ -167,7 +216,10 @@ input{
 
 <!-- INPUT -->
 <div class="inputBox">
-  <div class="voice">🎤</div>
+  <div class="voice"
+    onmousedown="startRec()" 
+    onmouseup="stopRec()">🎤</div>
+
   <input id="text" placeholder="پیام بنویس...">
   <div class="send" onclick="sendMsg()">➤</div>
 </div>
@@ -176,6 +228,7 @@ input{
 
 const chat=document.getElementById("chat");
 const ring=document.getElementById("ring");
+const callScreen=document.getElementById("callScreen");
 
 /* messages */
 const messages=[
@@ -184,29 +237,17 @@ const messages=[
   {type:"other", text:"نه.", time:"14:03"},
   {type:"other", text:"الان فقط می‌شمرم.", time:"14:03"},
   {type:"me", text:"چی رو؟", time:"14:04"},
-  {type:"other", text:"کسایی که بعد از آشنایی با تو ناپدید شدن.", time:"14:05"},
-  {type:"system", text:"من پیام از طرف خود سیستمه", time:""}
+  {type:"other", text:"کسایی که بعد از آشنایی با تو ناپدید شدن.", time:"14:05"}
 ];
 
 function render(){
   chat.innerHTML="";
   messages.forEach(m=>{
     const div=document.createElement("div");
-
-    if(m.type==="system"){
-      div.className="system";
-      div.innerHTML=`${m.text}`;
-    }else{
-      div.className="msg "+m.type;
-      div.innerHTML=`
-        ${m.text}
-        <div class="time">${m.time}</div>
-      `;
-    }
-
+    div.className="msg "+m.type;
+    div.innerHTML=`${m.text}<div class="time">${m.time}</div>`;
     chat.appendChild(div);
   });
-
   chat.scrollTop=chat.scrollHeight;
 }
 
@@ -218,51 +259,78 @@ function sendMsg(){
   const now=new Date();
   const time=now.getHours()+":"+String(now.getMinutes()).padStart(2,"0");
 
-  messages.push({
-    type:"me",
-    text:input.value,
-    time:time
-  });
-
+  messages.push({type:"me",text:input.value,time});
   input.value="";
   render();
 }
 
-/* FAKE CALL (3-4 sec) */
+/* FAKE CALL */
 function fakeCall(){
-
-  const caller=document.createElement("div");
-  caller.style.position="fixed";
-  caller.style.inset="0";
-  caller.style.background="rgba(0,0,0,0.85)";
-  caller.style.display="flex";
-  caller.style.flexDirection="column";
-  caller.style.justifyContent="center";
-  caller.style.alignItems="center";
-  caller.style.zIndex="9999";
-  caller.innerHTML=`
-    <img src="dar.jpg" style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
-    <div style="margin-top:10px;font-size:18px;">گل سفید در حال تماس...</div>
-  `;
-
-  document.body.appendChild(caller);
-
-  /* SOUND + VIBRATION */
+  callScreen.style.display="flex";
   ring.currentTime=0;
   ring.play();
 
   if(navigator.vibrate){
-    navigator.vibrate([400,300,400,300,400]);
+    navigator.vibrate([400,300,400,300]);
   }
 
-  /* END CALL AFTER 3-4 sec */
-  setTimeout(()=>{
-    ring.pause();
-    caller.remove();
-  },3500);
+  // auto cut if not answered
+  autoCut=setTimeout(()=>{
+    declineCall();
+  },4000);
 }
 
-/* init */
+let autoCut;
+
+/* ACCEPT */
+function acceptCall(){
+  ring.pause();
+  callScreen.style.display="none";
+  clearTimeout(autoCut);
+}
+
+/* DECLINE */
+function declineCall(){
+  ring.pause();
+  callScreen.style.display="none";
+  clearTimeout(autoCut);
+}
+
+/* VOICE REC */
+let rec, chunks=[];
+
+async function startRec(){
+  const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+  rec=new MediaRecorder(stream);
+  chunks=[];
+
+  rec.ondataavailable=e=>chunks.push(e.data);
+
+  rec.onstop=()=>{
+    const blob=new Blob(chunks,{type:"audio/webm"});
+    const url=URL.createObjectURL(blob);
+
+    const now=new Date();
+    const time=now.getHours()+":"+String(now.getMinutes()).padStart(2,"0");
+
+    messages.push({
+      type:"me",
+      voice:url,
+      time
+    });
+
+    render();
+  };
+
+  rec.start();
+}
+
+function stopRec(){
+  if(rec && rec.state!=="inactive"){
+    rec.stop();
+  }
+}
+
 render();
 
 </script>
