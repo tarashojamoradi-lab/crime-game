@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>Secure Node Browser</title>
+
+<style>
+body{
+  margin:0;
+  font-family:system-ui;
+  background:#05050a;
+  color:#fff;
+}
+
+/* TOP BAR */
+.topbar{
+  display:flex;
+  align-items:center;
+  padding:10px;
+  background:#0f0f18;
+  border-bottom:1px solid #222;
+}
+
+.url{
+  flex:1;
+  background:#1c1c2a;
+  border:none;
+  color:#fff;
+  padding:10px;
+  border-radius:12px;
+}
+
+/* buttons */
+.btn{
+  margin-left:6px;
+  background:#1c1c2a;
+  border:none;
+  color:#fff;
+  padding:10px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* RESULTS */
+.results{
+  padding:10px;
+}
+
+.card{
+  background:#141420;
+  padding:12px;
+  margin:10px 0;
+  border-radius:12px;
+  border-left:3px solid #00ff9d;
+  cursor:pointer;
+  animation:fade .3s ease;
+}
+
+@keyframes fade{
+  from{opacity:0; transform:translateY(5px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+/* LOADING */
+.loading{
+  color:#00ff9d;
+  padding:10px;
+  animation:blink 1s infinite;
+}
+
+@keyframes blink{
+  50%{opacity:0.3;}
+}
+
+/* BOTTOM NAV */
+.navbar{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:60px;
+  background:#0f0f18;
+  border-top:1px solid #222;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+}
+
+.nav{
+  color:#aaa;
+  cursor:pointer;
+  font-size:13px;
+}
+
+.nav:hover{
+  color:#fff;
+}
+
+/* FILE VIEW */
+.file{
+  background:#0b0b12;
+  padding:15px;
+  margin:10px;
+  border-radius:12px;
+  border:1px solid #222;
+  white-space:pre-wrap;
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <button class="btn" onclick="goHome()">🏠</button>
+  <button class="btn" onclick="goBack()">⬅</button>
+  <input id="q" class="url" placeholder="Search secure index..." />
+  <button class="btn" onclick="search()">GO</button>
+</div>
+
+<div id="results" class="results"></div>
+
+<div class="navbar">
+  <div class="nav" onclick="goHome()">Home</div>
+  <div class="nav" onclick="goBack()">Back</div>
+  <div class="nav" onclick="openTabs()">Tabs</div>
+  <div class="nav" onclick="reload()">Reload</div>
+</div>
+
+<script>
+
+/* ===== FAKE INDEX (داستانی + ترسناک) ===== */
+const index = [
+  "system log: unknown node active at 03:33",
+  "archive file: apartment_07 memory corrupted",
+  "audio trace: breathing detected in empty room",
+  "mirror delay anomaly still unresolved",
+  "security feed: door opened with no entry event",
+  "case note: subject appears in frame twice",
+  "dark index: connection established then lost",
+  "hidden signal: triggered from browser layer"
+];
+
+/* ===== SEARCH ===== */
+function search(){
+  const q = document.getElementById("q").value.toLowerCase();
+  const r = document.getElementById("results");
+
+  r.innerHTML = "<div class='loading'>connecting to secure node...</div>";
+
+  setTimeout(()=>{
+    r.innerHTML = "";
+
+    index
+      .filter(x => x.includes(q))
+      .forEach(x=>{
+        const d = document.createElement("div");
+        d.className = "card";
+        d.innerText = x;
+
+        d.onclick = () => openFile(x);
+        r.appendChild(d);
+      });
+
+    if(r.innerHTML === ""){
+      r.innerHTML = "<div class='card'>no match — index unstable</div>";
+      triggerGlitchEvent();
+    }
+
+    // random story event
+    randomSystemEvent();
+
+  }, 1200);
+}
+
+/* ===== FILE VIEW (خیلی مهم برای حس بازی) ===== */
+function openFile(text){
+  document.getElementById("results").innerHTML = `
+    <div class="file">
+📁 SECURE FILE OPENED
+
+${text}
+
+-------------------------
+status: corrupted
+warning: memory inconsistency detected
+node: unstable
+    </div>
+  `;
+}
+
+/* ===== NAVIGATION ===== */
+function goHome(){
+  window.location.href = "home.html";
+}
+
+function goBack(){
+  history.back();
+}
+
+function reload(){
+  location.reload();
+}
+
+/* ===== TABS SYSTEM (FAKE) ===== */
+function openTabs(){
+  alert("TAB SYSTEM\nActive sessions: 1\nSecure node: connected\nHidden process: running");
+}
+
+/* ===== RANDOM SYSTEM EVENTS ===== */
+function randomSystemEvent(){
+  const events = [
+    "SYSTEM: background scan completed",
+    "WARNING: latency spike detected",
+    "NOTE: unknown packet received",
+    "SYSTEM: memory trace unstable",
+    "ALERT: silent connection restored"
+  ];
+
+  if(Math.random() > 0.5){
+    setTimeout(()=>{
+      alert(events[Math.floor(Math.random()*events.length)]);
+    }, 800);
+  }
+}
+
+/* ===== GLITCH EVENT ===== */
+function triggerGlitchEvent(){
+  setTimeout(()=>{
+    document.body.style.filter = "hue-rotate(90deg)";
+    setTimeout(()=>{
+      document.body.style.filter = "none";
+    }, 300);
+  }, 500);
+}
+
+/* ===== HIDDEN TRIGGER (ایده داستانی) ===== */
+let hiddenCounter = 0;
+
+document.addEventListener("keydown", ()=>{
+  hiddenCounter++;
+  if(hiddenCounter > 20){
+    alert("HIDDEN NODE UNLOCKED: //observer.active");
+    hiddenCounter = 0;
+  }
+});
+</script>
+
+</body>
+</html>
