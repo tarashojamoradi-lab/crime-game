@@ -1,561 +1,133 @@
-/* =========================================
-   CLOWN PHONE
-   phone.js
-   Part 1 / 3
-========================================= */
+const correctPattern = [1, 4, 7, 5, 3, 6, 9];
+let userPattern = [];
 
-const phone = document.querySelector(".phone");
 const dots = document.querySelectorAll(".dot");
-const svg = document.getElementById("patternLines");
-const flash = document.getElementById("unlockFlash");
-const message = document.getElementById("message");
-const clock = document.getElementById("clock");
-const dateBox = document.getElementById("date");
-
-/* ---------------------------
-   ساعت و تاریخ
----------------------------- */
-
-function updateClock(){
-
-const now = new Date();
-
-let h = now.getHours().toString().padStart(2,"0");
-let m = now.getMinutes().toString().padStart(2,"0");
-
-clock.innerHTML = h + ":" + m;
-
-const months = [
-"فروردین",
-"اردیبهشت",
-"خرداد",
-"تیر",
-"مرداد",
-"شهریور",
-"مهر",
-"آبان",
-"آذر",
-"دی",
-"بهمن",
-"اسفند"
-];
-
-const days = [
-"یکشنبه",
-"دوشنبه",
-"سه‌شنبه",
-"چهارشنبه",
-"پنجشنبه",
-"جمعه",
-"شنبه"
-];
-
-dateBox.innerHTML =
-days[now.getDay()] +
-" " +
-now.getDate() +
-" " +
-months[now.getMonth()];
-
-}
-
-updateClock();
-
-setInterval(updateClock,1000);
-
-/* ---------------------------
-   الگوی صحیح
----------------------------- */
-
-const correctPattern = [
-1,
-4,
-7,
-5,
-3,
-6,
-9
-];
-
-/* ---------------------------
-   متغیرها
----------------------------- */
-
-let pattern = [];
+const canvas = document.getElementById("patternCanvas");
+const ctx = canvas.getContext("2d");
 
 let isDrawing = false;
 
-let lines = [];
-
-let currentLine = null;
-
-/* ---------------------------
-   SVG
----------------------------- */
-
-svg.setAttribute(
-"viewBox",
-"0 0 320 320"
-);
-
-/* ---------------------------
-   گرفتن مرکز هر نقطه
----------------------------- */
-
-function getCenter(dot){
-
-const rect =
-dot.getBoundingClientRect();
-
-const parent =
-svg.getBoundingClientRect();
-
-return{
-
-x:
-rect.left -
-parent.left +
-rect.width/2,
-
-y:
-rect.top -
-parent.top +
-rect.height/2
-
-};
-
+// اندازه canvas
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 }
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
-/* ---------------------------
-   ساخت خط
----------------------------- */
-
-function createLine(x1,y1,x2,y2){
-
-const line =
-document.createElementNS(
-"http://www.w3.org/2000/svg",
-"line"
-);
-
-line.setAttribute("x1",x1);
-
-line.setAttribute("y1",y1);
-
-line.setAttribute("x2",x2);
-
-line.setAttribute("y2",y2);
-
-line.setAttribute(
-"stroke",
-"white"
-);
-
-line.setAttribute(
-"stroke-width",
-"6"
-);
-
-line.setAttribute(
-"stroke-linecap",
-"round"
-);
-
-svg.appendChild(line);
-
-return line;
-
-}
-
-/* ---------------------------
-   پاک کردن خطوط
----------------------------- */
-
-function clearPattern(){
-
-pattern=[];
-
-dots.forEach(dot=>{
-
-dot.classList.remove(
-"active"
-);
-
+// شروع لمس
+dots.forEach(dot => {
+  dot.addEventListener("mousedown", () => start(dot));
+  dot.addEventListener("touchstart", () => start(dot));
 });
 
-svg.innerHTML="";
-
-currentLine=null;
-
-lines=[];
-
+function start(dot) {
+  reset();
+  isDrawing = true;
+  addDot(dot);
 }
 
-/* ---------------------------
-   فعال کردن نقطه
----------------------------- */
+// اضافه کردن نقطه
+function addDot(dot) {
+  const id = Number(dot.dataset.id);
 
-function activateDot(dot){
-
-const id =
-Number(dot.dataset.id);
-
-if(pattern.includes(id))
-return;
-
-dot.classList.add("active");
-
-pattern.push(id);
-
-const pos =
-getCenter(dot);
-
-if(pattern.length===1){
-
-currentLine=pos;
-
-return;
-
+  if (!userPattern.includes(id)) {
+    userPattern.push(id);
+    dot.classList.add("active");
+  }
 }
 
-const prev =
-dots[
-pattern.length-2
-];
-
-const prevPos =
-getCenter(prev);
-
-const line =
-createLine(
-prevPos.x,
-prevPos.y,
-pos.x,
-pos.y
-);
-
-lines.push(line);
-
-currentLine=pos;
-
-}
-/* =========================================
-   CLOWN PHONE
-   phone.js
-   Part 2 / 3
-========================================= */
-
-/* ---------------------------
-   پیدا کردن نقطه لمس شده
----------------------------- */
-
-function findDot(x,y){
-
-for(const dot of dots){
-
-const rect = dot.getBoundingClientRect();
-
-if(
-
-x >= rect.left &&
-x <= rect.right &&
-y >= rect.top &&
-y <= rect.bottom
-
-){
-
-return dot;
-
-}
-
-}
-
-return null;
-
-}
-
-/* ---------------------------
-   شروع رسم الگو
----------------------------- */
-
-function startDraw(e){
-
-clearPattern();
-
-isDrawing = true;
-
-const touch = e.touches ?
-e.touches[0] :
-e;
-
-const dot = findDot(
-
-touch.clientX,
-touch.clientY
-
-);
-
-if(dot){
-
-activateDot(dot);
-
-}
-
-}
-
-/* ---------------------------
-   ادامه رسم
----------------------------- */
-
-function moveDraw(e){
-
-if(!isDrawing) return;
-
-const touch = e.touches ?
-e.touches[0] :
-e;
-
-const dot = findDot(
-
-touch.clientX,
-touch.clientY
-
-);
-
-if(dot){
-
-activateDot(dot);
-
-}
-
-}
-
-/* ---------------------------
-   پایان رسم
----------------------------- */
-
-function endDraw(){
-
-if(!isDrawing) return;
-
-isDrawing = false;
-
-checkPattern();
-
-}
-
-/* ---------------------------
-   رویدادهای لمسی
----------------------------- */
-
-phone.addEventListener(
-
-"touchstart",
-
-startDraw,
-
-{passive:false}
-
-);
-
-phone.addEventListener(
-
-"touchmove",
-
-function(e){
-
-e.preventDefault();
-
-moveDraw(e);
-
-},
-
-{passive:false}
-
-);
-
-phone.addEventListener(
-
-"touchend",
-
-endDraw
-
-);
-
-/* ---------------------------
-   رویدادهای موس
----------------------------- */
-
-phone.addEventListener(
-
-"mousedown",
-
-startDraw
-
-);
-
-phone.addEventListener(
-
-"mousemove",
-
-moveDraw
-
-);
-
-phone.addEventListener(
-
-"mouseup",
-
-endDraw
-
-);
-
-phone.addEventListener(
-
-"mouseleave",
-
-endDraw
-
-);
-
-/* ---------------------------
-   بررسی الگو
----------------------------- */
-
-function arraysEqual(a,b){
-
-if(a.length!==b.length)
-return false;
-
-for(
-
-let i=0;
-
-i<a.length;
-
-i++
-
-){
-
-if(a[i]!==b[i])
-return false;
-
-}
-
-return true;
-
-}
-/* =========================================
-   CLOWN PHONE
-   phone.js
-   Part 3 / 3
-========================================= */
-
-function checkPattern(){
-
-if(arraysEqual(pattern,correctPattern)){
-
-message.style.color="#67ff67";
-message.innerHTML="";
-
-lines.forEach(line=>{
-
-line.setAttribute("stroke","#67ff67");
-
+// حرکت موس / انگشت
+document.addEventListener("mousemove", e => {
+  if (!isDrawing) return;
+  handleMove(e);
 });
 
-flash.style.transition=".35s";
-flash.style.opacity="1";
-
-setTimeout(()=>{
-
-flash.style.opacity="0";
-
-window.location.href="home.html";
-
-},800);
-
-}else{
-
-message.style.color="#ff4d4d";
-message.innerHTML="الگوی وارد شده اشتباه است";
-
-phone.classList.add("shake");
-
-if(navigator.vibrate){
-
-navigator.vibrate([120,80,120]);
-
-}
-
-lines.forEach(line=>{
-
-line.setAttribute("stroke","#ff3b3b");
-
+document.addEventListener("touchmove", e => {
+  if (!isDrawing) return;
+  handleMove(e.touches[0]);
 });
 
-setTimeout(()=>{
+function handleMove(e) {
+  const element = document.elementFromPoint(e.clientX, e.clientY);
 
-phone.classList.remove("shake");
-
-clearPattern();
-
-message.innerHTML="";
-
-},1000);
-
+  if (element && element.classList.contains("dot")) {
+    addDot(element);
+    drawLines();
+  }
 }
 
+// پایان لمس
+document.addEventListener("mouseup", finish);
+document.addEventListener("touchend", finish);
+
+function finish() {
+  if (!isDrawing) return;
+  isDrawing = false;
+
+  if (arraysEqual(userPattern, correctPattern)) {
+    // موفقیت
+    window.location.href = "home.html";
+  } else {
+    vibrate();
+    shake();
+  }
+
+  setTimeout(reset, 500);
 }
 
-/* جلوگیری از انتخاب متن */
+// رسم خط بین نقاط
+function drawLines() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-document.addEventListener("selectstart",e=>{
+  if (userPattern.length < 2) return;
 
-e.preventDefault();
+  ctx.beginPath();
+  ctx.strokeStyle = "#00ffd5";
+  ctx.lineWidth = 4;
+  ctx.shadowBlur = 10;
+  ctx.shadowColor = "#00ffd5";
 
-});
+  for (let i = 0; i < userPattern.length; i++) {
+    const dot = document.querySelector(`.dot[data-id="${userPattern[i]}"]`);
+    const rect = dot.getBoundingClientRect();
 
-/* جلوگیری از منوی لمس */
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
 
-document.addEventListener("contextmenu",e=>{
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
 
-e.preventDefault();
-
-});
-
-/* جلوگیری از درگ تصاویر */
-
-document.querySelectorAll("img").forEach(img=>{
-
-img.draggable=false;
-
-});
-
-/* جلوگیری از زوم دو ضرب */
-
-let lastTouchEnd=0;
-
-document.addEventListener("touchend",function(e){
-
-const now=(new Date()).getTime();
-
-if(now-lastTouchEnd<=300){
-
-e.preventDefault();
-
+  ctx.stroke();
 }
 
-lastTouchEnd=now;
+// ویبره خطا
+function vibrate() {
+  if (navigator.vibrate) {
+    navigator.vibrate([200, 100, 200]);
+  }
+}
 
-},false);
+// لرزش صفحه
+function shake() {
+  const screen = document.querySelector(".screen");
+  screen.classList.add("shake");
 
-/* آماده شدن صفحه */
+  setTimeout(() => {
+    screen.classList.remove("shake");
+  }, 400);
+}
 
-window.onload=function(){
+// ریست
+function reset() {
+  userPattern = [];
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-updateClock();
+  dots.forEach(d => d.classList.remove("active"));
+}
 
-clearPattern();
-
-};
+// مقایسه آرایه‌ها
+function arraysEqual(a, b) {
+  return a.length === b.length && a.every((v, i) => v === b[i]);
+}
