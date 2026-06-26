@@ -1,92 +1,58 @@
-document.onmousemove=(e)=>{
-if(!dragging)return;
-tx=e.clientX-startX;
-ty=e.clientY-startY;
-update();
-};
+const max=LIMIT*scale;
 
-function update(){
-map.style.transform=translate(${tx}px,${ty}px) scale(${scale});
+if(x>max)x=max;
+if(x<-max)x=-max;
+
+if(y>max)y=max;
+if(y<-max)y=-max;
 }
 
-/* ===== ZOOM ===== */
+/* RENDER */
+function render(){
+map.style.transform=translate(${x}px,${y}px) scale(${scale});
+}
+
+/* ZOOM CENTER SAFE */
 function zoom(z){
 scale*=z;
-update();
+if(scale<0.7)scale=0.7;
+if(scale>2.2)scale=2.2;
+clamp();
+render();
 }
 
-/* ===== INFO ===== */
+/* INFO */
 function info(name,time,text){
 popup.style.display="block";
 popup.innerHTML=<b>${name}</b><br>${time}<br>${text};
-setTimeout(()=>popup.style.display="none",3000);
+setTimeout(()=>popup.style.display="none",2500);
 }
 
-/* ===== PUZZLE ===== */
+/* PUZZLE */
 function puzzle(){
-let box=document.createElement("div");
-box.style.position="fixed";
-box.style.top="50%";
-box.style.left="50%";
-box.style.transform="translate(-50%,-50%)";
-box.style.background="#111";
-box.style.color="white";
-box.style.padding="20px";
-box.style.borderRadius="10px";
-box.style.zIndex=100;
+let ans=prompt("او با چه کسی اینجا بوده؟");
 
-box.innerHTML=
-<p>او با چه کسی اینجا بوده؟</p>
-<input id="ans" placeholder="جواب">
-<br><br>
-<button onclick="check()">تایید</button>
-;
-
-document.body.appendChild(box);
-
-window.check=()=>{
-let v=document.getElementById("ans").value;
-
-if(v==="Mitsuki Amane"||v==="Mitsuki"){
-document.getElementById("secret").classList.remove("hidden");
-popup.innerHTML="🔓 مسیر مخفی باز شد";
+if(ans==="Mitsuki Amane"||ans==="Mitsuki"){
+popup.innerHTML="🔓 مسیر مخفی فعال شد";
 popup.style.display="block";
-document.body.removeChild(box);
 }else{
 document.body.classList.add("glitch");
-popup.innerHTML="<span style='color:red'>❌ اشتباه است</span>";
+setTimeout(()=>document.body.classList.remove("glitch"),600);
+popup.innerHTML="<span style='color:red'>❌ اشتباه</span>";
 popup.style.display="block";
-
-setTimeout(()=>{
-document.body.classList.remove("glitch");
-popup.style.display="none";
-},700);
 }
-};
 }
 
-/* ===== FOCUS ===== */
-function focusLast(){
-tx=-1200;
-ty=-1100;
-scale=1.3;
-update();
+/* CENTER */
+function focusCenter(){
+x=-600;
+y=-600;
+scale=1;
+render();
 }
 
-/* ===== RANDOM EFFECTS ===== */
-setInterval(()=>{
-if(Math.random()<0.15){
-document.body.classList.add("glitch");
-setTimeout(()=>document.body.classList.remove("glitch"),200);
-}
-},4000);
-
-/* ===== NOTIFICATION ===== */
-setTimeout(()=>{
-popup.innerHTML="📡 موقعیت جدید شناسایی شد";
-popup.style.display="block";
-setTimeout(()=>popup.style.display="none",3000);
-},6000);
+/* INIT */
+render();
 
 </script>
 
