@@ -53,14 +53,16 @@ video{
   pointer-events:none;
 }
 
-/* CLOWN random frames */
+/* CLOWN behind user (REAL HORROR FIX) */
 #clown{
   position:fixed;
   inset:0;
-  background-size:cover;
-  background-position:center;
+  background:url("https://i.imgur.com/8QfQX9Q.png") center/cover no-repeat;
   opacity:0;
   pointer-events:none;
+  filter:brightness(0.4) contrast(1.3) blur(0.5px);
+  mix-blend-mode:screen;
+  transform:scale(1.05);
 }
 
 /* ghost overlay behind user */
@@ -101,7 +103,10 @@ video{
 <div id="flash"></div>
 <div id="black"></div>
 
-<audio id="laugh" src="https://www.soundjay.com/human/sounds/laugh-1.mp3"></audio>
+<!-- REALISTIC CREEPY LAUGH -->
+<audio id="laugh" loop>
+  <source src="https://www.soundjay.com/human/sounds/laugh-1.mp3" type="audio/mp3">
+</audio>
 
 <script>
 
@@ -122,16 +127,16 @@ navigator.mediaDevices.getUserMedia({ video:true })
   alert("Camera access denied");
 });
 
-// ghost always faintly visible
+// ghost slowly appears
 setTimeout(()=>{
-  ghost.style.opacity = "0.15";
+  ghost.style.opacity = "0.12";
 }, 2000);
 
 // sequence start
 setTimeout(()=>{
 
-  // VHS ON
-  vhs.style.opacity = "0.8";
+  // VHS ON (stronger)
+  vhs.style.opacity = "0.9";
 
   // SHAKE ON
   document.body.classList.add("shake");
@@ -140,49 +145,42 @@ setTimeout(()=>{
   let blinkCount = 0;
   const blink = setInterval(()=>{
     flash.style.opacity = "1";
-    setTimeout(()=> flash.style.opacity="0", 80);
+    setTimeout(()=> flash.style.opacity="0", 60);
     blinkCount++;
-    if(blinkCount > 6) clearInterval(blink);
-  }, 300);
+    if(blinkCount > 10) clearInterval(blink);
+  }, 200);
 
-  // random clown frames
-  const clownImages = [
-    "https://i.imgur.com/8QfQX9Q.png",
-    "https://i.imgur.com/6YQZ1aB.png",
-    "https://i.imgur.com/2pQ9H0m.png"
-  ];
+  // 👻 CLOWN APPEARS BEHIND USER (MAIN FIX)
+  setTimeout(()=>{
+    clown.style.opacity = "0.35";
+  }, 1200);
 
-  let clownInterval = setInterval(()=>{
-    clown.style.backgroundImage = `url('${clownImages[Math.floor(Math.random()*clownImages.length)]}')`;
-    clown.style.opacity = "1";
-
-    setTimeout(()=>{
-      clown.style.opacity = "0";
-    }, 200);
-
-  }, 400);
-
-  // sound laugh
+  // SOUND LAUGH (REAL HORROR LOOP)
   laugh.volume = 1;
-  laugh.play();
+  laugh.play().catch(()=>{});
 
-  // STOP AFTER 3.5 sec
+  // FINAL HORROR DROP
   setTimeout(()=>{
 
-    clearInterval(clownInterval);
     document.body.classList.remove("shake");
     vhs.style.opacity = "0";
 
-    clown.style.opacity = "0";
-    ghost.style.opacity = "0.4";
+    clown.style.opacity = "0.6";
+    ghost.style.opacity = "0.25";
 
     // BLACK SCREEN MESSAGE
     black.style.opacity = "1";
     black.innerHTML = "او متوجه شد که به پرونده نگاه کردی.";
 
+    // laugh continues faintly
+    laugh.volume = 0.2;
+
     setTimeout(()=>{
       black.style.opacity = "0";
-    }, 3000);
+      clown.style.opacity = "0";
+      ghost.style.opacity = "0";
+      laugh.pause();
+    }, 3500);
 
   }, 3500);
 
