@@ -1,4 +1,3 @@
-مکس
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -37,16 +36,6 @@ body{
   height:35px;
   border-radius:50%;
   object-fit:cover;
-}
-
-.callBox{
-  display:flex;
-  gap:10px;
-}
-
-.btn{
-  cursor:pointer;
-  opacity:0.8;
 }
 
 /* CHAT */
@@ -105,47 +94,11 @@ input{
   cursor:pointer;
 }
 
-/* CALL SCREEN */
-.callScreen{
-  position:fixed;
-  inset:0;
-  background:#000;
-  display:none;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-
-.callAvatar{
-  width:120px;
-  height:120px;
-  border-radius:50%;
-  overflow:hidden;
-  border:2px solid #444;
-}
-
-.callAvatar img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.callText{
-  margin-top:15px;
-  font-size:18px;
-}
-
-.endBtn{
-  margin-top:20px;
-  width:60px;
-  height:60px;
-  border-radius:50%;
-  background:red;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  cursor:pointer;
+/* VOICE MESSAGE */
+.voiceMsg{
+  background:#2b2b3a;
+  padding:10px;
+  border-radius:12px;
 }
 </style>
 </head>
@@ -164,8 +117,8 @@ input{
   </div>
 
   <div class="callBox">
-    <div class="btn" onclick="startCall()">📞</div>
-    <div class="btn" onclick="fakeVideo()">🎥</div>
+    <div onclick="startCall()" style="cursor:pointer;">📞</div>
+    <div onclick="fakeVideo()" style="cursor:pointer;">🎥</div>
   </div>
 </div>
 
@@ -179,20 +132,11 @@ input{
   <div class="send" onclick="sendMsg()">➤</div>
 </div>
 
-<!-- CALL -->
-<div class="callScreen" id="callScreen">
-  <div class="callAvatar">
-    <img src="kaw.png">
-  </div>
-  <div class="callText">در حال تماس با مسئول نظم...</div>
-  <div class="endBtn" onclick="endCall()">✖</div>
-</div>
-
 <script>
 
 const chat=document.getElementById("chat");
-const ring=document.getElementById("ring");
 
+/* messages */
 const messages=[
   {type:"other", text:"جلسه فردا ساعت ۹.", time:"09:00"},
   {type:"other", text:"لطفاً این بار مست نباش.", time:"09:01"},
@@ -201,12 +145,25 @@ const messages=[
 
 function render(){
   chat.innerHTML="";
+
   messages.forEach(m=>{
     const div=document.createElement("div");
-    div.className="msg "+m.type;
-    div.innerHTML=`${m.text}<div class="time">${m.time||""}</div>`;
+
+    if(m.voice){
+      div.className="voiceMsg me";
+      div.innerHTML=`
+        🎤 پیام صوتی<br>
+        <audio controls src="${m.voice}"></audio>
+        <div class="time">${m.time}</div>
+      `;
+    } else {
+      div.className="msg "+m.type;
+      div.innerHTML=`${m.text}<div class="time">${m.time||""}</div>`;
+    }
+
     chat.appendChild(div);
   });
+
   chat.scrollTop=chat.scrollHeight;
 }
 
@@ -224,58 +181,53 @@ function sendMsg(){
 }
 
 /* CALL */
-let callTimer;
-
 function startCall(){
-  document.getElementById("callScreen").style.display="flex";
-
-  ring.currentTime=0;
+  const ring=new Audio("bogh.mp3");
   ring.play();
 
-  callTimer=setTimeout(()=>{
-    endCall();
+  setTimeout(()=>{
+    ring.pause();
   },8000);
 }
 
-function endCall(){
-  document.getElementById("callScreen").style.display="none";
-  ring.pause();
-  ring.currentTime=0;
-  clearTimeout(callTimer);
-}
-
 function fakeVideo(){
-  alert("🎥 تماس تصویری (فیک)");
+  alert("🎥 تماس تصویری");
 }
 
-/* VOICE REC */
+/* VOICE REC FIXED */
 let recorder;
 let chunks=[];
 
 async function startRec(){
-  const stream=await navigator.mediaDevices.getUserMedia({audio:true});
-  recorder=new MediaRecorder(stream);
-  chunks=[];
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
 
-  recorder.ondataavailable=e=>chunks.push(e.data);
+    recorder=new MediaRecorder(stream);
+    chunks=[];
 
-  recorder.onstop=()=>{
-    const blob=new Blob(chunks,{type:"audio/webm"});
-    const url=URL.createObjectURL(blob);
+    recorder.ondataavailable=e=>chunks.push(e.data);
 
-    const now=new Date();
-    const time=now.getHours()+":"+String(now.getMinutes()).padStart(2,"0");
+    recorder.onstop=()=>{
+      const blob=new Blob(chunks,{type:"audio/webm"});
+      const url=URL.createObjectURL(blob);
 
-    messages.push({
-      type:"me",
-      voice:url,
-      time
-    });
+      const now=new Date();
+      const time=now.getHours()+":"+String(now.getMinutes()).padStart(2,"0");
 
-    render();
-  };
+      messages.push({
+        type:"me",
+        voice:url,
+        time
+      });
 
-  recorder.start();
+      render();
+    };
+
+    recorder.start();
+
+  } catch(err){
+    alert("دسترسی به میکروفون داده نشد");
+  }
 }
 
 function stopRec(){
