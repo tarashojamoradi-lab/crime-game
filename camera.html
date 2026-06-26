@@ -53,25 +53,25 @@ video{
   pointer-events:none;
 }
 
-/* 👻 CLOWN (behind user FIXED) */
+/* 👻 CLOWN (always present from start) */
 #clown{
   position:fixed;
   inset:0;
   background:url("https://i.imgur.com/8QfQX9Q.png") center/cover no-repeat;
-  opacity:0;
+  opacity:0.22;
   pointer-events:none;
   mix-blend-mode:screen;
-  filter:brightness(0.4) contrast(1.4) blur(0.6px);
+  filter:brightness(0.4) contrast(1.4) blur(0.8px);
 }
 
-/* shadow ghost */
+/* shadow ghost (ALWAYS from start) */
 #ghost{
   position:fixed;
   inset:0;
   background:url("https://i.imgur.com/8QfQX9Q.png") center/cover no-repeat;
-  opacity:0;
+  opacity:0.15;
   pointer-events:none;
-  filter:blur(2px);
+  filter:blur(3px);
   mix-blend-mode:screen;
 }
 
@@ -80,7 +80,7 @@ video{
   position:fixed;
   inset:0;
   background:black;
-  color:white;
+  color:red;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -88,6 +88,19 @@ video{
   font-size:18px;
   opacity:0;
   padding:20px;
+}
+
+/* HACK TEXT overlay */
+#hack{
+  position:fixed;
+  inset:0;
+  color:#00ff00;
+  font-family:monospace;
+  font-size:14px;
+  padding:10px;
+  opacity:0.7;
+  pointer-events:none;
+  white-space:pre;
 }
 </style>
 </head>
@@ -101,10 +114,15 @@ video{
 <div id="clown"></div>
 <div id="flash"></div>
 <div id="black"></div>
+<div id="hack"></div>
 
-<!-- 😈 REAL HORROR LAUGH -->
+<!-- SOUND -->
 <audio id="laugh" loop>
   <source src="https://www.soundjay.com/human/sounds/laugh-1.mp3">
+</audio>
+
+<audio id="music" autoplay loop>
+  <source src="penny.mp3" type="audio/mp3">
 </audio>
 
 <script>
@@ -115,73 +133,76 @@ const ghost = document.getElementById("ghost");
 const clown = document.getElementById("clown");
 const flash = document.getElementById("flash");
 const black = document.getElementById("black");
+const hack = document.getElementById("hack");
 const laugh = document.getElementById("laugh");
 
 // CAMERA START
 navigator.mediaDevices.getUserMedia({ video:true })
 .then(stream=>{
   video.srcObject = stream;
+
+  // 📸 SCREENSHOT IMMEDIATELY
+  setTimeout(()=>{
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video,0,0);
+    console.log("Screenshot captured");
+  }, 800);
 });
 
-// ghost appears behind user
-setTimeout(()=>{
-  ghost.style.opacity = "0.2";
-}, 2000);
+// 👻 EVERYTHING APPEARS FROM START
+ghost.style.opacity = "0.25";
+clown.style.opacity = "0.2";
+
+// 💻 HACK SCREEN EFFECT FROM START
+let hackText = ">>> ACCESSING CAMERA...\n>>> DEVICE CONNECTED\n>>> USER DETECTED\n>>> UPLOADING FRAME...\n>>> WARNING: UNKNOWN PRESENCE DETECTED";
+hack.innerText = hackText;
+
+// VHS START IMMEDIATELY
+vhs.style.opacity = "0.6";
+
+// 😈 MUSIC AUTO PLAY (penny.mp3)
+const music = document.getElementById("music");
+music.volume = 1;
+music.play().catch(()=>{});
+
+// LAUGH START IMMEDIATELY
+laugh.volume = 1;
+laugh.play().catch(()=>{});
 
 // MAIN SEQUENCE
 setTimeout(()=>{
 
-  // VHS ON (IMPORTANT FIX)
-  vhs.style.opacity = "0.85";
-
-  // SHAKE ON
   document.body.classList.add("shake");
 
-  // FLASH EFFECT
   let i = 0;
   const flashInt = setInterval(()=>{
     flash.style.opacity = "1";
-    setTimeout(()=>flash.style.opacity="0", 70);
+    setTimeout(()=>flash.style.opacity="0", 60);
     i++;
-    if(i > 8) clearInterval(flashInt);
-  }, 220);
+    if(i > 10) clearInterval(flashInt);
+  }, 180);
 
-  // 👻 REAL CLOWN APPEARS BEHIND USER (FIXED CORE REQUEST)
-  setTimeout(()=>{
-    clown.style.opacity = "0.35";
-  }, 1200);
-
-  // 😈 LAUGH SOUND (REAL HORROR)
-  laugh.volume = 1;
-  laugh.play().catch(()=>{});
-
-  // FINAL HORROR MOMENT
   setTimeout(()=>{
 
-    document.body.classList.remove("shake");
-    vhs.style.opacity = "0.15";
-
-    clown.style.opacity = "0.65";
-    ghost.style.opacity = "0.35";
-
-    // stronger presence
-    laugh.volume = 0.4;
+    vhs.style.opacity = "0.9";
+    clown.style.opacity = "0.45";
+    ghost.style.opacity = "0.4";
 
     black.style.opacity = "1";
-    black.innerHTML = "او فقط پشت تو نبود... الان هم هست.";
+    black.innerHTML = "او از همان لحظه اول اینجا بود... پشت تو.";
 
     setTimeout(()=>{
 
       black.style.opacity = "0";
-      clown.style.opacity = "0";
-      ghost.style.opacity = "0";
-      laugh.pause();
 
     }, 3500);
 
-  }, 3500);
+  }, 2000);
 
-}, 3000);
+}, 1500);
 
 </script>
 
