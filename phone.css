@@ -1,202 +1,152 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
--webkit-tap-highlight-color:transparent;
+/* =========================
+   PHONE.CSS | PART 1
+   Base Reset + Layout
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-html,body{
-width:100%;
-height:100%;
-overflow:hidden;
-font-family:tahoma,sans-serif;
-background:#000;
-touch-action:none;
+body {
+  background: #0f0f10;
+  color: #fff;
+  overflow-x: hidden;
 }
 
-.phone{
-position:relative;
-width:100%;
-height:100vh;
-overflow:hidden;
-background:#000;
+/* کانتینر اصلی گوشی */
+.phone-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
-.wallpaper{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-object-fit:cover;
-user-select:none;
-pointer-events:none;
+/* قاب گوشی */
+.phone-frame {
+  width: 360px;
+  height: 720px;
+  background: #000;
+  border-radius: 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  position: relative;
+  overflow: hidden;
+  border: 8px solid #1a1a1a;
 }
 
-.dark-layer{
-position:absolute;
-inset:0;
-background:rgba(0,0,0,.18);
-backdrop-filter:brightness(.95);
+/* صفحه نمایش داخل گوشی */
+.screen {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 32px;
+  overflow: hidden;
+  position: relative;
 }
 
-.status-bar{
-position:absolute;
-top:0;
-left:0;
-right:0;
-height:48px;
-padding:0 18px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-color:white;
-font-size:15px;
-font-weight:bold;
-z-index:5;
-text-shadow:0 0 8px black;
+/* نوار بالا (status bar) */
+.status-bar {
+  width: 100%;
+  height: 24px;
+  background: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 12px;
+  font-size: 12px;
+  color: #000;
+}
+/* =========================
+   PHONE.CSS | PART 2
+   Pattern Lock (Dots + Canvas)
+========================= */
+
+/* لایه رسم خطوط */
+#patternCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
 }
 
-.status-left{
-display:flex;
-align-items:center;
+/* کانتینر الگو */
+.pattern-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  place-items: center;
+  padding: 60px 40px;
+  z-index: 3;
 }
 
-.status-right{
-display:flex;
-align-items:center;
-gap:10px;
-font-size:16px;
+/* دات‌های الگو */
+.dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #2c2c2c;
+  border: 2px solid #555;
+  transition: 0.2s ease;
+  position: relative;
 }
 
-.date-box{
-position:absolute;
-top:70px;
-left:0;
-right:0;
-text-align:center;
-color:white;
-z-index:5;
-text-shadow:0 0 15px black;
+/* حالت لمس شده */
+.dot.active {
+  background: #00ffd5;
+  border-color: #00ffd5;
+  box-shadow: 0 0 12px rgba(0, 255, 213, 0.8);
+  transform: scale(1.15);
 }
 
-#date{
-font-size:19px;
-font-weight:bold;
+/* حالت hover (برای دسکتاپ تست) */
+.dot:hover {
+  background: #666;
+  cursor: pointer;
 }
 
-.pattern-area{
-position:absolute;
-left:50%;
-bottom:70px;
-transform:translateX(-50%);
-width:320px;
-height:320px;
-z-index:10;
+/* مرکز صفحه لاک */
+.lock-title {
+  position: absolute;
+  top: 80px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: #bbb;
+  z-index: 4;
 }
 
-#patternLines{
-position:absolute;
-inset:0;
-width:100%;
-height:100%;
-pointer-events:none;
+/* زیرنویس راهنما */
+.lock-hint {
+  position: absolute;
+  bottom: 80px;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  z-index: 4;
 }
 
-.pattern-grid{
-position:relative;
-width:100%;
-height:100%;
+/* وقتی کاربر در حال کشیدن است */
+.pattern-container.drawing .dot {
+  transition: 0.1s;
 }
 
-.dot{
-position:absolute;
-width:24px;
-height:24px;
-border-radius:50%;
-background:rgba(255,255,255,.22);
-border:2px solid rgba(255,255,255,.9);
-box-shadow:
-0 0 15px rgba(255,255,255,.45),
-0 0 35px rgba(255,255,255,.25);
-transition:.2s;
-}
-
-.dot.active{
-background:white;
-transform:scale(1.35);
-box-shadow:
-0 0 20px white,
-0 0 45px white;
-}
-
-.dot:nth-child(1){top:0;left:50%;transform:translateX(-50%);}
-.dot:nth-child(2){top:65px;right:45px;}
-.dot:nth-child(3){top:145px;right:0;}
-.dot:nth-child(4){bottom:65px;right:45px;}
-.dot:nth-child(5){top:50%;left:50%;transform:translate(-50%,-50%);}
-.dot:nth-child(6){bottom:65px;left:45px;}
-.dot:nth-child(7){bottom:0;left:50%;transform:translateX(-50%);}
-.dot:nth-child(8){top:145px;left:0;}
-.dot:nth-child(9){top:65px;left:45px;}
-.dot:nth-child(10){
-top:50%;
-left:50%;
-transform:translate(-50%,-50%) scale(.35);
-opacity:0;
-pointer-events:none;
-}
-
-.message{
-position:absolute;
-bottom:25px;
-left:0;
-right:0;
-text-align:center;
-font-size:15px;
-font-weight:bold;
-color:#ff4d4d;
-text-shadow:0 0 10px black;
-z-index:20;
-min-height:22px;
-}
-
-#unlockFlash{
-position:absolute;
-inset:0;
-background:white;
-opacity:0;
-pointer-events:none;
-z-index:999;
-}
-
-.shake{
-animation:shake .35s;
-}
-
-@keyframes shake{
-0%{transform:translateX(0);}
-20%{transform:translateX(-10px);}
-40%{transform:translateX(10px);}
-60%{transform:translateX(-8px);}
-80%{transform:translateX(8px);}
-100%{transform:translateX(0);}
-}
-
-@media (max-width:390px){
-
-.pattern-area{
-width:270px;
-height:270px;
-bottom:55px;
-}
-
-.status-bar{
-font-size:14px;
-}
-
-#date{
-font-size:17px;
-}
-
+/* افکت اتصال (در هنگام حرکت) */
+.line-glow {
+  stroke: #00ffd5;
+  stroke-width: 4;
+  filter: drop-shadow(0 0 6px #00ffd5);
 }
