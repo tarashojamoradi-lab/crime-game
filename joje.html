@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>joje chat</title>
+<title>chat</title>
 
 <style>
 body{
@@ -43,17 +43,28 @@ body{
   padding:12px;
   height:calc(100vh - 120px);
   overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
 }
 
 .msg{
   max-width:75%;
-  padding:10px;
-  margin:8px 0;
+  padding:10px 12px;
   border-radius:12px;
+  font-size:14px;
+  line-height:1.4;
 }
 
-.me{background:#1f1f2e; align-self:flex-start;}
-.other{background:#3a0f1f; align-self:flex-end;}
+.me{
+  background:#1f1f2e;
+  align-self:flex-start;
+}
+
+.other{
+  background:#3a0f1f;
+  align-self:flex-end;
+}
 
 /* CALL SCREEN */
 .callScreen{
@@ -65,7 +76,6 @@ body{
   justify-content:center;
   align-items:center;
   z-index:9999;
-  text-align:center;
 }
 
 .callAvatar{
@@ -73,7 +83,6 @@ body{
   height:120px;
   border-radius:50%;
   overflow:hidden;
-  animation:pulse 1s infinite;
   border:2px solid #444;
 }
 
@@ -83,14 +92,9 @@ body{
   object-fit:cover;
 }
 
-@keyframes pulse{
-  50%{transform:scale(1.05);}
-}
-
 .callText{
   margin-top:15px;
   font-size:18px;
-  opacity:0.9;
 }
 
 .actions{
@@ -130,10 +134,14 @@ body{
 
 <!-- TOP -->
 <div class="top">
+
   <div class="profile">
     <div class="avatar"></div>
     <div>شوخی بی‌مزه</div>
   </div>
+
+  <div onclick="startCall()" style="cursor:pointer;font-size:18px;">📞</div>
+
 </div>
 
 <!-- CHAT -->
@@ -164,9 +172,10 @@ body{
 const chat=document.getElementById("chat");
 const ring=document.getElementById("ring");
 
+let callStarted=false;
 let timeoutCall;
 
-/* NEW CHAT */
+/* CHAT FIXED */
 const messages=[
 {type:"other",text:"هنوزم موقع عصبی شدن ناخن‌هاتو می‌جَوی؟"},
 {type:"me",text:"هنوزم موقع ترسیدن زیاد حرف می‌زنی؟"},
@@ -188,12 +197,27 @@ function render(){
 
 render();
 
-/* CALL */
-setTimeout(()=>incomingCall(),2000);
+/* AUTO CALL ONCE ONLY */
+setTimeout(()=>{
+  if(!callStarted){
+    incomingCall();
+    callStarted=true;
+  }
+},2000);
 
+/* MANUAL CALL */
+function startCall(){
+  if(!callStarted){
+    incomingCall();
+    callStarted=true;
+  }
+}
+
+/* CALL */
 function incomingCall(){
   document.getElementById("callScreen").style.display="flex";
 
+  ring.currentTime=0;
   ring.play();
 
   if(navigator.vibrate){
@@ -202,14 +226,12 @@ function incomingCall(){
 
   timeoutCall=setTimeout(()=>{
     endCall();
-  },6000); // زودتر قطع میشه
+  },6000);
 }
 
 /* ANSWER */
 function answerCall(){
   ring.pause();
-  document.getElementById("callText").innerText="در حال مکالمه...";
-
   document.getElementById("actions").style.display="none";
   document.getElementById("endBtn").style.display="flex";
 }
