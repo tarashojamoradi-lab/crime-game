@@ -1,190 +1,46 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kurokawa Map System</title>
-
-<style>
-body{
-  margin:0;
-  font-family:sans-serif;
-  background:#0b0b0b;
-  color:white;
-  overflow:hidden;
+/* INFO */
+function openInfo(name,time){
+popup.style.display="block";
+popup.innerHTML=${name}<br>آخرین حضور: ${time};
+setTimeout(()=>popup.style.display="none",3000);
 }
 
-/* MAP */
-#map{
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(circle at 30% 30%, #1a1a1a, #000);
+/* QUIZ */
+function quiz(){
+let ans=prompt("نام را وارد کنید:");
+if(ans==="Mitsuki Amane"||ans==="Mitsuki"){
+document.getElementById("secret").style.display="block";
+popup.innerHTML="مسیر مخفی باز شد";
+popup.style.display="block";
+}else{
+document.body.style.background="darkred";
+document.body.classList.add("glitch");
+navigator.vibrate?.(200);
+setTimeout(()=>{
+document.body.classList.remove("glitch");
+document.body.style.background="#0b0b0b";
+},600);
+}
 }
 
-/* fake roads */
-.road{
-  position:absolute;
-  width:200px;
-  height:3px;
-  background:rgba(255,255,255,0.1);
-  transform:rotate(20deg);
+/* LOCATION */
+function focusLast(){
+tx=-1200;ty=-1100;scale=1.2;
+update();
 }
 
-/* points */
-.point{
-  position:absolute;
-  width:12px;
-  height:12px;
-  background:red;
-  border-radius:50%;
-  box-shadow:0 0 10px red;
-  cursor:pointer;
-}
-
-/* UI PANEL */
-#panel{
-  position:absolute;
-  bottom:0;
-  left:0;
-  right:0;
-  background:rgba(0,0,0,0.85);
-  padding:10px;
-  font-size:13px;
-  height:120px;
-  overflow:auto;
-}
-
-/* NOTIFICATION */
-#notif-container{
-  position:fixed;
-  top:20px;
-  left:50%;
-  transform:translateX(-50%);
-  width:90%;
-  max-width:360px;
-  z-index:9999;
-}
-
-.notif{
-  background:rgba(20,20,20,0.95);
-  padding:12px;
-  margin-top:8px;
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,0.1);
-  animation:fade 5s forwards;
-}
-
-@keyframes fade{
-  0%{opacity:0; transform:translateY(-20px);}
-  10%{opacity:1;}
-  90%{opacity:1;}
-  100%{opacity:0; transform:translateY(-20px);}
-}
-
-/* glitch */
-.glitch{
-  animation:glitch 0.2s infinite;
-}
-
-@keyframes glitch{
-  0%{transform:translate(0)}
-  25%{transform:translate(1px,0)}
-  50%{transform:translate(-1px,0)}
-  75%{transform:translate(0,1px)}
-  100%{transform:translate(0)}
-}
-</style>
-</head>
-
-<body>
-
-<div id="map" class="glitch"></div>
-
-<div id="notif-container"></div>
-
-<div id="panel">
-<b>Search History</b><br>
-<div id="history"></div>
-</div>
-
-<script>
-/* ---------------- LOCATIONS ---------------- */
-const locations = [
-  {name:"Shirogane School", x:120, y:200, text:"آخرین بازدید: 1964 - فایل ناقص"},
-  {name:"Unknown Forest", x:250, y:350, text:"هیچ ثبت رسمی ندارد"},
-  {name:"Old Train Station", x:80, y:420, text:"تعطیل از 1960"}
-];
-
-/* render points */
-locations.forEach(l=>{
-  const el = document.createElement("div");
-  el.className = "point";
-  el.style.left = l.x+"px";
-  el.style.top = l.y+"px";
-
-  el.onclick = ()=>{
-    showNotif("📍 "+l.name+" - "+l.text);
-    addHistory(l.name);
-  };
-
-  document.getElementById("map").appendChild(el);
-});
-
-/* ---------------- NOTIFICATIONS ---------------- */
-function showNotif(text){
-  const box = document.createElement("div");
-  box.className = "notif";
-  box.innerText = text;
-
-  document.getElementById("notif-container").appendChild(box);
-
-  setTimeout(()=>box.remove(),5000);
-}
-
-/* random scary notifications */
-const scary = [
-  "سیگنال در منطقه شما قطع شد",
-  "یک نفر نزدیک شما در Kurokawa است",
-  "شما نباید اینجا باشید",
-  "هیچ خروجی وجود ندارد"
-];
-
+/* RANDOM EFFECTS */
 setInterval(()=>{
-  const r = Math.floor(Math.random()*scary.length);
-  showNotif(scary[r]);
-},8000);
-
-/* ---------------- SEARCH HISTORY ---------------- */
-const badSearches = [
-  "چگونه یک جسد را پنهان کنیم",
-  "صدای گریه در جنگل ژاپن",
-  "روستای Kurokawa واقعی است؟",
-  "آخرین قطار چه ساعتی است"
-];
-
-function addHistory(item){
-  const div = document.createElement("div");
-  div.innerText = item;
-  document.getElementById("history").appendChild(div);
+if(Math.random()<0.2){
+document.body.classList.add("glitch");
+setTimeout(()=>document.body.classList.remove("glitch"),200);
 }
-
-/* fake auto history */
-setInterval(()=>{
-  const r = Math.floor(Math.random()*badSearches.length);
-  addHistory(badSearches[r]);
-
-  if(Math.random()>0.7){
-    showNotif("⚠️ History corrupted...");
-  }
-},10000);
-
-/* ---------------- ENVIRONMENT EVENTS ---------------- */
-setInterval(()=>{
-  document.body.style.filter =
-    Math.random()>0.8 ? "brightness(0.6)" : "brightness(1)";
 },5000);
 
+/* NOTIFICATION */
+setTimeout(()=>{
+alert("موقعیت جدید شناسایی شد.");
+},8000);
 </script>
 
 </body>
