@@ -1,257 +1,250 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
-
+<html lang="fa">
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Device</title>
 
-<meta name="viewport"
-content="width=device-width,
-initial-scale=1.0,
-maximum-scale=1.0,
-user-scalable=no">
+<style>
+body{
+  margin:0;
+  font-family:sans-serif;
+  overflow:hidden;
+  background:black;
+}
 
-<title>Clown Phone</title>
+/* ===== PHONE WRAPPER ===== */
+#phone{
+  position:fixed;
+  inset:0;
+  display:block;
+}
 
-<link rel="stylesheet" href="phone.css">
+/* ===== LOCK SCREEN ===== */
+#lock{
+  position:absolute;
+  inset:0;
+  background:url("oh.png") center/cover no-repeat;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:center;
+  color:white;
+}
 
+/* dark overlay like real phones */
+#lock::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+}
+
+/* content on top */
+#top{
+  position:relative;
+  margin-top:80px;
+  text-align:center;
+  z-index:2;
+}
+
+#time{
+  font-size:64px;
+  font-weight:300;
+  letter-spacing:2px;
+}
+
+#date{
+  font-size:16px;
+  opacity:0.8;
+}
+
+/* ===== PATTERN AREA ===== */
+#patternBox{
+  position:relative;
+  z-index:2;
+  margin-top:80px;
+  width:260px;
+  height:260px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-gap:25px;
+}
+
+.dot{
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,0.7);
+  margin:auto;
+  transition:0.2s;
+}
+
+.dot.active{
+  background:white;
+  transform:scale(1.2);
+}
+
+/* hint */
+#hint{
+  position:absolute;
+  bottom:60px;
+  z-index:2;
+  font-size:14px;
+  opacity:0.7;
+}
+
+/* shake animation */
+.shake{
+  animation:shake 0.3s;
+}
+
+@keyframes shake{
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-8px)}
+  50%{transform:translateX(8px)}
+  75%{transform:translateX(-8px)}
+  100%{transform:translateX(0)}
+}
+
+/* ===== HOME SCREEN ===== */
+#home{
+  position:absolute;
+  inset:0;
+  background:#000;
+  display:none;
+  color:white;
+  padding:20px;
+}
+</style>
 </head>
 
 <body>
 
 <div id="phone">
 
-    <!-- والپیپر -->
+  <!-- LOCK SCREEN -->
+  <div id="lock">
 
-    <img
-    id="wallpaper"
-    src="oh.png"
-    alt="Wallpaper">
-
-    <!-- لایه تاریک -->
-
-    <div id="darkOverlay"></div>
-
-    <!-- فلش هنگام باز شدن -->
-
-    <div id="unlockFlash"></div>
-
-    <!-- ویگنت ساعت -->
-
-    <div id="clockArea">
-
-        <div id="time">
-
-            00:00
-
-        </div>
-
-        <div id="date">
-
-            Loading...
-
-        </div>
-
+    <div id="top">
+      <div id="time">00:00</div>
+      <div id="date">---</div>
     </div>
 
-    <!-- نوار وضعیت -->
-
-    <header id="statusBar">
-
-        <div id="statusLeft">
-
-            <span id="network">
-                📶
-            </span>
-
-            <span id="wifi">
-                📡
-            </span>
-
-        </div>
-
-        <div id="statusCenter">
-
-            <span id="carrier">
-
-                Unknown
-
-            </span>
-
-        </div>
-
-        <div id="statusRight">
-
-            <span id="batteryPercent">
-
-                100%
-
-            </span>
-
-            <div id="battery">
-
-                <div id="batteryLevel"></div>
-
-            </div>
-
-        </div>
-
-    </header>
-
-    <!-- صفحه Pattern -->
-
-    <section id="lockScreen">
-
-        <svg
-        id="patternSvg"
-        width="100%"
-        height="100%">
-
-        </svg>
-
-        <div id="patternGrid">
-
-            <!-- ردیف اول -->
-
-            <div class="row">
-
-                <div
-                class="dot"
-                data-dot="1">
-
-                    <div class="dotCore"></div>
-
-                </div>
-
-                <div
-                class="dot"
-                data-dot="2">
-
-                    <div class="dotCore"></div>
-
-                </div>
-
-                <div
-                class="dot"
-                data-dot="3">
-
-                    <div class="dotCore"></div>
-
-                </div>
-
-            </div>
-
-            <!-- ردیف دوم -->
-
-            <div class="row">
-
-                <div
-                class="dot"
-                data-dot="4">
-
-                    <div class="dotCore"></div>
-
-                </div>
-
-                <div
-                class="dot"
-                data-dot="5">
-
-                    <div class="dotCore"></div>
-
-                </div>
-
-                <div
-                class="dot"
-                data-dot="6">
-
-                    <div class="dotCore"></div>
-
-                </div>
-
-            </div>
-
-            <!-- ردیف سوم -->
-
-            <div class="row">
-
-                <div
-                class="dot"
-                data-dot="7">
-
-                    <div class="dotCore"></div>
-
-                </div>
-
-                <div
-                class="dot"
-                data-dot="8">
-
-                    <div class="dotCore"></div>
-
-                </div>
-
-                <div
-                class="dot"
-                data-dot="9">
-
-                    <div class="dotCore"></div>
-
-                </div>
-
-            </div>
-
-        </div>
-        <!-- پیام خطا -->
-
-        <div id="patternError">
-
-            الگوی وارد شده اشتباه است
-
-        </div>
-
-    </section>
-
-    <!-- آیکون‌های پایین -->
-
-    <div id="bottomBar">
-
-        <button
-        id="flashlightBtn"
-        class="bottomButton"
-        aria-label="Flashlight">
-
-            <svg viewBox="0 0 24 24">
-
-                <path d="M9 2h6v4h2v5c0 2.2-1.8 4-4 4h-2c-2.2 0-4-1.8-4-4V6h2V2zm1 2v2h4V4h-4zm1 12h2v6h-2z"/>
-
-            </svg>
-
-        </button>
-
-        <button
-        id="cameraBtn"
-        class="bottomButton"
-        aria-label="Camera">
-
-            <svg viewBox="0 0 24 24">
-
-                <path d="M9 4l1.5-2h3L15 4h3c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm3 14a5 5 0 100-10 5 5 0 000 10z"/>
-
-            </svg>
-
-        </button>
-
+    <!-- PATTERN -->
+    <div id="patternBox">
+      <div class="dot" data-id="1"></div>
+      <div class="dot" data-id="2"></div>
+      <div class="dot" data-id="3"></div>
+
+      <div class="dot" data-id="4"></div>
+      <div class="dot" data-id="5"></div>
+      <div class="dot" data-id="6"></div>
+
+      <div class="dot" data-id="7"></div>
+      <div class="dot" data-id="8"></div>
+      <div class="dot" data-id="9"></div>
     </div>
 
-    <!-- نوار پایین -->
+    <div id="hint">Draw unlock pattern</div>
+  </div>
 
-    <div id="homeIndicator"></div>
+  <!-- HOME -->
+  <div id="home">
+    <h2>Welcome</h2>
+  </div>
 
 </div>
 
-<script src="phone.js"></script>
+<script>
+
+/* ===== TIME ===== */
+function updateTime(){
+  const now = new Date();
+
+  document.getElementById("time").innerText =
+    now.getHours().toString().padStart(2,"0") + ":" +
+    now.getMinutes().toString().padStart(2,"0");
+
+  document.getElementById("date").innerText =
+    now.toDateString();
+}
+setInterval(updateTime,1000);
+updateTime();
+
+/* ===== PATTERN LOGIC ===== */
+const correctPattern = ["1","4","7","5","3","6","9"];
+let userPattern = [];
+let drawing = false;
+
+const dots = document.querySelectorAll(".dot");
+const lock = document.getElementById("lock");
+
+function addDot(dot){
+  const id = dot.dataset.id;
+
+  if(!userPattern.includes(id)){
+    userPattern.push(id);
+    dot.classList.add("active");
+  }
+}
+
+/* mouse */
+dots.forEach(dot=>{
+  dot.addEventListener("mousedown", ()=>{
+    drawing = true;
+    addDot(dot);
+  });
+
+  dot.addEventListener("mouseenter", ()=>{
+    if(drawing) addDot(dot);
+  });
+
+  dot.addEventListener("touchstart", ()=>{
+    drawing = true;
+    addDot(dot);
+  });
+});
+
+/* finish draw */
+document.addEventListener("mouseup", check);
+document.addEventListener("touchend", check);
+
+function check(){
+  drawing = false;
+
+  if(userPattern.join("") === correctPattern.join("")){
+    unlock();
+  }else{
+    wrong();
+  }
+
+  reset();
+}
+
+function wrong(){
+  lock.classList.add("shake");
+
+  if(navigator.vibrate){
+    navigator.vibrate([100,50,100]);
+  }
+
+  setTimeout(()=>{
+    lock.classList.remove("shake");
+  },300);
+}
+
+function reset(){
+  userPattern = [];
+  dots.forEach(d=>d.classList.remove("active"));
+}
+
+function unlock(){
+  document.getElementById("lock").style.display = "none";
+  document.getElementById("home").style.display = "block";
+}
+
+</script>
 
 </body>
-
 </html>
