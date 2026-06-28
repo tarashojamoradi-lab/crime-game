@@ -317,7 +317,7 @@ chat.scrollTop=chat.scrollHeight;
 render();
 
 /* SEND */
-function sendMsg(){
+function sendMsg(){ 
 const input=document.getElementById("text");
 if(input.value.trim()=="") return;
 
@@ -331,6 +331,8 @@ time:now.getHours()+":"+String(now.getMinutes()).padStart(2,"0")
 
 input.value="";
 render();
+
+setTimeout(fakeReplyWithTyping, 4000);
 }
 
 /* CALL */
@@ -390,6 +392,34 @@ function stopRec(){
 if(recorder && recorder.state!=="inactive"){
 recorder.stop();
 }
+}
+function fakeReplyWithTyping(){
+
+const typing=document.createElement("div");
+typing.className="msg other";
+typing.innerHTML="<i>در حال نوشتن...</i>";
+typing.id="typingBox";
+
+chat.appendChild(typing);
+chat.scrollTop=chat.scrollHeight;
+
+setTimeout(()=>{
+
+document.getElementById("typingBox")?.remove();
+
+ding.currentTime = 0;
+ding.play().catch(()=>{});
+
+messages.push({
+type:"other",
+text:"پررو نشو",
+time:new Date().getHours()+":"+String(new Date().getMinutes()).padStart(2,"0")
+});
+
+render();
+
+},1000);
+
 }
 </script>
 
