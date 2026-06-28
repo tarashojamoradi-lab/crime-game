@@ -1,60 +1,975 @@
-const max=LIMIT*scale;
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
 
-if(x>max)x=max;
-if(x<-max)x=-max;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-if(y>max)y=max;
-if(y<-max)y=-max;
+<title>Maps</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:sans-serif;
+-webkit-tap-highlight-color:transparent;
 }
 
-/* RENDER */
+html,body{
+width:100%;
+height:100%;
+overflow:hidden;
+background:#d7d7d7;
+}
+
+/*=======================*/
+
+#mapApp{
+
+position:fixed;
+inset:0;
+overflow:hidden;
+background:#dcdcdc;
+
+}
+
+/*=======================*/
+
+#map{
+
+position:absolute;
+left:0;
+top:0;
+width:3000px;
+height:3000px;
+
+background:
+
+linear-gradient(#ffffff22 1px,transparent 1px),
+linear-gradient(90deg,#ffffff22 1px,transparent 1px),
+
+#d8d6c8;
+
+background-size:120px 120px;
+
+cursor:grab;
+
+}
+
+/*=======================*/
+
+.road{
+
+position:absolute;
+background:#f4f1df;
+border:2px solid #ffffff;
+border-radius:50px;
+box-shadow:0 0 8px rgba(0,0,0,.12);
+
+}
+
+/* افقی */
+
+.r1{
+
+left:120px;
+top:500px;
+width:1600px;
+height:44px;
+
+}
+
+.r2{
+
+left:350px;
+top:1100px;
+width:2000px;
+height:52px;
+
+}
+
+.r3{
+
+left:400px;
+top:1900px;
+width:1700px;
+height:42px;
+
+}
+
+/* عمودی */
+
+.v1{
+
+left:700px;
+top:250px;
+width:48px;
+height:1800px;
+
+}
+
+.v2{
+
+left:1500px;
+top:100px;
+width:48px;
+height:2200px;
+
+}
+
+.v3{
+
+left:2200px;
+top:350px;
+width:48px;
+height:1800px;
+
+}
+
+/*=======================*/
+
+.forest{
+
+position:absolute;
+background:#95be6d;
+border-radius:50%;
+
+filter:blur(.4px);
+
+}
+
+.f1{
+
+left:120px;
+top:120px;
+width:380px;
+height:280px;
+
+}
+
+.f2{
+
+left:2400px;
+top:180px;
+width:420px;
+height:350px;
+
+}
+
+.f3{
+
+left:2300px;
+top:1700px;
+width:500px;
+height:420px;
+
+}
+
+.f4{
+
+left:120px;
+top:2200px;
+width:420px;
+height:350px;
+
+}
+
+/*=======================*/
+
+.water{
+
+position:absolute;
+left:1180px;
+top:2300px;
+
+width:900px;
+height:220px;
+
+background:#7ec6ff;
+
+border-radius:150px;
+
+}
+
+/*=======================*/
+
+.house{
+
+position:absolute;
+
+width:36px;
+height:36px;
+
+background:#ececec;
+
+border:2px solid #777;
+
+border-radius:5px;
+
+}
+
+.house::after{
+
+content:"";
+
+position:absolute;
+
+left:5px;
+top:-9px;
+
+width:22px;
+height:22px;
+
+background:#a95b5b;
+
+transform:rotate(45deg);
+
+z-index:-1;
+
+}
+
+/*=======================*/
+
+.marker{
+
+position:absolute;
+
+width:24px;
+height:24px;
+
+background:#ff3b30;
+
+border-radius:50% 50% 50% 0;
+
+transform:rotate(-45deg);
+
+box-shadow:0 5px 12px rgba(0,0,0,.3);
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.marker::after{
+
+content:"";
+
+position:absolute;
+
+left:6px;
+top:6px;
+
+width:12px;
+height:12px;
+
+background:#fff;
+
+border-radius:50%;
+
+}
+
+.marker:hover{
+
+transform:rotate(-45deg) scale(1.1);
+
+}
+
+/*=======================*/
+
+.label{
+
+position:absolute;
+
+padding:4px 9px;
+
+background:rgba(255,255,255,.95);
+
+border-radius:12px;
+
+font-size:14px;
+
+font-weight:bold;
+
+box-shadow:0 2px 8px rgba(0,0,0,.18);
+
+white-space:nowrap;
+
+}
+
+/*=======================*/
+
+#topBar{
+
+position:absolute;
+
+top:15px;
+left:50%;
+
+transform:translateX(-50%);
+
+width:92%;
+height:56px;
+
+background:white;
+
+border-radius:18px;
+
+display:flex;
+align-items:center;
+
+padding:0 16px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.18);
+
+z-index:999;
+
+}
+
+#search{
+
+flex:1;
+
+border:none;
+
+outline:none;
+
+font-size:17px;
+
+background:transparent;
+
+}
+
+.searchIcon{
+
+font-size:23px;
+
+margin-left:12px;
+
+color:#666;
+
+}
+
+</style>
+  /*=======================*/
+/* Floating Buttons */
+/*=======================*/
+
+#controls{
+position:absolute;
+right:18px;
+bottom:150px;
+display:flex;
+flex-direction:column;
+gap:12px;
+z-index:9999;
+}
+
+.ctrlBtn{
+width:54px;
+height:54px;
+background:#fff;
+border-radius:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+cursor:pointer;
+user-select:none;
+box-shadow:0 8px 18px rgba(0,0,0,.18);
+transition:.25s;
+}
+
+.ctrlBtn:hover{
+transform:scale(1.06);
+}
+
+.ctrlBtn:active{
+transform:scale(.96);
+}
+
+/*=======================*/
+/* Bottom Card */
+/*=======================*/
+
+#bottomSheet{
+
+position:absolute;
+
+left:50%;
+bottom:0;
+
+transform:translateX(-50%);
+
+width:100%;
+max-width:650px;
+
+height:130px;
+
+background:#ffffff;
+
+border-radius:28px 28px 0 0;
+
+box-shadow:0 -8px 24px rgba(0,0,0,.18);
+
+padding:18px;
+
+z-index:9998;
+
+}
+
+#dragBar{
+
+width:55px;
+height:6px;
+
+background:#cfcfcf;
+
+border-radius:20px;
+
+margin:auto;
+margin-bottom:15px;
+
+}
+
+#placeTitle{
+
+font-size:22px;
+font-weight:bold;
+margin-bottom:6px;
+
+}
+
+#placeSub{
+
+font-size:15px;
+color:#666;
+
+}
+
+#status{
+
+position:absolute;
+
+left:18px;
+bottom:150px;
+
+background:#ffffff;
+
+padding:10px 16px;
+
+border-radius:16px;
+
+font-size:14px;
+
+box-shadow:0 6px 16px rgba(0,0,0,.15);
+
+z-index:9999;
+
+opacity:.95;
+
+}
+
+</head>
+
+<body>
+
+<div id="mapApp">
+
+<div id="topBar">
+
+<div class="searchIcon">🔍</div>
+
+<input
+id="search"
+type="text"
+placeholder="جستجو در نقشه">
+
+</div>
+
+<div id="map">
+
+<div class="road r1"></div>
+<div class="road r2"></div>
+<div class="road r3"></div>
+
+<div class="road v1"></div>
+<div class="road v2"></div>
+<div class="road v3"></div>
+
+<div class="forest f1"></div>
+<div class="forest f2"></div>
+<div class="forest f3"></div>
+<div class="forest f4"></div>
+
+<div class="water"></div>
+
+<!-- خانه‌ها و مارکرها و دکمه‌ها در بخش بعدی اضافه می‌شوند -->
+ <div id="map">
+
+
+
+...
+
+
+
+<div class="water"></div>
+ <!-- ================= خانه‌ها ================= -->
+
+<div class="house" style="left:530px;top:430px;"></div>
+<div class="house" style="left:610px;top:520px;"></div>
+<div class="house" style="left:760px;top:610px;"></div>
+<div class="house" style="left:900px;top:520px;"></div>
+<div class="house" style="left:980px;top:720px;"></div>
+<div class="house" style="left:1160px;top:860px;"></div>
+<div class="house" style="left:1340px;top:640px;"></div>
+<div class="house" style="left:1520px;top:510px;"></div>
+<div class="house" style="left:1730px;top:770px;"></div>
+<div class="house" style="left:1940px;top:920px;"></div>
+
+<div class="house" style="left:670px;top:1310px;"></div>
+<div class="house" style="left:850px;top:1450px;"></div>
+<div class="house" style="left:1040px;top:1570px;"></div>
+<div class="house" style="left:1280px;top:1410px;"></div>
+<div class="house" style="left:1490px;top:1530px;"></div>
+<div class="house" style="left:1710px;top:1670px;"></div>
+<div class="house" style="left:1930px;top:1460px;"></div>
+<div class="house" style="left:2120px;top:1610px;"></div>
+
+<div class="house" style="left:510px;top:2090px;"></div>
+<div class="house" style="left:760px;top:2180px;"></div>
+<div class="house" style="left:970px;top:2280px;"></div>
+<div class="house" style="left:1210px;top:2110px;"></div>
+<div class="house" style="left:1460px;top:2240px;"></div>
+<div class="house" style="left:1680px;top:2390px;"></div>
+<div class="house" style="left:1930px;top:2150px;"></div>
+
+<!-- ================= خیابان‌ها ================= -->
+
+<div class="label" style="left:650px;top:470px;">
+خیابان ساکورا
+</div>
+
+<div class="label" style="left:1180px;top:1070px;">
+جاده قدیمی
+</div>
+
+<div class="label" style="left:830px;top:1880px;">
+خیابان جنگل
+</div>
+
+<div class="label" style="left:2040px;top:640px;">
+معبد متروکه
+</div>
+
+<div class="label" style="left:2160px;top:1690px;">
+پل سنگی
+</div>
+
+<div class="label" style="left:1550px;top:2480px;">
+رودخانه
+</div>
+
+<!-- ================= مارکرها ================= -->
+
+<div class="marker" style="left:1470px;top:980px;"></div>
+
+<div class="marker" style="left:2190px;top:610px;"></div>
+
+<div class="marker" style="left:920px;top:2030px;"></div>
+
+<div class="marker" style="left:1760px;top:2160px;"></div>
+
+<div class="marker" style="left:580px;top:710px;"></div>
+
+<div class="marker" style="left:1260px;top:1510px;"></div>
+
+<div class="marker" style="left:1960px;top:1340px;"></div>
+   <div id="map">
+<!-- ================= کنترل ها ================= -->
+
+<div id="controls">
+
+<div class="ctrlBtn" id="zoomIn">＋</div>
+
+<div class="ctrlBtn" id="zoomOut">－</div>
+
+<div class="ctrlBtn" id="myLocation">📍</div>
+
+<div class="ctrlBtn" id="compass">🧭</div>
+
+</div>
+
+<!-- ================= وضعیت ================= -->
+
+<div id="status">
+
+در حال پیدا کردن موقعیت...
+
+</div>
+
+<!-- ================= پنل پایین ================= -->
+
+<div id="bottomSheet">
+
+<div id="dragBar"></div>
+
+<div id="placeTitle">
+
+روستای ساکورا
+
+</div>
+
+<div id="placeSub">
+
+ژاپن • چند خیابان، جنگل، رودخانه و مکان‌های ثبت‌شده
+
+</div>
+
+</div>
+
+</div>
+<!-- پایان map -->
+
+</div>
+<!-- پایان mapApp -->
+
+<script>
+
+  const map=document.getElementById("map");
+
+let scale=1;
+
+let posX=-700;
+let posY=-500;
+
+let startX=0;
+let startY=0;
+
+let dragging=false;
+
 function render(){
-map.style.transform=translate(${x}px,${y}px) scale(${scale});
+
+map.style.transform=
+`translate(${posX}px,${posY}px) scale(${scale})`;
+
 }
 
-/* ZOOM CENTER SAFE */
-function zoom(z){
-scale*=z;
-if(scale<0.7)scale=0.7;
-if(scale>2.2)scale=2.2;
-clamp();
 render();
+
+/*============================*/
+
+map.addEventListener("mousedown",e=>{
+
+dragging=true;
+
+startX=e.clientX-posX;
+
+startY=e.clientY-posY;
+
+map.style.cursor="grabbing";
+
+});
+
+document.addEventListener("mousemove",e=>{
+
+if(!dragging)return;
+
+posX=e.clientX-startX;
+
+posY=e.clientY-startY;
+
+render();
+
+});
+
+document.addEventListener("mouseup",()=>{
+
+dragging=false;
+
+map.style.cursor="grab";
+
+});
+
+/*============================*/
+
+map.addEventListener("touchstart",e=>{
+
+dragging=true;
+
+startX=e.touches[0].clientX-posX;
+
+startY=e.touches[0].clientY-posY;
+
+},{passive:true});
+
+document.addEventListener("touchmove",e=>{
+
+if(!dragging)return;
+
+posX=e.touches[0].clientX-startX;
+
+posY=e.touches[0].clientY-startY;
+
+render();
+
+},{passive:true});
+
+document.addEventListener("touchend",()=>{
+
+dragging=false;
+
+});
+
+/*============================*/
+
+const plus=document.getElementById("zoomIn");
+
+const minus=document.getElementById("zoomOut");
+
+plus.onclick=()=>{
+
+scale+=0.15;
+
+if(scale>3)scale=3;
+
+render();
+
 }
 
-/* INFO */
-function info(name,time,text){
-popup.style.display="block";
-popup.innerHTML=<b>${name}</b><br>${time}<br>${text};
-setTimeout(()=>popup.style.display="none",2500);
+minus.onclick=()=>{
+
+scale-=0.15;
+
+if(scale<0.5)scale=.5;
+
+render();
+
 }
 
-/* PUZZLE */
-function puzzle(){
-let ans=prompt("او با چه کسی اینجا بوده؟");
+/*============================*/
 
-if(ans==="Mitsuki Amane"||ans==="Mitsuki"){
-popup.innerHTML="🔓 مسیر مخفی فعال شد";
-popup.style.display="block";
+document
+.getElementById("status")
+.innerText="موقعیت پیدا شد.";
+
+</script> 
+  /*============================*/
+/* مارکرها */
+/*============================*/
+
+const markers=document.querySelectorAll(".marker");
+
+const title=document.getElementById("placeTitle");
+const sub=document.getElementById("placeSub");
+
+const places=[
+
+{
+name:"معبد قدیمی",
+text:"آخرین بازدید: ۲۶ سال پیش"
+},
+
+{
+name:"جنگل شمالی",
+text:"هیچ مسیر ثبت نشده است."
+},
+
+{
+name:"خانه متروکه",
+text:"مالک: نامشخص"
+},
+
+{
+name:"پل سنگی",
+text:"مختصات ذخیره شده"
+},
+
+{
+name:"رودخانه",
+text:"آخرین مشاهده: ساعت ۲۳:۴۸"
+},
+
+{
+name:"کوچه ساکورا",
+text:"هیچ اطلاعاتی موجود نیست."
+},
+
+{
+name:"آخرین مکان",
+text:"مختصات ناشناس"
+}
+
+];
+
+markers.forEach((m,i)=>{
+
+m.addEventListener("click",()=>{
+
+title.innerText=places[i].name;
+
+sub.innerText=places[i].text;
+
+m.style.transform="rotate(-45deg) scale(1.25)";
+
+setTimeout(()=>{
+
+m.style.transform="rotate(-45deg)";
+
+},250);
+
+});
+
+});
+
+/*============================*/
+/* موقعیت */
+/*============================*/
+
+const locationBtn=document.getElementById("myLocation");
+
+locationBtn.onclick=()=>{
+
+document.getElementById("status").innerText="در حال پیدا کردن موقعیت...";
+
+setTimeout(()=>{
+
+posX=-850;
+posY=-720;
+scale=1.4;
+
+render();
+
+document.getElementById("status").innerText="موقعیت پیدا شد.";
+
+},1200);
+
+};
+  </script>
+  /*============================*/
+/* رویدادهای مخفی */
+/*============================*/
+
+let secretStep=0;
+
+const secretEvents=[
+
+{
+title:"آخرین مکان مشاهده شده",
+text:"۲۶ سال پیش شخصی در این نقطه دیده شده است."
+},
+
+{
+title:"مختصات ناشناس",
+text:"یک موقعیت جدید روی نقشه ثبت شد."
+},
+
+{
+title:"هشدار",
+text:"سیگنال ناشناس دریافت شد."
+},
+
+{
+title:"پیام",
+text:"کسی در حال مشاهده موقعیت شماست..."
+}
+
+];
+
+setInterval(()=>{
+
+secretStep++;
+
+if(secretStep>secretEvents.length-1){
+
+secretStep=0;
+
+}
+
+title.innerText=secretEvents[secretStep].title;
+
+sub.innerText=secretEvents[secretStep].text;
+
+document.getElementById("status").innerText="نقشه بروزرسانی شد.";
+
+},30000);
+
+/*============================*/
+/* دوبار لمس مارکر */
+/*============================*/
+
+markers.forEach((m,index)=>{
+
+let tap=0;
+
+m.addEventListener("click",()=>{
+
+tap++;
+
+if(tap==2){
+
+title.innerText="پرونده محرمانه";
+
+sub.innerText="اطلاعات این مکان حذف شده است.";
+
+m.style.background="#000";
+
+setTimeout(()=>{
+
+m.style.background="#ff3b30";
+
+},1000);
+
+tap=0;
+
+}
+
+});
+
+});
+
+/*============================*/
+/* تغییر رنگ آرام نقشه */
+/*============================*/
+
+let dark=false;
+
+setInterval(()=>{
+
+if(dark){
+
+map.style.filter="brightness(1)";
+
+dark=false;
+
 }else{
-document.body.classList.add("glitch");
-setTimeout(()=>document.body.classList.remove("glitch"),600);
-popup.innerHTML="<span style='color:red'>❌ اشتباه</span>";
-popup.style.display="block";
-}
-}
 
-/* CENTER */
-function focusCenter(){
-x=-600;
-y=-600;
-scale=1;
-render();
+map.style.filter="brightness(.9)";
+
+dark=true;
+
 }
 
-/* INIT */
-render();
+},60000);
 
-</script>
+/*============================*/
+/* پیام شروع */
+/*============================*/
+
+setTimeout(()=>{
+
+title.innerText="روستای ساکورا";
+
+sub.innerText="برای جستجو یا لمس مارکرها آماده است.";
+
+},2500);
+
+/*============================*/
+/* پایان */
+  </script> 
 
 </body>
 </html>
+  
