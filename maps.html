@@ -2,6 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Unknown Signal Map</title>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
@@ -11,18 +12,16 @@
 html,body{
   margin:0;
   padding:0;
-  height:100%;
   width:100%;
+  height:100%;
   overflow:hidden;
   background:#000;
   font-family:sans-serif;
 }
 
-/* نقشه تمام صفحه */
 #map{
   position:fixed;
-  top:0;
-  left:0;
+  inset:0;
   width:100vw;
   height:100vh;
 }
@@ -43,7 +42,7 @@ html,body{
   font-size:13px;
 }
 
-/* پنل معما */
+/* پنل */
 #panel{
   position:absolute;
   top:15px;
@@ -57,26 +56,6 @@ html,body{
   font-size:13px;
 }
 
-input,button{
-  width:100%;
-  margin-top:8px;
-  padding:8px;
-  border-radius:8px;
-  border:none;
-  outline:none;
-}
-
-input{
-  background:#111;
-  color:#fff;
-}
-
-button{
-  background:red;
-  color:#fff;
-  cursor:pointer;
-}
-
 /* سرچ */
 #searchBox{
   position:absolute;
@@ -87,9 +66,30 @@ button{
 }
 
 #searchBox input{
+  width:100%;
+  padding:8px;
+  border-radius:8px;
   background:#111;
   color:#fff;
   border:1px solid #333;
+}
+
+/* تاریخچه */
+#history{
+  display:none;
+  margin-top:5px;
+  background:rgba(0,0,0,0.85);
+  border:1px solid red;
+  border-radius:10px;
+  max-height:140px;
+  overflow:auto;
+}
+
+#history div{
+  padding:6px;
+  font-size:12px;
+  border-bottom:1px solid #222;
+  cursor:pointer;
 }
 
 /* مقصد */
@@ -108,22 +108,35 @@ button{
   stroke-width:4;
   filter: drop-shadow(0 0 6px red);
 }
+
+/* نویز */
+#noise{
+  position:fixed;
+  inset:0;
+  background:url("https://i.imgur.com/3ZQ3ZQp.png");
+  opacity:0;
+  pointer-events:none;
+  z-index:99999;
+  mix-blend-mode:screen;
+}
 </style>
 </head>
 
 <body>
 
+<div id="noise"></div>
 <div id="notif"></div>
 
 <div id="panel">
-  🧩 معما<br>
-  <small>او با چه کسی اینجا بوده؟</small>
-  <input id="ans" placeholder="پاسخ...">
-  <button onclick="check()">تأیید</button>
+🧩 معما<br>
+<small>او با چه کسی اینجا بوده؟</small>
+<input id="ans" placeholder="پاسخ...">
+<button onclick="check()">تأیید</button>
 </div>
 
 <div id="searchBox">
-  <input placeholder="جستجو..." oninput="fakeSearch(this.value)">
+<input placeholder="جستجو..." onclick="showHistory()" oninput="fakeSearch(this.value)">
+<div id="history"></div>
 </div>
 
 <div id="map"></div>
@@ -131,92 +144,124 @@ button{
 <script>
 
 let map;
-let solved = false;
-let history = [];
+let solved=false;
 
-const fakeQueries = [
-  "سیگنال ناشناخته شناسایی شد...",
-  "داده در حال رمزگشایی است...",
-  "اتصال غیرمجاز ثبت شد",
-  "ردیابی در حال اجراست...",
-  "هیچ داده‌ای یافت نشد",
-  "سیستم در حالت ناشناخته"
+/* فقط ۴ تاریخچه عجیب */
+const fakeHistory=[
+"سیگنال از لایه 7 فعال شد",
+"کاربر ناشناس: N-442 ثبت شد",
+"داده حذف شده اما هنوز قابل مشاهده است",
+"اتصال به هیچ‌جا برقرار شد"
 ];
 
-// ================= MAP INIT =================
-function initMap(){
+const fakeQueries=[
+"سیگنال ناشناخته شناسایی شد...",
+"داده در حال رمزگشایی است...",
+"اتصال غیرمجاز ثبت شد",
+"ردیابی در حال اجراست...",
+"هیچ داده‌ای یافت نشد"
+];
 
-  const W = 4000;
-  const H = 4000;
-
-  map = L.map('map', {
-    crs: L.CRS.Simple,
-    minZoom: -2,
-    maxZoom: 3,
-
-    zoomControl: true,
-
-    dragging: false,        // ❌ حرکت ممنوع
-    scrollWheelZoom: true,  // ✔ زوم
-    doubleClickZoom: false,
-    boxZoom: false,
-    keyboard: false
-  });
-
-  const bounds = [[0,0],[H,W]];
-
-  L.imageOverlay("map.png", bounds).addTo(map);
-
-  map.fitBounds(bounds);
-  map.setMaxBounds(bounds);
-
-  setupPuzzle();
-}
-
-// ================= PUZZLE =================
-function setupPuzzle(){
-
-  const point = L.latLng(900, 900);
-
-  L.circleMarker(point,{
-    radius:8,
-    color:"red"
-  }).addTo(map).bindPopup("🧩 نقطه معما");
-}
-
-// ================= NOTIF =================
+/* notif */
 function notify(t){
-  const n = document.getElementById("notif");
-  n.innerText = t;
-  n.style.display = "block";
+  const n=document.getElementById("notif");
+  n.innerText=t;
+  n.style.display="block";
   setTimeout(()=>n.style.display="none",2000);
 }
 
-// ================= CHECK =================
-function check(){
-  if(solved) return;
-
-  const v = document.getElementById("ans").value.trim();
-
-  if(v === "میتسوکی" || v === "میتسوکی آمانه"){
-    solved = true;
-
-    notify("✔ سیگنال تأیید شد");
-
-    document.getElementById("panel").style.display = "none";
-
-    drawPath();
-  } else {
-    notify("❌ پاسخ اشتباه");
+/* vibration */
+function vibrate(){
+  if(navigator.vibrate){
+    navigator.vibrate([200,100,200]);
   }
 }
 
-// ================= PATH =================
+/* noise */
+function runNoise(){
+  const n=document.getElementById("noise");
+  n.style.opacity=1;
+  setTimeout(()=>n.style.opacity=0,2000);
+}
+
+/* cinematic zoom */
+function cinematicZoom(){
+  document.getElementById("map").style.filter="contrast(1.4) brightness(1.2) saturate(1.3)";
+  document.getElementById("map").style.transform="scale(1.05)";
+  document.getElementById("map").style.transition="all 0.8s ease";
+
+  setTimeout(()=>{
+    document.getElementById("map").style.filter="none";
+    document.getElementById("map").style.transform="scale(1)";
+  },3000);
+}
+
+/* map */
+function initMap(){
+
+  const img=new Image();
+  img.src="map.png";
+
+  img.onload=function(){
+
+    const W=img.naturalWidth;
+    const H=img.naturalHeight;
+
+    map=L.map("map",{
+      crs:L.CRS.Simple,
+      minZoom:-2,
+      maxZoom:4,
+      zoomControl:true,
+      dragging:true,
+      scrollWheelZoom:true
+    });
+
+    const bounds=[[0,0],[H,W]];
+
+    L.imageOverlay("map.png",bounds).addTo(map);
+
+    map.fitBounds(bounds);
+    map.setMaxBounds(bounds);
+
+    setupPuzzle();
+  }
+}
+
+/* puzzle */
+function setupPuzzle(){
+  const p=[900,900];
+
+  L.circleMarker(p,{radius:8,color:"red"})
+  .addTo(map)
+  .bindPopup("🧩 نقطه معما");
+}
+
+/* check */
+function check(){
+  if(solved) return;
+
+  const v=document.getElementById("ans").value.trim();
+
+  if(v==="میتسوکی" || v==="میتسوکی آمانه"){
+    solved=true;
+
+    document.getElementById("panel").style.display="none";
+
+    runNoise();
+
+    setTimeout(()=>{
+      drawPath();
+      vibrate();
+    },2000);
+  }
+}
+
+/* path */
 function drawPath(){
 
-  const center = [2000, 2000];
+  const center=[2000,2000];
 
-  const path = [
+  const path=[
     [900,900],
     [1300,1500],
     [1700,1800],
@@ -229,36 +274,33 @@ function drawPath(){
     className:"red-line"
   }).addTo(map);
 
-  L.circleMarker(center,{
-    radius:10,
-    color:"red"
-  }).addTo(map);
+  map.flyTo(center,2.5,{duration:2});
 
-  L.marker(center,{
-    icon: L.divIcon({
-      className:"destination-label",
-      html:"📍 مقصد نامشخص"
-    })
-  }).addTo(map);
-
-  notify("📍 مسیر فعال شد...");
+  cinematicZoom();
 }
 
-// ================= SEARCH =================
+/* search */
 function fakeSearch(v){
-  if(v.length > 2){
-
-    history.push(v);
-
-    const msg = fakeQueries[Math.floor(Math.random()*fakeQueries.length)];
-
-    notify("🔎 " + msg);
-
-    console.log("History:", history);
+  if(v.length>2){
+    const msg=fakeQueries[Math.floor(Math.random()*fakeQueries.length)];
+    notify("🔎 "+msg);
   }
 }
 
-// ================= START =================
+/* history */
+function showHistory(){
+  const box=document.getElementById("history");
+  box.style.display="block";
+  box.innerHTML="";
+
+  fakeHistory.forEach(h=>{
+    const d=document.createElement("div");
+    d.innerText=h;
+    box.appendChild(d);
+  });
+}
+
+/* start */
 initMap();
 
 </script>
