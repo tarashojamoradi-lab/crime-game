@@ -73,14 +73,23 @@ body{
   to{transform:scale(1); opacity:1;}
 }
 
-.queen{
-  background:linear-gradient(135deg,#ff4d4d,#ff9f43);
-  align-self:flex-end;
+/* ✅ FIXED ALIGN + COLORS */
+.other{
+  background:linear-gradient(135deg,#ff9f43,#ff6b6b);
+  align-self:flex-start; /* چپ */
+  color:white;
 }
 
 .me{
   background:rgba(255,255,255,0.08);
-  align-self:flex-start;
+  align-self:flex-end; /* راست */
+  color:white;
+}
+
+.queen{
+  background:rgba(255,255,255,0.08);
+  align-self:flex-end; /* راست */
+  color:white;
 }
 
 .time{
@@ -140,7 +149,6 @@ input{
   cursor:pointer;
 }
 
-/* VOICE MESSAGE */
 .voiceMsg{
   background:#2b2b3a;
   padding:10px;
@@ -157,7 +165,6 @@ input{
 
 <audio id="ding" src="ding.mp3" preload="auto"></audio>
 
-<!-- TOP -->
 <div class="top">
 
   <div class="btn" onclick="location.href='home.html'">🏠</div>
@@ -175,10 +182,8 @@ input{
 
 </div>
 
-<!-- CHAT -->
 <div id="chat"></div>
 
-<!-- INPUT -->
 <div class="inputBox">
   <div class="voice"
      onmousedown="startRec()" 
@@ -195,222 +200,46 @@ input{
 const chat=document.getElementById("chat");
 const dingSound=document.getElementById("ding");
 
-/* messages */
 const messages=[
-
-{
-type:"me",
-text:"سلام زیبارو.",
-time:"12:00"
-},
-
-{
-type:"other",
-text:"سلام شما؟",
-time:"12:01"
-},
-
-{
-type:"me",
-text:"یعنی نمیشناسی دیگه لوبیا خانم؟",
-time:"12:02"
-},
-
-{
-type:"other",
-text:"عهههه....",
-time:"12:03"
-},
-
-{
-type:"other",
-text:"یه سؤال بپرسم؟",
-time:"12:04"
-},
-
-{
-type:"me",
-text:"فقط یک دونه؟",
-time:"12:05"
-},
-
-{
-type:"other",
-text:"جدی میگم.",
-time:"12:06"
-},
-
-{
-type:"me",
-text:"باشه.",
-time:"12:07"
-},
-
-{
-type:"other",
-text:"تو این شماره رو از کجا پیدا کردی؟",
-time:"12:08"
-},
-
-{
-type:"me",
-text:"از همون جایی که آدم‌ها چیزای مهمشون رو پنهان می‌کنن.",
-time:"12:09"
-},
-
-{
-type:"other",
-text:"این جواب نیست.",
-time:"12:10"
-},
-
-{
-type:"me",
-text:"می‌دونم.",
-time:"12:11"
-},
-
-{
-type:"other",
-text:"حتی توی اون یکی گوشیم هم ذخیره‌ش نکرده بودم.",
-time:"12:12"
-},
-
-{
-type:"me",
-text:"پس معلومه خوب قایمش کرده بودی.",
-time:"12:13"
-},
-
-{
-type:"other",
-text:"...",
-time:"12:14"
-},
-
-{
-type:"other",
-text:"گاهی واقعاً نمی‌فهمم تو باید نگرانم کنی یا نه.",
-time:"12:15"
-},
-
-{
-type:"me",
-text:"و به چی رسیدی؟",
-time:"12:16"
-},
-
-{
-type:"other",
-text:"به اینکه اگه آدم‌ها رو فقط با عجیب بودنشون قضاوت کنیم، نصف دنیا باید تنها بمونه.",
-time:"12:17"
-},
-
-{
-type:"me",
-text:"تو زیادی به آدم‌ها فرصت میدی.",
-time:"12:18"
-},
-
-{
-type:"other",
-text:"و تو زیادی زود خودتو ازشون محروم می‌کنی.",
-time:"12:19"
-},
-
-{
-type:"me",
-text:"شاید.",
-time:"12:20"
-},
-
-{
-type:"other",
-text:"راستی...",
-time:"12:21"
-},
-
-{
-type:"other",
-text:"با این حال هنوز جواب پیام‌هات رو میدم.",
-time:"12:22"
-},
-
-{
-type:"me",
-text:"متوجه شدم.",
-time:"12:23"
-},
-
-{
-type:"other",
-text:"مغرور نشو.",
-time:"12:24"
-},
-
-{
-type:"me",
-text:"دیر گفتی.",
-time:"12:25"
-}
-
+{type:"me",text:"سلام زیبارو.",time:"12:00"},
+{type:"other",text:"سلام شما؟",time:"12:01"},
+{type:"me",text:"یعنی نمیشناسی دیگه لوبیا خانم؟",time:"12:02"},
+{type:"other",text:"عهههه....",time:"12:03"},
+{type:"other",text:"یه سؤال بپرسم؟",time:"12:04"},
+{type:"me",text:"فقط یک دونه؟",time:"12:05"},
+{type:"other",text:"جدی میگم.",time:"12:06"},
+{type:"me",text:"باشه.",time:"12:07"},
+{type:"other",text:"تو این شماره رو از کجا پیدا کردی؟",time:"12:08"},
+{type:"me",text:"از همون جایی که آدم‌ها چیزای مهمشون رو پنهان می‌کنن.",time:"12:09"},
+{type:"other",text:"این جواب نیست.",time:"12:10"},
+{type:"me",text:"می‌دونم.",time:"12:11"},
+{type:"other",text:"حتی توی اون یکی گوشیم هم ذخیره‌ش نکرده بودم.",time:"12:12"},
+{type:"me",text:"پس معلومه خوب قایمش کرده بودی.",time:"12:13"},
+{type:"other",text:"...",time:"12:14"},
+{type:"other",text:"گاهی واقعاً نمی‌فهمم تو باید نگرانم کنی یا نه.",time:"12:15"},
+{type:"me",text:"و به چی رسیدی؟",time:"12:16"},
+{type:"other",text:"به اینکه اگه آدم‌ها رو فقط با عجیب بودنشون قضاوت کنیم، نصف دنیا باید تنها بمونه.",time:"12:17"},
+{type:"me",text:"تو زیادی به آدم‌ها فرصت میدی.",time:"12:18"},
+{type:"other",text:"و تو زیادی زود خودتو ازشون محروم می‌کنی.",time:"12:19"},
+{type:"me",text:"شاید.",time:"12:20"},
+{type:"other",text:"راستی...",time:"12:21"},
+{type:"other",text:"با این حال هنوز جواب پیام‌هات رو میدم.",time:"12:22"},
+{type:"me",text:"متوجه شدم.",time:"12:23"},
+{type:"other",text:"مغرور نشو.",time:"12:24"},
+{type:"me",text:"دیر گفتی.",time:"12:25"}
 ];
 
 function render(){
   chat.innerHTML="";
-
   messages.forEach(m=>{
     const div=document.createElement("div");
-
-    if(m.voice){
-      div.className="msg me voiceMsg";
-      div.innerHTML=`
-        🎧 پیام صوتی
-        <audio controls src="${m.voice}"></audio>
-        <div class="time">${m.time}</div>
-      `;
-    } else {
-      div.className="msg "+m.type;
-      div.innerHTML=`
-        ${m.text}
-        <div class="time">${m.time}</div>
-      `;
-    }
-
+    div.className="msg "+m.type;
+    div.innerHTML=`${m.text}<div class="time">${m.time}</div>`;
     chat.appendChild(div);
   });
-
   chat.scrollTop=chat.scrollHeight;
 }
 
-/* typing */
-function showTyping(){
-  const t=document.createElement("div");
-  t.className="typing";
-  t.id="typing";
-  t.innerText="در حال نوشتن...";
-  chat.appendChild(t);
-  chat.scrollTop=chat.scrollHeight;
-}
-
-/* auto reply */
-function autoReply(){
-  const now=new Date();
-  const time=now.getHours()+":"+String(now.getMinutes()).padStart(2,"0");
-
-  messages.push({
-    type:"queen",
-    text:"چرا جوابمو نمیدی؟",
-    time:time
-  });
-
-  render();
-
-  dingSound.currentTime=0;
-  dingSound.play();
-}
-
-/* send */
 function sendMsg(){
   const input=document.getElementById("text");
   if(!input.value.trim()) return;
@@ -428,12 +257,10 @@ function sendMsg(){
   render();
 }
 
-/* fake call */
 function fakeCall(type){
   alert(type==="voice" ? "📞 تماس صوتی" : "🎥 تماس تصویری");
 }
 
-/* VOICE REC */
 let recorder;
 let chunks=[];
 
@@ -469,19 +296,7 @@ function stopRec(){
   }
 }
 
-/* init */
 render();
-
-/* auto sequence */
-setTimeout(()=>{
-  showTyping();
-
-  setTimeout(()=>{
-    document.getElementById("typing").remove();
-    autoReply();
-  },2500);
-
-},1500);
 
 </script>
 
