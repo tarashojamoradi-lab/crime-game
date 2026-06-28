@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Unknown Signal Map</title>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
@@ -26,7 +26,6 @@ html,body{
   height:100vh;
 }
 
-/* UI */
 #notif{
   position:absolute;
   top:15px;
@@ -42,7 +41,6 @@ html,body{
   font-size:13px;
 }
 
-/* پنل */
 #panel{
   position:absolute;
   top:15px;
@@ -56,26 +54,6 @@ html,body{
   font-size:13px;
 }
 
-/* تاریخچه (سفید واضح) */
-#history{
-  display:none;
-  margin-top:6px;
-  background:rgba(0,0,0,0.85);
-  border:1px solid red;
-  border-radius:10px;
-  max-height:150px;
-  overflow:auto;
-}
-
-#history div{
-  padding:6px;
-  font-size:12px;
-  border-bottom:1px solid #222;
-  cursor:pointer;
-  color:#fff; /* مهم: سفید */
-}
-
-/* سرچ */
 #searchBox{
   position:absolute;
   top:15px;
@@ -93,7 +71,25 @@ html,body{
   border:1px solid #333;
 }
 
-/* مقصد */
+/* ✅ اضافه شده: تاریخچه */
+#history{
+  display:none;
+  margin-top:5px;
+  background:rgba(0,0,0,0.85);
+  border:1px solid red;
+  border-radius:10px;
+  max-height:140px;
+  overflow:auto;
+}
+
+#history div{
+  padding:6px;
+  font-size:12px;
+  border-bottom:1px solid #222;
+  cursor:pointer;
+  color:#fff;
+}
+
 .destination-label{
   background:rgba(0,0,0,0.7);
   color:#fff;
@@ -103,17 +99,27 @@ html,body{
   font-size:12px;
 }
 
-/* مسیر */
 .red-line{
   stroke:red;
   stroke-width:4;
   filter: drop-shadow(0 0 6px red);
+}
+
+#noise{
+  position:fixed;
+  inset:0;
+  background:url("https://i.imgur.com/3ZQ3ZQp.png");
+  opacity:0;
+  pointer-events:none;
+  z-index:99999;
+  mix-blend-mode:screen;
 }
 </style>
 </head>
 
 <body>
 
+<div id="noise"></div>
 <div id="notif"></div>
 
 <div id="panel">
@@ -124,7 +130,7 @@ html,body{
 </div>
 
 <div id="searchBox">
-<input placeholder="جستجو..." oninput="fakeSearch(this.value)" onclick="showHistory()">
+<input placeholder="جستجو..." onclick="showHistory()" oninput="fakeSearch(this.value)">
 <div id="history"></div>
 </div>
 
@@ -135,7 +141,7 @@ html,body{
 let map;
 let solved=false;
 
-/* تاریخچه‌ها */
+/* فقط ۴ تاریخچه عجیب */
 const fakeHistory=[
 "سیگنال از لایه 7 فعال شد",
 "کاربر ناشناس: N-442 ثبت شد",
@@ -143,15 +149,14 @@ const fakeHistory=[
 "اتصال به هیچ‌جا برقرار شد"
 ];
 
-/* پیام‌ها */
 const fakeQueries=[
 "سیگنال ناشناخته شناسایی شد...",
 "داده در حال رمزگشایی است...",
 "اتصال غیرمجاز ثبت شد",
-"ردیابی در حال اجراست..."
+"ردیابی در حال اجراست...",
+"هیچ داده‌ای یافت نشد"
 ];
 
-/* notif */
 function notify(t){
   const n=document.getElementById("notif");
   n.innerText=t;
@@ -159,7 +164,27 @@ function notify(t){
   setTimeout(()=>n.style.display="none",2000);
 }
 
-/* MAP */
+function vibrate(){
+  if(navigator.vibrate){
+    navigator.vibrate([200,100,200]);
+  }
+}
+
+function runNoise(){
+  const n=document.getElementById("noise");
+  n.style.opacity=1;
+  setTimeout(()=>n.style.opacity=0,2000);
+}
+
+function cinematicZoom(){
+  document.getElementById("map").style.filter="contrast(1.4) brightness(1.2) saturate(1.3)";
+  document.getElementById("map").style.transform="scale(1.05)";
+  setTimeout(()=>{
+    document.getElementById("map").style.filter="none";
+    document.getElementById("map").style.transform="scale(1)";
+  },3000);
+}
+
 function initMap(){
 
   const img=new Image();
@@ -167,8 +192,8 @@ function initMap(){
 
   img.onload=function(){
 
-    const W=img.naturalWidth * 1.4; // 👈 بزرگ‌تر شدن نقشه
-    const H=img.naturalHeight * 1.4;
+    const W=img.naturalWidth;
+    const H=img.naturalHeight;
 
     map=L.map("map",{
       crs:L.CRS.Simple,
@@ -176,8 +201,7 @@ function initMap(){
       maxZoom:4,
       zoomControl:true,
       dragging:true,
-      scrollWheelZoom:true,
-      maxBoundsViscosity:1
+      scrollWheelZoom:true
     });
 
     const bounds=[[0,0],[H,W]];
@@ -191,39 +215,41 @@ function initMap(){
   }
 }
 
-/* نقطه معما (همون پایین چپ مثل نسخه قبلی) */
 function setupPuzzle(){
+  const p=[900,900];
 
-  const p=[1800,600]; // 👈 پایین چپ جنگلی
-
-  L.circleMarker(p,{
-    radius:8,
-    color:"red"
-  }).addTo(map).bindPopup("🧩 نقطه معما");
+  L.circleMarker(p,{radius:8,color:"red"})
+  .addTo(map)
+  .bindPopup("🧩 نقطه معما");
 }
 
-/* check */
 function check(){
+  if(solved) return;
 
   const v=document.getElementById("ans").value.trim();
 
   if(v==="میتسوکی" || v==="میتسوکی آمانه"){
-
+    solved=true;
     document.getElementById("panel").style.display="none";
+    runNoise();
 
-    notify("✔ تأیید شد");
-
-    drawPath();
+    setTimeout(()=>{
+      drawPath();
+      vibrate();
+    },2000);
   }
 }
 
-/* مسیر از کنار باکس تا مرکز */
 function drawPath(){
 
-  const start=[1500,800];   // کنار پنل
-  const center=[2000,1500]; // وسط
+  const center=[2000,2000];
 
-  const path=[start,[1700,1200],center];
+  const path=[
+    [900,900],
+    [1300,1500],
+    [1700,1800],
+    center
+  ];
 
   L.polyline(path,{
     color:"red",
@@ -233,15 +259,17 @@ function drawPath(){
 
   map.flyTo(center,2.5,{duration:2});
 
-  L.marker(center,{
-    icon:L.divIcon({
-      className:"destination-label",
-      html:"📍 مقصد نامشخص"
-    })
-  }).addTo(map);
+  cinematicZoom();
 }
 
-/* history */
+function fakeSearch(v){
+  if(v.length>2){
+    const msg=fakeQueries[Math.floor(Math.random()*fakeQueries.length)];
+    notify("🔎 "+msg);
+  }
+}
+
+/* ✅ اضافه شده: نمایش تاریخچه */
 function showHistory(){
   const box=document.getElementById("history");
   box.style.display="block";
@@ -254,14 +282,6 @@ function showHistory(){
   });
 }
 
-/* search */
-function fakeSearch(v){
-  if(v.length>2){
-    notify(fakeQueries[Math.floor(Math.random()*fakeQueries.length)]);
-  }
-}
-
-/* start */
 initMap();
 
 </script>
