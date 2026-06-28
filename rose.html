@@ -13,7 +13,6 @@ body{
   color:white;
 }
 
-/* TOP BAR */
 .top{
   position:sticky;
   top:0;
@@ -51,7 +50,6 @@ body{
   font-size:18px;
 }
 
-/* CHAT */
 #chat{
   padding:12px;
   height:calc(100vh - 140px);
@@ -61,7 +59,6 @@ body{
   gap:10px;
 }
 
-/* MESSAGE */
 .msg{
   max-width:75%;
   padding:10px 12px;
@@ -91,7 +88,6 @@ body{
   margin-top:4px;
 }
 
-/* INPUT */
 .inputBox{
   position:fixed;
   bottom:0;
@@ -143,7 +139,7 @@ input{
   <div class="btn" onclick="location.href='home.html'">🏠</div>
 
   <div class="profile">
-    <img src="dar.png" class="avatar">
+    <img src="tara.png" class="avatar">
     <div>گل سفید</div>
   </div>
 
@@ -167,7 +163,6 @@ input{
 
 const chat=document.getElementById("chat");
 
-/* CONVERSATION */
 const messages=[
   {type:"me", text:"سلام زیبارو.", time:"14:21"},
   {type:"queen", text:"سلام شما؟", time:"14:22"},
@@ -211,7 +206,6 @@ function render(){
   chat.scrollTop=chat.scrollHeight;
 }
 
-/* SEND */
 function sendMsg(){
   const input=document.getElementById("text");
   if(!input.value.trim()) return;
@@ -229,34 +223,37 @@ function sendMsg(){
   render();
 }
 
-/* FAKE CALL */
 function fakeCall(type){
   alert(type==="voice" ? "📞 تماس صوتی" : "🎥 تماس تصویری");
 }
 
-/* AUTO EVENT AFTER 4s */
 window.addEventListener("load",()=>{
 
   setTimeout(()=>{
 
-    /* SOUND */
     const audio=new Audio("ding.mp3");
     audio.play();
 
-    /* typing bubble */
-    const typing={type:"queen", text:"در حال نوشتن...", time:""};
-    messages.push(typing);
+    /* typing */
+    messages.push({
+      type:"queen",
+      text:"در حال نوشتن...",
+      time:""
+    });
+
     render();
 
-    /* replace with final message */
     setTimeout(()=>{
-      messages.pop();
+
+      /* FIX: add real message properly */
       messages.push({
         type:"queen",
         text:"پررو نشو!",
         time:""
       });
+
       render();
+
     },1500);
 
   },4000);
