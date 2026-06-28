@@ -6,7 +6,6 @@
 <title>Chat</title>
 
 <style>
-
 *{
 margin:0;
 padding:0;
@@ -20,8 +19,7 @@ color:#fff;
 overflow:hidden;
 }
 
-/*================ TOP =================*/
-
+/* TOP */
 .top{
 position:fixed;
 top:0;
@@ -60,14 +58,10 @@ font-weight:bold;
 display:flex;
 gap:18px;
 font-size:22px;
-}
-
-.callBox div{
 cursor:pointer;
 }
 
-/*================ CHAT =================*/
-
+/* CHAT */
 #chat{
 position:fixed;
 top:60px;
@@ -92,24 +86,18 @@ animation:pop .2s;
 }
 
 @keyframes pop{
-from{
-transform:scale(.95);
-opacity:0;
-}
-to{
-transform:scale(1);
-opacity:1;
-}
-}
-
-.other{
-align-self:flex-end;
-background:#3b1020;
+from{transform:scale(.95);opacity:0;}
+to{transform:scale(1);opacity:1;}
 }
 
 .me{
 align-self:flex-start;
 background:#202030;
+}
+
+.other{
+align-self:flex-end;
+background:#3b1020;
 }
 
 .time{
@@ -119,8 +107,7 @@ margin-top:4px;
 text-align:left;
 }
 
-/*================ INPUT =================*/
-
+/* INPUT */
 .inputBox{
 position:fixed;
 bottom:0;
@@ -142,12 +129,11 @@ border:none;
 outline:none;
 border-radius:25px;
 padding:0 15px;
-color:white;
+color:#fff;
 font-size:14px;
 }
 
-.send,
-.voice{
+.send,.voice{
 width:42px;
 height:42px;
 border-radius:50%;
@@ -159,8 +145,7 @@ cursor:pointer;
 font-size:18px;
 }
 
-/*================ VOICE =================*/
-
+/* VOICE */
 .voiceMsg{
 background:#252535;
 border-radius:15px;
@@ -172,12 +157,7 @@ max-width:75%;
 align-self:flex-start;
 }
 
-.voiceMsg audio{
-width:220px;
-}
-
-/*================ CALL =================*/
-
+/* CALL */
 #callScreen{
 position:fixed;
 inset:0;
@@ -186,7 +166,7 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 background:#050505;
-z-index:99999;
+z-index:9999;
 }
 
 .callAvatar{
@@ -204,7 +184,7 @@ object-fit:cover;
 }
 
 .callName{
-margin-top:22px;
+margin-top:20px;
 font-size:24px;
 font-weight:bold;
 }
@@ -212,7 +192,6 @@ font-weight:bold;
 .callState{
 margin-top:8px;
 opacity:.75;
-font-size:15px;
 }
 
 .endCall{
@@ -227,474 +206,217 @@ align-items:center;
 font-size:34px;
 cursor:pointer;
 }
-
 </style>
-
 </head>
 
 <body>
 
 <audio id="ring" src="bogh.mp3"></audio>
+<audio id="ding" src="ding.mp3"></audio>
 
 <div class="top">
+  <div class="profile">
+    <img src="dar.png" class="avatar">
+    <div class="name">گل سفید</div>
+  </div>
 
-<div class="profile">
-
-<img src="dar.png" class="avatar">
-
-<div class="name">
-گل سفید
-</div>
-
-</div>
-
-<div class="callBox">
-
-<div onclick="startCall()">📞</div>
-
-<div onclick="fakeVideo()">🎥</div>
-
-</div>
-
+  <div class="callBox">
+    <div onclick="startCall()">📞</div>
+    <div onclick="fakeVideo()">🎥</div>
+  </div>
 </div>
 
 <div id="chat"></div>
 
 <div class="inputBox">
+  <div class="voice"
+    onmousedown="startRec()"
+    onmouseup="stopRec()"
+    ontouchstart="startRec()"
+    ontouchend="stopRec()">🎤</div>
 
-<div class="voice"
-onmousedown="startRec()"
-onmouseup="stopRec()"
-ontouchstart="startRec()"
-ontouchend="stopRec()">
-🎤
-</div>
+  <input id="text" placeholder="پیام بنویس...">
 
-<input
-id="text"
-placeholder="پیام بنویس...">
-
-<div
-class="send"
-onclick="sendMsg()">
-➤
-</div>
-
+  <div class="send" onclick="sendMsg()">➤</div>
 </div>
 
 <div id="callScreen">
+  <div class="callAvatar">
+    <img src="dar.png">
+  </div>
 
-<div class="callAvatar">
+  <div class="callName">گل سفید</div>
+  <div class="callState">در حال تماس...</div>
 
-<img src="dar.png">
-
+  <div class="endCall" onclick="endCall()">📞</div>
 </div>
-
-<div class="callName">
-گل سفید
-</div>
-
-<div class="callState">
-در حال تماس...
-</div>
-
-<div class="endCall"
-onclick="endCall()">
-📞
-</div>
-
-</div>
-
-<script>
-
 const chat=document.getElementById("chat");
 const ring=document.getElementById("ring");
+const ding=document.getElementById("ding");
 const callScreen=document.getElementById("callScreen");
-
-const messages=[
-
-{
-type:"me",
-text:"سلام زیبارو.",
-time:"12:00"
-},
-
-{
-type:"other",
-text:"سلام شما؟",
-time:"12:01"
-},
-
-{
-type:"me",
-text:"یعنی نمیشناسی دیگه لوبیا خانم؟",
-time:"12:02"
-},
-
-{
-type:"other",
-text:"عهههه....",
-time:"12:03"
-},
-
-{
-type:"other",
-text:"یه سؤال بپرسم؟",
-time:"12:04"
-},
-
-{
-type:"me",
-text:"فقط یک دونه؟",
-time:"12:05"
-},
-
-{
-type:"other",
-text:"جدی میگم.",
-time:"12:06"
-},
-
-{
-type:"me",
-text:"باشه.",
-time:"12:07"
-},
-
-{
-type:"other",
-text:"تو این شماره رو از کجا پیدا کردی؟",
-time:"12:08"
-},
-
-{
-type:"me",
-text:"از همون جایی که آدم‌ها چیزای مهمشون رو پنهان می‌کنن.",
-time:"12:09"
-},
-
-{
-type:"other",
-text:"این جواب نیست.",
-time:"12:10"
-},
-
-{
-type:"me",
-text:"می‌دونم.",
-time:"12:11"
-},
-
-{
-type:"other",
-text:"حتی توی اون یکی گوشیم هم ذخیره‌ش نکرده بودم.",
-time:"12:12"
-},
-
-{
-type:"me",
-text:"پس معلومه خوب قایمش کرده بودی.",
-time:"12:13"
-},
-
-{
-type:"other",
-text:"...",
-time:"12:14"
-},
-
-{
-type:"other",
-text:"گاهی واقعاً نمی‌فهمم تو باید نگرانم کنی یا نه.",
-time:"12:15"
-},
-
-{
-type:"me",
-text:"و به چی رسیدی؟",
-time:"12:16"
-},
-
-{
-type:"other",
-text:"به اینکه اگه آدم‌ها رو فقط با عجیب بودنشون قضاوت کنیم، نصف دنیا باید تنها بمونه.",
-time:"12:17"
-},
-
-{
-type:"me",
-text:"تو زیادی به آدم‌ها فرصت میدی.",
-time:"12:18"
-},
-
-{
-type:"other",
-text:"و تو زیادی زود خودتو ازشون محروم می‌کنی.",
-time:"12:19"
-},
-
-{
-type:"me",
-text:"شاید.",
-time:"12:20"
-},
-
-{
-type:"other",
-text:"راستی...",
-time:"12:21"
-},
-
-{
-type:"other",
-text:"با این حال هنوز جواب پیام‌هات رو میدم.",
-time:"12:22"
-},
-
-{
-type:"me",
-text:"متوجه شدم.",
-time:"12:23"
-},
-
-{
-type:"other",
-text:"مغرور نشو.",
-time:"12:24"
-},
-
-{
-type:"me",
-text:"دیر گفتی.",
-time:"12:25"
-}
-
-];
 
 let recorder;
 let chunks=[];
 let callTimer;
 
+const messages=[
+{type:"me",text:"سلام زیبارو.",time:"09:00"},
+{type:"other",text:"سلام شما؟",time:"09:01"},
+{type:"me",text:"یعنی نمیشناسی دیگه لوبیا خانم؟",time:"09:02"},
+{type:"other",text:"عهههه....",time:"09:03"},
+{type:"other",text:"یه سؤال بپرسم؟",time:"09:04"},
+{type:"me",text:"فقط یک دونه؟",time:"09:04"},
+{type:"other",text:"جدی میگم.",time:"09:05"},
+{type:"me",text:"باشه.",time:"09:05"},
+{type:"other",text:"تو این شماره رو از کجا پیدا کردی؟",time:"09:06"},
+{type:"me",text:"از همون جایی که آدم‌ها چیزای مهمشون رو پنهان می‌کنن.",time:"09:06"},
+{type:"other",text:"این جواب نیست.",time:"09:07"},
+{type:"me",text:"می‌دونم.",time:"09:07"},
+{type:"other",text:"حتی توی اون یکی گوشیم هم ذخیره‌ش نکرده بودم.",time:"09:08"},
+{type:"me",text:"پس معلومه خوب قایمش کرده بودی.",time:"09:08"},
+{type:"other",text:"...",time:"09:09"},
+{type:"other",text:"گاهی واقعاً نمی‌فهمم تو باید نگرانم کنی یا نه.",time:"09:10"},
+{type:"me",text:"و به چی رسیدی؟",time:"09:10"},
+{type:"other",text:"به اینکه اگه آدم‌ها رو فقط با عجیب بودنشون قضاوت کنیم، نصف دنیا باید تنها بمونه.",time:"09:11"},
+{type:"me",text:"تو زیادی به آدم‌ها فرصت میدی.",time:"09:11"},
+{type:"other",text:"و تو زیادی زود خودتو ازشون محروم می‌کنی.",time:"09:12"},
+{type:"me",text:"شاید.",time:"09:12"},
+{type:"other",text:"راستی...",time:"09:13"},
+{type:"other",text:"با این حال هنوز جواب پیام‌هات رو میدم.",time:"09:13"},
+{type:"me",text:"متوجه شدم.",time:"09:14"},
+{type:"other",text:"مغرور نشو.",time:"09:14"},
+{type:"me",text:"دیر گفتی.",time:"09:15"}
+];
+
 function render(){
-
 chat.innerHTML="";
-  messages.forEach(m=>{
 
+messages.forEach(m=>{
 const div=document.createElement("div");
 
 if(m.voice){
-
 div.className="voiceMsg";
-
 div.innerHTML=`
-🎤 پیام صوتی
 <audio controls src="${m.voice}"></audio>
 <div class="time">${m.time}</div>
 `;
-
 }else{
-
 div.className="msg "+m.type;
-
 div.innerHTML=`
-${m.text}
+<div>${m.text}</div>
 <div class="time">${m.time}</div>
 `;
-
 }
 
 chat.appendChild(div);
-
 });
 
 chat.scrollTop=chat.scrollHeight;
-
 }
 
-/* نمایش اولیه */
 render();
 
-setTimeout(()=>{
-
-const typing=document.createElement("div");
-typing.className="msg other";
-typing.id="typing";
-typing.innerText="گل سفید در حال نوشتن...";
-chat.appendChild(typing);
-chat.scrollTop=chat.scrollHeight;
-
-setTimeout(()=>{
-
-typing.remove();
-
-const ring=new Audio("ring.mp3");
-ring.play().catch(()=>{});
-
-messages.push({
-type:"me",
-text:"دیر گفتی.",
-time:new Date().getHours()+":"+String(new Date().getMinutes()).padStart(2,"0")
-});
-
-render();
-
-},2500);
-
-},3000);
-
-/* ارسال پیام */
-
+/* SEND MESSAGE */
 function sendMsg(){
-
-/* ارسال پیام */
-
-function sendMsg(){
-
 const input=document.getElementById("text");
-
 if(input.value.trim()=="") return;
 
 const now=new Date();
 
 messages.push({
-
 type:"me",
-
 text:input.value,
-
-time:
-now.getHours()+":"+
-String(now.getMinutes()).padStart(2,"0")
-
+time:now.getHours()+":"+String(now.getMinutes()).padStart(2,"0")
 });
 
 input.value="";
-
 render();
-
 }
 
-/* تماس صوتی */
-
+/* CALL */
 function startCall(){
-
 callScreen.style.display="flex";
-
 ring.currentTime=0;
-
 ring.play().catch(()=>{});
 
 if(navigator.vibrate){
-
-navigator.vibrate([400,200,400,200,400]);
-
+navigator.vibrate([400,200,400]);
 }
 
 clearTimeout(callTimer);
-
-callTimer=setTimeout(()=>{
-
-endCall();
-
-},8000);
-
+callTimer=setTimeout(endCall,8000);
 }
-
-/* پایان تماس */
 
 function endCall(){
-
 callScreen.style.display="none";
-
 ring.pause();
-
 ring.currentTime=0;
-
 clearTimeout(callTimer);
-
 }
-
-/* تماس تصویری فیک */
 
 function fakeVideo(){
-
 alert("تماس تصویری در دسترس نیست.");
-
 }
 
-/* ضبط ویس */
-
+/* VOICE */
 async function startRec(){
-
 try{
-
-const stream=
-await navigator.mediaDevices.getUserMedia({
-audio:true
-});
-
+const stream=await navigator.mediaDevices.getUserMedia({audio:true});
 recorder=new MediaRecorder(stream);
-
 chunks=[];
 
-recorder.ondataavailable=e=>{
-
-chunks.push(e.data);
-
-};
+recorder.ondataavailable=e=>chunks.push(e.data);
 
 recorder.onstop=()=>{
-
-const blob=
-new Blob(chunks,{
-type:"audio/webm"
-});
-
-const url=
-URL.createObjectURL(blob);
-
-const now=new Date();
+const blob=new Blob(chunks,{type:"audio/webm"});
+const url=URL.createObjectURL(blob);
 
 messages.push({
-
 voice:url,
-
-time:
-now.getHours()+":"+
-String(now.getMinutes()).padStart(2,"0")
-
+time:new Date().getHours()+":"+String(new Date().getMinutes()).padStart(2,"0")
 });
 
 render();
 
-/* بستن میکروفون */
-
-stream.getTracks().forEach(track=>track.stop());
-
+stream.getTracks().forEach(t=>t.stop());
 };
 
 recorder.start();
-
 }catch(e){
-
-alert("اجازه دسترسی به میکروفون داده نشد.");
-
+alert("میکروفون اجازه داده نشد");
 }
-
 }
 
 function stopRec(){
-
-if(recorder &&
-recorder.state!=="inactive"){
-
+if(recorder && recorder.state!=="inactive"){
 recorder.stop();
-
+}
 }
 
+/* TYPING + MESSAGE EVENT */
+function showTypingThenReply(){
+
+const typing=document.createElement("div");
+typing.className="msg other";
+typing.innerHTML="<i>در حال نوشتن...</i>";
+typing.id="typing";
+
+chat.appendChild(typing);
+chat.scrollTop=chat.scrollHeight;
+
+setTimeout(()=>{
+
+document.getElementById("typing")?.remove();
+
+ding.play().catch(()=>{});
+
+messages.push({
+type:"other",
+text:"پررو نشو",
+time:new Date().getHours()+":"+String(new Date().getMinutes()).padStart(2,"0")
+});
+
+render();
+
+},4000);
 }
-
-</script>
-
-</body>
-</html>
