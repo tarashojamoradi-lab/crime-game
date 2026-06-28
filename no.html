@@ -243,7 +243,7 @@ cursor:pointer;
 <img src="jan.png" class="avatar">
 
 <div class="name">
-00
+00°
 </div>
 
 </div>
@@ -291,7 +291,7 @@ onclick="sendMsg()">
 </div>
 
 <div class="callName">
-00
+00°
 </div>
 
 <div class="callState">
@@ -311,139 +311,148 @@ const chat=document.getElementById("chat");
 const ring=document.getElementById("ring");
 const callScreen=document.getElementById("callScreen");
 
-const messages = [
+const messages=[
 
 {
 type:"other",
-text:"00\"\nمیدونی چرا ازت نمی‌ترسم؟",
-time:"آخرین روز:"
+text:"میدونی چرا ازت نمی‌ترسم؟",
+time:"23:00"
+},
+
+{
+type:"me",
+text:"چون دیوونه‌ای.",
+time:"23:01"
 },
 
 {
 type:"other",
-text:"دلقک\nچون دیوونه‌ای.",
-time:"00\""
+text:"چون یاد گرفتم به دست‌های آدم‌ها نگاه کنم، نه به صورتشون.",
+time:"23:02"
+},
+
+{
+type:"me",
+text:"و دست‌های من چی میگن؟",
+time:"23:03"
 },
 
 {
 type:"other",
-text:"00\"\nچون یاد گرفتم به دست‌های آدم‌ها نگاه کنم، نه به صورتشون.",
-time:""
+text:"اینکه خسته‌ان.",
+time:"23:04"
 },
 
 {
 type:"other",
-text:"دلقک\nو دست‌های من چی میگن؟",
-time:""
-},
-
-{
-type:"other",
-text:"00\"\nاینکه خسته‌ان.",
-time:""
-},
-
-{
-type:"other",
-text:"00\"\nو اینکه صاحبشون مدت‌هاست کسی رو بغل نکرده.",
-time:""
+text:"و اینکه صاحبشون مدت‌هاست کسی رو بغل نکرده.",
+time:"23:05"
 },
 
 {
 type:"me",
 text:"امروز بارون اومد.",
-time:"یه روز دیگه:"
+time:"23:06"
 },
 
 {
 type:"other",
-text:"00\"\nخب؟",
-time:""
+text:"خب؟",
+time:"23:07"
 },
 
 {
 type:"me",
-text:"هیچی.\nفقط یادم افتاد یه نفر هست که همیشه موقع بارون چترش رو فراموش می‌کنه.",
-time:""
-},
-
-{
-type:"other",
-text:"00\"\nهنوزم یادت مونده؟",
-time:""
+text:"هیچی.",
+time:"23:08"
 },
 
 {
 type:"me",
-text:"بعضی چیزها رو آدم حفظ نمی‌کنه.\nهمراه خودش حمل می‌کنه.",
-time:""
+text:"فقط یادم افتاد یه نفر هست که همیشه موقع بارون چترش رو فراموش می‌کنه.",
+time:"23:09"
 },
 
 {
 type:"other",
-text:"00\"\nامروز یه بچه از دیدنت ترسید؟",
-time:"یه روز دیگه:"
+text:"هنوزم یادت مونده؟",
+time:"23:10"
+},
+
+{
+type:"me",
+text:"بعضی چیزها رو آدم حفظ نمی‌کنه.",
+time:"23:11"
+},
+
+{
+type:"me",
+text:"همراه خودش حمل می‌کنه.",
+time:"23:12"
 },
 
 {
 type:"other",
-text:"دلقک\nآره.",
-time:""
+text:"امروز یه بچه از دیدنت ترسید؟",
+time:"23:13"
+},
+
+{
+type:"me",
+text:"آره.",
+time:"23:14"
 },
 
 {
 type:"other",
-text:"00\"\nو تو چیکار کردی؟",
-time:""
+text:"و تو چیکار کردی؟",
+time:"23:15"
+},
+
+{
+type:"me",
+text:"لبخند زدم.",
+time:"23:16"
 },
 
 {
 type:"other",
-text:"دلقک\nلبخند زدم.",
-time:""
+text:"همون اشتباه همیشگی.",
+time:"23:17"
+},
+
+{
+type:"me",
+text:"پس باید چیکار می‌کردم؟",
+time:"23:18"
 },
 
 {
 type:"other",
-text:"00\"\nهمون اشتباه همیشگی.",
-time:""
+text:"بهش نشون می‌دادی پشت گریم، یه آدمه.",
+time:"23:19"
+},
+
+{
+type:"me",
+text:"همه آدم‌ها ارزش دیدن پشت نقابشون رو ندارن.",
+time:"23:20"
 },
 
 {
 type:"other",
-text:"دلقک\nپس باید چیکار می‌کردم؟",
-time:""
+text:"من فکر می‌کنم دارن.",
+time:"23:21"
 },
 
 {
 type:"other",
-text:"00\"\nبهش نشون می‌دادی پشت گریم، یه آدمه.",
-time:""
-},
-
-{
-type:"other",
-text:"دلقک\nهمه آدم‌ها ارزش دیدن پشت نقابشون رو ندارن.",
-time:""
-},
-
-{
-type:"other",
-text:"00\"\nمن فکر می‌کنم دارن.",
-time:""
-},
-
-{
-type:"other",
-text:"00\"\nفقط بعضی‌ها بیشتر قایم می‌شن.",
-time:""
-
+text:"فقط بعضی‌ها بیشتر قایم می‌شن.",
+time:"23:22"
 }
 
 ];
-
-];
-
+  
 let recorder;
 let chunks=[];
 let callTimer;
