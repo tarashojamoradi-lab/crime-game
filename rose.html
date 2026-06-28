@@ -13,6 +13,7 @@ body{
   color:white;
 }
 
+/* TOP BAR */
 .top{
   position:sticky;
   top:0;
@@ -72,20 +73,31 @@ body{
   to{transform:scale(1); opacity:1;}
 }
 
-.queen{
-  background:#3a0f1f;
-  align-self:flex-end;
-}
-
+/* YOU */
 .me{
   background:rgba(255,255,255,0.08);
   align-self:flex-start;
+}
+
+/* WHITE FLOWER (OPPONENT) */
+.queen{
+  background:#7a0c2e; /* زرشکی */
+  align-self:flex-end;
 }
 
 .time{
   font-size:10px;
   opacity:0.6;
   margin-top:4px;
+}
+
+.typing{
+  align-self:flex-end;
+  font-size:12px;
+  opacity:0.7;
+  padding:6px 10px;
+  background:rgba(255,255,255,0.05);
+  border-radius:10px;
 }
 
 .inputBox{
@@ -112,7 +124,7 @@ input{
   width:40px;
   height:40px;
   border-radius:50%;
-  background:#ff4d4d;
+  background:#7a0c2e;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -129,32 +141,53 @@ input{
   align-items:center;
   cursor:pointer;
 }
+
+/* VOICE */
+.voiceMsg{
+  background:#2b2b3a;
+  padding:10px;
+  border-radius:14px;
+  max-width:75%;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
 </style>
 </head>
 
 <body>
 
+<audio id="ding" src="ding.mp3" preload="auto"></audio>
+
+<!-- TOP -->
 <div class="top">
 
   <div class="btn" onclick="location.href='home.html'">🏠</div>
 
   <div class="profile">
-    <img src="tara.png" class="avatar">
+    <img src="dar.png" class="avatar">
     <div>گل سفید</div>
   </div>
 
   <div class="callBox">
-    <div class="btn" onclick="fakeCall('voice')">📞</div>
-    <div class="btn" onclick="fakeCall('video')">🎥</div>
+    <div class="btn">📞</div>
+    <div class="btn">🎥</div>
     <div class="btn" onclick="history.back()">←</div>
   </div>
 
 </div>
 
+<!-- CHAT -->
 <div id="chat"></div>
 
+<!-- INPUT -->
 <div class="inputBox">
-  <div class="voice">🎤</div>
+  <div class="voice"
+     onmousedown="startRec()" 
+     onmouseup="stopRec()" 
+     ontouchstart="startRec()" 
+     ontouchend="stopRec()">🎤</div>
+
   <input id="text" placeholder="پیام بنویس...">
   <div class="send" onclick="sendMsg()">➤</div>
 </div>
@@ -165,31 +198,36 @@ const chat=document.getElementById("chat");
 
 const messages=[
   {type:"me", text:"سلام زیبارو.", time:"14:21"},
-  {type:"queen", text:"سلام شما؟", time:"14:22"},
-  {type:"me", text:"یعنی نمیشناسی دیگه لوبیا خانم؟", time:"14:24"},
-  {type:"queen", text:"عهههه....", time:"14:25"},
-  {type:"queen", text:"یه سؤال بپرسم؟", time:"14:26"},
-  {type:"me", text:"فقط یک دونه؟", time:"14:26"},
-  {type:"queen", text:"جدی میگم.", time:"14:27"},
-  {type:"me", text:"باشه.", time:"14:27"},
-  {type:"queen", text:"تو این شماره رو از کجا پیدا کردی؟", time:"14:28"},
-  {type:"me", text:"از همون جایی که آدم‌ها چیزای مهمشون رو پنهان می‌کنن.", time:"14:28"},
-  {type:"queen", text:"این جواب نیست.", time:"14:29"},
-  {type:"me", text:"می‌دونم.", time:"14:29"},
-  {type:"queen", text:"حتی توی اون یکی گوشیم هم ذخیره‌ش نکرده بودم.", time:"14:30"},
-  {type:"me", text:"پس معلومه خوب قایمش کرده بودی.", time:"14:30"},
-  {type:"queen", text:"...", time:"14:31"},
-  {type:"queen", text:"گاهی واقعاً نمی‌فهمم تو باید نگرانم کنی یا نه.", time:"14:31"},
-  {type:"me", text:"و به چی رسیدی؟", time:"14:32"},
-  {type:"queen", text:"به اینکه اگه آدم‌ها رو فقط با عجیب بودنشون قضاوت کنیم، نصف دنیا باید تنها بمونه.", time:"14:32"},
-  {type:"me", text:"تو زیادی به آدم‌ها فرصت میدی.", time:"14:33"},
-  {type:"queen", text:"و تو زیادی زود خودتو ازشون محروم می‌کنی.", time:"14:33"},
-  {type:"me", text:"شاید.", time:"14:34"},
-  {type:"queen", text:"راستی...", time:"14:34"},
-  {type:"queen", text:"با این حال هنوز جواب پیام‌هات رو میدم.", time:"14:35"},
-  {type:"me", text:"متوجه شدم.", time:"14:35"},
-  {type:"queen", text:"مغرور نشو.", time:"14:36"},
-  {type:"me", text:"دیر گفتی.", time:"14:36"}
+  {type:"queen", text:"سلام شما؟", time:"14:21"},
+
+  {type:"me", text:"یعنی نمیشناسی دیگه لوبیا خانم؟", time:"14:22"},
+  {type:"queen", text:"عهههه....", time:"14:22"},
+  {type:"queen", text:"یه سؤال بپرسم؟", time:"14:23"},
+  {type:"me", text:"فقط یک دونه؟", time:"14:23"},
+  {type:"queen", text:"جدی میگم.", time:"14:23"},
+  {type:"me", text:"باشه.", time:"14:24"},
+
+  {type:"queen", text:"تو این شماره رو از کجا پیدا کردی؟", time:"14:24"},
+  {type:"me", text:"از همون جایی که آدم‌ها چیزای مهمشون رو پنهان می‌کنن.", time:"14:25"},
+  {type:"queen", text:"این جواب نیست.", time:"14:25"},
+  {type:"me", text:"می‌دونم.", time:"14:25"},
+
+  {type:"queen", text:"حتی توی اون یکی گوشیم هم ذخیره‌ش نکرده بودم.", time:"14:26"},
+  {type:"me", text:"پس معلومه خوب قایمش کرده بودی.", time:"14:26"},
+  {type:"queen", text:"...", time:"14:26"},
+  {type:"queen", text:"گاهی واقعاً نمی‌فهمم تو باید نگرانم کنی یا نه.", time:"14:27"},
+  {type:"me", text:"و به چی رسیدی؟", time:"14:27"},
+
+  {type:"queen", text:"به اینکه اگه آدم‌ها رو فقط با عجیب بودنشون قضاوت کنیم، نصف دنیا باید تنها بمونه.", time:"14:28"},
+  {type:"me", text:"تو زیادی به آدم‌ها فرصت میدی.", time:"14:28"},
+  {type:"queen", text:"و تو زیادی زود خودتو ازشون محروم می‌کنی.", time:"14:29"},
+
+  {type:"me", text:"شاید.", time:"14:29"},
+  {type:"queen", text:"راستی...", time:"14:30"},
+  {type:"queen", text:"با این حال هنوز جواب پیام‌هات رو میدم.", time:"14:30"},
+  {type:"me", text:"متوجه شدم.", time:"14:30"},
+  {type:"queen", text:"مغرور نشو.", time:"14:31"},
+  {type:"me", text:"دیر گفتی.", time:"14:31"}
 ];
 
 function render(){
@@ -199,66 +237,12 @@ function render(){
     div.className="msg "+m.type;
     div.innerHTML=`
       ${m.text}
-      <div class="time">${m.time||""}</div>
+      <div class="time">${m.time}</div>
     `;
     chat.appendChild(div);
   });
   chat.scrollTop=chat.scrollHeight;
 }
-
-function sendMsg(){
-  const input=document.getElementById("text");
-  if(!input.value.trim()) return;
-
-  const now=new Date();
-  const time=now.getHours()+":"+String(now.getMinutes()).padStart(2,"0");
-
-  messages.push({
-    type:"me",
-    text:input.value,
-    time:time
-  });
-
-  input.value="";
-  render();
-}
-
-function fakeCall(type){
-  alert(type==="voice" ? "📞 تماس صوتی" : "🎥 تماس تصویری");
-}
-
-window.addEventListener("load",()=>{
-
-  setTimeout(()=>{
-
-    const audio=new Audio("ding.mp3");
-    audio.play();
-
-    /* typing */
-    messages.push({
-      type:"queen",
-      text:"در حال نوشتن...",
-      time:""
-    });
-
-    render();
-
-    setTimeout(()=>{
-
-      /* FIX: add real message properly */
-      messages.push({
-        type:"queen",
-        text:"پررو نشو!",
-        time:""
-      });
-
-      render();
-
-    },1500);
-
-  },4000);
-
-});
 
 render();
 
