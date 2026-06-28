@@ -1,163 +1,198 @@
-<!DOCTYPE html>  <html lang="fa" dir="rtl">    <head>    
-<meta charset="UTF-8">    
-<meta name="viewport" content="width=device-width, initial-scale=1.0">    
-<title>tash chat</title>  <style>    
-body{    
-  margin:0;    
-  font-family:sans-serif;    
-  background:#0b0b0f;    
-  color:white;    
-}    /* TOP BAR */
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tash chat</title>
+
+<style>
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:#0b0b0f;
+  color:white;
+}
+
+/* TOP BAR */
 .top{
-position:sticky;
-top:0;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:10px;
-background:rgba(20,20,30,0.85);
-backdrop-filter: blur(12px);
-border-bottom:1px solid rgba(255,255,255,0.1);
+  position:sticky;
+  top:0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px;
+  background:rgba(20,20,30,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.1);
 }
 
 .profile{
-display:flex;
-align-items:center;
-gap:10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
 .avatar{
-width:35px;
-height:35px;
-border-radius:50%;
-object-fit:cover;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  object-fit:cover;
 }
 
 .callBox{
-display:flex;
-gap:10px;
-align-items:center;
+  display:flex;
+  gap:10px;
+  align-items:center;
 }
 
 .btn{
-cursor:pointer;
-opacity:0.8;
-font-size:18px;
-transition:0.2s;
+  cursor:pointer;
+  opacity:0.8;
+  font-size:18px;
 }
 
-.btn:hover{
-opacity:1;
-transform:scale(1.1);
-}
-
-/* CHAT AREA */
 #chat{
-padding:12px;
-height:calc(100vh - 140px);
-overflow-y:auto;
-display:flex;
-flex-direction:column;
-gap:10px;
+  padding:12px;
+  height:calc(100vh - 140px);
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
 }
 
-/* MESSAGE */
 .msg{
-max-width:75%;
-padding:10px 12px;
-border-radius:14px;
-font-size:14px;
-animation:pop 0.2s ease;
+  max-width:75%;
+  padding:10px 12px;
+  border-radius:14px;
+  font-size:14px;
+  animation:pop 0.2s ease;
 }
 
 @keyframes pop{
-from{transform:scale(0.9); opacity:0;}
-to{transform:scale(1); opacity:1;}
+  from{transform:scale(0.9); opacity:0;}
+  to{transform:scale(1); opacity:1;}
 }
 
 .queen{
-background:linear-gradient(135deg,#ff4d4d,#ff9f43);
-align-self:flex-end;
+  background:linear-gradient(135deg,#ff4d4d,#ff9f43);
+  align-self:flex-end;
 }
 
 .me{
-background:rgba(255,255,255,0.08);
-align-self:flex-start;
+  background:rgba(255,255,255,0.08);
+  align-self:flex-start;
 }
 
-/* TIME */
 .time{
-font-size:10px;
-opacity:0.6;
-margin-top:4px;
+  font-size:10px;
+  opacity:0.6;
+  margin-top:4px;
 }
 
-/* TYPING */
 .typing{
-align-self:flex-end;
-font-size:12px;
-opacity:0.7;
-padding:6px 10px;
-background:rgba(255,255,255,0.05);
-border-radius:10px;
+  align-self:flex-end;
+  font-size:12px;
+  opacity:0.7;
+  padding:6px 10px;
+  background:rgba(255,255,255,0.05);
+  border-radius:10px;
 }
 
-/* INPUT */
 .inputBox{
-position:fixed;
-bottom:0;
-width:100%;
-display:flex;
-gap:8px;
-padding:10px;
-background:rgba(20,20,30,0.9);
+  position:fixed;
+  bottom:0;
+  width:100%;
+  display:flex;
+  gap:8px;
+  padding:10px;
+  background:rgba(20,20,30,0.9);
 }
 
 input{
-flex:1;
-padding:10px;
-border-radius:20px;
-border:none;
-outline:none;
-background:#1e1e2a;
-color:white;
+  flex:1;
+  padding:10px;
+  border-radius:20px;
+  border:none;
+  outline:none;
+  background:#1e1e2a;
+  color:white;
 }
 
 .send{
-width:40px;
-height:40px;
-border-radius:50%;
-background:#ff4d4d;
-display:flex;
-justify-content:center;
-align-items:center;
-cursor:pointer;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#ff4d4d;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
 }
 
 .voice{
-width:40px;
-height:40px;
-border-radius:50%;
-background:#333;
-display:flex;
-justify-content:center;
-align-items:center;
-cursor:pointer;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#333;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
 }
-</style>  </head>  <body>  <!-- AUDIO -->  <audio id="ding" src="ding.mp3" preload="auto"></audio>
 
-<!-- TOP -->  <div class="top">    <div class="btn" onclick="location.href='home.html'">🏠</div>    <div class="profile">    <img src="dar.jpg" class="avatar">    
-<div>گل سفید</div>
+/* VOICE MESSAGE */
+.voiceMsg{
+  background:#2b2b3a;
+  padding:10px;
+  border-radius:14px;
+  max-width:75%;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+</style>
+</head>
 
-  </div>    <div class="callBox">    
-    <div class="btn" onclick="fakeCall('voice')">📞</div>    
-    <div class="btn" onclick="fakeCall('video')">🎥</div>    
-    <div class="btn" onclick="history.back()">←</div>    
-  </div>  </div>  <!-- CHAT -->  <div id="chat"></div>  <!-- INPUT -->  <div class="inputBox">    
-  <div class="voice">🎤</div>    
-  <input id="text" placeholder="پیام بنویس...">    
-  <div class="send" onclick="sendMsg()">➤</div>    
-</div>  <script>    const chat=document.getElementById("chat");
+<body>
+
+<audio id="ding" src="ding.mp3" preload="auto"></audio>
+
+<!-- TOP -->
+<div class="top">
+
+  <div class="btn" onclick="location.href='home.html'">🏠</div>
+
+  <div class="profile">
+    <img src="tara.png" class="avatar">
+    <div>ملکه تشویق</div>
+  </div>
+
+  <div class="callBox">
+    <div class="btn" onclick="fakeCall('voice')">📞</div>
+    <div class="btn" onclick="fakeCall('video')">🎥</div>
+    <div class="btn" onclick="history.back()">←</div>
+  </div>
+
+</div>
+
+<!-- CHAT -->
+<div id="chat"></div>
+
+<!-- INPUT -->
+<div class="inputBox">
+  <div class="voice"
+     onmousedown="startRec()" 
+     onmouseup="stopRec()" 
+     ontouchstart="startRec()" 
+     ontouchend="stopRec()">🎤</div>
+
+  <input id="text" placeholder="پیام بنویس...">
+  <div class="send" onclick="sendMsg()">➤</div>
+</div>
+
+<script>
+
+const chat=document.getElementById("chat");
 const dingSound=document.getElementById("ding");
 
 /* messages */
@@ -206,94 +241,134 @@ const messages = [
   {type:"me", text:"دیر گفتی.", time:"14:43"}
 ];
 
-/* render */
 function render(){
-chat.innerHTML="";
-messages.forEach(m=>{
-const div=document.createElement("div");
-div.className="msg "+m.type;
-div.innerHTML=    ${m.text}     <div class="time">${m.time}</div>    ;
-chat.appendChild(div);
-});
-chat.scrollTop=chat.scrollHeight;
+  chat.innerHTML="";
+
+  messages.forEach(m=>{
+    const div=document.createElement("div");
+
+    if(m.voice){
+      div.className="msg me voiceMsg";
+      div.innerHTML=`
+        🎧 پیام صوتی
+        <audio controls src="${m.voice}"></audio>
+        <div class="time">${m.time}</div>
+      `;
+    } else {
+      div.className="msg "+m.type;
+      div.innerHTML=`
+        ${m.text}
+        <div class="time">${m.time}</div>
+      `;
+    }
+
+    chat.appendChild(div);
+  });
+
+  chat.scrollTop=chat.scrollHeight;
 }
 
-/* typing indicator */
+/* typing */
 function showTyping(){
-const t=document.createElement("div");
-t.className="typing";
-t.id="typing";
-t.innerText="در حال نوشتن...";
-chat.appendChild(t);
-chat.scrollTop=chat.scrollHeight;
+  const t=document.createElement("div");
+  t.className="typing";
+  t.id="typing";
+  t.innerText="در حال نوشتن...";
+  chat.appendChild(t);
+  chat.scrollTop=chat.scrollHeight;
 }
 
-/* auto message */
+/* auto reply */
 function autoReply(){
-const now=new Date();
-const time=now.getHours()+":"+String(now.getMinutes()).padStart(2,"0");
+  const now=new Date();
+  const time=now.getHours()+":"+String(now.getMinutes()).padStart(2,"0");
 
-messages.push({
-type:"queen",
-text:"چرا جوابمو نمیدی؟",
-time:time
-});
+  messages.push({
+    type:"queen",
+    text:"چرا جوابمو نمیدی؟",
+    time:time
+  });
 
-render();
+  render();
 
-// 🔊 ding sound
-if(dingSound){
-dingSound.currentTime = 0;
-dingSound.play();
-}
+  dingSound.currentTime=0;
+  dingSound.play();
 }
 
 /* send */
 function sendMsg(){
-const input=document.getElementById("text");
-if(!input.value.trim()) return;
+  const input=document.getElementById("text");
+  if(!input.value.trim()) return;
 
-const now=new Date();
-const time=now.getHours()+":"+String(now.getMinutes()).padStart(2,"0");
+  const now=new Date();
+  const time=now.getHours()+":"+String(now.getMinutes()).padStart(2,"0");
 
-messages.push({
-type:"me",
-text:input.value,
-time:time
-});
+  messages.push({
+    type:"me",
+    text:input.value,
+    time:time
+  });
 
-input.value="";
-render();
+  input.value="";
+  render();
 }
 
-/* fake calls */
+/* fake call */
 function fakeCall(type){
-if(type==="voice"){
-alert("📞 در حال برقراری تماس صوتی...");
+  alert(type==="voice" ? "📞 تماس صوتی" : "🎥 تماس تصویری");
 }
-if(type==="video"){
-alert("🎥 در حال برقراری تماس تصویری...");
+
+/* VOICE REC */
+let recorder;
+let chunks=[];
+
+async function startRec(){
+  const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+  recorder=new MediaRecorder(stream);
+  chunks=[];
+
+  recorder.ondataavailable=e=>chunks.push(e.data);
+
+  recorder.onstop=()=>{
+    const blob=new Blob(chunks,{type:"audio/webm"});
+    const url=URL.createObjectURL(blob);
+
+    const now=new Date();
+    const time=now.getHours()+":"+String(now.getMinutes()).padStart(2,"0");
+
+    messages.push({
+      type:"me",
+      voice:url,
+      time:time
+    });
+
+    render();
+  };
+
+  recorder.start();
 }
+
+function stopRec(){
+  if(recorder && recorder.state!=="inactive"){
+    recorder.stop();
+  }
 }
 
 /* init */
 render();
 
-/* typing + auto reply sequence */
+/* auto sequence */
 setTimeout(()=>{
-showTyping();
+  showTyping();
 
-setTimeout(()=>{
-const typing=document.getElementById("typing");
-if(typing) typing.remove();
-
-autoReply();
-
-},2500);
+  setTimeout(()=>{
+    document.getElementById("typing").remove();
+    autoReply();
+  },2500);
 
 },1500);
 
-</script> 
-  
+</script>
+
 </body>
-</html> 
+</html>
