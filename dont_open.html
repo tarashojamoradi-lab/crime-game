@@ -61,13 +61,29 @@ const call=document.getElementById("call");
 const ring=document.getElementById("ring");
 const evil=document.getElementById("evil");
 
+let vib;  
+
 setTimeout(()=>{
 call.style.display="flex";
 ring.loop=true;
 ring.play().catch(()=>{});
+
+vib = setInterval(()=>{
+    if(navigator.vibrate){
+        navigator.vibrate([400,200]);
+    }
+},600);
+
 },2000);
 
 function answer(){
+
+clearInterval(vib);
+navigator.vibrate(0);
+
+ring.pause();
+ring.currentTime=0;
+...
   ring.pause();
   ring.currentTime=0;
   evil.play().catch(()=>{});
@@ -79,6 +95,13 @@ function answer(){
 }
 
 function decline(){
+
+clearInterval(vib);
+navigator.vibrate(0);
+
+ring.pause();
+evil.pause();
+...
 ring.pause();
 evil.pause();
 evil.currentTime=0;
