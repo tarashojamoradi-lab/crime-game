@@ -57,35 +57,32 @@ font-size:30px;
 <audio id="evil" src="evil.mp3"></audio>
 
 <script>
-const call = document.getElementById("call");
-const ring = document.getElementById("ring");
-const evil = document.getElementById("evil");
+const call=document.getElementById("call");
+const ring=document.getElementById("ring");
+const evil=document.getElementById("evil");
 
-setTimeout(() => {
-  call.style.display = "flex";
-  ring.loop = true;
-  ring.play().catch(() => {});
-}, 2000);
+setTimeout(()=>{
+call.style.display="flex";
+ring.loop=true;
+ring.play().catch(()=>{});
+},2000);
 
-function answer() {
+function answer(){
   ring.pause();
-  ring.currentTime = 0;
-  evil.play().catch(() => {});
+  ring.currentTime=0;
+  evil.play().catch(()=>{});
 
-  document.querySelector("small").innerText = "تماس برقرار شد";
+  document.querySelector("small").innerText="تماس برقرار شد";
 
-  document.querySelector(".btns").innerHTML =
-    '<button class="r" onclick="decline()">📞</button>';
+  document.querySelector(".btns").innerHTML=
+  '<button class="r" onclick="decline()">📞</button>';
 }
 
-function decline() {
-  ring.pause();
-  ring.currentTime = 0;
-
-  evil.pause();
-  evil.currentTime = 0;
-
-  call.style.display = "none";
+function decline(){
+ring.pause();
+evil.pause();
+evil.currentTime=0;
+call.style.display="none";
 }
 </script>
 
