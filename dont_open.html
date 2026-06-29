@@ -23,7 +23,11 @@ width:80px;height:80px;border:none;border-radius:50%;
 font-size:15px;color:#fff;cursor:pointer
 }
 .g{background:#23b14d}
-.r{background:#d83b3b}
+.r{
+background:#d83b3b;
+font-size:34px;
+transform:rotate(135deg);
+}
 </style>
 </head>
 <body>
@@ -59,10 +63,14 @@ ring.play().catch(()=>{});
 },2000);
 
 function answer(){
-ring.pause();
-ring.currentTime=0;
-evil.play().catch(()=>{});
-document.querySelector("small").innerText="تماس برقرار شد";
+  ring.pause();
+  ring.currentTime=0;
+  evil.play().catch(()=>{});
+
+  document.querySelector("small").innerText="تماس برقرار شد";
+
+  document.querySelector(".btns").innerHTML=
+  '<button class="r" onclick="decline()">📞</button>';
 }
 
 function decline(){
