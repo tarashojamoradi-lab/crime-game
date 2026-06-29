@@ -1,259 +1,178 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa">
 <head>
-<meta charset="UTF-8">
-<title>Mystery Settings</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Settings</title>
 
 <style>
-body{
-margin:0;
-background:#111;
-font-family:Arial;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-color:#fff;
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0f0f10;
+  color: white;
 }
 
-.phone{
-width:330px;
-height:650px;
-background:#1b1b1b;
-border-radius:25px;
-overflow:hidden;
-position:relative;
+/* Full screen */
+.screen {
+  width: 100vw;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-h2{
-padding:20px;
-margin:0;
-background:#222;
+/* Header */
+h1 {
+  font-size: 22px;
+  margin-bottom: 20px;
 }
 
-.item{
-padding:16px 20px;
-border-bottom:1px solid #333;
-cursor:pointer;
+/* Card style */
+.card {
+  background: #1c1c1e;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 12px;
 }
 
-.item:hover{
-background:#2b2b2b;
+/* List item */
+.item {
+  padding: 12px;
+  border-bottom: 1px solid #2c2c2e;
 }
 
-#hidden{
-display:none;
-color:#00ff88;
+.item:last-child {
+  border-bottom: none;
 }
 
-#toast{
-position:absolute;
-top:15px;
-left:50%;
-transform:translateX(-50%);
-background:#000;
-padding:10px 18px;
-border-radius:20px;
-display:none;
+/* Add contact */
+.add {
+  color: #4da3ff;
+  cursor: pointer;
+  user-select: none;
 }
 
-#popup{
-position:absolute;
-inset:0;
-background:#000d;
-display:none;
-justify-content:center;
-align-items:center;
+/* AI message popup */
+.toast {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.8);
+  padding: 12px 18px;
+  border-radius: 10px;
+  opacity: 0;
+  transition: 0.5s;
 }
 
-#box{
-background:#222;
-padding:25px;
-border-radius:15px;
-width:250px;
-text-align:center;
+/* PIN modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-input{
-width:35px;
-height:40px;
-font-size:24px;
-text-align:center;
-margin:4px;
-background:#111;
-color:white;
-border:none;
-}
-
-.glitch{
-animation:g .2s 4;
-}
-
-@keyframes g{
-0%{transform:translate(3px);}
-50%{transform:translate(-3px);}
-100%{transform:translate(0);}
-}
-
-.note{
-font-size:13px;
-color:#888;
-padding:15px;
+.pin-box {
+  font-size: 24px;
+  letter-spacing: 10px;
 }
 </style>
-
 </head>
+
 <body>
 
-<div class="phone">
+<div class="screen">
 
-<div id="toast"></div>
+  <h1>Settings</h1>
 
-<h2>⚙ Settings</h2>
+  <div class="card">
+    <div class="item">Wi-Fi</div>
+    <div class="item">Bluetooth</div>
+    <div class="item">Privacy</div>
+  </div>
 
-<div class="item">Network</div>
-<div class="item">Display</div>
-
-<div class="item">
-Battery
-<br><small>84%<br>
-Health: Good<br>
-Last User:
-<span id="user">████████</span>
-</small>
-</div>
-
-<div class="item">Privacy</div>
-
-<div class="item" id="about">
-About Phone
-</div>
-
-<div class="item" id="hidden">
-████ Hidden Service ████
-</div>
-
-<div class="item">
-Emergency Contacts
-</div>
-
-<div class="item"
-id="hold">
-+ Add Contact
-</div>
-
-<div class="note">
-Hold +Add Contact 2 sec
-</div>
-
-<div id="popup">
-<div id="box">
-
-<h3>Authentication Required</h3>
-
-<input maxlength="1">
-<input maxlength="1">
-<input maxlength="1">
-<input maxlength="1">
+  <div class="card">
+    <h3>Emergency Contacts</h3>
+    <div class="item">Mother</div>
+    <div class="item">Police</div>
+    <div class="item">Doctor</div>
+    <div class="item add" id="addBtn">+ Add Contact</div>
+  </div>
 
 </div>
-</div>
 
+<!-- AI Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- PIN Modal -->
+<div class="modal" id="modal">
+  <div>
+    <h2>احراز هویت لازم است</h2>
+    <div class="pin-box" id="pin">_ _ _ _</div>
+  </div>
 </div>
 
 <script>
+let visits = localStorage.getItem("visits") || 0;
+visits++;
+localStorage.setItem("visits", visits);
 
-let click=0;
+const toast = document.getElementById("toast");
 
-about.onclick=function(){
+function showToast(text){
+  toast.innerText = text;
+  toast.style.opacity = 1;
 
-click++;
-
-if(click==5){
-
-document.querySelector(".phone").classList.add("glitch");
-
-toast.innerHTML="Developer Mode Enabled";
-toast.style.display="block";
-
-setTimeout(()=>{
-toast.style.display="none";
-hidden.style.display="block";
-},1500);
-
+  setTimeout(() => {
+    toast.style.opacity = 0;
+  }, 2000);
 }
 
+/* AI Messages */
+setTimeout(() => {
+  if(visits == 1) showToast("...");
+  else if(visits == 2) showToast("I know you're looking for the truth.");
+  else if(visits >= 3) showToast("Check the camera.");
+}, 800);
+
+/* Fake camera effect on 3rd visit */
+if(visits >= 3){
+  setTimeout(() => {
+    document.body.style.filter = "blur(2px)";
+  }, 3000);
 }
 
-// باتری آلوده
+/* Long press for secret */
+const addBtn = document.getElementById("addBtn");
+const modal = document.getElementById("modal");
 
-setInterval(()=>{
+let pressTimer;
 
-user.innerHTML="DECEASED";
+addBtn.addEventListener("mousedown", startPress);
+addBtn.addEventListener("touchstart", startPress);
 
-setTimeout(()=>{
+addBtn.addEventListener("mouseup", cancelPress);
+addBtn.addEventListener("mouseleave", cancelPress);
+addBtn.addEventListener("touchend", cancelPress);
 
-user.innerHTML="████████";
-
-},1200);
-
-},7000);
-
-// پیام‌های AI
-
-let msgs=[
-"...",
-"You shouldn't be here.",
-"I know you're looking for the truth.",
-"Check the camera."
-];
-
-let i=0;
-
-window.onload=function(){
-
-show();
-
+function startPress(){
+  pressTimer = setTimeout(() => {
+    modal.style.display = "flex";
+  }, 2000); // 2 seconds hold
 }
 
-function show(){
-
-if(i<msgs.length){
-
-toast.innerHTML=msgs[i++];
-
-toast.style.display="block";
-
-setTimeout(()=>{
-
-toast.style.display="none";
-
-},2500);
-
+function cancelPress(){
+  clearTimeout(pressTimer);
 }
 
-}
-
-// رمز مخفی
-
-let t;
-
-hold.onmousedown=()=>{
-
-t=setTimeout(()=>{
-
-popup.style.display="flex";
-
-},2000);
-
-}
-
-hold.onmouseup=()=>clearTimeout(t);
-
-hold.onmouseleave=()=>clearTimeout(t);
-
-popup.onclick=()=>popup.style.display="none";
-
+/* Close modal on click */
+modal.addEventListener("click", () => {
+  modal.style.display = "none";
+});
 </script>
 
 </body>
