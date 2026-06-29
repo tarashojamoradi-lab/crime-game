@@ -79,16 +79,25 @@ body{
 }
 
 /* NOTIFICATION */
-.notif::before{
-  content:"💬";
-  width:34px;
-  height:34px;
+.notif{
+  position:fixed;
+  top:-120px;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  max-width:380px;
+  padding:14px 16px;
+  border-radius:18px;
+  background:rgba(28,28,30,0.92);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  color:white;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  transition:0.35s ease;
+  cursor:pointer;
   display:flex;
-  justify-content:center;
   align-items:center;
-  background:#0A84FF;
-  border-radius:10px;
-  font-size:16px;
+  gap:12px;
 }
 
 .notif.show{
@@ -116,6 +125,9 @@ body{
 <body>
 
 <audio id="ding" src="ding.mp3" preload="auto"></audio>
+
+</body>
+  
 <!-- NOTIF -->
 <div class="notif" id="notif" onclick="openChat('joke.html')">
   پیام جدید: کسایی که بعد از آشنایی با تو ناپدید شدن.
@@ -224,7 +236,16 @@ function openChat(url){
   window.location.href = url;
 }
 
+const ding = document.getElementById("ding");
+
+document.addEventListener("click", () => {
+  ding.play().catch(()=>{});
+}, { once:true });
+
 setTimeout(()=>{
+
+  ding.play().catch(()=>{});
+
   const n=document.getElementById("notif");
   n.classList.add("show");
 
