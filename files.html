@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>File Manager</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:sans-serif;
+}
+
+body{
+background:#111;
+color:#fff;
+}
+
+.topbar{
+height:60px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:20px;
+font-weight:bold;
+background:#1b1b1b;
+border-bottom:1px solid #2f2f2f;
+position:sticky;
+top:0;
+z-index:10;
+}
+
+.list{
+padding:10px;
+}
+
+.item{
+display:flex;
+align-items:center;
+gap:14px;
+padding:15px;
+border-radius:14px;
+margin-bottom:8px;
+cursor:pointer;
+transition:.2s;
+}
+
+.item:hover{
+background:#252525;
+}
+
+.icon{
+font-size:28px;
+width:38px;
+text-align:center;
+}
+
+.name{
+flex:1;
+font-size:16px;
+}
+
+.type{
+font-size:13px;
+color:#9b9b9b;
+}
+
+.popup{
+position:fixed;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+background:#222;
+width:310px;
+border-radius:18px;
+padding:22px;
+display:none;
+z-index:100;
+box-shadow:0 0 25px rgba(0,0,0,.5);
+text-align:center;
+}
+
+.popup h3{
+margin-bottom:12px;
+font-size:18px;
+}
+
+.popup p{
+font-size:15px;
+color:#cfcfcf;
+line-height:1.8;
+margin-bottom:18px;
+}
+
+.popup button{
+border:none;
+background:#2d8cff;
+color:#fff;
+padding:10px 26px;
+border-radius:12px;
+font-size:15px;
+cursor:pointer;
+}
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+display:none;
+z-index:99;
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+مدیریت فایل
+</div>
+
+<div class="list">
+
+<div class="item" onclick="location.href='downloads.html'">
+<div class="icon">📁</div>
+<div class="name">Downloads</div>
+<div class="type">پوشه</div>
+</div>
+
+<div class="item" onclick="location.href='documents.html'">
+<div class="icon">📁</div>
+<div class="name">Documents</div>
+<div class="type">پوشه</div>
+</div>
+
+<div class="item" onclick="location.href='dont_open.html'">
+<div class="icon">📄</div>
+<div class="name">dont_open.html</div>
+<div class="type">HTML</div>
+</div>
+
+<div class="item" onclick="location.href='final_note.html'">
+<div class="icon">📄</div>
+<div class="name">final_note.html</div>
+<div class="type">HTML</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="name">body_01.tmp</div>
+<div class="type">TMP</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="name">blood_scan.bin</div>
+<div class="type">BIN</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="name">last_breath.dat</div>
+<div class="type">DAT</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="name">unknown_face.tmp</div>
+<div class="type">TMP</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="name">mirror_error.bin</div>
+<div class="type">BIN</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="name">grave_log.dat</div>
+<div class="type">DAT</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="name">witness.tmp</div>
+<div class="type">TMP</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="name">no_signal.bin</div>
+<div class="type">BIN</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="name">room13.log</div>
+<div class="type">LOG</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="name">dont_watch.tmp</div>
+<div class="type">TMP</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="name">hidden_room.bin</div>
+<div class="type">BIN</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="name">death_list.tmp</div>
+<div class="type">TMP</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="name">black_record.dat</div>
+<div class="type">DAT</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="name">forgotten.tmp</div>
+<div class="type">TMP</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="name">error_666.tmp</div>
+<div class="type">TMP</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="name">void_memory.bin</div>
+<div class="type">BIN</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="name">cold_case.tmp</div>
+<div class="type">TMP</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="name">never_found.dat</div>
+<div class="type">DAT</div>
+</div>
+
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="popup" id="popup">
+<h3>خطا</h3>
+<p id="msg"></p>
+<button onclick="closePopup()">بستن</button>
+</div>
+
+<script>
+
+const messages=[
+"این فایل حذف شده است.",
+"فایل آسیب دیده است.",
+"فایل قابل خواندن نیست.",
+"دسترسی به فایل امکان‌پذیر نیست.",
+"فایل پیدا نشد.",
+"فرمت فایل پشتیبانی نمی‌شود.",
+"خطا در بارگذاری فایل."
+];
+
+function errorFile(){
+
+document.getElementById("msg").innerHTML=
+messages[Math.floor(Math.random()*messages.length)];
+
+document.getElementById("overlay").style.display="block";
+document.getElementById("popup").style.display="block";
+
+}
+
+function closePopup(){
+
+document.getElementById("overlay").style.display="none";
+document.getElementById("popup").style.display="none";
+
+}
+
+document.getElementById("overlay").onclick=closePopup;
+
+</script>
+
+</body>
+</html>
