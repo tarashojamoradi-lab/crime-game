@@ -79,18 +79,16 @@ body{
 }
 
 /* NOTIFICATION */
-.notif{
-  position:fixed;
-  top:-120px;
-  left:50%;
-  transform:translateX(-50%);
-  background:rgba(30,30,40,0.95);
-  padding:12px 18px;
-  border-radius:14px;
-  width:85%;
-  max-width:320px;
-  transition:0.5s;
-  cursor:pointer;
+.notif::before{
+  content:"💬";
+  width:34px;
+  height:34px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#0A84FF;
+  border-radius:10px;
+  font-size:16px;
 }
 
 .notif.show{
@@ -117,6 +115,7 @@ body{
 
 <body>
 
+<audio id="ding" src="ding.mp3" preload="auto"></audio>
 <!-- NOTIF -->
 <div class="notif" id="notif" onclick="openChat('joke.html')">
   پیام جدید: کسایی که بعد از آشنایی با تو ناپدید شدن.
