@@ -33,12 +33,6 @@ body{
   padding:10px;
 }
 
-.section-title{
-  font-size:13px;
-  color:#666;
-  margin:10px 5px;
-}
-
 .contact{
   display:flex;
   align-items:center;
@@ -93,31 +87,82 @@ body{
 <div class="list" id="list"></div>
 
 <script>
+
+// لیست مخاطبین (هنوز پشت سر توست اولین مخاطب)
 const contacts = [
-"کارفرمای دیروز","پرنسس آیفونی","ملکهٔ تشویق","گل سفید","00","جوجه‌سیرکی",
-"مسئول نظم","عروسک خرسی","شوخیِ بی‌مزه","قربانی بعدی","X","Next to Next",
-"...","پیک ناشناس","صاحب خرگوش","🃏","هه","پشتِ در","تماشاگرِ آخر",
-"حقیقت","سه و هفده دقیقه","عکس بگیر","کسی که نخ را برید","همان صدا",
-"لبخند خیس","امشب نه","نمی‌بایست بیدارش می‌کردی","هنوز پشت سر توست",
-"او اسمش را عوض کرد","کسی که نباید شماره داشته باشد","آخرین کسی که خندید"
+"هنوز پشت سر توست",
+"کارفرمای دیروز",
+"پرنسس آیفونی",
+"ملکهٔ تشویق",
+"گل سفید",
+"00",
+"جوجه‌سیرکی",
+"مسئول نظم",
+"عروسک خرسی",
+"شوخیِ بی‌مزه",
+"قربانی بعدی",
+"X",
+"Next to Next",
+"...",
+"پیک ناشناس",
+"صاحب خرگوش",
+"🃏",
+"هه",
+"پشتِ در",
+"تماشاگرِ آخر",
+"حقیقت",
+"سه و هفده دقیقه",
+"عکس بگیر",
+"کسی که نخ را برید",
+"همان صدا",
+"لبخند خیس",
+"امشب نه",
+"نمی‌بایست بیدارش می‌کردی",
+"او اسمش را عوض کرد",
+"کسی که نباید شماره داشته باشد",
+"آخرین کسی که خندید"
 ];
 
-// ژاپنی‌نما شماره ساز
+// صفحاتی که باید باز شوند
+const pages = {
+  "هنوز پشت سر توست":"hanoz.html",
+  "00":"no.html",
+  "پیک ناشناس":"unknown.html",
+  "جوجه‌سیرکی":"joje.html",
+  "شوخیِ بی‌مزه":"joke.html",
+  "عروسک خرسی":"dall.html",
+  "گل سفید":"rose.html",
+  "مسئول نظم":"nazm.html",
+  "ملکهٔ تشویق":"tash.html"
+};
+
+// شماره ژاپنی تصادفی
 function jpNumber(){
-  return "+81 " + Math.floor(70 + Math.random()*30) + "-" +
+  return "+81 " +
+         Math.floor(70 + Math.random()*30) + "-" +
          Math.floor(1000 + Math.random()*9000) + "-" +
          Math.floor(1000 + Math.random()*9000);
 }
 
-// مرتب‌سازی الفبا
-contacts.sort((a,b)=>a.localeCompare(b,'fa'));
-
 const list = document.getElementById("list");
 
 contacts.forEach(name=>{
+
   const num = jpNumber();
+
   const div = document.createElement("div");
   div.className = "contact";
+
+  let phoneHTML;
+  let messageHTML;
+
+  if(pages[name]){
+      phoneHTML = `<a href="${pages[name]}">📞</a>`;
+      messageHTML = `<a href="${pages[name]}">💬</a>`;
+  }else{
+      phoneHTML = `<a href="#" onclick="alert('این مخاطب در دسترس نیست.');return false;">📞</a>`;
+      messageHTML = `<a href="#" onclick="alert('ارسال پیام به این مخاطب امکان‌پذیر نیست.');return false;">💬</a>`;
+  }
 
   div.innerHTML = `
     <div class="avatar">${name[0]}</div>
@@ -128,13 +173,15 @@ contacts.forEach(name=>{
     </div>
 
     <div class="actions">
-      <a href="telephone.html?name=${encodeURIComponent(name)}&num=${num}">📞</a>
-      <a href="message.html?name=${encodeURIComponent(name)}&num=${num}">💬</a>
+      ${phoneHTML}
+      ${messageHTML}
     </div>
   `;
 
   list.appendChild(div);
+
 });
+
 </script>
 
 </body>
