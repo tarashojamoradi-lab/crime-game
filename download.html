@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Downloads</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#111;
+color:#fff;
+}
+
+.header{
+display:flex;
+align-items:center;
+gap:15px;
+padding:18px;
+font-size:22px;
+font-weight:bold;
+border-bottom:1px solid #2c2c2c;
+background:#181818;
+position:sticky;
+top:0;
+}
+
+.back{
+font-size:26px;
+cursor:pointer;
+}
+
+.list{
+padding:10px;
+}
+
+.item{
+display:flex;
+align-items:center;
+gap:15px;
+padding:15px 12px;
+border-radius:14px;
+cursor:pointer;
+transition:.2s;
+}
+
+.item:hover{
+background:#242424;
+}
+
+.icon{
+font-size:28px;
+width:34px;
+text-align:center;
+}
+
+.info{
+flex:1;
+}
+
+.name{
+font-size:16px;
+}
+
+.type{
+font-size:13px;
+color:#8d8d8d;
+margin-top:3px;
+}
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+display:none;
+}
+
+.popup{
+position:fixed;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+background:#222;
+width:310px;
+padding:22px;
+border-radius:18px;
+display:none;
+text-align:center;
+box-shadow:0 0 30px rgba(0,0,0,.6);
+}
+
+.popup h3{
+margin-bottom:10px;
+}
+
+.popup p{
+line-height:1.8;
+margin-bottom:18px;
+color:#d5d5d5;
+}
+
+.popup button{
+padding:10px 28px;
+border:none;
+background:#2f8cff;
+color:#fff;
+border-radius:12px;
+font-size:15px;
+cursor:pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+<div class="back" onclick="history.back()">←</div>
+<div>Downloads</div>
+</div>
+
+<div class="list">
+
+<div class="item" onclick="location.href='house_plan.pdf'">
+<div class="icon">📄</div>
+<div class="info">
+<div class="name">house_plan.pdf</div>
+<div class="type">PDF</div>
+</div>
+</div>
+
+<div class="item" onclick="location.href='receipt_218.pdf'">
+<div class="icon">📄</div>
+<div class="info">
+<div class="name">receipt_218.pdf</div>
+<div class="type">PDF</div>
+</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📦</div>
+<div class="info">
+<div class="name">textures_pack.zip</div>
+<div class="type">ZIP</div>
+</div>
+</div>
+
+<div class="item" onclick="location.href='parking_ticket.png'">
+<div class="icon">🖼️</div>
+<div class="info">
+<div class="name">parking_ticket.png</div>
+<div class="type">png</div>
+</div>
+</div>
+
+<div class="item" onclick="location.href='medical_bill.pdf'">
+<div class="icon">📄</div>
+<div class="info">
+<div class="name">medical_bill.pdf</div>
+<div class="type">PDF</div>
+</div>
+</div>
+
+<div class="item" onclick="location.href='readme.txt'">
+<div class="icon">📄</div>
+<div class="info">
+<div class="name">readme.txt</div>
+<div class="type">TXT</div>
+</div>
+</div>
+
+<div class="item" onclick="location.href='route_map.html'">
+<div class="icon">🌐</div>
+<div class="info">
+<div class="name">route_map.html</div>
+<div class="type">HTML</div>
+</div>
+</div>
+
+<div class="item" onclick="location.href='sirk.png'">
+<div class="icon">🖼️</div>
+<div class="info">
+<div class="name">sirk.png</div>
+<div class="type">png</div>
+</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">💾</div>
+<div class="info">
+<div class="name">camera_patch.bin</div>
+<div class="type">BIN</div>
+</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📦</div>
+<div class="info">
+<div class="name">archive_old.zip</div>
+<div class="type">ZIP</div>
+</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="info">
+<div class="name">recovered.tmp</div>
+<div class="type">TMP</div>
+</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">💾</div>
+<div class="info">
+<div class="name">memory_dump.bin</div>
+<div class="type">BIN</div>
+</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="info">
+<div class="name">final_cache.dat</div>
+<div class="type">DAT</div>
+</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📦</div>
+<div class="info">
+<div class="name">backup_fragment.zip</div>
+<div class="type">ZIP</div>
+</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="info">
+<div class="name">system_log.tmp</div>
+<div class="type">TMP</div>
+</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">💾</div>
+<div class="info">
+<div class="name">unknown_device.bin</div>
+<div class="type">BIN</div>
+</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📄</div>
+<div class="info">
+<div class="name">restore_point.dat</div>
+<div class="type">DAT</div>
+</div>
+</div>
+
+<div class="item" onclick="errorFile()">
+<div class="icon">📦</div>
+<div class="info">
+<div class="name">shadow_cache.zip</div>
+<div class="type">ZIP</div>
+</div>
+</div>
+
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="popup" id="popup">
+<h3>خطا</h3>
+<p id="message"></p>
+<button onclick="closePopup()">بستن</button>
+</div>
+
+<script>
+
+const errors=[
+"این فایل آسیب دیده است.",
+"فایل حذف شده است.",
+"امکان بازیابی فایل وجود ندارد.",
+"ساختار فایل نامعتبر است.",
+"اطلاعات فایل از بین رفته است.",
+"دسترسی به فایل امکان‌پذیر نیست.",
+"فایل قابل خواندن نیست.",
+"خطا در باز کردن فایل."
+];
+
+function errorFile(){
+
+document.getElementById("overlay").style.display="block";
+document.getElementById("popup").style.display="block";
+
+document.getElementById("message").innerHTML=
+errors[Math.floor(Math.random()*errors.length)];
+
+}
+
+function closePopup(){
+
+document.getElementById("overlay").style.display="none";
+document.getElementById("popup").style.display="none";
+
+}
+
+document.getElementById("overlay").onclick=closePopup;
+
+</script>
+
+</body>
+</html>
