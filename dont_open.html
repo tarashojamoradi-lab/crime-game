@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Files</title>
+<style>
+body{margin:0;background:#111;color:#fff;font-family:Arial;height:100vh;overflow:hidden}
+#files{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center}
+#files h1{font-size:42px;margin:0;color:#ddd}
+#files p{color:#888;margin-top:10px}
+#call{
+display:none;position:fixed;inset:0;background:#202124;
+color:#fff;justify-content:center;align-items:center;
+flex-direction:column;text-align:center
+}
+img{width:130px;height:130px;border-radius:50%;object-fit:cover;border:4px solid #fff}
+h2{margin:20px 0 5px}
+small{color:#ccc}
+.btns{display:flex;gap:60px;margin-top:60px}
+button{
+width:80px;height:80px;border:none;border-radius:50%;
+font-size:15px;color:#fff;cursor:pointer
+}
+.g{background:#23b14d}
+.r{background:#d83b3b}
+</style>
+</head>
+<body>
+
+<div id="files">
+<h1>No Files</h1>
+<p>هیچ فایلی پیدا نشد.</p>
+</div>
+
+<div id="call">
+<img src="jan.png">
+<h2>گل سفید</h2>
+<small>تماس ورودی</small>
+
+<div class="btns">
+<button class="r" onclick="decline()">رد</button>
+<button class="g" onclick="answer()">پاسخ</button>
+</div>
+</div>
+
+<audio id="ring" src="scare.mp3"></audio>
+<audio id="evil" src="evil.mp3"></audio>
+
+<script>
+const call=document.getElementById("call");
+const ring=document.getElementById("ring");
+const evil=document.getElementById("evil");
+
+setTimeout(()=>{
+call.style.display="flex";
+ring.loop=true;
+ring.play().catch(()=>{});
+},2000);
+
+function answer(){
+ring.pause();
+ring.currentTime=0;
+evil.play().catch(()=>{});
+document.querySelector("small").innerText="تماس برقرار شد";
+}
+
+function decline(){
+ring.pause();
+evil.pause();
+evil.currentTime=0;
+call.style.display="none";
+}
+</script>
+
+</body>
+</html>
