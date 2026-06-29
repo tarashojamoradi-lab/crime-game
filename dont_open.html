@@ -57,55 +57,35 @@ font-size:30px;
 <audio id="evil" src="evil.mp3"></audio>
 
 <script>
-const call=document.getElementById("call");
-const ring=document.getElementById("ring");
-const evil=document.getElementById("evil");
+const call = document.getElementById("call");
+const ring = document.getElementById("ring");
+const evil = document.getElementById("evil");
 
-let vib;  
+setTimeout(() => {
+  call.style.display = "flex";
+  ring.loop = true;
+  ring.play().catch(() => {});
+}, 2000);
 
-setTimeout(()=>{
-call.style.display="flex";
-ring.loop=true;
-ring.play().catch(()=>{});
-
-vib = setInterval(()=>{
-    if(navigator.vibrate){
-        navigator.vibrate([400,200]);
-    }
-},600);
-
-},2000);
-
-function answer(){
-
-clearInterval(vib);
-navigator.vibrate(0);
-
-ring.pause();
-ring.currentTime=0;
-...
+function answer() {
   ring.pause();
-  ring.currentTime=0;
-  evil.play().catch(()=>{});
+  ring.currentTime = 0;
+  evil.play().catch(() => {});
 
-  document.querySelector("small").innerText="تماس برقرار شد";
+  document.querySelector("small").innerText = "تماس برقرار شد";
 
-  document.querySelector(".btns").innerHTML=
-  '<button class="r" onclick="decline()">📞</button>';
+  document.querySelector(".btns").innerHTML =
+    '<button class="r" onclick="decline()">📞</button>';
 }
 
-function decline(){
+function decline() {
+  ring.pause();
+  ring.currentTime = 0;
 
-clearInterval(vib);
-navigator.vibrate(0);
+  evil.pause();
+  evil.currentTime = 0;
 
-ring.pause();
-evil.pause();
-...
-ring.pause();
-evil.pause();
-evil.currentTime=0;
-call.style.display="none";
+  call.style.display = "none";
 }
 </script>
 
