@@ -5,618 +5,730 @@
 
 <meta charset="UTF-8">
 
-<title>Mystery Map</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet"
-href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<title>Crime Map</title>
 
-<style>
-
-html,body{
-
-margin:0;
-padding:0;
-width:100%;
-height:100%;
-overflow:hidden;
-background:#000;
-font-family:tahoma;
-
-}
-
-#map{
-
-width:100%;
-height:100%;
-
-}
-
-.leaflet-container{
-
-background:#000;
-
-}
-
-/* ---------- UI گوشی ---------- */
-
-#phoneUI{
-
-position:absolute;
-top:10px;
-left:50%;
-transform:translateX(-50%);
-width:92%;
-display:flex;
-justify-content:space-between;
-color:white;
-z-index:9999;
-font-size:14px;
-pointer-events:none;
-text-shadow:0 0 10px black;
-
-}
-
-#notify{
-
-position:absolute;
-top:45px;
-left:50%;
-transform:translateX(-50%);
-
-background:#111;
-border:1px solid red;
-
-padding:10px 18px;
-
-color:#ff4444;
-
-display:none;
-
-z-index:9999;
-
-box-shadow:0 0 20px red;
-
-border-radius:8px;
-
-}
-
-/* ---------- پنجره معما ---------- */
-
-.popup{
-
-text-align:center;
-
-width:220px;
-
-}
-
-.popup input{
-
-width:90%;
-
-padding:8px;
-
-margin-top:10px;
-
-background:#111;
-
-color:white;
-
-border:1px solid red;
-
-}
-
-.popup button{
-
-margin-top:10px;
-
-padding:8px 15px;
-
-background:#700;
-
-color:white;
-
-border:none;
-
-cursor:pointer;
-
-}
-
-/* ---------- اسکن ---------- */
-
-#scanner{
-
-position:absolute;
-
-left:50%;
-
-top:50%;
-
-transform:translate(-50%,-50%);
-
-background:rgba(0,0,0,.88);
-
-padding:25px;
-
-color:#00ff66;
-
-display:none;
-
-font-size:22px;
-
-z-index:9999;
-
-border:1px solid #00ff66;
-
-box-shadow:0 0 25px #00ff66;
-
-text-align:center;
-
-}
-
-/* ---------- سایه ---------- */
-
-#shadow{
-
-position:absolute;
-
-left:17%;
-
-top:58%;
-
-width:45px;
-
-height:100px;
-
-background:black;
-
-border-radius:50% 50% 20% 20%;
-
-opacity:0;
-
-z-index:700;
-
-filter:blur(2px);
-
-}
-
-/* ---------- مه ---------- */
-
-#fog{
-
-position:absolute;
-
-width:100%;
-
-height:100%;
-
-background:
-radial-gradient(circle,
-transparent 20%,
-rgba(30,30,30,.55) 75%);
-
-animation:fog 8s infinite alternate;
-
-pointer-events:none;
-
-z-index:500;
-
-}
-
-@keyframes fog{
-
-from{
-
-opacity:.7;
-
-}
-
-to{
-
-opacity:.95;
-
-}
-
-}
-
-/* ---------- فلیکر ---------- */
-
-.flicker{
-
-animation:flick .18s 4;
-
-}
-
-@keyframes flick{
-
-0%{
-
-filter:brightness(1);
-
-}
-
-50%{
-
-filter:brightness(.15);
-
-}
-
-100%{
-
-filter:brightness(1);
-
-}
-
-}
-
-</style>
+<link rel="stylesheet" href="map.css">
 
 </head>
 
 <body>
 
-<div id="phoneUI">
+<div id="loading">
 
-<div id="clock"></div>
+<div class="scanBox">
 
-<div>📡 GPS</div>
+<div class="scanTitle">
 
-<div>🔋38%</div>
-
-</div>
-
-<div id="notify">
-
-📡 سیگنال جدید دریافت شد...
+سیستم پرونده جنایی
 
 </div>
 
-<div id="scanner">
+<div class="scanText">
 
-درحال اسکن...
-
-<div id="percent">
-
-0%
+در حال بارگذاری نقشه...
 
 </div>
 
 </div>
 
-<div id="shadow"></div>
+</div>
 
-<div id="fog"></div>
 
-<div id="map"></div>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<div id="mapContainer">
 
-<script>
+<img src="map.png" id="mapImage">
 
-const width=1000;
-const height=700;
+<canvas id="routeCanvas"></canvas>
 
-const map=L.map('map',{
+<div id="fog1" class="fog"></div>
 
-crs:L.CRS.Simple,
+<div id="fog2" class="fog"></div>
 
-minZoom:-2,
+<div id="fog3" class="fog"></div>
 
-maxZoom:2
 
-});
 
-const bounds=[[0,0],[height,width]];
+<div id="destination">
 
-L.imageOverlay("map.png",bounds).addTo(map);
+📍 مقصد نامشخص
 
-map.fitBounds(bounds);
-  // ---------- ساعت ----------
+</div>
 
-function updateClock(){
 
-const now=new Date();
 
-let h=String(now.getHours()).padStart(2,"0");
-let m=String(now.getMinutes()).padStart(2,"0");
+<div id="signalBox">
 
-document.getElementById("clock").innerHTML=h+":"+m;
+<div class="signalTitle">
 
-}
+SIGNAL
 
-updateClock();
+</div>
 
-setInterval(updateClock,1000);
+<div id="signalText">
 
-// ---------- مسیر ----------
+سیگنال یافت نشد
 
-let route;
+</div>
 
-// ---------- نقطه جنگل ----------
+</div>
 
-const forestMarker=L.marker([525,190]).addTo(map);
 
-forestMarker.bindPopup(`
 
-<div class="popup">
+<div id="compass">
 
-<b>🌲 جنگل متروکه</b>
+🧭
 
-<br><br>
+</div>
+
+</div>
+
+
+
+<div id="questionBox">
+
+<h2>
 
 او با چه کسی اینجا بوده؟
 
-<br>
+</h2>
 
-<input id="answer">
+<input
 
-<br>
+id="answer"
+
+type="text"
+
+placeholder="پاسخ را وارد کنید">
 
 <button onclick="checkAnswer()">
 
-ارسال
+بررسی پاسخ
 
 </button>
 
-<br><br>
-
-<div id="result"></div>
+<p id="result"></p>
 
 </div>
 
-`);
-
-// ---------- بررسی جواب ----------
-
-window.checkAnswer=function(){
-
-let txt=document
-.getElementById("answer")
-.value
-.trim()
-.toLowerCase();
-
-if(
-
-txt=="میتسوکی"
-
-||
-
-txt=="میتسوکی آمانه"
-
-){
-
-document.getElementById("result").innerHTML=
-
-"<span style='color:lime'>✔ درست</span>";
-
-startSequence();
-
-}
-
-else{
-
-document.getElementById("result").innerHTML=
-
-"<span style='color:red'>❌ اشتباه</span>";
-
-}
-
-}
-
-// ---------- شروع اتفاقات ----------
-
-function startSequence(){
-
-document.body.classList.add("flicker");
-
-setTimeout(()=>{
-
-document.body.classList.remove("flicker");
-
-showShadow();
-
-},500);
-
-}
-
-// ---------- سایه ----------
-
-function showShadow(){
-
-const s=document.getElementById("shadow");
-
-s.style.opacity=.8;
-
-setTimeout(()=>{
-
-s.style.opacity=0;
-
-showNotify();
-
-},350);
-
-}
-
-// ---------- اعلان ----------
-
-function showNotify(){
-
-const n=document.getElementById("notify");
-
-n.style.display="block";
-
-setTimeout(()=>{
-
-n.style.display="none";
-
-scanGPS();
-
-},2000);
-
-}
-
-// ---------- اسکن ----------
-
-function scanGPS(){
-
-const scan=document.getElementById("scanner");
-
-scan.style.display="block";
-
-let p=0;
-
-const timer=setInterval(()=>{
-
-p+=5;
-
-document.getElementById("percent").innerHTML=p+"%";
-
-if(p>=100){
-
-clearInterval(timer);
-
-scan.style.display="none";
-
-drawRoute();
-
-}
-
-},80);
-// ---------- کشیدن مسیر ----------
-
-function drawRoute(){
-
-document.getElementById("fog").style.transition="2s";
-document.getElementById("fog").style.opacity=".2";
-
-const points=[
-
-[525,190],
-
-[510,240],
-
-[490,290],
-
-[470,340],
-
-[445,395],
-
-[420,455],
-
-[395,510],
-
-[370,560],
-
-[345,610],
-
-[325,655],
-
-[300,705],
-
-[270,755],
-
-[245,805],
-
-[225,850]
-
-];
-
-route=L.polyline([],{
-
-color:"#ff0000",
-
-weight:6,
-
-opacity:1,
-
-lineCap:"round",
-
-lineJoin:"round",
-
-className:"redRoute"
-
-}).addTo(map);
-
-let i=0;
-
-const timer=setInterval(()=>{
-
-route.addLatLng(points[i]);
-
-i++;
-
-if(i>=points.length){
-
-clearInterval(timer);
-
-finishMission();
-
-}
-
-},220);
-
-}
-
-// ---------- پایان مسیر ----------
-
-function finishMission(){
-
-const end=L.marker([225,850]).addTo(map);
-
-end.bindPopup(
-
-"<b>🏠 سرنخ جدید پیدا شد...</b><br>مرحله بعد"
-
-).openPopup();
-
-}
-</script>
-
-<style>
-
-.redRoute{
-
-filter:
-
-drop-shadow(0 0 3px red)
-
-drop-shadow(0 0 8px red)
-
-drop-shadow(0 0 18px red);
-
-animation:redGlow 1s infinite alternate;
-
-}
-
-@keyframes redGlow{
-
-from{
-
-filter:
-
-drop-shadow(0 0 2px red)
-
-drop-shadow(0 0 6px red);
-
-}
-
-to{
-
-filter:
-
-drop-shadow(0 0 8px red)
-
-drop-shadow(0 0 18px red)
-
-drop-shadow(0 0 30px red);
-
-}
-
-}
-
-</style>
+<script src="map.js"></script>
 
 </body>
 
 </html>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:tahoma,sans-serif;
+}
+
+body{
+
+background:#090909;
+overflow:hidden;
+color:white;
+
+}
+
+/* صفحه بارگذاری */
+
+#loading{
+
+position:fixed;
+inset:0;
+background:#050505;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+
+}
+
+.scanBox{
+
+border:1px solid #444;
+padding:30px;
+width:320px;
+background:#111;
+text-align:center;
+border-radius:12px;
+box-shadow:0 0 30px rgba(255,0,0,.25);
+
+}
+
+.scanTitle{
+
+font-size:22px;
+margin-bottom:18px;
+color:#ff4040;
+
+}
+
+.scanText{
+
+color:#ccc;
+animation:blink 1s infinite;
+
+}
+
+@keyframes blink{
+
+50%{
+
+opacity:.35;
+
+}
+
+}
+
+/* نقشه */
+
+#mapContainer{
+
+position:relative;
+width:100vw;
+height:100vh;
+overflow:hidden;
+touch-action:none;
+
+}
+
+#mapImage{
+
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+user-select:none;
+-webkit-user-drag:none;
+
+}
+
+/* Canvas */
+
+#routeCanvas{
+
+position:absolute;
+left:0;
+top:0;
+width:100%;
+height:100%;
+pointer-events:none;
+
+}
+
+/* مه */
+
+.fog{
+
+position:absolute;
+
+width:180%;
+
+height:180%;
+
+left:-40%;
+
+top:-30%;
+
+pointer-events:none;
+
+background:
+radial-gradient(circle,
+rgba(255,255,255,.22) 0%,
+rgba(255,255,255,.12) 25%,
+rgba(255,255,255,.05) 45%,
+transparent 70%);
+
+filter:blur(45px);
+
+opacity:.9;
+
+animation:fogMove 26s linear infinite;
+
+}
+
+#fog2{
+
+animation-duration:34s;
+
+opacity:.65;
+
+}
+
+#fog3{
+
+animation-duration:42s;
+
+opacity:.45;
+
+}
+
+@keyframes fogMove{
+
+0%{
+
+transform:translateX(-12%) translateY(0);
+
+}
+
+50%{
+
+transform:translateX(10%) translateY(3%);
+
+}
+
+100%{
+
+transform:translateX(-12%) translateY(0);
+
+}
+
+}
+
+/* پنل سیگنال */
+
+#signalBox{
+
+position:absolute;
+
+top:18px;
+
+left:18px;
+
+background:rgba(0,0,0,.65);
+
+padding:14px;
+
+border-radius:10px;
+
+border:1px solid #3b3b3b;
+
+backdrop-filter:blur(8px);
+
+min-width:180px;
+
+}
+
+.signalTitle{
+
+font-size:13px;
+
+letter-spacing:3px;
+
+color:#ff5555;
+
+margin-bottom:8px;
+
+}
+
+#signalText{
+
+font-size:15px;
+
+}
+
+/* قطب نما */
+
+#compass{
+
+position:absolute;
+
+top:20px;
+
+right:20px;
+
+font-size:34px;
+
+animation:spinCompass 18s linear infinite;
+
+}
+
+@keyframes spinCompass{
+
+0%{
+
+transform:rotate(0deg);
+
+}
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+/* مقصد */
+
+#destination{
+
+position:absolute;
+
+display:none;
+
+padding:10px 14px;
+
+background:#b00020;
+
+border-radius:10px;
+
+font-weight:bold;
+
+color:white;
+
+box-shadow:0 0 20px rgba(255,0,0,.5);
+
+animation:pulse 1.2s infinite;
+
+}
+
+@keyframes pulse{
+
+50%{
+
+transform:scale(1.08);
+
+}
+
+}
+
+/* پنل سوال */
+
+#questionBox{
+
+position:fixed;
+
+bottom:20px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+width:min(92%,430px);
+
+background:rgba(15,15,15,.92);
+
+padding:18px;
+
+border-radius:16px;
+
+border:1px solid #383838;
+
+backdrop-filter:blur(8px);
+
+}
+
+#questionBox h2{
+
+font-size:18px;
+
+margin-bottom:12px;
+
+}
+
+#answer{
+
+width:100%;
+
+padding:12px;
+
+border:none;
+
+outline:none;
+
+border-radius:10px;
+
+font-size:15px;
+
+margin-bottom:10px;
+
+background:#202020;
+
+color:white;
+
+}
+
+#questionBox button{
+
+width:100%;
+
+padding:12px;
+
+border:none;
+
+border-radius:10px;
+
+background:#d40000;
+
+color:white;
+
+font-size:15px;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+#questionBox button:hover{
+
+background:#ff2b2b;
+
+}
+
+#result{
+
+margin-top:12px;
+
+min-height:22px;
+
+font-weight:bold;
+
+text-align:center;
+
+}
+// حذف صفحه بارگذاری
+window.onload = function () {
+    setTimeout(() => {
+        document.getElementById("loading").style.display = "none";
+    }, 1200);
+};
+
+// پاسخ‌های صحیح
+const validAnswers = [
+    "میتسوکی",
+    "میتسوکی آمانه",
+    "mitsuki",
+    "mitsuki amane"
+];
+
+// بررسی پاسخ
+function checkAnswer() {
+
+    const input = document
+        .getElementById("answer")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const result = document.getElementById("result");
+
+    if (validAnswers.includes(input)) {
+
+        result.style.color = "#4cff4c";
+        result.innerHTML = "✓ پاسخ صحیح است...";
+
+        document.getElementById("signalText").innerHTML =
+            "سیگنال ناشناخته دریافت شد...";
+
+        setTimeout(startReveal, 1200);
+
+    } else {
+
+        result.style.color = "#ff4b4b";
+        result.innerHTML = "✗ پاسخ اشتباه است.";
+
+    }
+
+}
+
+// کنار رفتن مه
+function startReveal() {
+
+    document.getElementById("fog1").style.transition = "2.5s";
+    document.getElementById("fog2").style.transition = "3s";
+    document.getElementById("fog3").style.transition = "3.5s";
+
+    document.getElementById("fog1").style.opacity = "0";
+    document.getElementById("fog2").style.opacity = "0";
+    document.getElementById("fog3").style.opacity = "0";
+
+    setTimeout(drawRoute, 2600);
+
+}
+
+// رسم مسیر
+function drawRoute() {
+
+    const canvas = document.getElementById("routeCanvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const startX = canvas.width - 60;
+    const startY = canvas.height * 0.35;
+
+    const endX = canvas.width * 0.52;
+    const endY = canvas.height * 0.58;
+
+    let progress = 0;
+
+    function animate() {
+
+        progress += 0.015;
+
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+
+        ctx.setLineDash([12,8]);
+
+        ctx.lineWidth = 5;
+
+        ctx.strokeStyle = "#ff0000";
+
+        ctx.beginPath();
+
+        ctx.moveTo(startX,startY);
+
+        ctx.lineTo(
+            startX + (endX-startX)*progress,
+            startY + (endY-startY)*progress
+        );
+
+        ctx.stroke();
+
+        if(progress<1){
+
+            requestAnimationFrame(animate);
+
+        }else{
+
+            showDestination(endX,endY);
+
+        }
+
+    }
+
+    animate();
+
+}
+
+// نمایش مقصد
+function showDestination(x,y){
+
+    const dest=document.getElementById("destination");
+
+    dest.style.left=x+"px";
+    dest.style.top=y+"px";
+
+    dest.style.display="block";
+
+}
+/* ---------- Zoom & Pan ---------- */
+
+const container = document.getElementById("mapContainer");
+const map = document.getElementById("mapImage");
+
+let scale = 1;
+let posX = 0;
+let posY = 0;
+
+function updateTransform(){
+
+    map.style.transform =
+        `translate(${posX}px,${posY}px) scale(${scale})`;
+
+}
+
+container.addEventListener("wheel",function(e){
+
+    e.preventDefault();
+
+    if(e.deltaY<0){
+
+        scale += 0.12;
+
+    }else{
+
+        scale -= 0.12;
+
+    }
+
+    if(scale<1) scale=1;
+
+    if(scale>4) scale=4;
+
+    updateTransform();
+
+});
+
+let dragging=false;
+
+let startX=0;
+
+let startY=0;
+
+container.addEventListener("mousedown",function(e){
+
+    dragging=true;
+
+    startX=e.clientX-posX;
+
+    startY=e.clientY-posY;
+
+});
+
+window.addEventListener("mouseup",function(){
+
+    dragging=false;
+
+});
+
+window.addEventListener("mousemove",function(e){
+
+    if(!dragging) return;
+
+    posX=e.clientX-startX;
+
+    posY=e.clientY-startY;
+
+    updateTransform();
+
+});
+
+
+/* ---------- Mobile Drag ---------- */
+
+container.addEventListener("touchstart",function(e){
+
+    if(e.touches.length!=1) return;
+
+    dragging=true;
+
+    startX=e.touches[0].clientX-posX;
+
+    startY=e.touches[0].clientY-posY;
+
+});
+
+container.addEventListener("touchmove",function(e){
+
+    if(!dragging) return;
+
+    posX=e.touches[0].clientX-startX;
+
+    posY=e.touches[0].clientY-startY;
+
+    updateTransform();
+
+});
+
+container.addEventListener("touchend",function(){
+
+    dragging=false;
+
+});
+
+
+/* ---------- Destination ---------- */
+
+document.getElementById("destination").onclick=function(){
+
+    window.location.href="location.html";
+
+};
