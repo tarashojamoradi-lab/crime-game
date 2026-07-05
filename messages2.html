@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Messages</title>
+
+<style>
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:#0b0b0f;
+  color:white;
+  direction:rtl;
+}
+
+/* LIST */
+.list{
+  padding:10px;
+}
+
+.chat{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px;
+  margin-bottom:10px;
+  border-radius:14px;
+  background:rgba(255,255,255,0.05);
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.chat:hover{
+  background:rgba(255,255,255,0.1);
+}
+
+/* LEFT SIDE */
+.left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* AVATAR */
+.avatar{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  object-fit:cover;
+  cursor:pointer;
+  border:2px solid rgba(255,255,255,0.2);
+}
+
+/* TEXT */
+.name{
+  font-weight:bold;
+}
+
+.preview{
+  font-size:12px;
+  opacity:0.7;
+  max-width:180px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* UNREAD NUMBER */
+.count{
+  min-width:22px;
+  height:22px;
+  border-radius:50%;
+  background:red;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:12px;
+}
+
+/* NOTIFICATION */
+.notif{
+  position:fixed;
+  top:-120px;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  max-width:380px;
+  padding:14px 16px;
+  border-radius:18px;
+  background:rgba(28,28,30,0.92);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  color:white;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  transition:0.35s ease;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.notif.show{
+  top:20px;
+}
+
+/* IMAGE ZOOM MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.8);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+.modal img{
+  width:70%;
+  max-width:300px;
+  border-radius:20px;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="ding" src="ding.mp3" preload="auto"></audio>
+
+</body>
+  
+<!-- NOTIF -->
+<div class="notif" id="notif" onclick="openChat('joke.html')">
+  پیام جدید: کسایی که بعد از آشنایی با تو ناپدید شدن.
+</div>
+
+<div class="list">
+
+  <div class="chat" onclick="openChat('rose.html')">
+    <div class="left">
+      <img src="dar.jpg" class="avatar" onclick="openImg(event,'dar.jpg')">
+      <div>
+        <div class="name">گل سفید</div>
+        <div class="preview">دیر گفتی</div>
+      </div>
+    </div>
+    <div class="count">2</div>
+  </div>
+
+  <div class="chat" onclick="openChat('joke.html')">
+    <div class="left">
+      <div class="avatar" style="background:#a55eea;"></div>
+      <div>
+        <div class="name">شوخی بی‌مزه</div>
+        <div class="preview">کسایی که بعد از آشنایی با تو ناپدید شدن</div>
+      </div>
+    </div>
+    <div class="count">5</div>
+  </div>
+
+  <div class="chat" onclick="openChat('joje.html')">
+    <div class="left">
+      <div class="avatar" style="background:#ffa502;"></div>
+      <div>
+        <div class="name">جوجه سیرکی</div>
+        <div class="preview">از تو نه</div>
+      </div>
+    </div>
+    <div class="count">3</div>
+  </div>
+
+  <div class="chat" onclick="openChat('no.html')">
+    <div class="left">
+      <img src="jan.png" class="avatar" onclick="openImg(event,'jan.png')">
+      <div>
+        <div class="name">°00</div>
+        <div class="preview">فقط بعضی ها قایم میشن</div>
+      </div>
+    </div>
+    <div class="count">1</div>
+  </div>
+
+  <div class="chat" onclick="openChat('nazm.html')">
+    <div class="left">
+      <img src="kaw.png" class="avatar" onclick="openImg(event,'kaw.png')">
+      <div>
+        <div class="name">مسئول نظم</div>
+        <div class="preview">قول نمی دم</div>
+      </div>
+    </div>
+    <div class="count">1</div>
+  </div>
+
+  <div class="chat" onclick="openChat('tash.html')">
+    <div class="left">
+      <img src="tara.png" class="avatar" onclick="openImg(event,'tara.png')">
+      <div>
+        <div class="name">ملکه تشویق</div>
+        <div class="preview">ولی من نه! هنوز اون کل کاغذی رو دارم</div>
+      </div>
+    </div>
+    <div class="count">1</div>
+  </div>
+
+  <div class="chat" onclick="openChat('dall.html')">
+    <div class="left">
+      <img src="maman.png" class="avatar" onclick="openImg(event,'maman.png')">
+      <div>
+        <div class="name">عروسک خرسی</div>
+        <div class="preview">قوللللل🐰</div>
+      </div>
+    </div>
+    <div class="count">2</div>
+  </div>
+
+  <div class="chat" onclick="openChat('unknown.html')">
+    <div class="left">
+      <div class="avatar" style="background:#57606f;"></div>
+      <div>
+        <div class="name">پیک ناشناس</div>
+        <div class="preview">تاریخچه پیام پاک شده</div>
+      </div>
+    </div>
+    <div class="count">0</div>
+  </div>
+
+</div>
+  
+<!-- IMAGE MODAL -->
+<div class="modal" id="modal" onclick="closeImg()">
+  <img id="modalImg">
+</div>
+
+<script>
+
+function openChat(url){
+  window.location.href = url;
+}
+
+const ding = document.getElementById("ding");
+
+document.addEventListener("click", () => {
+  ding.play().catch(()=>{});
+}, { once:true });
+
+setTimeout(()=>{
+
+  ding.play().catch(()=>{});
+
+  const n=document.getElementById("notif");
+  n.classList.add("show");
+
+  setTimeout(()=>{
+    n.style.top="-120px";
+  },4000);
+
+},2000);
+
+document.getElementById("notif").addEventListener("click",()=>{
+  window.location.href="joke.html";
+});
+
+function openImg(e,src){
+  e.stopPropagation();
+  document.getElementById("modal").style.display="flex";
+  document.getElementById("modalImg").src=src;
+}
+
+function closeImg(){
+  document.getElementById("modal").style.display="none";
+}
+
+</script>
+
+</body>
+</html>
