@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contacts</title>
+
+<style>
+body{
+  margin:0;
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+  background:#f2f2f7;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  background:#f2f2f7;
+  padding:10px;
+  z-index:10;
+}
+
+.search{
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  outline:none;
+  font-size:14px;
+}
+
+.list{
+  padding:10px;
+}
+
+.contact{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:white;
+  padding:10px;
+  border-radius:12px;
+  margin-bottom:8px;
+}
+
+.avatar{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#c7c7cc;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  color:white;
+}
+
+.info{
+  flex:1;
+  margin-left:10px;
+}
+
+.name{
+  font-size:15px;
+  font-weight:500;
+}
+
+.number{
+  font-size:12px;
+  color:#888;
+}
+
+.actions a{
+  margin-left:8px;
+  text-decoration:none;
+  font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <input class="search" placeholder="Search">
+</div>
+
+<div class="list" id="list"></div>
+
+<script>
+
+// لیست مخاطبین (هنوز پشت سر توست اولین مخاطب)
+const contacts = [
+"هنوز پشت سر توست",
+"کارفرمای دیروز",
+"پرنسس آیفونی",
+"ملکهٔ تشویق",
+"گل سفید",
+"00",
+"جوجه‌سیرکی",
+"مسئول نظم",
+"عروسک خرسی",
+"شوخیِ بی‌مزه",
+"قربانی بعدی",
+"X",
+"Next to Next",
+"...",
+"پیک ناشناس",
+"صاحب خرگوش",
+"🃏",
+"هه",
+"پشتِ در",
+"تماشاگرِ آخر",
+"حقیقت",
+"سه و هفده دقیقه",
+"عکس بگیر",
+"کسی که نخ را برید",
+"همان صدا",
+"لبخند خیس",
+"امشب نه",
+"نمی‌بایست بیدارش می‌کردی",
+"او اسمش را عوض کرد",
+"کسی که نباید شماره داشته باشد",
+"آخرین کسی که خندید"
+];
+
+// صفحاتی که باید باز شوند
+const pages = { 
+  "00":"no.html",
+  "پیک ناشناس":"unknown.html",
+  "جوجه‌سیرکی":"joje.html",
+  "شوخیِ بی‌مزه":"joke.html",
+  "عروسک خرسی":"dall2.html",
+  "گل سفید":"rose2.html",
+  "مسئول نظم":"nazm2.html",
+  "ملکهٔ تشویق":"tash2.html"
+};
+
+// شماره ژاپنی تصادفی
+function jpNumber(){
+  return "+81 " +
+         Math.floor(70 + Math.random()*30) + "-" +
+         Math.floor(1000 + Math.random()*9000) + "-" +
+         Math.floor(1000 + Math.random()*9000);
+}
+
+const list = document.getElementById("list");
+
+contacts.forEach(name=>{
+
+  const num = jpNumber();
+
+  const div = document.createElement("div");
+  div.className = "contact";
+
+  let phoneHTML;
+  let messageHTML;
+
+  if(pages[name]){
+      phoneHTML = `<a href="${pages[name]}">📞</a>`;
+      messageHTML = `<a href="${pages[name]}">💬</a>`;
+  }else{
+      phoneHTML = `<a href="#" onclick="alert('این مخاطب در دسترس نیست.');return false;">📞</a>`;
+      messageHTML = `<a href="#" onclick="alert('ارسال پیام به این مخاطب امکان‌پذیر نیست.');return false;">💬</a>`;
+  }
+
+  div.innerHTML = `
+    <div class="avatar">${name[0]}</div>
+
+    <div class="info">
+      <div class="name">${name}</div>
+      <div class="number">${num}</div>
+    </div>
+
+    <div class="actions">
+      ${phoneHTML}
+      ${messageHTML}
+    </div>
+  `;
+
+  list.appendChild(div);
+
+});
+
+</script>
+
+</body>
+</html>
