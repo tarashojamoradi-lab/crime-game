@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camera</title>
+
+<style>
+body{
+  margin:0;
+  background:black;
+  overflow:hidden;
+  font-family:sans-serif;
+}
+
+/* CAMERA */
+video{
+  width:100vw;
+  height:100vh;
+  object-fit:cover;
+  transform:scaleX(-1);
+}
+
+/* VHS NOISE */
+#vhs{
+  position:fixed;
+  inset:0;
+  background:url("https://i.imgur.com/3ZQ3Z9m.gif");
+  opacity:0;
+  mix-blend-mode:screen;
+  pointer-events:none;
+}
+
+/* SHAKE */
+.shake{
+  animation: shake 0.1s infinite;
+}
+
+@keyframes shake{
+  0%{transform:translate(0,0)}
+  25%{transform:translate(2px,-2px)}
+  50%{transform:translate(-2px,2px)}
+  75%{transform:translate(2px,2px)}
+  100%{transform:translate(0,0)}
+}
+
+/* FLASH */
+.flash{
+  position:fixed;
+  inset:0;
+  background:white;
+  opacity:0;
+  pointer-events:none;
+}
+
+/* 👻 CLOWN (REAL PRESENCE BEHIND USER - FIXED CINEMATIC STYLE) */
+#clown{
+  position:fixed;
+  inset:0;
+  background:url("https://i.imgur.com/8QfQX9Q.png") center/cover no-repeat;
+  opacity:0.18;
+  pointer-events:none;
+  mix-blend-mode:screen;
+  filter:brightness(0.25) contrast(1.6) blur(1.2px);
+  transform:scale(1.1);
+}
+
+/* shadow ghost (STRONGER DEPTH) */
+#ghost{
+  position:fixed;
+  inset:0;
+  background:url("https://i.imgur.com/8QfQX9Q.png") center/cover no-repeat;
+  opacity:0.28;
+  pointer-events:none;
+  filter:blur(6px);
+  mix-blend-mode:screen;
+  transform:scale(1.2);
+}
+
+/* black message */
+#black{
+  position:fixed;
+  inset:0;
+  background:black;
+  color:red;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:18px;
+  opacity:0;
+  padding:20px;
+}
+
+/* HACK TEXT overlay */
+#hack{
+  position:fixed;
+  inset:0;
+  color:#00ff00;
+  font-family:monospace;
+  font-size:14px;
+  padding:10px;
+  opacity:0.7;
+  pointer-events:none;
+  white-space:pre;
+}
+</style>
+</head>
+
+<body>
+
+<video id="cam" autoplay></video>
+
+<div id="vhs"></div>
+<div id="ghost"></div>
+<div id="clown"></div>
+<div id="flash"></div>
+<div id="black"></div>
+<div id="hack"></div>
+
+<!-- SOUND -->
+<audio id="laugh" loop>
+  <source src="https://www.soundjay.com/human/sounds/laugh-1.mp3">
+</audio>
+
+<audio id="music" autoplay loop>
+  <source src="penny.mp3" type="audio/mp3">
+</audio>
+
+<script>
+
+const video = document.getElementById("cam");
+const vhs = document.getElementById("vhs");
+const ghost = document.getElementById("ghost");
+const clown = document.getElementById("clown");
+const flash = document.getElementById("flash");
+const black = document.getElementById("black");
+const hack = document.getElementById("hack");
+const laugh = document.getElementById("laugh");
+
+// CAMERA START
+navigator.mediaDevices.getUserMedia({ video:true })
+.then(stream=>{
+  video.srcObject = stream;
+
+  setTimeout(()=>{
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video,0,0);
+  }, 800);
+});
+
+// 👻 CINEMATIC PRESENCE FROM START (FIXED CORE REQUEST)
+ghost.style.opacity = "0.32";
+clown.style.opacity = "0.22";
+
+// 💻 HACK SCREEN
+hack.innerText =
+">>> ACCESSING CAMERA...\n>>> DEVICE CONNECTED\n>>> USER DETECTED\n>>> WARNING: UNKNOWN PRESENCE BEHIND YOU";
+
+// VHS FROM START
+vhs.style.opacity = "0.6";
+
+// AUDIO AUTO PLAY
+const music = document.getElementById("music");
+music.volume = 1;
+music.play().catch(()=>{});
+
+laugh.volume = 1;
+laugh.play().catch(()=>{});
+
+// MAIN SEQUENCE
+setTimeout(()=>{
+
+  document.body.classList.add("shake");
+
+  let i = 0;
+  const flashInt = setInterval(()=>{
+    flash.style.opacity = "1";
+    setTimeout(()=>flash.style.opacity="0", 60);
+    i++;
+    if(i > 10) clearInterval(flashInt);
+  }, 180);
+
+  setTimeout(()=>{
+
+    vhs.style.opacity = "0.9";
+    clown.style.opacity = "0.35";
+    ghost.style.opacity = "0.5";
+
+    black.style.opacity = "1";
+    black.innerHTML = "او از همان لحظه اول پشت تو ایستاده بود...";
+
+    setTimeout(()=>{
+      black.style.opacity = "0";
+    }, 3500);
+
+  }, 2000);
+
+}, 1500);
+
+</script>
+
+</body>
+</html>
