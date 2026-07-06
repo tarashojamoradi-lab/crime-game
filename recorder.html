@@ -1,0 +1,15 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Recorder</title>
+<style>
+body{margin:0;background:#111;color:#eee;font-family:Arial}header{padding:18px;font-size:28px;font-weight:bold}.item{display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid #333}.play{width:44px;height:44px;border-radius:50%;border:none;background:#2b7cff;color:#fff;font-size:18px}.wave{flex:1;height:18px;background:repeating-linear-gradient(90deg,#777 0 2px,transparent 2px 5px);border-radius:4px}.meta{width:170px}.name{font-weight:bold}.date{font-size:12px;color:#aaa}
+</style></head><body><header>Recorder</header><div id="list"></div>
+<script>
+const files=[
+["fo.wav","The Last Balloon"],["flow.wav","Smile #13"],["plan.wav","Paper Boat"],["plant.wav","Don't Open Yet"],["mo.wav","Mirror Noise"],["table.wav","Forgotten Room"],["water.wav","Cotton Candy"],["ve.wav","Empty Chair"],["zi.wav","Laughing Hall"],["qo.wav","Red Ticket"],["po.wav","Final Note"]];
+const list=document.getElementById('list');let current=null;
+files.forEach((f,i)=>{const a=new Audio(f[0]);const d=document.createElement('div');d.className='item';
+d.innerHTML=`<button class=play>▶</button><div class=wave></div><div class=meta><div class=name>${f[1]}</div><div class=date>${10+i} May • --:--</div></div>`;
+const b=d.querySelector('button');b.onclick=()=>{if(current&&current!==a){current.pause();current.currentTime=0;document.querySelectorAll('.play').forEach(x=>x.textContent='▶');}
+if(a.paused){a.play();b.textContent='❚❚';current=a;}else{a.pause();b.textContent='▶';}
+};a.onloadedmetadata=()=>d.querySelector('.date').textContent=`${10+i} May • ${Math.floor(a.duration/60)}:${String(Math.floor(a.duration%60)).padStart(2,'0')}`;a.onended=()=>b.textContent='▶';
+list.appendChild(d);});
+</script></body></html>
