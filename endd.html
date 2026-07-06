@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>Final Case</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    background:black;
+    color:white;
+    font-family:tahoma;
+    direction:rtl;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.center{
+    text-align:center;
+    width:90%;
+    max-width:600px;
+}
+
+#title{
+    font-size:26px;
+    min-height:40px;
+}
+
+/* glass box */
+#box{
+    margin-top:30px;
+    padding:20px;
+    border-radius:15px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(10px);
+    opacity:0;
+    transform:translateY(20px);
+    transition:1s;
+}
+
+input{
+    width:80%;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    text-align:center;
+}
+
+button{
+    margin-top:10px;
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+#note{
+    margin-top:10px;
+    font-size:13px;
+    opacity:0.8;
+}
+
+#msg{
+    margin-top:15px;
+    font-size:16px;
+}
+
+.shake{
+    animation:shake 0.4s;
+}
+
+@keyframes shake{
+    0%{transform:translateX(0);}
+    25%{transform:translateX(-5px);}
+    50%{transform:translateX(5px);}
+    75%{transform:translateX(-5px);}
+    100%{transform:translateX(0);}
+}
+
+#img{
+    display:none;
+    width:250px;
+    margin:20px auto;
+    border-radius:10px;
+}
+
+#stamp{
+    display:none;
+    margin-top:20px;
+    font-size:28px;
+    color:red;
+    border:2px solid red;
+    padding:10px;
+    transform:rotate(-10deg);
+}
+
+#flash{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:white;
+    opacity:0;
+    pointer-events:none;
+}
+
+.flashAnim{
+    animation:flash 0.1s ease;
+}
+
+@keyframes flash{
+    0%{opacity:0;}
+    50%{opacity:1;}
+    100%{opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div id="flash"></div>
+
+<div class="center">
+
+    <div id="title"></div>
+
+    <div id="box">
+        <input id="answer" placeholder="پاسخ را وارد کنید">
+        <br>
+        <button onclick="check()">تأیید</button>
+
+        <div id="note">
+            بعد از تأیید پاسخ، حقیقت کامل پرونده آشکار خواهد شد.
+        </div>
+
+        <div id="msg"></div>
+
+        <img id="img" src="tat.png">
+
+        <div id="stamp">CASE CLOSED</div>
+    </div>
+
+</div>
+
+<script>
+
+/* 🎧 SOUNDS */
+const stampSound = new Audio("stamp.mp3");
+const flashSound = new Audio("flash.mp3");
+
+/* جواب درست */
+const CORRECT = "دلقک";
+
+/* تایپ */
+let text = "شما فقط یک فرصت دارید.";
+let i = 0;
+
+function type(){
+    if(i < text.length){
+        document.getElementById("title").innerHTML += text[i];
+        i++;
+        setTimeout(type, 80);
+    } else {
+        setTimeout(showBox, 3000);
+    }
+}
+
+function showBox(){
+    let box = document.getElementById("box");
+    box.style.opacity = "1";
+    box.style.transform = "translateY(0)";
+}
+
+type();
+
+/* بررسی جواب */
+function check(){
+    let val = document.getElementById("answer").value.trim();
+    let box = document.getElementById("box");
+    let msg = document.getElementById("msg");
+
+    if(val === CORRECT){
+
+        msg.innerHTML = "پاسخ صحیح";
+
+        setTimeout(()=>{
+            document.getElementById("img").style.display = "block";
+        }, 800);
+
+        setTimeout(()=>{
+            flash();              // فلش سفید
+            flashSound.play();    // 🔊 صدای شاتر
+
+            document.getElementById("stamp").style.display = "block";
+            stampSound.play();    // 🔊 صدای مهر
+
+        }, 1500);
+
+        setTimeout(()=>{
+            document.body.style.transition = "2s";
+            document.body.style.opacity = "0";
+        }, 3000);
+
+        setTimeout(()=>{
+            window.location.href = "truth.html";
+        }, 4500);
+
+    } else {
+        msg.innerHTML = "هنوز بخشی از گذشته را ندیده‌ای...<br>دوباره پرونده را مرور کن.";
+        box.classList.add("shake");
+
+        setTimeout(()=>{
+            box.classList.remove("shake");
+        }, 500);
+    }
+}
+
+/* فلش */
+function flash(){
+    let f = document.getElementById("flash");
+    f.classList.add("flashAnim");
+
+    setTimeout(()=>{
+        f.classList.remove("flashAnim");
+    }, 150);
+}
+
+</script>
+
+</body>
+</html>
