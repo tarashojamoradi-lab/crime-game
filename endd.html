@@ -2,235 +2,60 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Final Case</title>
-
 <style>
-body{
-    margin:0;
-    height:100vh;
-    background:black;
-    color:white;
-    font-family:tahoma;
-    direction:rtl;
-    overflow:hidden;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-
-.center{
-    text-align:center;
-    width:90%;
-    max-width:600px;
-}
-
-#title{
-    font-size:26px;
-    min-height:40px;
-}
-
-/* glass box */
-#box{
-    margin-top:30px;
-    padding:20px;
-    border-radius:15px;
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(10px);
-    opacity:0;
-    transform:translateY(20px);
-    transition:1s;
-}
-
-input{
-    width:80%;
-    padding:10px;
-    border:none;
-    border-radius:8px;
-    text-align:center;
-}
-
-button{
-    margin-top:10px;
-    padding:10px 20px;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-#note{
-    margin-top:10px;
-    font-size:13px;
-    opacity:0.8;
-}
-
-#msg{
-    margin-top:15px;
-    font-size:16px;
-}
-
-.shake{
-    animation:shake 0.4s;
-}
-
-@keyframes shake{
-    0%{transform:translateX(0);}
-    25%{transform:translateX(-5px);}
-    50%{transform:translateX(5px);}
-    75%{transform:translateX(-5px);}
-    100%{transform:translateX(0);}
-}
-
-#img{
-    display:none;
-    width:250px;
-    margin:20px auto;
-    border-radius:10px;
-}
-
-#stamp{
-    display:none;
-    margin-top:20px;
-    font-size:28px;
-    color:red;
-    border:2px solid red;
-    padding:10px;
-    transform:rotate(-10deg);
-}
-
-#flash{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:white;
-    opacity:0;
-    pointer-events:none;
-}
-
-.flashAnim{
-    animation:flash 0.1s ease;
-}
-
-@keyframes flash{
-    0%{opacity:0;}
-    50%{opacity:1;}
-    100%{opacity:0;}
-}
+body{margin:0;font-family:tahoma;direction:rtl;background:
+linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),url('tat.png') center/cover fixed;
+height:100vh;display:flex;justify-content:center;align-items:center;color:#fff;overflow:hidden}
+#flash,#black{position:fixed;inset:0;pointer-events:none}
+#flash{background:#fff;opacity:0;z-index:20}
+#black{background:#000;opacity:0;transition:1s;z-index:19}
+@keyframes cam{0%{opacity:0}50%{opacity:1}100%{opacity:0}}
+.box{width:min(92%,620px);background:rgba(255,255,255,.08);backdrop-filter:blur(12px);
+padding:24px;border-radius:18px;border:1px solid rgba(255,255,255,.12);opacity:0;transform:translateY(20px);transition:1s;text-align:center}
+input{width:100%;padding:12px;border-radius:10px;border:none;background:#ffffff22;color:#fff}
+button{margin-top:16px;padding:12px 28px;background:#8b0000;color:#fff;border:none;border-radius:10px;font-weight:bold;cursor:pointer}
+#msg.error{color:#ff5555} #msg.success{color:#75ff9b}
+@keyframes shake{25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-4px)}}
+.shake{animation:shake .4s}
+#img{display:none;max-width:300px;width:100%;margin:20px auto;border-radius:10px;filter:blur(10px);opacity:0;transition:1s}
+#stamp{display:none;color:#b30000;border:3px solid #b30000;padding:10px 18px;transform:rotate(-12deg);font-size:28px;font-weight:bold}
 </style>
 </head>
-
 <body>
-
-<div id="flash"></div>
-
-<div class="center">
-
-    <div id="title"></div>
-
-    <div id="box">
-        <input id="answer" placeholder="پاسخ را وارد کنید">
-        <br>
-        <button onclick="check()">تأیید</button>
-
-        <div id="note">
-            بعد از تأیید پاسخ، حقیقت کامل پرونده آشکار خواهد شد.
-        </div>
-
-        <div id="msg"></div>
-
-        <img id="img" src="tat.png">
-
-        <div id="stamp">CASE CLOSED</div>
-    </div>
-
-</div>
-
+<div id="flash"></div><div id="black"></div>
+<div style="width:min(92%,620px);text-align:center">
+<div id="title" style="font-size:28px;min-height:40px"></div>
+<div class="box" id="box">
+<input id="answer" placeholder="پاسخ را وارد کنید">
+<button id="btn">تأیید</button>
+<div style="margin-top:12px">بعد از تأیید پاسخ، حقیقت کامل پرونده آشکار خواهد شد.</div>
+<div id="msg"></div>
+<img id="img" src="tat.png">
+<div id="stamp">CASE CLOSED</div>
+</div></div>
 <script>
-
-/* 🎧 SOUNDS */
-const stampSound = new Audio("stamp.mp3");
-const flashSound = new Audio("flash.mp3");
-
-/* جواب درست */
-const CORRECT = "دلقک";
-
-/* تایپ */
-let text = "شما فقط یک فرصت دارید.";
-let i = 0;
-
-function type(){
-    if(i < text.length){
-        document.getElementById("title").innerHTML += text[i];
-        i++;
-        setTimeout(type, 80);
-    } else {
-        setTimeout(showBox, 3000);
-    }
-}
-
-function showBox(){
-    let box = document.getElementById("box");
-    box.style.opacity = "1";
-    box.style.transform = "translateY(0)";
-}
-
-type();
-
-/* بررسی جواب */
+const ok=["ریوزاکی","ریوزکی","ریوزاکی تاتسوزاکی","ریوزکی تاتسوزاکی"];
+const stamp=new Audio("stamp.mp3"),shot=new Audio("flash.mp3");
+let t="شما فقط یک فرصت دارید.",i=0;
+(function type(){if(i<t.length){title.textContent+=t[i++];setTimeout(type,80)}else setTimeout(()=>{box.style.opacity=1;box.style.transform='translateY(0)'},3000)})();
+btn.onclick=check;answer.addEventListener("keydown",e=>{if(e.key==="Enter")check()});
+function flash(){flashEl=document.getElementById("flash");flashEl.style.animation="cam .12s";shot.currentTime=0;shot.play();setTimeout(()=>flashEl.style.animation="",140)}
 function check(){
-    let val = document.getElementById("answer").value.trim();
-    let box = document.getElementById("box");
-    let msg = document.getElementById("msg");
-
-    if(val === CORRECT){
-
-        msg.innerHTML = "پاسخ صحیح";
-
-        setTimeout(()=>{
-            document.getElementById("img").style.display = "block";
-        }, 800);
-
-        setTimeout(()=>{
-            flash();              // فلش سفید
-            flashSound.play();    // 🔊 صدای شاتر
-
-            document.getElementById("stamp").style.display = "block";
-            stampSound.play();    // 🔊 صدای مهر
-
-        }, 1500);
-
-        setTimeout(()=>{
-            document.body.style.transition = "2s";
-            document.body.style.opacity = "0";
-        }, 3000);
-
-        setTimeout(()=>{
-            window.location.href = "truth.html";
-        }, 4500);
-
-    } else {
-        msg.innerHTML = "هنوز بخشی از گذشته را ندیده‌ای...<br>دوباره پرونده را مرور کن.";
-        box.classList.add("shake");
-
-        setTimeout(()=>{
-            box.classList.remove("shake");
-        }, 500);
-    }
+ let v=answer.value.trim();
+ if(ok.includes(v)){
+  msg.className="success";msg.textContent="✓ پاسخ صحیح";btn.disabled=true;
+  setTimeout(()=>{img.style.display="block";requestAnimationFrame(()=>{img.style.opacity=1;img.style.filter="blur(0)"})},700);
+  setTimeout(()=>{flash();stamp.currentTime=0;stamp.play();document.getElementById("stamp").style.display="inline-block";},1500);
+  setTimeout(()=>{document.body.style.transition="1.5s";document.body.style.opacity=0},3200);
+  setTimeout(()=>{black.style.opacity=1},4700);
+  setTimeout(()=>{flash()},5400);
+  setTimeout(()=>location.href="truthh.html",5900);
+ }else{
+  msg.className="error";msg.innerHTML="هنوز بخشی از گذشته را ندیده‌ای...<br>دوباره پرونده را مرور کن.";
+  box.classList.add("shake");setTimeout(()=>box.classList.remove("shake"),450);
+ }
 }
-
-/* فلش */
-function flash(){
-    let f = document.getElementById("flash");
-    f.classList.add("flashAnim");
-
-    setTimeout(()=>{
-        f.classList.remove("flashAnim");
-    }, 150);
-}
-
 </script>
-
-</body>
-</html>
+</body></html>
