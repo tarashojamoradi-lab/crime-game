@@ -7,6 +7,11 @@ html,body{margin:0;height:100%;overflow:hidden;background:#000;font-family:tahom
 #text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);max-width:70%;color:#fff;
 font-size:2rem;text-align:center;opacity:0;transition:opacity 1s;text-shadow:0 0 15px #000}
 .flash{animation:f .3s}@keyframes f{0%{filter:brightness(1)}50%{filter:brightness(4)}100%{filter:brightness(1)}}
+
+.shake{color:#f00!important;animation:shake .5s infinite}
+@keyframes shake{0%,100%{transform:translate(-50%,-50%) translateX(0)}25%{transform:translate(-50%,-50%) translateX(-4px)}75%{transform:translate(-50%,-50%) translateX(4px)}}
+#fullBtn{display:none;position:fixed;bottom:30px;left:50%;transform:translateX(-50%);padding:12px 22px;font-size:18px;z-index:9}
+#story{display:none;position:fixed;inset:5%;overflow:auto;background:#111;color:#fff;padding:20px;z-index:10;line-height:2}
 </style></head><body>
 <div id=bg></div><div id=img></div><div id=text></div>
 <audio id=aud src="ajib.mp3"></audio>
@@ -18,7 +23,7 @@ const s=[
 ["ریوزکی هر روز بیشتر شبیه پدرش می‌شد.",null],
 ["اما حقیقت تلخ‌تر بود...",null],
 ["این بار، پسر دلقک قاتل بیدار شده بود.",null],
-["او هرگز نتوانست میتسوکی را بکشد.","see.png"],
+["او هرگز نتوانست میتسوکی را بکشد.","eshgh.png"],
 ["میتسوکی پشت چهره یک قاتل، کودکی زخمی را دید.",null],
 ["اما کاگه فوجیوارا نمی‌توانست این خوشبختی را تحمل کند.","white.png"],
 ["قربانی‌های ریوزکی اتفاقی انتخاب نمی‌شدند.",null],
@@ -31,13 +36,47 @@ let i=0,t=document.getElementById('text'),im=document.getElementById('img');
 aud.volume=0;aud.play().catch(()=>{});
 let v=0;let fi=setInterval(()=>{if(v<1){v+=.05;aud.volume=v}else clearInterval(fi)},200);
 function next(){
- if(i>=s.length){let fo=setInterval(()=>{if(aud.volume>0.05)aud.volume-=.05;else{aud.pause();clearInterval(fo)}},200);return;}
+ if(i>=s.length){
+t.classList.add('shake');t.style.color='red';
+setTimeout(()=>{t.style.opacity=0;setTimeout(()=>{document.getElementById('fullBtn').style.display='block';},1200)},3000);return;}
  let [tx,p]=s[i++];t.style.opacity=0;im.style.opacity=0;
  setTimeout(()=>{
  t.innerHTML=tx;t.style.opacity=1;
  if(p){im.style.backgroundImage=`url(${p})`;im.style.transform='scale(1.08)';im.style.opacity=.95;}
  },700);
- setTimeout(next,5000);
+ if(i===s.length){setTimeout(next,5000);}else{setTimeout(next,5000);}
+if(i===s.length){};
+document.getElementById('fullBtn').onclick=function(){document.getElementById('story').style.display='block';};
 }
 next();
-</script></body></html>
+</script><button id='fullBtn'>📖 مطالعه حقیقت کامل پرونده</button><div id='story'><h2>حقیقت کامل پرونده</h2><pre style="white-space:pre-wrap;font-family:tahoma">حقیقت پرونده
+
+ریوزکی تاتسوزاکی، پس از مرگ مادرش، توسط پدرش، آکومو کوروشیما، در سیرک رها شد. کودکی او میان خنده‌های ساختگی دلقک‌ها گذشت؛ اما پشت آن لبخندها، پسری زندگی می‌کرد که هرگز طعم عشق، خانواده و امنیت را نچشید. پدرش همان قاتل زنجیره‌ای معروفی بود که سال‌ها پیش با لقب دلقک قاتل شناخته می‌شد. مردی که تنها یک بار برای دیدن پسرش آمد؛ همان آخرین اجرای زندگی ریوزکی.
+
+ریوزکی تمام عمر از این حقیقت فرار می‌کرد که هر روز بیشتر شبیه پدرش می‌شود. اما نفرت، آرام‌آرام او را به همان مسیری کشاند که همیشه از آن بیزار بود. او تصمیم گرفت راه پدرش را ادامه دهد، اما آخرین قربانی‌اش خود آکومو باشد؛ انتقامی برای تمام سال‌هایی که از او دزدیده شده بود. به همین دلیل، آدرس خانه آکومو بارها در طول پرونده دیده می‌شود؛ سرنخ‌هایی که نقشه قتل بعدی ریوزکی را فاش می‌کردند.
+
+وقتی روزنامه‌ها از بازگشت «دلقک قاتل» نوشتند، همه تصور کردند هیولای گذشته دوباره بیدار شده است. اما حقیقت تلخ‌تر از این بود...
+
+این بار، پسر دلقک قاتل بیدار شده بود.
+
+با این حال، ریوزکی هرگز نتوانست میتسوکی را بکشد. میتسوکی تنها کسی بود که پشت چهره ترسناک یک قاتل، کودکی زخمی را دید. نه از او ترسید، نه قضاوتش کرد و نه ترکش کرد. بعد از مرگ مادرش، او تنها انسانی بود که ریوزکی را بی‌قیدوشرط دوست داشت؛ برای اولین بار، ریوزکی باور کرد شاید هنوز بتواند زندگی متفاوتی داشته باشد.
+
+اما کاگه فوجیوارا نمی‌توانست این خوشبختی را تحمل کند. سال‌ها حسادت، احساس حقارت و طمع، او را به انسانی تبدیل کرده بود که فقط می‌خواست هر آنچه ریوزکی داشت از او بگیرد. از بازجویی‌ها، پیام‌های سایت و آخرین صفحه دفترچه خاطرات می‌توان فهمید که این نفرت، مدت‌ها در وجود او رشد کرده بود.
+
+کاگه در ابتدا فقط قصد داشت به میتسوکی آسیب برساند، اما همه‌چیز از کنترلش خارج شد و اشتباهی که هرگز قرار نبود به قتل ختم شود، زندگی میتسوکی را برای همیشه گرفت.
+
+در پایان، ریوزکی دوباره همان درد کودکی‌اش را تجربه کرد؛ یک بار مادرش را از او گرفتند و این بار، تنها کسی را که بعد از سال‌ها تاریکی، نور را به زندگی‌اش برگردانده بود.
+
+شاید ریوزکی یک قاتل بود...
+
+اما پیش از آن، کودکی بود که هیچ‌وقت کسی دستش را نگرفت.
+
+دلیل انتخاب قربانی‌های ریوزکی نیز اتفاقی نبود. تمام قربانیان او بین ۱۰ تا ۲۲ سال سن داشتند؛ همان سال‌هایی که خودش بیش از هر زمان دیگری به عشق، امنیت و خانواده نیاز داشت، اما هیچ‌کدام را به دست نیاورد.
+
+هر بار که لبخند یک کودک را می‌دید، یا عشق و آرامش یک نوجوان را، چیزی درونش فرو می‌ریخت. او احساس می‌کرد دنیا همان خوشبختی‌ای را که از او دزدیده بود، بی‌دریغ به دیگران هدیه داده است.
+
+برای ریوزکی، قربانی‌ها فقط انسان نبودند؛ آن‌ها نماد تمام چیزهایی بودند که خودش هرگز نداشت. او نمی‌توانست تحمل کند دیگران در همان سنی که زندگی خودش نابود شده بود، عشق، محبت و آرامش را تجربه کنند.
+
+تلخ‌ترین حقیقت پرونده شاید همین باشد...
+
+ریوزکی از کودکی، انسان‌ها را نمی‌کشت؛ او خوشبختی را می‌کشت. چون باور داشت اگر خودش هرگز اجازه نداشته طعم عشق را بچشد، هیچ‌کس دیگری هم نباید آن را تجربه کند.</pre></div></body></html>
