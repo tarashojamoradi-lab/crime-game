@@ -1,209 +1,43 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-<meta charset="UTF-8">
-<title>Truth File</title>
-
+<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="utf-8">
+<title>پرونده ریوزکی</title>
 <style>
-body{
-    margin:0;
-    direction:rtl;
-    font-family:tahoma;
-    color:white;
-    overflow-x:hidden;
-}
-
-/* بک‌گراند */
-#bg{
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:url("vala.png") center/cover no-repeat;
-    filter:brightness(0.3) blur(2px);
-    z-index:-1;
-}
-
-/* موسیقی */
-audio{
-    display:none;
-}
-
-/* کانتینر */
-.container{
-    max-width:800px;
-    margin:auto;
-    padding:40px 20px;
-}
-
-/* عنوان */
-h1{
-    text-align:center;
-    font-size:28px;
-    margin-bottom:30px;
-    opacity:0;
-    animation:fadeIn 2s forwards;
-}
-
-@keyframes fadeIn{
-    to{opacity:1;}
-}
-
-/* بخش‌ها */
-.section{
-    margin:80px 0;
-    opacity:0;
-    transform:translateY(30px);
-    transition:1.5s;
-}
-
-.section.show{
-    opacity:1;
-    transform:translateY(0);
-}
-
-/* متن */
-p{
-    line-height:2;
-    font-size:16px;
-}
-
-/* تصاویر */
-img{
-    width:100%;
-    margin-top:20px;
-    border-radius:12px;
-    box-shadow:0 0 30px rgba(0,0,0,0.7);
-}
-
-/* white fade */
-#white{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:white;
-    opacity:0;
-    pointer-events:none;
-}
-
-.flash{
-    animation:flash 0.4s ease;
-}
-
-@keyframes flash{
-    0%{opacity:0;}
-    50%{opacity:1;}
-    100%{opacity:0;}
-}
-
-</style>
-</head>
-
-<body>
-
-<div id="bg"></div>
-
-<audio id="music" src="ajib.mp3" loop></audio>
-
-<div id="white"></div>
-
-<div class="container">
-
-<h1>حقیقت پرونده</h1>
-
-<!-- بخش 1 -->
-<div class="section" id="s1">
-<p>
-ریوزکی تاتسوزاکی، پس از مرگ مادرش، توسط پدرش در سیرک رها شد...
-</p>
-
-<img src="child.png">
-</div>
-
-<!-- بخش 2 -->
-<div class="section" id="s2">
-<p>
-او احساس می‌کرد دنیا همان خوشبختی‌ای را که از او دزدیده بود...
-</p>
-
-<img src="see.png">
-</div>
-
-<!-- بخش 3 -->
-<div class="section" id="s3">
-<p>
-مرگ میتسوکی، نقطه‌ای بود که همه چیز را تغییر داد...
-</p>
-
-<img src="white.png">
-</div>
-
-<!-- پایان -->
-<div class="section" id="s4">
-<p style="text-align:center;font-size:18px;">
-شاید ریوزکی یک قاتل بود...<br><br>
-اما پیش از آن، کودکی بود که هیچ‌وقت کسی دستش را نگرفت.
-</p>
-</div>
-
-</div>
-
+html,body{margin:0;height:100%;overflow:hidden;background:#000;font-family:tahoma}
+#bg{position:fixed;inset:0;background:url('tat.png') center/cover no-repeat;filter:brightness(.35)}
+#img{position:fixed;inset:0;background:center/contain no-repeat;opacity:0;transition:opacity 1s,transform 8s;transform:scale(1)}
+#text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);max-width:70%;color:#fff;
+font-size:2rem;text-align:center;opacity:0;transition:opacity 1s;text-shadow:0 0 15px #000}
+.flash{animation:f .3s}@keyframes f{0%{filter:brightness(1)}50%{filter:brightness(4)}100%{filter:brightness(1)}}
+</style></head><body>
+<div id=bg></div><div id=img></div><div id=text></div>
+<audio id=aud src="ajib.mp3"></audio>
 <script>
-
-const music = document.getElementById("music");
-const white = document.getElementById("white");
-
-let sections = [
-    document.getElementById("s1"),
-    document.getElementById("s2"),
-    document.getElementById("s3"),
-    document.getElementById("s4")
+const s=[
+["حقیقت پرونده...",null],["ریوزکی تاتسوزاکی، پس از مرگ مادرش، توسط پدرش در سیرک رها شد.","child.png"],
+["پشت آن لبخندها، پسری زندگی می‌کرد که هرگز عشق، خانواده و امنیت را نشناخت.",null],
+["پدرش آکومو کوروشیما بود؛ همان دلقک قاتل.",null],
+["ریوزکی هر روز بیشتر شبیه پدرش می‌شد.",null],
+["اما حقیقت تلخ‌تر بود...",null],
+["این بار، پسر دلقک قاتل بیدار شده بود.",null],
+["او هرگز نتوانست میتسوکی را بکشد.","see.png"],
+["میتسوکی پشت چهره یک قاتل، کودکی زخمی را دید.",null],
+["اما کاگه فوجیوارا نمی‌توانست این خوشبختی را تحمل کند.","white.png"],
+["قربانی‌های ریوزکی اتفاقی انتخاب نمی‌شدند.",null],
+["او انسان‌ها را نمی‌کشت...",null],
+["او خوشبختی را می‌کشت.",null],
+["شاید ریوزکی یک قاتل بود...",null],
+["اما پیش از آن، کودکی بود که هیچ‌وقت کسی دستش را نگرفت.",null]
 ];
-
-let i = 0;
-
-/* شروع موسیقی با fade */
-window.onload = () => {
-    music.volume = 0;
-    music.play();
-
-    let fade = setInterval(()=>{
-        if(music.volume < 0.6){
-            music.volume += 0.05;
-        } else {
-            clearInterval(fade);
-        }
-    },200);
-
-    showNext();
-};
-
-/* نمایش مرحله‌ای */
-function showNext(){
-    if(i < sections.length){
-        sections[i].classList.add("show");
-
-        setTimeout(()=>{
-            i++;
-            showNext();
-        }, 5000); // هر بخش 5 ثانیه
-    } else {
-        setTimeout(endScene, 2000);
-    }
+let i=0,t=document.getElementById('text'),im=document.getElementById('img');
+aud.volume=0;aud.play().catch(()=>{});
+let v=0;let fi=setInterval(()=>{if(v<1){v+=.05;aud.volume=v}else clearInterval(fi)},200);
+function next(){
+ if(i>=s.length){let fo=setInterval(()=>{if(aud.volume>0.05)aud.volume-=.05;else{aud.pause();clearInterval(fo)}},200);return;}
+ let [tx,p]=s[i++];t.style.opacity=0;im.style.opacity=0;
+ setTimeout(()=>{
+ t.innerHTML=tx;t.style.opacity=1;
+ if(p){im.style.backgroundImage=`url(${p})`;im.style.transform='scale(1.08)';im.style.opacity=.95;}
+ },700);
+ setTimeout(next,5000);
 }
-
-/* پایان */
-function endScene(){
-    white.classList.add("flash");
-
-    setTimeout(()=>{
-        document.body.style.opacity = "0";
-    }, 400);
-
-}
-
-</script>
-
-</body>
-</html>
+next();
+</script></body></html>
