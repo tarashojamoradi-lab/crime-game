@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مدیریت فایل</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Tahoma,sans-serif;
+}
+
+body{
+    background:#111;
+    color:white;
+}
+
+.header{
+    text-align:center;
+    padding:22px;
+    font-size:22px;
+    font-weight:bold;
+    border-bottom:1px solid #222;
+}
+
+.list{
+    width:100%;
+}
+
+.item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 18px;
+    text-decoration:none;
+    color:white;
+    border-bottom:1px solid #222;
+    transition:.2s;
+}
+
+.item:hover{
+    background:#1d1d1d;
+}
+
+.right{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.icon{
+    font-size:28px;
+    line-height:1;
+}
+
+.name{
+    font-size:17px;
+}
+
+.info{
+    color:#888;
+    font-size:12px;
+    margin-top:3px;
+}
+
+.type{
+    color:#777;
+    font-size:13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+مدیریت فایل
+</div>
+
+<div class="list">
+
+    <!-- پوشه -->
+    <a href="victim.html" class="item">
+        <div class="right">
+            <span class="icon">📁</span>
+
+            <div>
+                <div class="name">قربانی</div>
+                <div class="info">۱ مورد</div>
+            </div>
+        </div>
+
+        <div class="type">پوشه</div>
+    </a>
+
+    <!-- پوشه جدید -->
+    <a href="oofi2.html" class="item">
+        <div class="right">
+            <span class="icon">📁</span>
+
+            <div>
+                <div class="name">اوفی شده ها</div>
+                <div class="info">۱ مورد</div>
+            </div>
+        </div>
+
+        <div class="type">پوشه</div>
+    </a>
+
+    <!-- فایل عکس -->
+    <a href="waa.png" class="item">
+        <div class="right">
+            <span class="icon">🖼️</span>
+
+            <div>
+                <div class="name">IMG_0517.png</div>
+                <div class="info">PNG • 1.8 MB</div>
+            </div>
+        </div>
+
+        <div class="type">PNG</div>
+    </a>
+
+</div>
+
+</body>
+</html>
