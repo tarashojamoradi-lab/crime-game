@@ -1,1 +1,243 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recent Calls</title>
 
+<style>
+body{
+  margin:0;
+  font-family:-apple-system, BlinkMacSystemFont, sans-serif;
+  background:#0b0b0f;
+  color:white;
+}
+
+/* HEADER */
+.header{
+  position:sticky;
+  top:0;
+  background:#121218;
+  padding:14px 16px;
+  font-size:20px;
+  font-weight:bold;
+  border-bottom:1px solid #222;
+}
+
+/* LIST */
+.section-title{
+  padding:10px 16px;
+  color:#aaa;
+  font-size:13px;
+}
+
+.call{
+  display:flex;
+  align-items:center;
+  padding:12px 16px;
+  border-bottom:1px solid #1f1f1f;
+  cursor:pointer;
+}
+
+.avatar{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:#333;
+  margin-left:10px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  color:#fff;
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.info{
+  flex:1;
+}
+
+.name{
+  font-size:15px;
+  margin-bottom:4px;
+}
+
+.meta{
+  font-size:12px;
+  color:#aaa;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* ICON COLORS */
+.missed{ color:#ff3b30; }
+.outgoing{ color:#34c759; }
+.incoming{ color:#0a84ff; }
+
+/* DETAIL PAGE */
+.detail{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#0b0b0f;
+  display:none;
+  flex-direction:column;
+}
+
+.detail-header{
+  padding:14px;
+  background:#121218;
+  font-size:16px;
+  font-weight:bold;
+}
+
+.detail-body{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
+  color:#bbb;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">Recents</div>
+
+<div id="list">
+
+  <div class="section-title">۱۷ May</div>
+
+  <div class="call" onclick="openDetail('گل سفید')">
+    <div class="avatar"><img src="jan3.png"></div>
+    <div class="info">
+      <div class="name">گل سفید</div>
+      <div class="meta"><span class="outgoing">↗</span> خروجی • ۱ ساعت و ۱۶ دقیقه</div>
+    </div>
+  </div>
+
+  <div class="call" onclick="openDetail('شوخی بی مزه')">
+    <div class="avatar">S</div>
+    <div class="info">
+      <div class="name">شوخی بی مزه</div>
+      <div class="meta"><span class="missed">✖</span> خروجی • ۴ دقیقه • بلاک شده</div>
+    </div>
+  </div>
+
+  <div class="call" onclick="openDetail('گل سفید')">
+    <div class="avatar"><img src="jan3.png"></div>
+    <div class="info">
+      <div class="name">گل سفید</div>
+      <div class="meta"><span class="missed">✖</span> تماس بی‌پاسخ</div>
+    </div>
+  </div>
+
+  <div class="call" onclick="openDetail('ماه پشت پرده')">
+    <div class="avatar">M</div>
+    <div class="info">
+      <div class="name">ماهِ پشت پرده</div>
+      <div class="meta"><span class="missed">✖</span> از دست رفته</div>
+    </div>
+  </div>
+
+  <div class="section-title">۱۶ May</div>
+
+  <div class="call" onclick="openDetail('آخرین کسی که خندید')">
+    <div class="avatar">?</div>
+    <div class="info">
+      <div class="name">آخرین کسی که خندید 🎭</div>
+      <div class="meta"><span class="missed">✖</span> تماس نامشخص</div>
+    </div>
+  </div>
+
+  <div class="call" onclick="openDetail('تماشاگر آخر')">
+    <div class="avatar">T</div>
+    <div class="info">
+      <div class="name">تماشاگر آخر</div>
+      <div class="meta"><span class="outgoing">↗</span> خروجی • ۳ بار بدون پاسخ</div>
+    </div>
+  </div>
+
+  <div class="section-title">۱۱–۱۰ May</div>
+
+  <div class="call" onclick="openDetail('پرنسس آیفونی')">
+    <div class="avatar">P</div>
+    <div class="info">
+      <div class="name">پرنسس آیفونی</div>
+      <div class="meta"><span class="incoming">↙</span> ورودی • ۴۶ ثانیه</div>
+    </div>
+  </div>
+
+  <div class="call" onclick="openDetail('مسئول نظم')">
+    <div class="avatar"><img src="kaw3.png"></div>
+    <div class="info">
+      <div class="name">مسئول نظم</div>
+      <div class="meta"><span class="missed">✖</span> از دست رفته</div>
+    </div>
+  </div>
+
+  <div class="call" onclick="openDetail('ملکهٔ تشویق')">
+    <div class="avatar"><img src="tara2.png"></div>
+    <div class="info">
+      <div class="name">ملکهٔ تشویق</div>
+      <div class="meta"><span class="incoming">↙</span> ۱ دقیقه و ۳۳ ثانیه</div>
+    </div>
+  </div>
+
+  <div class="call" onclick="openDetail('عروسک خرسی')">
+    <div class="avatar"><img src="maman2.png"></div>
+    <div class="info">
+      <div class="name">عروسک خرسی</div>
+      <div class="meta"><span class="incoming">↙</span> ۲۲ ثانیه</div>
+    </div>
+  </div>
+
+  <div class="call" onclick="openDetail('00°')">
+    <div class="avatar"><img src="dar.jpg"></div>
+    <div class="info">
+      <div class="name">00°</div>
+      <div class="meta"><span class="missed">✖</span> بدون پاسخ</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- DETAIL PAGE -->
+<div class="detail" id="detail">
+  <div class="detail-header">جزئیات تماس</div>
+  <div class="detail-body" id="detailText"></div>
+</div>
+
+<script>
+function openDetail(name){
+  const detail = document.getElementById("detail");
+  const text = document.getElementById("detailText");
+
+  if(name === "آخرین کسی که خندید"){
+    text.innerHTML = "این مخاطب دیگر وجود ندارد.";
+  } else {
+    text.innerHTML = "تماس: " + name;
+  }
+
+  detail.style.display = "flex";
+}
+
+document.getElementById("detail").onclick = function(){
+  this.style.display = "none";
+}
+</script>
+
+</body>
+</html>
