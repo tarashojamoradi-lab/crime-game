@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Story</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:tahoma;
+}
+
+body{
+
+background:#000;
+overflow:hidden;
+
+}
+
+.story{
+
+position:relative;
+width:100%;
+max-width:430px;
+height:100vh;
+margin:auto;
+overflow:hidden;
+
+}
+
+.story img.bg{
+
+width:100%;
+height:100%;
+object-fit:cover;
+
+}
+
+.progress{
+
+position:absolute;
+top:10px;
+left:10px;
+right:10px;
+height:4px;
+background:rgba(255,255,255,.3);
+border-radius:20px;
+overflow:hidden;
+
+}
+
+.progress span{
+
+display:block;
+height:100%;
+background:white;
+animation:story 8s linear forwards;
+
+}
+
+@keyframes story{
+
+from{
+
+width:0;
+
+}
+
+to{
+
+width:100%;
+
+}
+
+}
+
+.header{
+
+position:absolute;
+top:22px;
+left:15px;
+right:15px;
+
+display:flex;
+align-items:center;
+gap:10px;
+
+color:white;
+
+}
+
+.header img{
+
+width:42px;
+height:42px;
+border-radius:50%;
+object-fit:cover;
+
+}
+
+.header small{
+
+opacity:.8;
+
+}
+
+.text{
+
+position:absolute;
+
+bottom:60px;
+
+left:20px;
+right:20px;
+
+background:rgba(0,0,0,.35);
+
+padding:16px;
+
+border-radius:16px;
+
+font-size:20px;
+
+line-height:1.8;
+
+font-weight:bold;
+
+color:white;
+
+backdrop-filter:blur(4px);
+
+}
+
+</style>
+
+<script>
+
+setTimeout(function(){
+
+window.location.href="people.html";
+
+},8000);
+
+</script>
+
+</head>
+
+<body>
+
+<div class="story">
+
+<img class="bg" src="hof2.png">
+
+<div class="progress">
+
+<span></span>
+
+</div>
+
+<div class="header">
+
+<img src="lilii3.png">
+
+<div>
+
+<b>Serina Saionji</b><br>
+
+<small>72h</small>
+
+</div>
+
+</div>
+
+<div class="text">
+
+ثابت شد قرار نیست همه لیاقت وایسادن کنارم رو داشته باشن!!
+
+</div>
+
+</div>
+
+</body>
+
+</html>
