@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tash chat</title>
+
+<style>
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:#0b0b0f;
+  color:white;
+}
+
+/* TOP BAR */
+.top{
+  position:sticky;
+  top:0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px;
+  background:rgba(20,20,30,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.profile{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.avatar{
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+.callBox{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.btn{
+  cursor:pointer;
+  opacity:0.8;
+  font-size:18px;
+}
+
+#chat{
+  padding:12px;
+  height:calc(100vh - 140px);
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.msg{
+  max-width:75%;
+  padding:10px 12px;
+  border-radius:14px;
+  font-size:14px;
+  animation:pop 0.2s ease;
+}
+
+@keyframes pop{
+  from{transform:scale(0.9); opacity:0;}
+  to{transform:scale(1); opacity:1;}
+}
+
+.queen{
+  background:linear-gradient(135deg,#ff4d4d,#ff9f43);
+  align-self:flex-end;
+}
+
+.me{
+  background:rgba(255,255,255,0.08);
+  align-self:flex-start;
+}
+
+.time{
+  font-size:10px;
+  opacity:0.6;
+  margin-top:4px;
+}
+
+.typing{
+  align-self:flex-end;
+  font-size:12px;
+  opacity:0.7;
+  padding:6px 10px;
+  background:rgba(255,255,255,0.05);
+  border-radius:10px;
+}
+
+.inputBox{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  display:flex;
+  gap:8px;
+  padding:10px;
+  background:rgba(20,20,30,0.9);
+}
+
+input{
+  flex:1;
+  padding:10px;
+  border-radius:20px;
+  border:none;
+  outline:none;
+  background:#1e1e2a;
+  color:white;
+}
+
+.send{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#ff4d4d;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+}
+
+.voice{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#333;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+}
+
+/* VOICE MESSAGE */
+.voiceMsg{
+  background:#2b2b3a;
+  padding:10px;
+  border-radius:14px;
+  max-width:75%;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="ding" src="ding.mp3" preload="auto"></audio>
+
+<!-- TOP -->
+<div class="top">
+
+  <div class="btn" onclick="location.href='home3.html'">🏠</div>
+
+  <div class="profile">
+    <img src="jan3.png" class="avatar">
+    <div>گل سفید</div>
+  </div>
+
+  <div class="callBox">
+    <div class="btn" onclick="fakeCall('voice')">📞</div>
+    <div class="btn" onclick="fakeCall('video')">🎥</div>
+    <div class="btn" onclick="history.back()">←</div>
+  </div>
+
+</div>
+
+<!-- CHAT -->
+<div id="chat"></div>
+
+<!-- INPUT -->
+<div class="inputBox">
+  <div class="voice"
+     onmousedown="startRec()" 
+     onmouseup="stopRec()" 
+     ontouchstart="startRec()" 
+     ontouchend="stopRec()">🎤</div>
+
+  <input id="text" placeholder="پیام بنویس...">
+  <div class="send" onclick="sendMsg()">➤</div>
+</div>
+
+<script>
+
+const chat=document.getElementById("chat");
+const dingSound=document.getElementById("ding");
+
+/* messages */
+const messages = [
+  {type:"me", text:"سلام زیبارو.", time:"14:21"},
+  {type:"queen", text:"سلام شما؟", time:"14:22"},
+
+  {type:"me", text:"یعنی نمیشناسی دیگه لوبیا خانم؟", time:"14:23"},
+  {type:"queen", text:"عهههه....", time:"14:24"},
+
+  {type:"queen", text:"یه سؤال بپرسم؟", time:"14:24"},
+  {type:"me", text:"فقط یک دونه؟", time:"14:25"},
+
+  {type:"queen", text:"جدی میگم.", time:"14:25"},
+  {type:"me", text:"باشه.", time:"14:26"},
+
+  {type:"queen", text:"تو این شماره رو از کجا پیدا کردی؟", time:"14:26"},
+  {type:"me", text:"از همون جایی که آدم‌ها چیزای مهمشون رو پنهان می‌کنن.", time:"14:27"},
+
+  {type:"queen", text:"این جواب نیست.", time:"14:28"},
+  {type:"me", text:"می‌دونم.", time:"14:29"},
+
+  {type:"queen", text:"حتی توی اون یکی گوشیم هم ذخیره‌ش نکرده بودم.", time:"14:30"},
+  {type:"me", text:"پس معلومه خوب قایمش کرده بودی.", time:"14:31"},
+
+  {type:"queen", text:"...", time:"14:32"},
+  {type:"queen", text:"گاهی واقعاً نمی‌فهمم تو باید نگرانم کنی یا نه.", time:"14:33"},
+
+  {type:"me", text:"و به چی رسیدی؟", time:"14:34"},
+
+  {type:"queen", text:"به اینکه اگه آدم‌ها رو فقط با عجیب بودنشون قضاوت کنیم، نصف دنیا باید تنها بمونه.", time:"14:35"},
+
+  {type:"me", text:"تو زیادی به آدم‌ها فرصت میدی.", time:"14:36"},
+
+  {type:"queen", text:"و تو زیادی زود خودتو ازشون محروم می‌کنی.", time:"14:37"},
+
+  {type:"me", text:"شاید.", time:"14:38"},
+
+  {type:"queen", text:"راستی...", time:"14:39"},
+  {type:"queen", text:"با این حال هنوز جواب پیام‌هات رو میدم.", time:"14:40"},
+
+  {type:"me", text:"متوجه شدم.", time:"14:41"},
+
+  {type:"queen", text:"مغرور نشو.", time:"14:42"},
+
+  {type:"me", text:"دیر گفتی.", time:"14:43"}
+];
+
+function render(){
+  chat.innerHTML="";
+
+  messages.forEach(m=>{
+    const div=document.createElement("div");
+
+    if(m.voice){
+      div.className="msg me voiceMsg";
+      div.innerHTML=`
+        🎧 پیام صوتی
+        <audio controls src="${m.voice}"></audio>
+        <div class="time">${m.time}</div>
+      `;
+    } else {
+      div.className="msg "+m.type;
+      div.innerHTML=`
+        ${m.text}
+        <div class="time">${m.time}</div>
+      `;
+    }
+
+    chat.appendChild(div);
+  });
+
+  chat.scrollTop=chat.scrollHeight;
+}
+
+/* typing */
+function showTyping(){
+  const t=document.createElement("div");
+  t.className="typing";
+  t.id="typing";
+  t.innerText="در حال نوشتن...";
+  chat.appendChild(t);
+  chat.scrollTop=chat.scrollHeight;
+}
+
+/* auto reply */
+function autoReply(){
+  const now=new Date();
+  const time=now.getHours()+":"+String(now.getMinutes()).padStart(2,"0");
+
+  messages.push({
+    type:"queen",
+    text:"چرا جوابمو نمیدی؟",
+    time:time
+  });
+
+  render();
+
+  dingSound.currentTime=0;
+  dingSound.play();
+}
+
+/* send */
+function sendMsg(){
+  const input=document.getElementById("text");
+  if(!input.value.trim()) return;
+
+  const now=new Date();
+  const time=now.getHours()+":"+String(now.getMinutes()).padStart(2,"0");
+
+  messages.push({
+    type:"me",
+    text:input.value,
+    time:time
+  });
+
+  input.value="";
+  render();
+}
+
+/* fake call */
+function fakeCall(type){
+  alert(type==="voice" ? "📞 تماس صوتی" : "🎥 تماس تصویری");
+}
+
+/* VOICE REC */
+let recorder;
+let chunks=[];
+
+async function startRec(){
+  const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+  recorder=new MediaRecorder(stream);
+  chunks=[];
+
+  recorder.ondataavailable=e=>chunks.push(e.data);
+
+  recorder.onstop=()=>{
+    const blob=new Blob(chunks,{type:"audio/webm"});
+    const url=URL.createObjectURL(blob);
+
+    const now=new Date();
+    const time=now.getHours()+":"+String(now.getMinutes()).padStart(2,"0");
+
+    messages.push({
+      type:"me",
+      voice:url,
+      time:time
+    });
+
+    render();
+  };
+
+  recorder.start();
+}
+
+function stopRec(){
+  if(recorder && recorder.state!=="inactive"){
+    recorder.stop();
+  }
+}
+
+/* init */
+render();
+
+/* auto sequence */
+setTimeout(()=>{
+  showTyping();
+
+  setTimeout(()=>{
+    document.getElementById("typing").remove();
+    autoReply();
+  },2500);
+
+},1500);
+
+</script>
+
+</body>
+</html>
