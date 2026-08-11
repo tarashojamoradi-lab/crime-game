@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#050505" />
+  <title>کابوس خاموش</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #050505;
+    }
+
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      color: #eee;
+      touch-action: manipulation;
+    }
+
+    /* کل صحنه همیشه اندازه صفحه گوشی را پر می‌کند */
+    .scene {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100dvh;
+      overflow: hidden;
+      background: #050505;
+      isolation: isolate;
+    }
+
+    /* تصویر خانه: بدون تغییر زوم؛ با cover تمام صفحه را پر می‌کند */
+    .house {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+      transform: scale(1.001);
+    }
+
+    /* تاریکی بسیار ظریف روی کل صحنه */
+    .vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 48%,
+          transparent 35%,
+          rgba(0,0,0,.16) 70%,
+          rgba(0,0,0,.58) 100%);
+    }
+
+    /* مه: اگر fog.png وجود داشته باشد نمایش داده می‌شود */
+    .fog {
+      position: absolute;
+      inset: -8%;
+      z-index: 2;
+      width: 116%;
+      height: 116%;
+      object-fit: cover;
+      opacity: .12;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      animation: fogMove 22s ease-in-out infinite alternate;
+    }
+
+    @keyframes fogMove {
+      from { transform: translate3d(-1.5%, 0, 0) scale(1.02); }
+      to   { transform: translate3d(1.5%, -0.5%, 0) scale(1.06); }
+    }
+
+    /*
+      در:
+      فقط door.png را روی خانه می‌گذارد.
+      برای اینکه دقیقاً روی در خانه بنشیند، مقادیر left/top/width/height
+      را پایین این فایل در بخش CONFIG تنظیم کن.
+    */
+    .door-layer {
+      position: absolute;
+      z-index: 5;
+      transform-origin: 0% 50%;
+      cursor: pointer;
+      transition:
+        transform 1.65s cubic-bezier(.22,.75,.18,1),
+        filter 1.2s ease,
+        opacity .8s ease;
+      will-change: transform;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .door {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* لایه نور خیلی نرم برای حس سینمایی */
+    .warm-glow {
+      position: absolute;
+      z-index: 4;
+      left: 50%;
+      top: 42%;
+      width: 28vmax;
+      height: 28vmax;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(circle,
+        rgba(255,184,74,.055) 0%,
+        rgba(255,140,35,.018) 32%,
+        transparent 70%);
+      animation: lampBreath 4.5s ease-in-out infinite;
+    }
+
+    @keyframes lampBreath {
+      0%,100% { opacity: .65; transform: translate(-50%,-50%) scale(.96); }
+      50% { opacity: 1; transform: translate(-50%,-50%) scale(1.04); }
+    }
+
+    /* سایه بسیار کوتاه پشت پنجره */
+    .shadow-event {
+      position: absolute;
+      z-index: 4;
+      left: 50%;
+      top: 20%;
+      width: 10%;
+      height: 18%;
+      opacity: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse at center,
+        rgba(0,0,0,.72) 0%,
+        rgba(0,0,0,.36) 35%,
+        transparent 72%);
+      filter: blur(3px);
+    }
+
+    .shadow-event.show {
+      animation: shadowPass 1.05s ease-out forwards;
+    }
+
+    @keyframes shadowPass {
+      0% { opacity: 0; transform: translateX(8%) scale(.82); }
+      22% { opacity: .72; }
+      48% { opacity: .42; transform: translateX(-8%) scale(1.08); }
+      100% { opacity: 0; transform: translateX(-16%) scale(1.12); }
+    }
+
+    /* زوم دوربین هنگام ورود */
+    .scene.zooming .house,
+    .scene.zooming .fog,
+    .scene.zooming .vignette,
+    .scene.zooming .warm-glow,
+    .scene.zooming .shadow-event {
+      transition: transform 2.2s cubic-bezier(.2,.7,.1,1);
+    }
+
+    .scene.zooming .house {
+      transform: scale(1.17);
+      transform-origin: 50% 54%;
+    }
+
+    .scene.zooming .fog {
+      transform: scale(1.25);
+      opacity: .2;
+    }
+
+    .scene.zooming .door-layer {
+      transform: scale(1.16) perspective(900px) rotateY(-58deg);
+      filter: brightness(.72);
+    }
+
+    .blackout {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      background: #000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1.15s ease;
+    }
+
+    .blackout.on { opacity: 1; }
+
+    .hint {
+      position: absolute;
+      z-index: 10;
+      left: 50%;
+      bottom: max(24px, env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      padding: 9px 16px;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 999px;
+      background: rgba(0,0,0,.28);
+      backdrop-filter: blur(5px);
+      color: rgba(255,255,255,.72);
+      font-size: 12px;
+      letter-spacing: .5px;
+      pointer-events: none;
+      opacity: .65;
+      transition: opacity .7s ease;
+    }
+
+    .scene.started .hint { opacity: 0; }
+
+    /* جلوگیری از سفید شدن تصویر در دستگاه‌های خیلی باریک */
+    @media (max-aspect-ratio: 3/5) {
+      .house { object-position: 50% 50%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fog, .warm-glow { animation: none; }
+      .scene.zooming .house { transform: scale(1.08); }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="scene" id="scene" aria-label="کابوس خاموش">
+
+    <!-- تصویر اصلی خانه -->
+    <img class="housee" id="housee" src="housee.png" alt="" draggable="false">
+
+    <!-- مه اختیاری: فایل fog.png را کنار index.html قرار بده -->
+    <img class="fog" id="fog" src="fog.png" alt="" draggable="false"
+         onerror="this.style.display='none'">
+
+    <!-- نور نرم محیط -->
+    <div class="warm-glow" aria-hidden="true"></div>
+
+    <!-- سایه کوتاه و تصادفی -->
+    <div class="shadow-event" id="shadowEvent" aria-hidden="true"></div>
+
+    <!-- در جداگانه -->
+    <div class="door-layer" id="doorLayer" role="button"
+         tabindex="0" aria-label="باز کردن در">
+      <img class="door" src="door.png" alt="" draggable="false">
+    </div>
+
+    <div class="vignette" aria-hidden="true"></div>
+
+    <div class="hint">روی در بزنید</div>
+
+    <div class="blackout" id="blackout"></div>
+  </main>
+
+  <script>
+    /*
+      ============================================================
+      CONFIG — مهم‌ترین بخش برای هماهنگ کردن door.png با house.png
+      ============================================================
+
+      مقادیر زیر درصدی هستند؛ بنابراین روی گوشی‌های مختلف هم
+      نسبت در به تصویر حفظ می‌شود.
+
+      اگر door.png دقیقاً همان برش در عکس خانه باشد، فقط این چهار
+      مقدار را طوری تنظیم کن که در دقیقاً روی در اصلی بنشیند.
+    */
+    const CONFIG = {
+      door: {
+        left: 29.5,   // درصد از سمت چپ
+        top: 35.0,    // درصد از بالا
+        width: 41.0,  // درصد عرض صفحه
+        height: 35.0  // درصد ارتفاع صفحه
+      },
+
+      // زمان شروع اولین سایه و بازه تکرار آن
+      shadow: {
+        firstDelay: 9000,
+        minGap: 10000,
+        maxGap: 16000
+      }
+    };
+
+    const scene = document.getElementById("scene");
+    const doorLayer = document.getElementById("doorLayer");
+    const blackout = document.getElementById("blackout");
+    const shadowEvent = document.getElementById("shadowEvent");
+
+    let opened = false;
+
+    function placeDoor() {
+      doorLayer.style.left = CONFIG.door.left + "%";
+      doorLayer.style.top = CONFIG.door.top + "%";
+      doorLayer.style.width = CONFIG.door.width + "%";
+      doorLayer.style.height = CONFIG.door.height + "%";
+    }
+
+    placeDoor();
+    window.addEventListener("resize", placeDoor);
+
+    /*
+      صداها:
+      فایل‌های lock.mp3 و door_creak.mp3 را در همان پوشه قرار بده.
+      اگر فایل صوتی نباشد، صفحه همچنان بدون خطا کار می‌کند.
+    */
+    let lockSound = null;
+    let creakSound = null;
+
+    try {
+      lockSound = new Audio("lock.mp3");
+      creakSound = new Audio("door_creak.mp3");
+      lockSound.volume = 0.55;
+      creakSound.volume = 0.68;
+    } catch (e) {}
+
+    function play(sound) {
+      if (!sound) return;
+      try {
+        sound.currentTime = 0;
+        sound.play().catch(() => {});
+      } catch (e) {}
+    }
+
+    function openDoor() {
+      if (opened) return;
+      opened = true;
+      scene.classList.add("started");
+
+      // صدای قفل
+      play(lockSound);
+
+      // شروع حرکت در کمی بعد از صدای قفل
+      setTimeout(() => {
+        doorLayer.classList.add("opening");
+        play(creakSound);
+      }, 260);
+
+      // زوم آرام دوربین
+      setTimeout(() => {
+        scene.classList.add("zooming");
+      }, 380);
+
+      // تاریکی و ورود به صفحه بعد
+      setTimeout(() => {
+        blackout.classList.add("on");
+      }, 2100);
+
+      /*
+        اینجا می‌توانی بعداً مسیر صفحه داخل خانه را قرار بدهی.
+        مثال:
+        window.location.href = "inside.html";
+      */
+    }
+
+    doorLayer.addEventListener("click", openDoor);
+
+    doorLayer.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openDoor();
+      }
+    });
+
+    /*
+      سایه پنجره:
+      هر 10 تا 16 ثانیه یک بار، برای حدود یک ثانیه ظاهر می‌شود.
+      بدون صدا.
+    */
+    function triggerShadow() {
+      if (opened) return;
+
+      shadowEvent.classList.remove("show");
+      void shadowEvent.offsetWidth;
+      shadowEvent.classList.add("show");
+
+      const gap =
+        CONFIG.shadow.minGap +
+        Math.random() * (CONFIG.shadow.maxGap - CONFIG.shadow.minGap);
+
+      setTimeout(triggerShadow, gap);
+    }
+
+    setTimeout(triggerShadow, CONFIG.shadow.firstDelay);
+  </script>
+</body>
+</html>
