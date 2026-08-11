@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>حیاط متروکه | پرونده محرمانه</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
+
+  *{box-sizing:border-box}
+  html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#090806;color:#e7dfd0;font-family:Vazirmatn,Tahoma,sans-serif}
+  body{user-select:none}
+
+  .scene{
+    position:relative;width:100vw;height:100vh;overflow:hidden;
+    background:
+      radial-gradient(circle at 52% 58%,rgba(122,88,46,.13),transparent 25%),
+      linear-gradient(180deg,#080706 0%,#11100d 48%,#070706 100%);
+  }
+
+  .yard{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(to bottom,rgba(0,0,0,.35),rgba(0,0,0,.48)),
+      url("back.jpg");
+    background-size:cover;background-position:center;
+    filter:saturate(.55) contrast(1.08) brightness(.57);
+    transform:scale(1.025);
+  }
+
+  .vignette{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(ellipse at center,transparent 35%,rgba(0,0,0,.42) 73%,rgba(0,0,0,.84) 100%);
+  }
+
+  .grain{position:absolute;inset:-50%;opacity:.055;pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+    animation:grain .18s steps(2) infinite;
+  }
+  @keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(2%,-1%)}50%{transform:translate(-1%,2%)}75%{transform:translate(1%,1%)}100%{transform:translate(-2%,-1%)}}
+
+  .top{
+    position:absolute;top:0;left:0;right:0;padding:24px 22px;
+    display:flex;justify-content:space-between;align-items:flex-start;z-index:5;
+  }
+  .case-tag{font-size:10px;letter-spacing:3px;color:#8e8779;opacity:.75}
+  .warning{font-size:10px;color:#9b3028;letter-spacing:2px;text-shadow:0 0 12px rgba(160,30,25,.4)}
+
+  .hint{
+    position:absolute;z-index:6;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:min(310px,76vw);text-align:center;pointer-events:none;
+    opacity:0;transition:opacity 1.5s ease;
+  }
+  .hint.show{opacity:1}
+  .hint .dot{width:7px;height:7px;border-radius:50%;background:#9a713e;margin:0 auto 14px;box-shadow:0 0 16px #a27642}
+  .hint p{margin:0;font-size:12px;line-height:2;color:#c8bca9;text-shadow:0 2px 8px #000}
+  .hint small{display:block;margin-top:9px;font-size:9px;color:#8e8373;letter-spacing:1px}
+
+  .search-zone{
+    position:absolute;z-index:4;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:min(360px,82vw);height:min(300px,45vh);cursor:pointer;
+    border-radius:50%;background:transparent;
+  }
+  .search-zone:hover{background:radial-gradient(ellipse,rgba(142,106,57,.08),transparent 68%)}
+
+  .dust{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.2);
+    width:min(310px,70vw);height:120px;border-radius:50%;
+    background:radial-gradient(ellipse,rgba(53,40,27,.55),rgba(25,20,14,.08) 65%,transparent 72%);
+    opacity:0;pointer-events:none;
+  }
+  .dust.reveal{animation:dustReveal 1.15s ease-out forwards}
+  @keyframes dustReveal{
+    0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}
+    35%{opacity:.85}
+    100%{opacity:.2;transform:translate(-50%,-50%) scale(1.2)}
+  }
+
+  .safe-layer{
+    position:absolute;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;
+    background:rgba(4,4,3,.84);backdrop-filter:blur(5px);
+    opacity:0;visibility:hidden;transition:opacity .65s ease,visibility .65s ease;
+  }
+  .safe-layer.open{opacity:1;visibility:visible}
+  .safe-wrap{
+    position:relative;width:min(520px,92vw);max-height:90vh;text-align:center;
+    transform:translateY(35px) scale(.93);transition:transform .8s cubic-bezier(.2,.8,.2,1);
+  }
+  .safe-layer.open .safe-wrap{transform:translateY(0) scale(1)}
+  .safe-img{
+    display:block;width:min(370px,72vw);max-height:53vh;object-fit:contain;margin:0 auto 12px;
+    filter:drop-shadow(0 20px 30px rgba(0,0,0,.9)) brightness(.78) contrast(1.15);
+  }
+  .safe-title{font-size:12px;color:#b9ab94;letter-spacing:3px;margin-bottom:13px}
+  .safe-sub{font-size:9px;color:#756d60;margin-bottom:18px}
+
+  .lockbox{display:flex;direction:ltr;justify-content:center;gap:8px}
+  .digit{
+    width:52px;height:58px;border:1px solid #554a3b;background:rgba(12,11,9,.92);
+    color:#ded2bf;text-align:center;font:600 25px Georgia,serif;outline:none;border-radius:3px;
+    box-shadow:inset 0 0 18px rgba(0,0,0,.7),0 0 0 rgba(150,80,35,0);
+  }
+  .digit:focus{border-color:#8b6c43;box-shadow:0 0 14px rgba(139,108,67,.16),inset 0 0 18px rgba(0,0,0,.7)}
+  .enter{
+    margin-top:14px;width:228px;height:39px;border:1px solid #574a3a;background:#16130f;color:#c7b89f;
+    font-family:inherit;font-size:10px;letter-spacing:2px;cursor:pointer;transition:.25s;
+  }
+  .enter:hover{background:#211b14;border-color:#8b6c43;color:#e6d7c0}
+  .status{height:22px;margin-top:10px;font-size:10px;color:#a34a42;opacity:0;transition:.25s}
+  .status.show{opacity:1}
+
+  .shake{animation:violentShake .55s linear}
+  @keyframes violentShake{
+    0%,100%{transform:translateY(0) rotate(0)}
+    10%{transform:translate(-10px,4px) rotate(-1deg)}
+    20%{transform:translate(12px,-5px) rotate(1.4deg)}
+    30%{transform:translate(-14px,6px) rotate(-1.6deg)}
+    40%{transform:translate(12px,-7px) rotate(1.7deg)}
+    50%{transform:translate(-10px,5px) rotate(-1.2deg)}
+    60%{transform:translate(8px,-4px) rotate(1deg)}
+    70%{transform:translate(-6px,3px) rotate(-.7deg)}
+    80%{transform:translate(4px,-2px) rotate(.4deg)}
+  }
+
+  .blackout{
+    position:fixed;inset:0;background:#000;z-index:100;opacity:0;pointer-events:none;transition:opacity 1s ease;
+  }
+  .blackout.on{opacity:1}
+
+  .flash{position:fixed;inset:0;background:#eee8dc;z-index:99;opacity:0;pointer-events:none}
+  .flash.on{animation:flash .16s ease-out}
+  @keyframes flash{0%{opacity:.85}100%{opacity:0}}
+
+  @media(max-width:480px){
+    .top{padding:18px 15px}
+    .safe-img{width:min(300px,68vw);max-height:46vh}
+    .digit{width:48px;height:54px}
+  }
+</style>
+</head>
+<body>
+<div class="scene" id="scene">
+  <div class="yard"></div>
+  <div class="vignette"></div>
+  <div class="grain"></div>
+
+  <div class="top">
+    <div class="case-tag">CASE 03 · ARCHIVE</div>
+    <div class="warning">محرمانه</div>
+  </div>
+
+  <div class="hint" id="hint">
+    <div class="dot"></div>
+    <p>اینجا برات آشنا نیست؟...</p>
+    <small>اگر صدای قدم ها را پشت سرت شنیدی، برنگرد.شاید او منتظر همین باشد.</small>
+  </div>
+
+  <div class="search-zone" id="searchZone" aria-label="بررسی خاک"></div>
+  <div class="dust" id="dust"></div>
+
+  <section class="safe-layer" id="safeLayer">
+    <div class="safe-wrap" id="safeWrap">
+      <img src="sand.png" class="safe-img" alt="گاوصندوق قدیمی">
+      <div class="safe-title">گاوصندوق مدفون</div>
+      <div class="safe-sub">قفل مکانیکی چهار رقمی · اثر زنگ‌زدگی و خاک</div>
+
+      <div class="lockbox">
+        <input class="digit" maxlength="1" inputmode="numeric" autocomplete="off">
+        <input class="digit" maxlength="1" inputmode="numeric" autocomplete="off">
+        <input class="digit" maxlength="1" inputmode="numeric" autocomplete="off">
+        <input class="digit" maxlength="1" inputmode="numeric" autocomplete="off">
+      </div>
+      <button class="enter" id="enterBtn">باز کردن قفل</button>
+      <div class="status" id="status">رمز اشتباه است.</div>
+    </div>
+  </section>
+
+  <div class="flash" id="flash"></div>
+  <div class="blackout" id="blackout"></div>
+</div>
+
+<audio id="wiind" src="wiind.mp3" preload="auto"></audio>
+<audio id="kalo" src="kalo.mp3" preload="auto"></audio>
+<audio id="rah" src="rah.mp3" preload="auto"></audio>
+<audio id="khak" src="khak.mp3" preload="auto"></audio>
+<audio id="naf" src="naf.mp3" preload="auto"></audio>
+<audio id="bom" src="bom.mp3" preload="auto"></audio>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const digits = [...document.querySelectorAll('.digit')];
+  let found = false, sequenceStarted = false;
+
+  // صدای ورود به حیاط: باد → kalo → rah
+  async function playAudioSequence(){
+    if(sequenceStarted) return;
+    sequenceStarted = true;
+    const wind = $('wind'), kalo = $('kalo'), rah = $('rah');
+
+    const play = async (a) => {
+      try { a.currentTime = 0; await a.play(); return true; }
+      catch(e) { return false; }
+    };
+
+    const started = await play(wind);
+    if(!started){
+      // مرورگر ممکن است پخش خودکار را مسدود کند؛ اولین لمس کاربر دوباره تلاش می‌کند.
+      sequenceStarted = false;
+      return;
+    }
+    wind.onended = async () => {
+      if(await play(kalo)){
+        kalo.onended = () => play(rah);
+      }
+    };
+  }
+
+  // تلاش برای پخش هنگام ورود
+  playAudioSequence();
+
+  // در صورت مسدود بودن autoplay، اولین تعامل کاربر صدا را فعال می‌کند.
+  document.addEventListener('pointerdown', () => playAudioSequence(), {once:true});
+
+  setTimeout(() => $('hint').classList.add('show'), 1100);
+
+  $('searchZone').addEventListener('click', async () => {
+    if(found) return;
+    found = true;
+    $('hint').classList.remove('show');
+
+    try { $('khak').currentTime = 0; await $('khak').play(); } catch(e){}
+
+    $('dust').classList.add('reveal');
+
+    setTimeout(() => {
+      $('safeLayer').classList.add('open');
+      setTimeout(() => digits[0].focus(), 500);
+    }, 850);
+  });
+
+  digits.forEach((input, i) => {
+    input.addEventListener('input', () => {
+      input.value = input.value.replace(/[^0-9۰-۹]/g,'');
+      if(input.value && i < digits.length-1) digits[i+1].focus();
+    });
+    input.addEventListener('keydown', e => {
+      if(e.key === 'Backspace' && !input.value && i > 0) digits[i-1].focus();
+      if(e.key === 'Enter') checkCode();
+    });
+  });
+
+  function getCode(){
+    return digits.map(x => x.value).join('')
+      .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).trim();
+  }
+
+  $('enterBtn').addEventListener('click', checkCode);
+
+  async function checkCode(){
+    const code = getCode();
+    if(code !== '1245'){
+      $('status').textContent = 'رمز اشتباه است.';
+      $('status').classList.add('show');
+      try { $('naf').currentTime = 0; await $('naf').play(); } catch(e){}
+      digits.forEach(x => { x.value=''; });
+      digits[0].focus();
+      return;
+    }
+
+    $('status').textContent = '';
+    $('status').classList.remove('show');
+
+    $('safeWrap').classList.add('shake');
+    try { $('bom').currentTime = 0; await $('bom').play(); } catch(e){}
+
+    setTimeout(() => {
+      $('flash').classList.add('on');
+      setTimeout(() => {
+        $('blackout').classList.add('on');
+        setTimeout(() => { window.location.href = 'help.html'; }, 1150);
+      }, 120);
+    }, 500);
+  }
+})();
+</script>
+</body>
+</html>
