@@ -13,24 +13,20 @@
 
   .scene{
     position:relative;width:100vw;height:100vh;overflow:hidden;
-    background:
-      radial-gradient(circle at 52% 58%,rgba(122,88,46,.13),transparent 25%),
-      linear-gradient(180deg,#080706 0%,#11100d 48%,#070706 100%);
+    background:#090806;
   }
 
+  /* بک‌گراند کاملاً واضح و بدون لایه‌ی تاریک */
   .yard{
     position:absolute;inset:0;
-    background-image:
-      linear-gradient(to bottom,rgba(0,0,0,.35),rgba(0,0,0,.48)),
-      url("hayat.png");
+    background-image:url("hayat.png");
     background-size:cover;background-position:center;
-    filter:saturate(.55) contrast(1.08) brightness(.57);
+    filter:none;
     transform:scale(1.025);
   }
 
-  .vignette{position:absolute;inset:0;pointer-events:none;
-    background:radial-gradient(ellipse at center,transparent 35%,rgba(0,0,0,.42) 73%,rgba(0,0,0,.84) 100%);
-  }
+  /* عمداً بدون وینیت/سایه‌ی تیره روی عکس */
+  .vignette{display:none}
 
   .grain{position:absolute;inset:-50%;opacity:.055;pointer-events:none;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
@@ -140,7 +136,6 @@
 <body>
 <div class="scene" id="scene">
   <div class="yard"></div>
-  <div class="vignette"></div>
   <div class="grain"></div>
 
   <div class="top">
@@ -150,8 +145,8 @@
 
   <div class="hint" id="hint">
     <div class="dot"></div>
-    <p>اینجا برات آشنا نیست؟...</p>
-    <small>اگر صدای قدم ها را پشت سرت شنیدی، برنگرد.شاید او منتظر همین باشد.</small>
+    <p>چیزی در این خاک دفن شده...</p>
+    <small>برای بررسی، مرکز تصویر را لمس کنید</small>
   </div>
 
   <div class="search-zone" id="searchZone" aria-label="بررسی خاک"></div>
@@ -178,7 +173,6 @@
   <div class="blackout" id="blackout"></div>
 </div>
 
-<audio id="wiind" src="wiind.mp3" preload="auto"></audio>
 <audio id="kalo" src="kalo.mp3" preload="auto"></audio>
 <audio id="rah" src="rah.mp3" preload="auto"></audio>
 <audio id="khak" src="khak.mp3" preload="auto"></audio>
@@ -189,37 +183,64 @@
 (() => {
   const $ = id => document.getElementById(id);
   const digits = [...document.querySelectorAll('.digit')];
-  let found = false, sequenceStarted = false;
+  let found = false;
+  let audioSequenceStarted = false;
+  let audioSequenceTimer = null;
 
-  // صدای ورود به حیاط: باد → kalo → rah
-  async function playAudioSequence(){
-    if(sequenceStarted) return;
-    sequenceStarted = true;
-    const wind = $('wind'), kalo = $('kalo'), rah = $('rah');
+  /*
+    ترتیب صداها:
+    1) kalo.mp3 بلافاصله هنگام ورود
+    2)  rah.mp3 دقیقاً 3 ثانیه بعد
+  */
+  async function startAudioSequence() {
+    if (audioSequenceStarted) return;
 
-    const play = async (a) => {
-      try { a.currentTime = 0; await a.play(); return true; }
-      catch(e) { return false; }
-    };
+    const wind = $('wind');
+    const kalo = $('kalo');
+    const rah = $('rah');
 
-    const started = await play(wind);
-    if(!started){
-      // مرورگر ممکن است پخش خودکار را مسدود کند؛ اولین لمس کاربر دوباره تلاش می‌کند.
-      sequenceStarted = false;
-      return;
+    try {
+      wind.currentTime = 0;
+      await wind.play();
+      audioSequenceStarted = true;
+
+      audioSequenceTimer = setTimeout(async () => {
+        try {
+          kalo.currentTime = 0;
+          await kalo.play();
+
+          kalo.onended = async () => {
+            try {
+              rah.currentTime = 0;
+              await rah.play();
+            } catch(e) {}
+          };
+        } catch(e) {
+          // اگر پخش kalo توسط مرورگر مسدود شد، در تعامل بعدی دوباره تلاش می‌شود.
+        }
+      }, 3000);
+
+    } catch(e) {
+      /*
+        بعضی مرورگرها اجازه پخش صدای دارای صدا را بدون
+        اولین تعامل کاربر نمی‌دهند. در این حالت اولین لمس/کلیک
+        کاربر کل توالی را فعال می‌کند.
+      */
+      audioSequenceStarted = false;
     }
-    wind.onended = async () => {
-      if(await play(kalo)){
-        kalo.onended = () => play(rah);
-      }
-    };
   }
 
-  // تلاش برای پخش هنگام ورود
-  playAudioSequence();
+  // تلاش برای پخش فوری هنگام ورود
+  startAudioSequence();
 
-  // در صورت مسدود بودن autoplay، اولین تعامل کاربر صدا را فعال می‌کند.
-  document.addEventListener('pointerdown', () => playAudioSequence(), {once:true});
+  // fallback برای محدودیت autoplay مرورگر
+  const unlockAudio = () => {
+    if (!audioSequenceStarted) startAudioSequence();
+  };
+
+  document.addEventListener('pointerdown', unlockAudio, {passive:true});
+  document.addEventListener('touchstart', unlockAudio, {passive:true});
+  document.addEventListener('keydown', unlockAudio);
 
   setTimeout(() => $('hint').classList.add('show'), 1100);
 
@@ -243,6 +264,7 @@
       input.value = input.value.replace(/[^0-9۰-۹]/g,'');
       if(input.value && i < digits.length-1) digits[i+1].focus();
     });
+
     input.addEventListener('keydown', e => {
       if(e.key === 'Backspace' && !input.value && i > 0) digits[i-1].focus();
       if(e.key === 'Enter') checkCode();
@@ -258,10 +280,13 @@
 
   async function checkCode(){
     const code = getCode();
+
     if(code !== '1245'){
       $('status').textContent = 'رمز اشتباه است.';
       $('status').classList.add('show');
+
       try { $('naf').currentTime = 0; await $('naf').play(); } catch(e){}
+
       digits.forEach(x => { x.value=''; });
       digits[0].focus();
       return;
@@ -271,13 +296,18 @@
     $('status').classList.remove('show');
 
     $('safeWrap').classList.add('shake');
+
     try { $('bom').currentTime = 0; await $('bom').play(); } catch(e){}
 
     setTimeout(() => {
       $('flash').classList.add('on');
+
       setTimeout(() => {
         $('blackout').classList.add('on');
-        setTimeout(() => { window.location.href = 'help.html'; }, 1150);
+
+        setTimeout(() => {
+          window.location.href = 'help.html';
+        }, 1150);
       }, 120);
     }, 500);
   }
@@ -285,3 +315,4 @@
 </script>
 </body>
 </html>
+
