@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        overflow: hidden;
+    }
+
+    .image-page {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .image-page img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="image-page" id="page">
+    <img src="son.png" alt="">
+</div>
+
+<audio id="sound" src="rah.mp3" preload="auto"></audio>
+
+<script>
+    const page = document.getElementById("page");
+    const sound = document.getElementById("sound");
+
+    page.addEventListener("click", () => {
+        sound.play();
+    }, { once: true });
+
+    page.addEventListener("touchstart", () => {
+        sound.play();
+    }, { once: true });
+</script>
+
+</body>
+</html>
