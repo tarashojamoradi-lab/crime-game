@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Little Box 🥑</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    font-family:Arial, sans-serif;
+    background:
+        radial-gradient(circle at 10% 10%,#bbf7d0 0,transparent 25%),
+        radial-gradient(circle at 90% 20%,#d9f99d 0,transparent 23%),
+        radial-gradient(circle at 50% 100%,#86efac 0,transparent 28%),
+        linear-gradient(145deg,#f0fdf4,#dcfce7,#ecfccb);
+    color:#14532d;
+    overflow-x:hidden;
+}
+
+/* soft background */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background-image:
+        radial-gradient(circle,#ffffff 1px,transparent 1.5px);
+    background-size:27px 27px;
+    opacity:.35;
+}
+
+/* main */
+
+.container{
+    width:min(92%,470px);
+    margin:auto;
+    padding:25px 0 50px;
+}
+
+/* header */
+
+.header{
+    text-align:center;
+    animation:fadeDown 1s ease;
+}
+
+.dino{
+    font-size:58px;
+    animation:float 3s ease-in-out infinite;
+}
+
+.title{
+    margin-top:7px;
+    font-size:28px;
+    color:#166534;
+}
+
+.subtitle{
+    margin-top:8px;
+    color:#4d7c5a;
+    font-size:13px;
+}
+
+/* box */
+
+.box-area{
+    display:flex;
+    justify-content:center;
+    margin-top:28px;
+}
+
+.box{
+    width:245px;
+    height:210px;
+    position:relative;
+    cursor:pointer;
+    transition:.4s;
+    filter:drop-shadow(0 15px 25px #16653425);
+}
+
+.box:hover{
+    transform:translateY(-7px) rotate(-1deg);
+}
+
+.box-bottom{
+    position:absolute;
+    bottom:0;
+    left:20px;
+    width:205px;
+    height:130px;
+    background:linear-gradient(135deg,#86efac,#22c55e);
+    border-radius:12px 12px 24px 24px;
+    border:3px solid #15803d;
+}
+
+.box-bottom::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    height:100%;
+    width:22px;
+    background:#bbf7d0aa;
+}
+
+.box-lid{
+    position:absolute;
+    top:45px;
+    left:10px;
+    width:225px;
+    height:48px;
+    background:linear-gradient(135deg,#4ade80,#15803d);
+    border:3px solid #166534;
+    border-radius:12px;
+    z-index:5;
+    transition:.7s;
+}
+
+.ribbon{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    width:24px;
+    height:100%;
+    background:#dcfce7aa;
+    z-index:6;
+}
+
+.knot{
+    position:absolute;
+    top:-18px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:38px;
+    z-index:8;
+}
+
+.box.open .box-lid{
+    transform:translateY(-72px) rotate(-5deg);
+}
+
+.box-label{
+    position:absolute;
+    z-index:7;
+    bottom:45px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#f0fdf4;
+    color:#166534;
+    padding:8px 15px;
+    border-radius:15px;
+    font-size:12px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+/* instruction */
+
+.instruction{
+    text-align:center;
+    margin-top:15px;
+    color:#4d7c5a;
+    font-size:13px;
+}
+
+/* content */
+
+.content{
+    opacity:0;
+    max-height:0;
+    overflow:hidden;
+    transition:1s ease;
+}
+
+.content.show{
+    opacity:1;
+    max-height:1000px;
+}
+
+/* cards */
+
+.card{
+    background:#ffffffb8;
+    backdrop-filter:blur(15px);
+    border:1px solid #ffffff;
+    border-radius:27px;
+    padding:20px;
+    margin-top:18px;
+    box-shadow:0 12px 35px #14532d18;
+}
+
+/* message */
+
+.message{
+    min-height:90px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:15px;
+    border-radius:21px;
+    background:linear-gradient(135deg,#f0fdf4,#ecfccb);
+    border:1px solid #bbf7d0;
+    font-size:17px;
+    line-height:1.8;
+    transition:.3s;
+}
+
+button{
+    width:100%;
+    border:0;
+    border-radius:18px;
+    padding:14px;
+    margin-top:12px;
+    cursor:pointer;
+    background:linear-gradient(135deg,#22c55e,#15803d);
+    color:white;
+    font-size:14px;
+    box-shadow:0 8px 20px #15803d30;
+    transition:.25s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+/* mini status */
+
+.status-title{
+    text-align:center;
+    font-size:13px;
+    color:#4d7c5a;
+}
+
+.status-icons{
+    display:flex;
+    justify-content:center;
+    gap:17px;
+    font-size:37px;
+    margin-top:12px;
+}
+
+.status-icons span{
+    animation:float 3s ease-in-out infinite;
+}
+
+.status-icons span:nth-child(2){
+    animation-delay:.5s;
+}
+
+.status-icons span:nth-child(3){
+    animation-delay:1s;
+}
+
+/* music */
+
+.music{
+    text-align:center;
+}
+
+.music-note{
+    font-size:34px;
+    animation:pulse 2s infinite;
+}
+
+.song-name{
+    font-size:13px;
+    color:#166534;
+    margin-top:7px;
+}
+
+/* countdown */
+
+.countdown{
+    text-align:center;
+}
+
+.count-title{
+    font-size:13px;
+    color:#4d7c5a;
+}
+
+.timer{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+    margin-top:13px;
+}
+
+.time{
+    background:#166534;
+    color:white;
+    padding:10px 3px;
+    border-radius:15px;
+}
+
+.time strong{
+    display:block;
+    font-size:18px;
+}
+
+.time small{
+    font-size:9px;
+    opacity:.8;
+}
+
+/* footer */
+
+.footer{
+    text-align:center;
+    margin-top:25px;
+    color:#4d7c5a;
+    font-size:11px;
+}
+
+/* floating */
+
+.floating{
+    position:fixed;
+    pointer-events:none;
+    z-index:-1;
+    animation:rise linear forwards;
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-9px);
+    }
+}
+
+@keyframes pulse{
+    0%,100%{
+        transform:scale(1);
+    }
+    50%{
+        transform:scale(1.12);
+    }
+}
+
+@keyframes fadeDown{
+    from{
+        opacity:0;
+        transform:translateY(-20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes rise{
+    from{
+        transform:translateY(0) scale(.7);
+        opacity:0;
+    }
+    20%{
+        opacity:.65;
+    }
+    to{
+        transform:translateY(-110vh) scale(1.2) rotate(15deg);
+        opacity:0;
+    }
+}
+
+@media(max-width:380px){
+
+    .title{
+        font-size:24px;
+    }
+
+    .box{
+        transform:scale(.9);
+    }
+
+    .box:hover{
+        transform:scale(.9) translateY(-5px);
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <header class="header">
+
+        <div class="dino">🦕</div>
+
+        <div class="title">
+            جعبه‌ی کوچولو 🥑
+        </div>
+
+        <div class="subtitle">
+            یک چیز کوچیک برای وقتی حوصلت سر میره
+        </div>
+
+    </header>
+
+
+    <!-- BOX -->
+
+    <div class="box-area">
+
+        <div class="box" id="giftBox" onclick="openBox()">
+
+            <div class="box-lid">
+
+                <div class="ribbon"></div>
+
+                <div class="knot">
+                    🎀
+                </div>
+
+            </div>
+
+            <div class="box-bottom">
+
+                <div class="ribbon"></div>
+
+                <div class="box-label">
+                    OPEN ME 🥑
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="instruction">
+        روش بزن، ببین توش چی قایم کردم 👀
+    </div>
+
+
+    <!-- CONTENT -->
+
+    <div class="content" id="content">
+
+
+        <!-- MESSAGE -->
+
+        <section class="card">
+
+            <div class="message" id="message">
+                چیه دل تنگمی؟ 👀
+            </div>
+
+            <button onclick="newMessage()">
+                یه پیام دیگه 🥑
+            </button>
+
+        </section>
+
+
+        <!-- CUTE CREATURES -->
+
+        <section class="card">
+
+            <div class="status-title">
+                نگهبان‌های جعبه 🦕
+            </div>
+
+            <div class="status-icons">
+
+                <span>🥑</span>
+                <span>🦕</span>
+                <span>🌱</span>
+
+            </div>
+
+        </section>
+
+
+        <!-- COUNTDOWN -->
+
+        <section class="card countdown">
+
+            <div class="count-title">
+                ⏳ تا پنجشنبه
+            </div>
+
+            <div class="timer">
+
+                <div class="time">
+                    <strong id="days">00</strong>
+                    <small>روز</small>
+                </div>
+
+                <div class="time">
+                    <strong id="hours">00</strong>
+                    <small>ساعت</small>
+                </div>
+
+                <div class="time">
+                    <strong id="minutes">00</strong>
+                    <small>دقیقه</small>
+                </div>
+
+                <div class="time">
+                    <strong id="seconds">00</strong>
+                    <small>ثانیه</small>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MUSIC -->
+
+        <section class="card music">
+
+            <div class="music-note" id="musicIcon">
+                🎵
+            </div>
+
+            <div class="song-name">
+                We Fell In Love In October ♡
+            </div>
+
+            <button onclick="toggleMusic()">
+                <span id="musicText">
+                    ▶ پخش آهنگ
+                </span>
+            </button>
+
+            <audio id="song">
+                <source
+                src="Girl In Red - We Fell In Love In October [Melodya].mp3"
+                type="audio/mpeg">
+            </audio>
+
+        </section>
+
+
+    </div>
+
+
+    <div class="footer">
+        🥑 🦕 🌱 ♡
+        <br>
+        مخصوص کوچولو
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   MESSAGES
+========================= */
+
+const messages = [
+
+"چیه دل تنگمی؟ 👀",
+
+"دوست دارم کوچولو",
+
+"فندق جان، حواست به خودت باشه 🥑",
+
+"لوبیای کوچولوی من کجاست؟ 🫘",
+
+"قندای ما الان مشغول چیه؟ 👀",
+
+"گزارش وضعیت: یک کوچولوی خیلی کیوت شناسایی شد 🦕",
+
+"آواکادوها هم امروز به یادت بودن 🥑😂",
+
+"قشنگ، امروز چند درصد کیوت بودی؟ 100%؟ 🤨",
+
+"کوچولو detected! 🚨🦕",
+
+"این سایت رسماً متعلق به توئه 🌱",
+
+"دلم می‌خواست الان اینجا بودی که ببینمت و اذیتت کنم 😂",
+
+"امروز اجازه داری خیلی لوس بشی. فقط امروز. 😐",
+
+"یه نفر اینجا زیادی کیوته، لطفاً رسیدگی شود.",
+
+"فقط اومدم چک کنم فندق هنوز سر جاشه یا نه 👀",
+
+"اگر حوصله‌ت سر رفته، تقصیر من نیست؛ دکمه‌ی پیام رو زدم که سرگرم شی 😂"
+
+];
+
+
+let lastMessage = -1;
+
+
+function newMessage(){
+
+    const box = document.getElementById("message");
+
+    let random;
+
+    do{
+
+        random = Math.floor(Math.random()*messages.length);
+
+    }while(random === lastMessage);
+
+    lastMessage = random;
+
+    box.style.opacity = "0";
+    box.style.transform = "scale(.94)";
+
+    setTimeout(()=>{
+
+        box.innerText = messages[random];
+
+        box.style.opacity = "1";
+        box.style.transform = "scale(1)";
+
+    },180);
+
+}
+
+
+/* =========================
+   OPEN BOX
+========================= */
+
+function openBox(){
+
+    const box = document.getElementById("giftBox");
+    const content = document.getElementById("content");
+
+    if(!box.classList.contains("open")){
+
+        box.classList.add("open");
+
+        setTimeout(()=>{
+
+            content.classList.add("show");
+
+        },450);
+
+        setTimeout(()=>{
+
+            createBurst();
+
+        },500);
+
+    }
+
+}
+
+
+/* =========================
+   COUNTDOWN
+========================= */
+
+/*
+   پنجشنبه ۱۴۰۵/۵/۲۹
+   = 20 August 2026
+
+   ساعت را می‌توانی در صورت نیاز
+   از اینجا تغییر بدهی.
+*/
+
+const targetDate =
+new Date("2026-08-20T00:00:00").getTime();
+
+
+function updateCountdown(){
+
+    const now =
+    new Date().getTime();
+
+    const distance =
+    targetDate - now;
+
+
+    if(distance <= 0){
+
+        document.getElementById("days").innerText="00";
+        document.getElementById("hours").innerText="00";
+        document.getElementById("minutes").innerText="00";
+        document.getElementById("seconds").innerText="00";
+
+        document.querySelector(".count-title").innerText =
+        "🎉 برگشتییی!";
+
+        return;
+
+    }
+
+
+    const days =
+    Math.floor(
+        distance/(1000*60*60*24)
+    );
+
+    const hours =
+    Math.floor(
+        (distance/(1000*60*60))%24
+    );
+
+    const minutes =
+    Math.floor(
+        (distance/(1000*60))%60
+    );
+
+    const seconds =
+    Math.floor(
+        (distance/1000)%60
+    );
+
+
+    document.getElementById("days").innerText =
+    String(days).padStart(2,"0");
+
+    document.getElementById("hours").innerText =
+    String(hours).padStart(2,"0");
+
+    document.getElementById("minutes").innerText =
+    String(minutes).padStart(2,"0");
+
+    document.getElementById("seconds").innerText =
+    String(seconds).padStart(2,"0");
+
+}
+
+
+updateCountdown();
+
+setInterval(updateCountdown,1000);
+
+
+/* =========================
+   MUSIC
+========================= */
+
+const song =
+document.getElementById("song");
+
+const musicText =
+document.getElementById("musicText");
+
+const musicIcon =
+document.getElementById("musicIcon");
+
+
+function toggleMusic(){
+
+    if(song.paused){
+
+        song.play();
+
+        musicText.innerText =
+        "⏸ توقف آهنگ";
+
+        musicIcon.style.animation =
+        "pulse 1s infinite";
+
+    }else{
+
+        song.pause();
+
+        musicText.innerText =
+        "▶ پخش آهنگ";
+
+        musicIcon.style.animation =
+        "none";
+
+    }
+
+}
+
+
+/* =========================
+   FLOATING EFFECTS
+========================= */
+
+const floatingItems = [
+
+    "♡",
+    "💚",
+    "🥑",
+    "🦕",
+    "🌱",
+    "🍃",
+    "✨"
+
+];
+
+
+function createFloating(){
+
+    const item =
+    document.createElement("div");
+
+    item.className =
+    "floating";
+
+    item.innerText =
+    floatingItems[
+        Math.floor(
+            Math.random()*floatingItems.length
+        )
+    ];
+
+    item.style.left =
+    Math.random()*100+"vw";
+
+    item.style.bottom =
+    "-30px";
+
+    item.style.fontSize =
+    (12+Math.random()*17)+"px";
+
+    item.style.animationDuration =
+    (7+Math.random()*7)+"s";
+
+
+    document.body.appendChild(item);
+
+
+    setTimeout(()=>{
+
+        item.remove();
+
+    },14000);
+
+}
+
+
+setInterval(createFloating,700);
+
+
+/* =========================
+   BOX OPEN BURST
+========================= */
+
+function createBurst(){
+
+    const items = [
+        "💚",
+        "🥑",
+        "🌱",
+        "🦕",
+        "♡",
+        "✨"
+    ];
+
+
+    for(let i=0;i<16;i++){
+
+        const item =
+        document.createElement("div");
+
+        item.innerText =
+        items[
+            Math.floor(
+                Math.random()*items.length
+            )
+        ];
+
+        item.style.position="fixed";
+        item.style.left="50%";
+        item.style.top="210px";
+        item.style.fontSize="20px";
+        item.style.pointerEvents="none";
+        item.style.zIndex="20";
+
+        const x =
+        (Math.random()-.5)*280;
+
+        const y =
+        (Math.random()-.5)*230;
+
+        item.style.transition =
+        "1s ease";
+
+        document.body.appendChild(item);
+
+
+        requestAnimationFrame(()=>{
+
+            item.style.transform =
+            `translate(${x}px,${y}px) scale(.5)`;
+
+            item.style.opacity="0";
+
+        });
+
+
+        setTimeout(()=>{
+
+            item.remove();
+
+        },1100);
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
