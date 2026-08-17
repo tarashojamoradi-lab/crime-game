@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRIVATE FREQUENCY ♡</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --black:#080607;
+    --black2:#10090c;
+    --panel:#180c10;
+    --wine:#4b101c;
+    --burgundy:#741b2b;
+    --red:#a52a42;
+    --rose:#d96b80;
+    --text:#f4e7e9;
+    --muted:#98777e;
+    --line:#472029;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+    color:var(--text);
+    font-family:Arial,Helvetica,sans-serif;
+    background:
+        radial-gradient(circle at 50% -10%,#741b2b55,transparent 38%),
+        radial-gradient(circle at 0% 80%,#4b101c40,transparent 30%),
+        linear-gradient(145deg,#050405,#0d080a 50%,#080506);
+}
+
+/* SCREEN */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:50;
+    pointer-events:none;
+    opacity:.11;
+    background:repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 3px,
+        #fff1 4px
+    );
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:49;
+    pointer-events:none;
+    box-shadow:inset 0 0 150px #000;
+}
+
+/* CURSOR GLOW */
+
+.cursor-glow{
+    position:fixed;
+    width:240px;
+    height:240px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:2;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(
+        circle,
+        #a52a4230 0%,
+        #741b2b15 32%,
+        transparent 70%
+    );
+    filter:blur(8px);
+    opacity:0;
+}
+
+body:hover .cursor-glow{
+    opacity:1;
+}
+
+/* TOUCH */
+
+.touch-glow{
+    position:fixed;
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:40;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(
+        circle,
+        #d96b8038,
+        #a52a4218 40%,
+        transparent 72%
+    );
+    animation:touchFade .8s ease-out forwards;
+}
+
+@keyframes touchFade{
+    0%{
+        opacity:.9;
+        transform:translate(-50%,-50%) scale(.4);
+    }
+    100%{
+        opacity:0;
+        transform:translate(-50%,-50%) scale(1.7);
+    }
+}
+
+/* FLOATING HEARTS */
+
+.heart-particle{
+    position:fixed;
+    bottom:-35px;
+    pointer-events:none;
+    z-index:5;
+    color:#d96b80;
+    opacity:0;
+    text-shadow:
+        0 0 8px #a52a4266,
+        0 0 18px #a52a4230;
+    animation:floatHeart linear forwards;
+}
+
+@keyframes floatHeart{
+    0%{
+        opacity:0;
+        transform:
+            translateY(0)
+            translateX(0)
+            scale(.6)
+            rotate(0deg);
+    }
+
+    10%{
+        opacity:.75;
+    }
+
+    35%{
+        transform:
+            translateY(-30vh)
+            translateX(calc(var(--drift) * .35))
+            scale(1)
+            rotate(8deg);
+    }
+
+    65%{
+        opacity:.55;
+        transform:
+            translateY(-65vh)
+            translateX(var(--drift))
+            scale(.95)
+            rotate(-10deg);
+    }
+
+    100%{
+        opacity:0;
+        transform:
+            translateY(-110vh)
+            translateX(calc(var(--drift) * -0.5))
+            scale(.75)
+            rotate(15deg);
+    }
+}
+
+/* CONTAINER */
+
+.container{
+    position:relative;
+    z-index:10;
+    width:min(92%,650px);
+    margin:auto;
+    padding:30px 0 70px;
+}
+
+/* HEADER */
+
+.header{
+    text-align:center;
+    padding:10px 0 27px;
+    animation:fadeDown 1s ease;
+}
+
+.eyebrow{
+    color:var(--muted);
+    font-size:9px;
+    letter-spacing:5px;
+}
+
+.logo{
+    margin-top:12px;
+    font-size:34px;
+    font-weight:800;
+    letter-spacing:6px;
+}
+
+.logo span{
+    color:var(--rose);
+}
+
+.subtitle{
+    margin-top:10px;
+    color:var(--muted);
+    font-size:11px;
+}
+
+.heart{
+    animation:pulse 2.2s infinite;
+}
+
+/* RADIO */
+
+.radio{
+    position:relative;
+    overflow:hidden;
+    padding:25px;
+    border-radius:27px;
+    border:1px solid var(--line);
+    background:linear-gradient(
+        145deg,
+        #1b0d11,
+        #0c0809 65%
+    );
+    box-shadow:
+        0 25px 70px #000000aa,
+        inset 0 1px #ffffff09;
+}
+
+.radio::before{
+    content:"";
+    position:absolute;
+    width:220px;
+    height:220px;
+    right:-100px;
+    top:-110px;
+    background:#8b203433;
+    filter:blur(45px);
+    border-radius:50%;
+}
+
+.radio-top{
+    position:relative;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:var(--muted);
+    font-size:9px;
+    letter-spacing:2px;
+}
+
+.live{
+    color:#e17b8d;
+}
+
+.dot{
+    display:inline-block;
+    width:6px;
+    height:6px;
+    background:#d94c65;
+    border-radius:50%;
+    margin-left:5px;
+    box-shadow:0 0 13px #d94c65;
+    animation:blink 1.5s infinite;
+}
+
+/* DISPLAY */
+
+.display{
+    position:relative;
+    margin-top:22px;
+    padding:25px 18px;
+    border-radius:18px;
+    border:1px solid #51202b;
+    background:radial-gradient(
+        circle,
+        #4d111d55,
+        #080607 70%
+    );
+    text-align:center;
+}
+
+.station-label{
+    font-size:8px;
+    letter-spacing:4px;
+    color:#8d626a;
+}
+
+.frequency{
+    margin:8px 0;
+    font-size:56px;
+    font-weight:800;
+    letter-spacing:3px;
+    color:#e16b80;
+    text-shadow:
+        0 0 12px #a52a4233,
+        0 0 30px #a52a421c;
+}
+
+.frequency small{
+    font-size:14px;
+    color:#9a626d;
+}
+
+.station-name{
+    color:#a9878d;
+    font-size:10px;
+    letter-spacing:3px;
+}
+
+/* TUNER */
+
+.tuner{
+    display:flex;
+    align-items:center;
+    gap:4px;
+    height:18px;
+    margin-top:17px;
+}
+
+.tuner-line{
+    height:1px;
+    flex:1;
+    background:#48202a;
+}
+
+.tuner-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--rose);
+    box-shadow:0 0 12px #d96b80;
+}
+
+/* VISUALIZER */
+
+.visualizer{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:4px;
+    height:55px;
+    margin-top:10px;
+}
+
+.visualizer span{
+    width:3px;
+    border-radius:5px;
+    background:#c95269;
+    opacity:.7;
+    animation:wave 1s ease-in-out infinite alternate;
+}
+
+.visualizer span:nth-child(1){height:10px}
+.visualizer span:nth-child(2){height:24px;animation-delay:.1s}
+.visualizer span:nth-child(3){height:37px;animation-delay:.2s}
+.visualizer span:nth-child(4){height:19px;animation-delay:.3s}
+.visualizer span:nth-child(5){height:47px;animation-delay:.4s}
+.visualizer span:nth-child(6){height:29px;animation-delay:.5s}
+.visualizer span:nth-child(7){height:42px;animation-delay:.6s}
+.visualizer span:nth-child(8){height:18px;animation-delay:.7s}
+.visualizer span:nth-child(9){height:34px;animation-delay:.8s}
+.visualizer span:nth-child(10){height:14px;animation-delay:.9s}
+.visualizer span:nth-child(11){height:44px;animation-delay:.4s}
+.visualizer span:nth-child(12){height:23px;animation-delay:.2s}
+
+/* SECTIONS */
+
+.section{
+    margin-top:19px;
+}
+
+.label{
+    color:#805863;
+    font-size:9px;
+    letter-spacing:3px;
+    margin-bottom:8px;
+}
+
+.panel{
+    background:linear-gradient(
+        145deg,
+        #190d11,
+        #0e080a
+    );
+    border:1px solid var(--line);
+    border-radius:21px;
+    padding:19px;
+    box-shadow:0 12px 35px #00000045;
+}
+
+/* MESSAGE */
+
+.message{
+    min-height:90px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:15px;
+    border-radius:17px;
+    background:#0e080a;
+    border:1px solid #3a1b23;
+    color:#f0e1e4;
+    font-size:15px;
+    line-height:1.8;
+    transition:.3s;
+}
+
+button{
+    width:100%;
+    border:1px solid #59202d;
+    background:#190c10;
+    color:#d9aab3;
+    padding:13px;
+    border-radius:14px;
+    margin-top:10px;
+    cursor:pointer;
+    font-size:11px;
+    letter-spacing:1px;
+    transition:.25s;
+}
+
+button:hover{
+    background:#35121b;
+    border-color:#9b3046;
+    color:white;
+    transform:translateY(-2px);
+}
+
+.main-button{
+    background:#3a101a;
+    color:#e99aaa;
+}
+
+/* DEDICATION */
+
+.dedication{
+    text-align:center;
+}
+
+.dedication-title{
+    font-size:16px;
+    color:#f2dfe3;
+}
+
+.dedication-sub{
+    margin-top:7px;
+    color:#86616a;
+    font-size:10px;
+}
+
+.play{
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    margin:18px auto 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#3c111b;
+    border:1px solid #9a3047;
+    color:#e98498;
+    font-size:18px;
+    box-shadow:0 0 20px #8b203322;
+}
+
+/* QUOTE */
+
+.quote{
+    text-align:center;
+    color:#cda5ad;
+    font-size:13px;
+    line-height:1.9;
+}
+
+.quote-mark{
+    font-size:28px;
+    color:#8e3043;
+}
+
+/* GRID */
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+/* SIGNAL */
+
+.signal-number{
+    font-size:28px;
+    font-weight:bold;
+    color:#df7185;
+}
+
+.signal-bar{
+    height:5px;
+    margin-top:13px;
+    border-radius:10px;
+    overflow:hidden;
+    background:#30131b;
+}
+
+.signal-fill{
+    width:88%;
+    height:100%;
+    background:#b43d56;
+    box-shadow:0 0 13px #b43d5680;
+    transition:1s;
+}
+
+/* CURRENT */
+
+.current{
+    color:#8d7076;
+    font-size:10px;
+    line-height:2.1;
+}
+
+.current span{
+    color:#dbc1c6;
+}
+
+/* NEWS */
+
+.news{
+    border-right:2px solid #9b3046;
+    padding-right:13px;
+    font-size:13px;
+    line-height:1.8;
+}
+
+.news small{
+    display:block;
+    color:#805863;
+    font-size:8px;
+    letter-spacing:2px;
+    margin-bottom:5px;
+}
+
+/* COUNTDOWN */
+
+.countdown{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+}
+
+.time{
+    text-align:center;
+    padding:12px 3px;
+    border-radius:13px;
+    background:#12090c;
+    border:1px solid #32141d;
+}
+
+.time strong{
+    display:block;
+    color:#df7185;
+    font-size:20px;
+}
+
+.time small{
+    color:#785660;
+    font-size:8px;
+}
+
+/* CONTROLS */
+
+.button-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+}
+
+.result{
+    margin-top:12px;
+    min-height:55px;
+    border-radius:14px;
+    background:#0d0709;
+    border:1px solid #351720;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:#cdaab1;
+    padding:10px;
+    font-size:12px;
+}
+
+/* RULES */
+
+.rules{
+    color:#94747b;
+    font-size:10px;
+    line-height:2.2;
+}
+
+.rules strong{
+    color:#e0c5ca;
+}
+
+/* SECRET */
+
+.locked{
+    text-align:center;
+    padding:20px;
+    border:1px dashed #54202c;
+    border-radius:17px;
+    cursor:pointer;
+    color:#805863;
+    transition:.3s;
+}
+
+.locked:hover{
+    border-color:#9d3047;
+    color:#d9788b;
+}
+
+.lock-icon{
+    font-size:22px;
+    margin-bottom:7px;
+}
+
+.secret{
+    display:none;
+    color:#df7185;
+    line-height:1.9;
+}
+
+/* FOOTER */
+
+.footer{
+    text-align:center;
+    margin-top:28px;
+    color:#4c3037;
+    font-size:9px;
+    letter-spacing:2px;
+}
+
+/* ANIMATIONS */
+
+@keyframes blink{
+    0%,100%{opacity:1}
+    50%{opacity:.25}
+}
+
+@keyframes wave{
+    from{transform:scaleY(.45)}
+    to{transform:scaleY(1.2)}
+}
+
+@keyframes pulse{
+    0%,100%{
+        opacity:1;
+        transform:scale(1);
+    }
+    50%{
+        opacity:.7;
+        transform:scale(1.08);
+    }
+}
+
+@keyframes fadeDown{
+    from{
+        opacity:0;
+        transform:translateY(-18px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@media(max-width:500px){
+
+    .logo{
+        font-size:28px;
+        letter-spacing:4px;
+    }
+
+    .frequency{
+        font-size:47px;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<div class="container">
+
+<header class="header">
+    <div class="eyebrow">PRIVATE FREQUENCY</div>
+
+    <div class="logo">
+        RADIO <span>07</span> <span class="heart">♡</span>
+    </div>
+
+    <div class="subtitle">
+        broadcasting for one person only
+    </div>
+</header>
+
+
+<section class="radio">
+
+    <div class="radio-top">
+        <span>FM / PRIVATE CHANNEL</span>
+
+        <span class="live">
+            <i class="dot"></i>
+            ON AIR
+        </span>
+    </div>
+
+    <div class="display">
+
+        <div class="station-label">
+            STATION NO. 07
+        </div>
+
+        <div class="frequency">
+            98.7 <small>FM</small>
+        </div>
+
+        <div class="station-name">
+            ONLY YOU ARE TUNED IN
+        </div>
+
+        <div class="tuner">
+            <div class="tuner-line"></div>
+            <div class="tuner-dot"></div>
+            <div class="tuner-line"></div>
+        </div>
+
+        <div class="visualizer">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <div class="label">
+            TONIGHT'S TRANSMISSION
+        </div>
+
+        <div class="message" id="message">
+            آره، خودتی. هنوز اینجایی؟
+        </div>
+
+        <button class="main-button" onclick="nextMessage()">
+            NEXT TRANSMISSION ♡
+        </button>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="label">
+        DEDICATED TO YOU
+    </div>
+
+    <div class="panel dedication">
+
+        <div class="dedication-title">
+            We Fell In Love In October
+        </div>
+
+        <div class="dedication-sub">
+            بعضی آهنگا رو نمی‌شه برای هر کسی پخش کرد.
+        </div>
+
+        <button class="play" onclick="toggleMusic()">
+            <span id="playIcon">▶</span>
+        </button>
+
+        <audio id="song">
+            <source
+                src="Girl In Red - We Fell In Love In October [Melodya].mp3"
+                type="audio/mpeg">
+        </audio>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="panel quote">
+
+        <div class="quote-mark">“</div>
+
+        امشب برنامه فقط برای یه نفره.
+
+        <br>
+
+        <span style="color:#8e5a65;">
+            No explanation needed.
+        </span>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="grid">
+
+        <div class="panel">
+
+            <div class="label">
+                SIGNAL
+            </div>
+
+            <div class="signal-number" id="signal">
+                88%
+            </div>
+
+            <div class="signal-bar">
+                <div class="signal-fill" id="signalFill"></div>
+            </div>
+
+            <button onclick="changeSignal()">
+                CHECK SIGNAL
+            </button>
+
+        </div>
+
+
+        <div class="panel">
+
+            <div class="label">
+                CURRENTLY
+            </div>
+
+            <div class="current">
+
+                mood ........ <span>fine</span><br>
+                energy ...... <span>questionable</span><br>
+                patience .... <span id="patience">43%</span><br>
+                music ....... <span>playing</span><br>
+                plans ....... <span>none</span><br>
+                status ...... <span>thinking of you</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="label">
+        BREAKING NEWS
+    </div>
+
+    <div class="panel">
+
+        <div class="news">
+
+            <small>LATEST REPORT</small>
+
+            <span id="newsText">
+                یک نفر همچنان در حال انجام هیچ کار مفیدی نیست.
+            </span>
+
+        </div>
+
+        <button onclick="nextNews()">
+            REFRESH NEWS
+        </button>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="label">
+        RETURN PROTOCOL
+    </div>
+
+    <div class="panel">
+
+        <div class="countdown">
+
+            <div class="time">
+                <strong id="days">00</strong>
+                <small>DAYS</small>
+            </div>
+
+            <div class="time">
+                <strong id="hours">00</strong>
+                <small>HOURS</small>
+            </div>
+
+            <div class="time">
+                <strong id="minutes">00</strong>
+                <small>MIN</small>
+            </div>
+
+            <div class="time">
+                <strong id="seconds">00</strong>
+                <small>SEC</small>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="label">
+        IMPORTANT CONTROLS
+    </div>
+
+    <div class="panel">
+
+        <div class="button-grid">
+
+            <button onclick="dontPress()">
+                DO NOT PRESS
+            </button>
+
+            <button onclick="seriousButton()">
+                SERIOUS BUTTON
+            </button>
+
+            <button onclick="emergency()">
+                EMERGENCY
+            </button>
+
+            <button onclick="randomButton()">
+                RANDOM
+            </button>
+
+        </div>
+
+        <div class="result" id="buttonResult">
+            هیچ دکمه‌ای هنوز زده نشده.
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="label">
+        THE RULES
+    </div>
+
+    <div class="panel rules">
+
+        <strong>RULE #01</strong>
+        Don't take anything here too seriously.
+
+        <br>
+
+        <strong>RULE #02</strong>
+        You will probably press every button.
+
+        <br>
+
+        <strong>RULE #03</strong>
+        Yes, I knew you would.
+
+        <br>
+
+        <strong>RULE #04</strong>
+        There is no RULE #04.
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="label">
+        RESTRICTED TRANSMISSION
+    </div>
+
+    <div class="locked" onclick="unlock()">
+
+        <div class="lock-icon">🔐</div>
+
+        <div id="lockText">
+
+            PRIVATE
+
+            <br>
+
+            <small>
+                probably nothing important
+            </small>
+
+        </div>
+
+        <div class="secret" id="secret">
+
+            Okay.
+            <br>
+            You found it.
+            <br>
+            This one was actually for you. ♡
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="footer">
+
+    RADIO 07 ♡
+    <br>
+    PRIVATE TRANSMISSION
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   CURSOR GLOW
+========================= */
+
+const cursorGlow =
+document.getElementById("cursorGlow");
+
+let mouseX = 0;
+let mouseY = 0;
+let glowX = 0;
+let glowY = 0;
+
+document.addEventListener("mousemove",(e)=>{
+
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+
+});
+
+function animateGlow(){
+
+    glowX += (mouseX - glowX) * .12;
+    glowY += (mouseY - glowY) * .12;
+
+    cursorGlow.style.left = glowX + "px";
+    cursorGlow.style.top = glowY + "px";
+
+    requestAnimationFrame(animateGlow);
+}
+
+animateGlow();
+
+
+/* =========================
+   TOUCH GLOW
+========================= */
+
+function createTouchGlow(x,y){
+
+    const glow =
+    document.createElement("div");
+
+    glow.className = "touch-glow";
+
+    glow.style.left = x + "px";
+    glow.style.top = y + "px";
+
+    document.body.appendChild(glow);
+
+    setTimeout(()=>{
+        glow.remove();
+    },800);
+}
+
+document.addEventListener("click",(e)=>{
+
+    createTouchGlow(
+        e.clientX,
+        e.clientY
+    );
+
+});
+
+document.addEventListener(
+    "touchstart",
+    (e)=>{
+
+        const touch = e.touches[0];
+
+        createTouchGlow(
+            touch.clientX,
+            touch.clientY
+        );
+
+    },
+    {passive:true}
+);
+
+
+/* =========================
+   HEARTS + RANDOM EMOJIS
+========================= */
+
+const floatingSymbols = [
+    "♡","♡","♥","♡","♥","♡","🥑","🫘"
+];
+
+const stupidEmojis = [
+    "😂","🦆","🐸","🥑","🗿","😭",
+    "🐥","🫵","🤨","🦕","🍅","😐"
+];
+
+function createHeart(){
+
+    const heart =
+    document.createElement("div");
+
+    heart.className =
+    "heart-particle";
+
+    const isEmoji =
+    Math.random() < .16;
+
+    if(isEmoji){
+
+        heart.innerText =
+        stupidEmojis[
+            Math.floor(
+                Math.random() *
+                stupidEmojis.length
+            )
+        ];
+
+        heart.style.fontSize =
+        (Math.random()*7+12)+"px";
+
+    }else{
+
+        heart.innerText =
+        floatingSymbols[
+            Math.floor(
+                Math.random() *
+                floatingSymbols.length
+            )
+        ];
+
+        heart.style.fontSize =
+        (Math.random()*8+8)+"px";
+
+    }
+
+    const duration =
+    Math.random()*5+6;
+
+    const left =
+    Math.random()*100;
+
+    const drift =
+    Math.random()*100-50;
+
+    heart.style.left =
+    left+"vw";
+
+    heart.style.setProperty(
+        "--drift",
+        drift+"px"
+    );
+
+    heart.style.animationDuration =
+    duration+"s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{
+        heart.remove();
+    },duration*1000);
+}
+
+
+/* بیشتر شدن قلب‌ها */
+
+function heartLoop(){
+
+    createHeart();
+
+    const next =
+    Math.random()*1800+700;
+
+    setTimeout(
+        heartLoop,
+        next
+    );
+}
+
+heartLoop();
+
+
+/* ایموجی ناگهانی */
+
+setInterval(()=>{
+
+    if(Math.random()<.65){
+
+        const emoji =
+        document.createElement("div");
+
+        emoji.className =
+        "heart-particle";
+
+        emoji.innerText =
+        stupidEmojis[
+            Math.floor(
+                Math.random() *
+                stupidEmojis.length
+            )
+        ];
+
+        emoji.style.left =
+        (Math.random()*90+5)+"vw";
+
+        emoji.style.fontSize =
+        (Math.random()*8+13)+"px";
+
+        emoji.style.animationDuration =
+        "6s";
+
+        document.body.appendChild(emoji);
+
+        setTimeout(()=>{
+            emoji.remove();
+        },6000);
+
+    }
+
+},9000);
+
+
+/* =========================
+   MESSAGES
+========================= */
+
+const messages = [
+
+"آره، خودتی. هنوز اینجایی؟",
+
+"فقط اومدم ببینم هنوز سر جاشی یا نه.",
+
+"خب. حالا که اینجایی، بمون.",
+
+"امروز هم به شکل عجیبی قابل تحملی. شوخی کردم.",
+
+"این پیام هیچ کاربردی نداره. صرفاً خواستم اذیتت کنم. 😂",
+
+"امروز برنامه خاصی نداریم. مثل همیشه.",
+
+"اگر حوصله‌ت سر رفته، تقصیر من نیست.",
+
+"خب؟ چیزی می‌خواستی یا فقط اومدی سرک بکشی؟",
+
+"این بخش فقط برای اینه که حوصله‌ت سر نره.",
+
+"فعلاً همین. زیادی انتظار نداشته باش.",
+
+"یه نفر اینجا زیادی کیوته، لطفاً رسیدگی شود.",
+
+"قشنگ، امروز چند درصد کیوت بودی؟ 100%؟ 🤨",
+
+"فقط اومدم چک کنم فندق هنوز سر جاشه یا نه 👀",
+
+"این سایت رسماً متعلق به توئه. 🌹",
+
+"آره، این فرکانس برای توئه.",
+
+"امشب برنامه فقط برای یه نفره.",
+
+"لازم نیست چیزی بگی. فقط گوش کن.",
+
+"این آهنگ رو برای هیچ‌کس دیگه‌ای پخش نمی‌کنیم.",
+
+"اگه این فرکانس رو گرفتی، یعنی هنوز حواسم بهت هست.",
+
+"بعضی آهنگا رو نمی‌شه برای هر کسی پخش کرد.",
+
+"خب. حالا که اینجایی، بمون. ♡"
+
+];
+
+let lastMessage = -1;
+
+function nextMessage(){
+
+    let random;
+
+    do{
+
+        random =
+        Math.floor(
+            Math.random() *
+            messages.length
+        );
+
+    }while(
+        random === lastMessage
+    );
+
+    lastMessage = random;
+
+    const box =
+    document.getElementById("message");
+
+    box.style.opacity = "0";
+    box.style.transform =
+    "translateY(5px)";
+
+    setTimeout(()=>{
+
+        box.innerText =
+        messages[random];
+
+        box.style.opacity = "1";
+        box.style.transform =
+        "translateY(0)";
+
+    },180);
+}
+
+
+/* =========================
+   MUSIC
+========================= */
+
+const song =
+document.getElementById("song");
+
+const playIcon =
+document.getElementById("playIcon");
+
+function toggleMusic(){
+
+    if(song.paused){
+
+        song.play();
+
+        playIcon.innerText = "Ⅱ";
+
+    }else{
+
+        song.pause();
+
+        playIcon.innerText = "▶";
+
+    }
+}
+
+
+/* =========================
+   SIGNAL
+========================= */
+
+function changeSignal(){
+
+    const values =
+    [12,27,43,57,68,79,88,94,100];
+
+    const value =
+    values[
+        Math.floor(
+            Math.random() *
+            values.length
+        )
+    ];
+
+    document.getElementById("signal")
+    .innerText =
+    value + "%";
+
+    document.getElementById("signalFill")
+    .style.width =
+    value + "%";
+}
+
+
+/* =========================
+   PATIENCE
+========================= */
+
+setInterval(()=>{
+
+    const value =
+    Math.floor(
+        Math.random()*80+10
+    );
+
+    document.getElementById("patience")
+    .innerText =
+    value+"%";
+
+},4000);
+
+
+/* =========================
+   NEWS
+========================= */
+
+const news = [
+
+"یک نفر همچنان در حال انجام هیچ کار مفیدی نیست.",
+
+"منابع نزدیک تأیید کردند: حوصله همچنان وجود ندارد.",
+
+"آخرین گزارش‌ها حاکی از آن است که شخص موردنظر هنوز آنلاین است.",
+
+"خبر فوری: هیچ خبر فوری‌ای وجود ندارد.",
+
+"گزارش جدید: اسنک‌ها همچنان در معرض خطرند.",
+
+"مقامات اعلام کردند اوضاع تحت کنترل است. احتمالاً.",
+
+"یک نفر امروز هم به شکل مشکوکی قابل تحمل است.",
+
+"تحقیقات ادامه دارد؛ نتیجه فعلاً مشخص نیست."
+
+];
+
+let lastNews = -1;
+
+function nextNews(){
+
+    let random;
+
+    do{
+
+        random =
+        Math.floor(
+            Math.random() *
+            news.length
+        );
+
+    }while(
+        random === lastNews
+    );
+
+    lastNews = random;
+
+    const text =
+    document.getElementById("newsText");
+
+    text.style.opacity = "0";
+
+    setTimeout(()=>{
+
+        text.innerText =
+        news[random];
+
+        text.style.opacity = "1";
+
+    },180);
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+let dontPressCount = 0;
+
+function dontPress(){
+
+    dontPressCount++;
+
+    const box =
+    document.getElementById(
+        "buttonResult"
+    );
+
+    if(dontPressCount === 1){
+
+        box.innerText =
+        "گفتم نزن.";
+
+    }else if(dontPressCount === 2){
+
+        box.innerText =
+        "واقعاً چرا؟";
+
+    }else if(dontPressCount === 3){
+
+        box.innerText =
+        "باشه. دیگه خودت می‌دونی.";
+
+    }else{
+
+        box.innerText =
+        "تو واقعاً نمی‌تونی جلوی خودتو بگیری، نه؟";
+
+    }
+}
+
+function seriousButton(){
+
+    const texts = [
+
+        "این بخش کاملاً جدیه.",
+
+        "خیلی جدیه.",
+
+        "خب دیگه شورشو درآوردی.",
+
+        "من دیگه چیزی نمی‌گم."
+
+    ];
+
+    document.getElementById(
+        "buttonResult"
+    ).innerText =
+    texts[
+        Math.floor(
+            Math.random() *
+            texts.length
+        )
+    ];
+}
+
+function emergency(){
+
+    document.getElementById(
+        "buttonResult"
+    ).innerText =
+    "آرام باش. هیچ اتفاقی نیفتاده. 🖤";
+}
+
+function randomButton(){
+
+    const texts = [
+
+        "نه.",
+        "شاید.",
+        "نمیدونم.",
+        "بعداً.",
+        "خودت تصمیم بگیر.",
+        "اشتباه اومدی اینجا.",
+        "دوباره بزن.",
+        "این یکی واقعاً هیچ کاری نمی‌کنه.",
+        "جالبه که هنوز داری دکمه می‌زنی."
+
+    ];
+
+    document.getElementById(
+        "buttonResult"
+    ).innerText =
+    texts[
+        Math.floor(
+            Math.random() *
+            texts.length
+        )
+    ];
+}
+
+
+/* =========================
+   SECRET
+========================= */
+
+let unlocked = false;
+
+function unlock(){
+
+    if(unlocked) return;
+
+    unlocked = true;
+
+    document.getElementById(
+        "lockText"
+    ).style.display = "none";
+
+    document.getElementById(
+        "secret"
+    ).style.display = "block";
+}
+
+
+/* =========================
+   COUNTDOWN
+========================= */
+
+/*
+   تاریخ بازگشت را اینجا تغییر بده.
+*/
+
+const targetDate =
+new Date(
+    "2025-08-20T00:00:00"
+).getTime();
+
+function updateCountdown(){
+
+    const now =
+    new Date().getTime();
+
+    const distance =
+    targetDate - now;
+
+    if(distance <= 0){
+
+        document.getElementById("days")
+        .innerText = "00";
+
+        document.getElementById("hours")
+        .innerText = "00";
+
+        document.getElementById("minutes")
+        .innerText = "00";
+
+        document.getElementById("seconds")
+        .innerText = "00";
+
+        return;
+    }
+
+    const days =
+    Math.floor(
+        distance /
+        (1000*60*60*24)
+    );
+
+    const hours =
+    Math.floor(
+        (distance /
+        (1000*60*60)) % 24
+    );
+
+    const minutes =
+    Math.floor(
+        (distance /
+        (1000*60)) % 60
+    );
+
+    const seconds =
+    Math.floor(
+        (distance/1000) % 60
+    );
+
+    document.getElementById("days")
+    .innerText =
+    String(days).padStart(2,"0");
+
+    document.getElementById("hours")
+    .innerText =
+    String(hours).padStart(2,"0");
+
+    document.getElementById("minutes")
+    .innerText =
+    String(minutes).padStart(2,"0");
+
+    document.getElementById("seconds")
+    .innerText =
+    String(seconds).padStart(2,"0");
+}
+
+updateCountdown();
+
+setInterval(
+    updateCountdown,
+    1000
+);
+
+
+/* =========================
+   RANDOM SIGNAL GLITCH
+========================= */
+
+setInterval(()=>{
+
+    if(Math.random()<.12){
+
+        const signal =
+        document.getElementById("signal");
+
+        signal.innerText =
+        "LOST";
+
+        setTimeout(()=>{
+
+            signal.innerText =
+            "88%";
+
+        },900);
+    }
+
+},5000);
+
+</script>
+
+</body>
+</html>
