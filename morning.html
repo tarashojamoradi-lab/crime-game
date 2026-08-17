@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOOD MORNING, YOU ☀️</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --cream:#fffaf0;
+    --cream2:#f5efd9;
+    --green:#718f55;
+    --green2:#526d3d;
+    --lightgreen:#a9bf87;
+    --dark:#293522;
+    --brown:#756650;
+    --pink:#d99891;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+    font-family:Arial,"Segoe UI",sans-serif;
+    color:var(--dark);
+
+    background:
+        radial-gradient(circle at 80% 5%,#ffe6a877,transparent 27%),
+        radial-gradient(circle at 10% 70%,#b7ce9560,transparent 30%),
+        linear-gradient(180deg,#fffdf5,#f4efd9);
+}
+
+/* SUN */
+
+.sun{
+    position:fixed;
+    width:190px;
+    height:190px;
+    right:-55px;
+    top:-55px;
+    border-radius:50%;
+
+    background:
+        radial-gradient(circle,#ffe9a6,#ffd978 55%,#f4c965);
+
+    box-shadow:
+        0 0 50px #ffd97880,
+        0 0 110px #ffe5a544;
+
+    animation:sunFloat 6s ease-in-out infinite;
+    z-index:1;
+}
+
+@keyframes sunFloat{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(8px)}
+}
+
+/* CLOUDS */
+
+.cloud{
+    position:fixed;
+    width:150px;
+    height:45px;
+    background:#ffffffcc;
+    border-radius:50px;
+    z-index:2;
+    opacity:.8;
+    animation:cloudMove 30s linear infinite;
+}
+
+.cloud:before,
+.cloud:after{
+    content:"";
+    position:absolute;
+    background:#ffffffdd;
+    border-radius:50%;
+}
+
+.cloud:before{
+    width:65px;
+    height:65px;
+    left:25px;
+    bottom:8px;
+}
+
+.cloud:after{
+    width:50px;
+    height:50px;
+    right:25px;
+    bottom:8px;
+}
+
+.cloud.one{
+    top:120px;
+    left:-180px;
+}
+
+.cloud.two{
+    top:250px;
+    left:-230px;
+    transform:scale(.7);
+    opacity:.5;
+    animation-duration:40s;
+    animation-delay:5s;
+}
+
+@keyframes cloudMove{
+    from{transform:translateX(0)}
+    to{transform:translateX(calc(100vw + 500px))}
+}
+
+/* FLOATING LEAVES */
+
+.leaf{
+    position:fixed;
+    pointer-events:none;
+    z-index:3;
+    opacity:0;
+    animation:leafFloat linear forwards;
+}
+
+@keyframes leafFloat{
+    0%{
+        opacity:0;
+        transform:translateY(0) rotate(0);
+    }
+    15%{opacity:.6}
+    100%{
+        opacity:0;
+        transform:
+            translateY(-100vh)
+            translateX(100px)
+            rotate(180deg);
+    }
+}
+
+/* MAIN */
+
+.container{
+    position:relative;
+    z-index:10;
+    width:min(92%,650px);
+    margin:auto;
+    padding:55px 0 70px;
+}
+
+/* HEADER */
+
+.header{
+    text-align:center;
+    animation:fadeDown 1s ease;
+}
+
+.morning-label{
+    color:#8d997d;
+    font-size:9px;
+    letter-spacing:4px;
+}
+
+.title{
+    margin-top:12px;
+    font-size:clamp(37px,10vw,65px);
+    font-weight:900;
+    letter-spacing:-2px;
+}
+
+.title span{
+    color:var(--green);
+}
+
+.subtitle{
+    margin-top:12px;
+    color:#817966;
+    font-size:12px;
+}
+
+/* CARD */
+
+.card{
+    margin-top:32px;
+    padding:30px;
+    border-radius:32px;
+
+    background:
+        linear-gradient(145deg,#fffffff0,#fffaf0e8);
+
+    border:1px solid #ffffff;
+
+    box-shadow:
+        0 25px 70px #716b5230,
+        0 5px 20px #716b5218;
+
+    backdrop-filter:blur(10px);
+
+    animation:cardAppear 1s ease;
+}
+
+/* GREETING */
+
+.greeting{
+    text-align:center;
+}
+
+.greeting-small{
+    color:#8d806c;
+    font-size:10px;
+    letter-spacing:2px;
+}
+
+.greeting h2{
+    margin-top:12px;
+    font-size:25px;
+    color:var(--green2);
+}
+
+.greeting p{
+    margin-top:13px;
+    color:#766f60;
+    font-size:12px;
+    line-height:2;
+}
+
+/* BUTTON */
+
+.start-button{
+    display:block;
+    margin:24px auto 0;
+
+    border:none;
+    padding:14px 25px;
+    border-radius:100px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #718f55,
+            #526d3d
+        );
+
+    color:white;
+    font-size:11px;
+    cursor:pointer;
+
+    box-shadow:0 10px 25px #526d3d35;
+    transition:.25s;
+}
+
+.start-button:hover{
+    transform:translateY(-3px) scale(1.02);
+}
+
+/* MESSAGE */
+
+.message-box{
+    margin-top:20px;
+    min-height:75px;
+    padding:18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    border-radius:20px;
+    background:#f4f0df;
+    border:1px solid #e6dfc8;
+
+    color:#5f614f;
+    font-size:13px;
+    line-height:1.9;
+
+    transition:.3s;
+}
+
+/* GRID */
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:13px;
+    margin-top:15px;
+}
+
+.mini-card{
+    min-height:145px;
+    padding:20px;
+
+    border-radius:24px;
+
+    background:#ffffffbb;
+    border:1px solid #ebe5d3;
+
+    box-shadow:0 10px 30px #716b5212;
+
+    transition:.25s;
+}
+
+.mini-card:hover{
+    transform:translateY(-4px);
+}
+
+.icon{
+    font-size:28px;
+    margin-bottom:12px;
+}
+
+.mini-title{
+    color:#526442;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.mini-text{
+    margin-top:8px;
+    color:#837a69;
+    font-size:10px;
+    line-height:1.8;
+}
+
+/* AVOCADO */
+
+.avocado{
+    text-align:center;
+    padding:25px;
+    margin-top:15px;
+
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #e8efd8,
+            #f9f5e6
+        );
+
+    border:1px solid #dbe5c6;
+}
+
+.avocado-emoji{
+    font-size:55px;
+    display:inline-block;
+    animation:avocadoBounce 2.5s ease-in-out infinite;
+}
+
+@keyframes avocadoBounce{
+    0%,100%{
+        transform:rotate(-4deg) translateY(0);
+    }
+
+    50%{
+        transform:rotate(4deg) translateY(-7px);
+    }
+}
+
+.avocado p{
+    margin-top:10px;
+    color:#62734e;
+    font-size:11px;
+}
+
+/* DINO */
+
+.dino-area{
+    position:relative;
+    height:145px;
+    margin-top:15px;
+    overflow:hidden;
+
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #dfe9cb,
+            #f6f0df
+        );
+
+    border:1px solid #d1ddba;
+}
+
+.dino{
+    position:absolute;
+    bottom:18px;
+    left:18%;
+
+    font-size:65px;
+
+    animation:
+        dinoWalk 4s ease-in-out infinite;
+}
+
+.dino-shadow{
+    position:absolute;
+    width:75px;
+    height:9px;
+    left:19%;
+    bottom:15px;
+
+    border-radius:50%;
+    background:#718f5530;
+    filter:blur(3px);
+}
+
+.grass{
+    position:absolute;
+    bottom:8px;
+    left:0;
+    right:0;
+
+    color:#718f55;
+    letter-spacing:5px;
+    font-size:12px;
+}
+
+@keyframes dinoWalk{
+    0%,100%{
+        transform:
+            translateX(0)
+            rotate(-2deg);
+    }
+
+    50%{
+        transform:
+            translateX(35px)
+            rotate(3deg);
+    }
+}
+
+/* COOL MESSAGE */
+
+.cool-text{
+    margin-top:15px;
+    padding:23px;
+
+    border-radius:24px;
+
+    background:#2f3d29;
+    color:#f6f1df;
+
+    text-align:center;
+
+    box-shadow:0 15px 35px #29352230;
+}
+
+.cool-text .small{
+    color:#aab994;
+    font-size:9px;
+    letter-spacing:3px;
+}
+
+.cool-text h3{
+    margin-top:12px;
+    font-size:18px;
+    font-weight:600;
+}
+
+.cool-text p{
+    margin-top:9px;
+    color:#c6cdb8;
+    font-size:10px;
+    line-height:1.8;
+}
+
+/* CHECKLIST */
+
+.checklist{
+    margin-top:15px;
+    padding:22px;
+
+    border-radius:24px;
+
+    background:#fffefa;
+    border:1px solid #e7dfcb;
+
+    box-shadow:
+        0 10px 30px #716b5212;
+}
+
+.check-title{
+    color:#526442;
+    font-size:14px;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.check-subtitle{
+    color:#968c79;
+    font-size:9px;
+    margin-bottom:15px;
+}
+
+.task{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    width:100%;
+
+    padding:13px 5px;
+
+    border-bottom:1px solid #f0ebdf;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.task:last-child{
+    border-bottom:none;
+}
+
+.task input{
+    appearance:none;
+
+    width:22px;
+    height:22px;
+
+    flex:none;
+
+    border:2px solid #a9b895;
+    border-radius:7px;
+
+    background:#fff;
+
+    cursor:pointer;
+
+    position:relative;
+
+    transition:.2s;
+}
+
+.task input:checked{
+    background:#718f55;
+    border-color:#718f55;
+}
+
+.task input:checked::after{
+    content:"✓";
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:
+        translate(-50%,-55%);
+
+    color:white;
+
+    font-size:14px;
+    font-weight:bold;
+}
+
+.task label{
+    flex:1;
+
+    color:#665f52;
+
+    font-size:11px;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.task input:checked + label{
+    color:#a49b8b;
+    text-decoration:line-through;
+}
+
+.progress{
+    margin-top:17px;
+}
+
+.progress-top{
+    display:flex;
+    justify-content:space-between;
+
+    color:#8c826f;
+    font-size:9px;
+}
+
+.progress-bar{
+    height:7px;
+    margin-top:8px;
+
+    background:#ebe7d9;
+
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    width:0%;
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #a9bf87,
+            #526d3d
+        );
+
+    border-radius:20px;
+
+    transition:.5s;
+}
+
+/* PHOTO */
+
+.photo-section{
+    margin-top:15px;
+
+    padding:24px;
+
+    text-align:center;
+
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #edf3e3,
+            #fffaf0
+        );
+
+    border:1px solid #dbe5ce;
+}
+
+.photo-title{
+    color:#526442;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.photo-subtitle{
+    margin-top:7px;
+
+    color:#8b826f;
+
+    font-size:9px;
+
+    line-height:1.8;
+}
+
+.upload-button{
+    display:inline-block;
+
+    margin-top:17px;
+
+    padding:12px 20px;
+
+    border-radius:100px;
+
+    background:#718f55;
+
+    color:white;
+
+    font-size:10px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    box-shadow:
+        0 8px 20px #526d3d30;
+}
+
+.upload-button:hover{
+    transform:translateY(-2px);
+    background:#526d3d;
+}
+
+#photoInput{
+    display:none;
+}
+
+.photo-preview{
+    display:none;
+
+    margin-top:17px;
+
+    position:relative;
+}
+
+.photo-preview img{
+    width:100%;
+    max-height:330px;
+
+    object-fit:cover;
+
+    border-radius:20px;
+
+    border:4px solid white;
+
+    box-shadow:
+        0 12px 30px #526d3d25;
+}
+
+.photo-date{
+    margin-top:8px;
+
+    color:#817967;
+
+    font-size:9px;
+}
+
+/* SCREENSHOT */
+
+.screenshot{
+    margin-top:15px;
+
+    padding:20px;
+
+    border-radius:23px;
+
+    text-align:center;
+
+    background:#f8eee8;
+
+    border:1px solid #ead8cc;
+}
+
+.screenshot strong{
+    color:#795b51;
+
+    font-size:12px;
+}
+
+.screenshot p{
+    margin-top:8px;
+
+    color:#9a8178;
+
+    font-size:10px;
+
+    line-height:1.8;
+}
+
+/* SECRET */
+
+.secret{
+    margin-top:15px;
+
+    text-align:center;
+
+    padding:20px;
+
+    border-radius:23px;
+
+    background:#f5f1e4;
+
+    border:1px dashed #c7c0ad;
+
+    cursor:pointer;
+
+    color:#897e6c;
+
+    transition:.25s;
+}
+
+.secret:hover{
+    background:#eee9d9;
+}
+
+.secret-message{
+    display:none;
+
+    margin-top:12px;
+
+    color:#637251;
+
+    font-size:11px;
+
+    line-height:2;
+}
+
+/* FOOTER */
+
+.footer{
+    text-align:center;
+
+    margin-top:30px;
+
+    color:#a49b88;
+
+    font-size:9px;
+
+    letter-spacing:2px;
+}
+
+/* ANIMATIONS */
+
+@keyframes fadeDown{
+    from{
+        opacity:0;
+        transform:translateY(-20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes cardAppear{
+    from{
+        opacity:0;
+        transform:
+            translateY(20px)
+            scale(.98);
+    }
+
+    to{
+        opacity:1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+@media(max-width:500px){
+
+    .container{
+        padding-top:45px;
+    }
+
+    .card{
+        padding:22px;
+        border-radius:27px;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .sun{
+        width:150px;
+        height:150px;
+        right:-60px;
+        top:-45px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="sun"></div>
+
+<div class="cloud one"></div>
+<div class="cloud two"></div>
+
+<div class="container">
+
+<header class="header">
+
+    <div class="morning-label">
+        PRIVATE MORNING TRANSMISSION
+    </div>
+
+    <div class="title">
+        GOOD <span>MORNING</span>
+    </div>
+
+    <div class="subtitle">
+        آره، این صفحه برای تو ساخته شده.
+    </div>
+
+</header>
+
+
+<section class="card">
+
+    <div class="greeting">
+
+        <div class="greeting-small">
+            MORNING REPORT ☀️
+        </div>
+
+        <h2>
+            صبح بخیر، خودتی. 👀
+        </h2>
+
+        <p>
+            امیدوارم امروز حداقل با بالش دعوا نکرده باشی.
+            <br>
+            حالا روزتو شروع کن.
+        </p>
+
+    </div>
+
+
+    <button
+        class="start-button"
+        onclick="startMorning()">
+
+        ☀️ START THE DAY
+
+    </button>
+
+
+    <div
+        class="message-box"
+        id="morningMessage">
+
+        برای شروع روز روی دکمه بزن.
+
+    </div>
+
+
+    <div class="grid">
+
+        <div class="mini-card">
+
+            <div class="icon">🌱</div>
+
+            <div class="mini-title">
+                TODAY'S PLAN
+            </div>
+
+            <div class="mini-text">
+                کاراتو انجام بده،
+                فیلم ببین،
+                و امروز رو هدر نده.
+            </div>
+
+        </div>
+
+
+        <div class="mini-card">
+
+            <div class="icon">☕</div>
+
+            <div class="mini-title">
+                MORNING STATUS
+            </div>
+
+            <div class="mini-text">
+                انرژی: نامعلوم
+                <br>
+                حوصله: در دست بررسی
+                <br>
+                کیوت بودن: متأسفانه بالا
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="avocado">
+
+        <div class="avocado-emoji">
+            🥑
+        </div>
+
+        <p>
+            یک آواکادو برای شروع روز.
+            چون apparently این مهمه. 😂
+        </p>
+
+    </div>
+
+
+    <div class="dino-area">
+
+        <div class="dino-shadow"></div>
+
+        <div class="dino">
+            🦕
+        </div>
+
+        <div class="grass">
+            ˋˏ 🌱 🌿 🌱 🌿 🌱 🌿 ˎˊ
+        </div>
+
+    </div>
+
+
+    <div class="cool-text">
+
+        <div class="small">
+            MORNING TRANSMISSION
+        </div>
+
+        <h3>
+            امروز رو خوب شروع کن.
+        </h3>
+
+        <p>
+            بقیه‌ش رو خودت هندل کن.
+            <br>
+            من فقط اومدم صبح‌بخیر بگم.
+        </p>
+
+    </div>
+
+
+    <!-- CHECKLIST -->
+
+    <div class="checklist">
+
+        <div class="check-title">
+            ☀️ TODAY'S MISSIONS
+        </div>
+
+        <div class="check-subtitle">
+            همه رو انجام بده و آخر روز وضعیت رو گزارش کن. 👀
+        </div>
+
+
+        <div class="task">
+
+            <input
+                type="checkbox"
+                id="task1"
+                onchange="updateProgress()">
+
+            <label for="task1">
+                🎬 فیلم و سریال
+            </label>
+
+        </div>
+
+
+        <div class="task">
+
+            <input
+                type="checkbox"
+                id="task2"
+                onchange="updateProgress()">
+
+            <label for="task2">
+                🕵🏻 کمک به پرونده جدید
+            </label>
+
+        </div>
+
+
+        <div class="task">
+
+            <input
+                type="checkbox"
+                id="task3"
+                onchange="updateProgress()">
+
+            <label for="task3">
+                🎥 ولاگ
+            </label>
+
+        </div>
+
+
+        <div class="task">
+
+            <input
+                type="checkbox"
+                id="task4"
+                onchange="updateProgress()">
+
+            <label for="task4">
+                📚 پیدا کردن اسم استادای خوب
+            </label>
+
+        </div>
+
+
+        <div class="task">
+
+            <input
+                type="checkbox"
+                id="task5"
+                onchange="updateProgress()">
+
+            <label for="task5">
+                📁 کارهای پرونده
+            </label>
+
+        </div>
+
+
+        <div class="progress">
+
+            <div class="progress-top">
+
+                <span>
+                    DAILY PROGRESS
+                </span>
+
+                <span id="progressText">
+                    0 / 5
+                </span>
+
+            </div>
+
+            <div class="progress-bar">
+
+                <div
+                    class="progress-fill"
+                    id="progressFill">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PHOTO -->
+
+    <div class="photo-section">
+
+        <div class="photo-title">
+            📸 PROOF OF THE DAY
+        </div>
+
+        <div class="photo-subtitle">
+
+            حالا یه عکس از خودت بگیر
+            <br>
+            ببینیم امروز چه شکلی شروع کردی. 👀
+
+        </div>
+
+
+        <label
+            for="photoInput"
+            class="upload-button">
+
+            📸 TAKE / CHOOSE PHOTO
+
+        </label>
+
+
+        <input
+            id="photoInput"
+            type="file"
+            accept="image/*"
+            capture="user">
+
+
+        <div
+            class="photo-preview"
+            id="photoPreview">
+
+            <img
+                id="previewImage"
+                alt="Today's photo">
+
+            <div
+                class="photo-date"
+                id="photoDate">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="screenshot">
+
+        <strong>
+            📱 آخر روز
+        </strong>
+
+        <p>
+            وقتی کاراتو انجام دادی،
+            <br>
+            از صفحه اسکرین‌شات بگیر.
+            <br>
+            همین. حال نداریم ذخیره‌سازی درست کنیم 😂
+        </p>
+
+    </div>
+
+
+    <div
+        class="secret"
+        onclick="openSecret()">
+
+        🔒
+        <br>
+
+        <span id="secretTitle">
+            اینجا رو باز نکن.
+        </span>
+
+        <div
+            class="secret-message"
+            id="secretMessage">
+
+            خب معلومه که بازش کردی. 😂
+            <br><br>
+
+            صبح بخیر کوچولو.
+            <br>
+            حالا برو روزتو شروع کن. 🌱
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="footer">
+
+    MADE FOR ONE PERSON ONLY ☀️
+    <br>
+    🥑 · 🦕 · 🌱
+
+</div>
+
+</div>
+
+
+<script>
+
+/* MORNING MESSAGES */
+
+const messages = [
+
+"خب. حالا که بیداری، صبح بخیر. ☀️",
+
+"بیداری یا هنوز رو حالت loading ـی؟ 😂",
+
+"صبح بخیر. امروز هم به شکل عجیبی قابل تحملی.",
+
+"اول آب بخور، بعد هر کاری خواستی بکن.",
+
+"گزارش صبحگاهی: هنوز کیوتی. متأسفانه.",
+
+"امروز رو خوب شروع کن. بقیه‌ش با خودت.",
+
+"صبح بخیر کوچولو. حالا برو یه چیزی بخور.",
+
+"فقط اومدم مطمئن شم هنوز زنده‌ای. 👀",
+
+"یک روز جدید. امیدوارم این یکی کمتر اعصابتو خرد کنه.",
+
+"خب؟ بیدار شدی؟ پس دیگه بهونه‌ای نداری.",
+
+"صبح بخیر قشنگ. حالا زیادی خوشحال نشو 😂",
+
+"امروز اجازه داری حال خوبی داشته باشی. فقط امروز.",
+
+"یک نفر اینجا تازه بیدار شده. منابع موثق تأیید کردند."
+
+];
+
+let lastMessage = -1;
+
+function startMorning(){
+
+    let random;
+
+    do{
+
+        random =
+        Math.floor(
+            Math.random() *
+            messages.length
+        );
+
+    }while(
+        random === lastMessage
+    );
+
+    lastMessage = random;
+
+    const box =
+    document.getElementById(
+        "morningMessage"
+    );
+
+    box.style.opacity = "0";
+
+    box.style.transform =
+    "translateY(6px)";
+
+    setTimeout(()=>{
+
+        box.innerText =
+        messages[random];
+
+        box.style.opacity = "1";
+
+        box.style.transform =
+        "translateY(0)";
+
+    },180);
+
+}
+
+
+/* CHECKLIST */
+
+function updateProgress(){
+
+    const tasks = [
+        "task1",
+        "task2",
+        "task3",
+        "task4",
+        "task5"
+    ];
+
+    let completed = 0;
+
+    tasks.forEach(id=>{
+
+        if(
+            document.getElementById(id).checked
+        ){
+            completed++;
+        }
+
+    });
+
+    const percentage =
+        (completed / tasks.length) * 100;
+
+    document.getElementById(
+        "progressFill"
+    ).style.width =
+    percentage + "%";
+
+    document.getElementById(
+        "progressText"
+    ).innerText =
+    completed + " / 5";
+
+
+    if(completed === 5){
+
+        document.getElementById(
+            "progressText"
+        ).innerText =
+        "5 / 5 ✓";
+
+        document.getElementById(
+            "morningMessage"
+        ).innerText =
+        "همه کارا انجام شد؟ خب. بهت افتخار می‌کنم. 👀🌱";
+
+    }
+
+}
+
+
+/* PHOTO
+   اصلاح‌شده:
+   عکس انتخاب‌شده مستقیماً
+   با URL.createObjectURL
+   داخل صفحه نمایش داده می‌شود.
+*/
+
+const photoInput =
+document.getElementById(
+    "photoInput"
+);
+
+const photoPreview =
+document.getElementById(
+    "photoPreview"
+);
+
+const previewImage =
+document.getElementById(
+    "previewImage"
+);
+
+const photoDate =
+document.getElementById(
+    "photoDate"
+);
+
+
+photoInput.addEventListener(
+    "change",
+    function(){
+
+        const file =
+        this.files &&
+        this.files[0];
+
+        if(!file){
+            return;
+        }
+
+        if(!file.type.startsWith("image/")){
+            return;
+        }
+
+        const imageURL =
+        URL.createObjectURL(file);
+
+        previewImage.src =
+        imageURL;
+
+        photoPreview.style.display =
+        "block";
+
+        const now =
+        new Date();
+
+        photoDate.innerText =
+        "TODAY • " +
+        now.toLocaleDateString(
+            "fa-IR"
+        ) +
+        " • " +
+        now.toLocaleTimeString(
+            "fa-IR",
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
+
+        previewImage.onload =
+        function(){
+
+            URL.revokeObjectURL(
+                imageURL
+            );
+
+        };
+
+    }
+);
+
+
+/* SECRET */
+
+function openSecret(){
+
+    const message =
+    document.getElementById(
+        "secretMessage"
+    );
+
+    const title =
+    document.getElementById(
+        "secretTitle"
+    );
+
+    if(
+        message.style.display === "block"
+    ){
+
+        message.style.display =
+        "none";
+
+        title.innerText =
+        "اینجا رو باز نکن.";
+
+    }else{
+
+        message.style.display =
+        "block";
+
+        title.innerText =
+        "";
+
+    }
+
+}
+
+
+/* FLOATING LEAVES */
+
+const leafSymbols = [
+    "🍃",
+    "🌱",
+    "☘️",
+    "✦",
+    "♡"
+];
+
+function createLeaf(){
+
+    const leaf =
+    document.createElement(
+        "div"
+    );
+
+    leaf.className =
+    "leaf";
+
+    leaf.innerText =
+    leafSymbols[
+        Math.floor(
+            Math.random() *
+            leafSymbols.length
+        )
+    ];
+
+    leaf.style.left =
+    Math.random()*100 +
+    "vw";
+
+    leaf.style.bottom =
+    "-30px";
+
+    leaf.style.fontSize =
+    (Math.random()*8+10) +
+    "px";
+
+    leaf.style.animationDuration =
+    (Math.random()*5+6) +
+    "s";
+
+    document.body.appendChild(
+        leaf
+    );
+
+    setTimeout(()=>{
+
+        leaf.remove();
+
+    },11000);
+
+}
+
+setInterval(
+    createLeaf,
+    1100
+);
+
+
+/* SOFT CLICK EFFECT */
+
+document.addEventListener(
+    "click",
+    function(e){
+
+        const sparkle =
+        document.createElement(
+            "div"
+        );
+
+        sparkle.innerText =
+        ["✦","·","♡","☘️"][
+            Math.floor(
+                Math.random()*4
+            )
+        ];
+
+        sparkle.style.position =
+        "fixed";
+
+        sparkle.style.left =
+        e.clientX+"px";
+
+        sparkle.style.top =
+        e.clientY+"px";
+
+        sparkle.style.pointerEvents =
+        "none";
+
+        sparkle.style.zIndex =
+        "100";
+
+        sparkle.style.color =
+        "#718f55";
+
+        sparkle.style.fontSize =
+        "14px";
+
+        sparkle.style.animation =
+        "clickSpark .8s ease forwards";
+
+        document.body.appendChild(
+            sparkle
+        );
+
+        setTimeout(()=>{
+            sparkle.remove();
+        },800);
+
+    }
+);
+
+
+const style =
+document.createElement("style");
+
+style.innerHTML = `
+
+@keyframes clickSpark{
+
+    0%{
+        opacity:1;
+
+        transform:
+            translate(-50%,-50%)
+            scale(.5);
+    }
+
+    100%{
+        opacity:0;
+
+        transform:
+            translate(-50%,-100px)
+            scale(1.4);
+    }
+
+}
+`;
+
+document.head.appendChild(style);
+
+</script>
+
+</body>
+</html>
