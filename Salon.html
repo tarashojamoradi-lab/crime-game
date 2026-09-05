@@ -495,67 +495,6 @@ button:active{
 }
 
 /* =========================
-   SUCCESS STAMP
-========================= */
-
-.success-stamp{
-    position:fixed;
-    top:50%;
-    left:50%;
-    z-index:150;
-
-    color:rgba(45,145,70,.95);
-    border:3px solid rgba(45,145,70,.82);
-
-    padding:7px 18px;
-
-    font-family:Georgia, "Times New Roman", serif;
-    font-size:27px;
-    font-weight:bold;
-    letter-spacing:2px;
-
-    transform:translate(-50%,-50%) rotate(-8deg) scale(1.55);
-    opacity:0;
-    visibility:hidden;
-
-    pointer-events:none;
-
-    text-shadow:0 1px 1px rgba(0,0,0,.35);
-
-    transition:
-        opacity .18s ease,
-        transform .18s ease,
-        visibility .18s;
-}
-
-.success-stamp.show{
-    opacity:1;
-    visibility:visible;
-    transform:translate(-50%,-50%) rotate(-8deg) scale(1);
-    animation:successStampImpact .42s ease;
-}
-
-@keyframes successStampImpact{
-    0%{
-        transform:translate(-50%,-50%) rotate(-8deg) scale(1.6);
-        opacity:0;
-    }
-
-    45%{
-        transform:translate(-50%,-50%) rotate(-8deg) scale(.92);
-        opacity:1;
-    }
-
-    70%{
-        transform:translate(-50%,-50%) rotate(-8deg) scale(1.05);
-    }
-
-    100%{
-        transform:translate(-50%,-50%) rotate(-8deg) scale(1);
-    }
-}
-
-/* =========================
    FOOTER
 ========================= */
 
@@ -812,15 +751,6 @@ button:active{
 
 
 <!-- =========================
-     SUCCESS STAMP
-========================= -->
-
-<div class="success-stamp" id="successStamp">
-    تأیید شد
-</div>
-
-
-<!-- =========================
      SUCCESS
 ========================= -->
 
@@ -855,15 +785,11 @@ button:active{
 </div>
 
 
-<audio id="stampSound" src="stamp.mp3" preload="auto"></audio>
-
 <script>
 
 /* =========================
    ELEMENTS
-=========================
-
-
+========================= */
 
 const background =
     document.getElementById("background");
@@ -879,12 +805,6 @@ const checkBtn =
 
 const message =
     document.getElementById("message");
-
-const successStamp =
-    document.getElementById("successStamp");
-
-const stampSound =
-    document.getElementById("stampSound");
 
 const failedStamps =
     document.getElementById("failedStamps");
@@ -1063,21 +983,7 @@ function checkAnswer(){
 
         message.classList.remove("show");
 
-        successStamp.classList.remove("show");
-
-        void successStamp.offsetWidth;
-
-        successStamp.classList.add("show");
-
-        stampSound.currentTime = 0;
-        stampSound.play().catch(function(){});
-
-        setTimeout(function(){
-
-            window.location.href =
-                "page2.html";
-
-        }, 1250);
+        successOverlay.classList.add("active");
 
     }
 
