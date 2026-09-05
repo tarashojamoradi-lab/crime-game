@@ -31,6 +31,54 @@ h1{text-align:center;font-weight:normal;font-size:28px;letter-spacing:4px;color:
 .modal.on{visibility:visible;opacity:1}.box{width:min(430px,90vw);background:#120d08;border:1px solid rgba(185,150,91,.5);padding:28px;text-align:center;box-shadow:0 25px 80px #000}
 .box h2{font-weight:normal;color:#e6d7bc;margin-bottom:12px;font-size:19px}.box p{color:#a99a86;font-size:13px;line-height:2}.close{margin-top:18px}
 @media(max-width:600px){.album{height:96vh;padding:14px 10px}.top{font-size:8px}h1{font-size:21px}.sub{font-size:9px}.page{border-width:5px;padding:7px}.card{height:100%;width:auto}.backtext{font-size:17px}.hot{width:28px;height:28px}.hot:after{inset:7px}.foot{font-size:7px}}
+
+@media (max-width: 600px){
+  .stage{padding:12px 8px 20px}
+  .album{padding:12px 8px}
+  .card{width:min(94vw,560px);height:auto;aspect-ratio:3/4}
+  .photo{width:100%;height:100%;object-fit:contain}
+  .controls{margin-top:12px}
+}
+
+.back .date{font-family:Georgia,"Times New Roman",serif;letter-spacing:1px}
+.back{font-family:Georgia,"Times New Roman",serif}
+.hot.masked{left:88%!important;right:auto!important;top:43%!important;transform:translate(-50%,-50%)!important}
+
+@media (max-width:600px){
+  body{overflow-x:hidden}
+  .stage{min-height:100dvh;padding:10px 6px 18px}
+  .album{width:100%;padding:8px 4px}
+  .card{width:min(94vw,560px);height:auto;aspect-ratio:3/4;max-height:none}
+  .photo{display:block;width:100%;height:100%;object-fit:contain}
+}
+
+.back{
+  background:
+    radial-gradient(circle at 20% 18%, rgba(120,82,35,.10), transparent 28%),
+    radial-gradient(circle at 82% 76%, rgba(120,82,35,.08), transparent 30%),
+    #e9d6ad;
+  color:#4a3521;
+  font-family:Georgia,"Times New Roman",serif;
+}
+.back .date{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(18px,4vw,26px);
+  letter-spacing:1px;
+}
+.back .backtext{
+  font-family:"Segoe Print","Bradley Hand","Comic Sans MS",cursive;
+  font-size:clamp(18px,4.4vw,30px);
+  line-height:1.9;
+  max-width:82%;
+  margin:auto;
+  text-align:center;
+}
+
+.photo{border:0!important;outline:0!important;box-shadow:none!important}
+@media (max-width:600px){
+  .card{width:94vw!important;height:auto!important;aspect-ratio:3/4!important;max-height:none!important}
+  .photo{width:100%!important;height:100%!important;object-fit:contain!important}
+}
 </style>
 </head>
 <body>
