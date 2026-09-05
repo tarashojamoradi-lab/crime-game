@@ -1,89 +1,837 @@
-/* پاسخ صحیح معما */
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-            const correctAnswer =
-                normalize("سالون");
+<title>کابوس خاموش | پرونده ۰۱۷</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:Tahoma, Arial, sans-serif;
+    background:#050403;
+    color:#e8dfcf;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.background{
+    position:fixed;
+    inset:-10px;
+    background-image:url("saloon.png");
+    background-size:cover;
+    background-position:center;
+    filter:
+        brightness(0.38)
+        contrast(1.05)
+        saturate(0.60)
+        blur(2.5px);
+    transform:scale(1.03);
+    z-index:0;
+}
+
+/* =========================
+   DARK VIGNETTE
+========================= */
+
+.vignette{
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 20%,
+            rgba(0,0,0,.25) 48%,
+            rgba(0,0,0,.78) 100%
+        );
+    z-index:1;
+    pointer-events:none;
+}
+
+/* =========================
+   LAMP LIGHT
+========================= */
+
+.lamp-light{
+    position:fixed;
+    width:520px;
+    height:520px;
+    top:-170px;
+    left:50%;
+    transform:translateX(-50%);
+    background:radial-gradient(
+        circle,
+        rgba(255,190,90,.12) 0%,
+        rgba(255,150,50,.05) 35%,
+        transparent 70%
+    );
+    filter:blur(20px);
+    z-index:2;
+    pointer-events:none;
+}
+
+/* =========================
+   DUST
+========================= */
+
+.dust{
+    position:fixed;
+    inset:0;
+    z-index:3;
+    pointer-events:none;
+    overflow:hidden;
+}
+
+.dust span{
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:rgba(255,220,160,.35);
+    border-radius:50%;
+    animation:float 12s linear infinite;
+}
+
+.dust span:nth-child(1){left:12%;top:75%;animation-delay:1s;}
+.dust span:nth-child(2){left:25%;top:40%;animation-delay:4s;}
+.dust span:nth-child(3){left:39%;top:80%;animation-delay:2s;}
+.dust span:nth-child(4){left:52%;top:25%;animation-delay:6s;}
+.dust span:nth-child(5){left:67%;top:65%;animation-delay:3s;}
+.dust span:nth-child(6){left:81%;top:35%;animation-delay:7s;}
+.dust span:nth-child(7){left:91%;top:72%;animation-delay:5s;}
+.dust span:nth-child(8){left:47%;top:55%;animation-delay:8s;}
+
+@keyframes float{
+    0%{
+        transform:translateY(20px);
+        opacity:0;
+    }
+
+    20%{
+        opacity:.7;
+    }
+
+    80%{
+        opacity:.4;
+    }
+
+    100%{
+        transform:translateY(-180px);
+        opacity:0;
+    }
+}
+
+/* =========================
+   FILM NOISE
+========================= */
+
+.noise{
+    position:fixed;
+    inset:0;
+    z-index:4;
+    pointer-events:none;
+    opacity:.06;
+    background-image:
+        repeating-radial-gradient(
+            circle at 0 0,
+            #fff 0,
+            #fff 1px,
+            transparent 1px,
+            transparent 3px
+        );
+    background-size:4px 4px;
+}
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container{
+    position:relative;
+    z-index:10;
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+/* =========================
+   CASE PANEL
+========================= */
+
+.case-panel{
+    position:relative;
+    width:min(720px,92vw);
+    padding:48px 45px 42px;
+
+    background:
+        linear-gradient(
+            rgba(18,14,10,.93),
+            rgba(10,8,6,.96)
+        );
+
+    border:1px solid rgba(185,150,91,.38);
+
+    box-shadow:
+        0 0 0 1px rgba(0,0,0,.7),
+        0 25px 80px rgba(0,0,0,.85),
+        inset 0 0 40px rgba(0,0,0,.55);
+
+    animation:panelAppear 1.4s ease;
+}
+
+@keyframes panelAppear{
+    from{
+        opacity:0;
+        transform:translateY(20px) scale(.98);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+/* =========================
+   TOP LINE
+========================= */
+          .top-line{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-bottom:18px;
+    margin-bottom:30px;
+
+    border-bottom:1px solid rgba(180,145,88,.25);
+
+    font-size:12px;
+    color:#9e927e;
+    letter-spacing:1px;
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.title{
+    text-align:center;
+    margin-bottom:8px;
+
+    font-size:38px;
+    font-weight:normal;
+    letter-spacing:5px;
+
+    color:#e6d7bc;
+
+    text-shadow:
+        0 2px 10px rgba(0,0,0,.8);
+}
+
+.subtitle{
+    text-align:center;
+    color:#8e806c;
+    font-size:13px;
+    margin-bottom:38px;
+}
+
+/* =========================
+   FILE TEXT
+========================= */
+
+.file-info{
+    text-align:center;
+    margin-bottom:28px;
+}
+
+.file-info .warning{
+    color:#a78a61;
+    font-size:13px;
+    margin-bottom:14px;
+}
+
+.file-info p{
+    color:#b9ad9b;
+    font-size:14px;
+    line-height:2;
+}
+
+/* =========================
+   QUESTION
+========================= */
+
+.question{
+    text-align:center;
+    margin:28px 0 20px;
+
+    color:#ded1bd;
+    font-size:18px;
+}
+
+/* =========================
+   INPUT
+========================= */
+
+.input-wrapper{
+    position:relative;
+    width:100%;
+    max-width:430px;
+    margin:0 auto 18px;
+}
+
+input{
+    width:100%;
+    height:58px;
+
+    padding:0 20px;
+
+    background:rgba(5,4,3,.85);
+
+    border:1px solid rgba(174,140,84,.4);
+
+    color:#e8dfcf;
+
+    text-align:center;
+
+    font-family:Tahoma,Arial,sans-serif;
+    font-size:17px;
+
+    outline:none;
+
+    transition:
+        border .3s,
+        box-shadow .3s,
+        background .3s;
+}
+
+input::placeholder{
+    color:#625a4f;
+}
+
+input:focus{
+    border-color:rgba(204,170,107,.75);
+
+    background:rgba(8,6,4,.95);
+
+    box-shadow:
+        0 0 20px rgba(177,136,70,.08);
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+button{
+    display:block;
+
+    width:100%;
+    max-width:430px;
+    height:56px;
+
+    margin:0 auto;
+
+    border:1px solid rgba(185,150,91,.55);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(103,79,47,.35),
+            rgba(45,34,22,.5)
+        );
+
+    color:#d9c9ad;
+
+    font-family:Tahoma,Arial,sans-serif;
+    font-size:15px;
+
+    cursor:pointer;
+
+    transition:
+        background .3s,
+        border .3s,
+        transform .2s,
+        box-shadow .3s;
+}
+
+button:hover{
+    background:
+        linear-gradient(
+            180deg,
+            rgba(130,98,58,.45),
+            rgba(55,41,26,.65)
+        );
+
+    border-color:rgba(214,176,108,.75);
+
+    box-shadow:
+        0 0 25px rgba(180,135,70,.12);
+}
+
+button:active{
+    transform:scale(.985);
+}
+
+/* =========================
+   WRONG ANSWER
+========================= */
+
+.message{
+    min-height:24px;
+
+    text-align:center;
+
+    margin-top:17px;
+
+    color:#806e59;
+
+    font-size:12px;
+
+    opacity:0;
+
+    transition:opacity .3s;
+}
+
+.message.show{
+    opacity:1;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    margin-top:32px;
+
+    padding-top:17px;
+
+    border-top:1px solid rgba(180,145,88,.16);
+
+    display:flex;
+    justify-content:space-between;
+
+    color:#62594d;
+
+    font-size:10px;
+}
+
+/* =========================
+   SUCCESS OVERLAY
+========================= */
+
+.success-overlay{
+    position:fixed;
+    inset:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:
+        rgba(0,0,0,.88);
+
+    z-index:100;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:
+        opacity .5s,
+        visibility .5s;
+}
+
+.success-overlay.active{
+    opacity:1;
+    visibility:visible;
+}
+
+.success-box{
+    width:min(520px,88vw);
+
+    text-align:center;
+
+    padding:50px 35px;
+
+    border:1px solid rgba(190,155,94,.45);
+
+    background:
+        linear-gradient(
+            rgba(17,13,9,.97),
+            rgba(8,6,4,.98)
+        );
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.9);
+
+    transform:scale(.9);
+
+    transition:transform .5s;
+}
+
+.success-overlay.active .success-box{
+    transform:scale(1);
+}
+           .success-symbol{
+    font-size:34px;
+    color:#b89b6a;
+    margin-bottom:22px;
+}
+
+.success-box h2{
+    font-size:26px;
+    font-weight:normal;
+    color:#e6d7bc;
+    margin-bottom:15px;
+}
+
+.success-box p{
+    color:#938673;
+    font-size:13px;
+    line-height:2;
+    margin-bottom:30px;
+}
+
+.continue-btn{
+    max-width:280px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+    .case-panel{
+        padding:35px 22px 30px;
+    }
+
+    .title{
+        font-size:28px;
+        letter-spacing:3px;
+    }
+
+    .subtitle{
+        font-size:11px;
+    }
+
+    .question{
+        font-size:16px;
+    }
+
+    .top-line{
+        font-size:9px;
+    }
+
+    .footer{
+        font-size:8px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+<div class="background"></div>
+
+<!-- VIGNETTE -->
+<div class="vignette"></div>
+
+<!-- LAMP LIGHT -->
+<div class="lamp-light"></div>
+
+<!-- DUST -->
+<div class="dust">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<!-- FILM NOISE -->
+<div class="noise"></div>
 
 
-            if (answer === correctAnswer) {
+<!-- =========================
+     MAIN
+========================= -->
 
-                message.className =
-                    "message correct show";
+<div class="container">
 
-                message.textContent =
-                    "پاسخ درست است...";
+    <div class="case-panel">
 
-
-                setTimeout(function () {
-
-                    document
-                        .getElementById("successScreen")
-                        .classList.add("active");
-
-                }, 900);
+        <div class="top-line">
+            <span>بایگانی محرمانه ـ دسترسی محدود</span>
+            <span>پرونده ۰۱۷</span>
+        </div>
 
 
-            } else {
+        <h1 class="title">
+            کابوس خاموش
+        </h1>
 
-                message.className =
-                    "message wrong show";
-
-
-                const messages = [
-
-                    "این پاسخ با شواهد پرونده مطابقت ندارد.",
-
-                    "نه... هنوز چیزی را اشتباه دیده‌ای.",
-
-                    "پرونده این پاسخ را نمی‌پذیرد.",
-
-                    "دوباره به سرنخ‌ها فکر کن..."
-
-                ];
+        <div class="subtitle">
+            پرونده‌ای که نباید باز می‌شد
+        </div>
 
 
-                message.textContent =
-                    messages[
-                        Math.floor(
-                            Math.random() * messages.length
-                        )
-                    ];
+        <div class="file-info">
+
+            <div class="warning">
+                ⚠ هشدار: این پرونده تحت نظارت مستقیم کلانتر است
+            </div>
+
+            <p>
+                سال ۱۸۸۷ ـ سرزمین‌های غربی آمریکا
+                <br>
+                بخشی از اطلاعات این پرونده از بین رفته است.
+                <br>
+                تنها چیزی که باقی مانده، یک سرنخ است.
+            </p>
+
+        </div>
 
 
-                input.value = "";
+        <div class="question">
+            پاسخ سرنخ را وارد کنید
+        </div>
 
-            }
+
+        <div class="input-wrapper">
+
+            <input
+                type="text"
+                id="answer"
+                placeholder="پاسخ را اینجا وارد کنید..."
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <button id="checkBtn">
+            بررسی سرنخ
+        </button>
+
+
+        <div class="message" id="message"></div>
+
+
+        <div class="footer">
+
+            <span>
+                پرونده محرمانه
+            </span>
+
+            <span>
+                سال ۱۸۸۷
+            </span>
+
+            <span>
+                دسترسی: محدود
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     SUCCESS
+========================= -->
+
+<div class="success-overlay" id="successOverlay">
+
+    <div class="success-box">
+
+        <div class="success-symbol">
+            ◈
+        </div>
+
+        <h2>
+            سرنخ تأیید شد
+        </h2>
+
+        <p>
+            پاسخ صحیح است.
+            <br>
+            اما چیزی که پشت این سرنخ پنهان شده،
+            تازه آغاز ماجراست...
+        </p>
+
+        <button
+            class="continue-btn"
+            id="continueBtn"
+        >
+            ادامه پرونده
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const answerInput = document.getElementById("answer");
+const checkBtn = document.getElementById("checkBtn");
+const message = document.getElementById("message");
+
+const successOverlay =
+    document.getElementById("successOverlay");
+
+const continueBtn =
+    document.getElementById("continueBtn");
+
+
+/* =========================
+   WRONG ANSWERS
+========================= */
+
+const wrongMessages = [
+
+    "این پاسخ با چیزی که در پرونده ثبت شده مطابقت ندارد.",
+
+    "نه... این همان چیزی نیست که دنبالش می‌گردیم.",
+
+    "یک بار دیگر به سرنخ نگاه کن.",
+
+    "جواب اشتباه است... اما پرونده هنوز چیزی را پنهان کرده.",
+
+    "این پاسخ درست نیست.",
+
+    "کلانتر این جواب را در پرونده ثبت نکرده است.",
+           "دوباره فکر کن... یک جزئیات کوچک را از دست داده‌ای.",
+
+    "این سرنخ تو را به جای اشتباهی می‌برد."
+
+];
+
+
+/* =========================
+   NORMALIZE PERSIAN
+========================= */
+
+function normalizeText(text){
+
+    return text
+        .trim()
+        .replace(/ي/g,"ی")
+        .replace(/ى/g,"ی")
+        .replace(/ك/g,"ک")
+        .replace(/\s+/g,"");
+
+}
+
+
+/* =========================
+   CHECK ANSWER
+========================= */
+
+function checkAnswer(){
+
+    const answer =
+        normalizeText(answerInput.value);
+
+    if(answer === "سالون"){
+
+        message.classList.remove("show");
+
+        successOverlay.classList.add("active");
+
+    }
+
+    else{
+
+        const randomMessage =
+            wrongMessages[
+                Math.floor(
+                    Math.random() *
+                    wrongMessages.length
+                )
+            ];
+
+        message.textContent =
+            randomMessage;
+
+        message.classList.remove("show");
+
+        void message.offsetWidth;
+
+        message.classList.add("show");
+
+        answerInput.focus();
+
+    }
+
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+checkBtn.addEventListener(
+    "click",
+    checkAnswer
+);
+
+
+/* =========================
+   ENTER KEY
+========================= */
+
+answerInput.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+
+            checkAnswer();
 
         }
 
-
-        /* رفتن به صفحه دوم */
-
-        function goNext() {
-
-            window.location.href =
-                "page2.html";
-
-        }
+    }
+);
 
 
-        /* امکان ارسال پاسخ با Enter */
+/* =========================
+   CONTINUE
+========================= */
 
-        document
-            .getElementById("answer")
-            .addEventListener(
-                "keydown",
-                function (event) {
+continueBtn.addEventListener(
+    "click",
+    function(){
 
-                    if (event.key === "Enter") {
+        window.location.href =
+            "page2.html";
 
-                        checkAnswer();
+    }
+);
 
-                    }
-
-                }
-            );
-
-    </script>
+</script>
 
 </body>
-</html>
+</html> 
