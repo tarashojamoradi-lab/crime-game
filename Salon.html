@@ -40,6 +40,7 @@ html,body{
         blur(2.5px);
     transform:scale(1.03);
     z-index:0;
+    cursor:pointer;
 }
 
 /* =========================
@@ -166,6 +167,7 @@ html,body{
     justify-content:center;
     align-items:center;
     padding:20px;
+    pointer-events:none;
 }
 
 /* =========================
@@ -191,6 +193,22 @@ html,body{
         inset 0 0 40px rgba(0,0,0,.55);
 
     animation:panelAppear 1.4s ease;
+
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(20px) scale(.98);
+    transition:
+        opacity .8s ease,
+        visibility .8s ease,
+        transform .8s ease;
+
+    pointer-events:auto;
+}
+
+.case-panel.active{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0) scale(1);
 }
 
 @keyframes panelAppear{
@@ -208,7 +226,8 @@ html,body{
 /* =========================
    TOP LINE
 ========================= */
-          .top-line{
+
+.top-line{
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -384,27 +403,156 @@ button:active{
 }
 
 /* =========================
-   WRONG ANSWER
+   WRONG ANSWER / RED STAMPS
 ========================= */
 
 .message{
-    min-height:24px;
+    position:fixed;
+    top:50%;
+    left:50%;
+    z-index:50;
 
-    text-align:center;
+    min-height:0;
+    margin:0;
 
-    margin-top:17px;
+    color:#a51f1f;
+    font-family:Georgia, "Times New Roman", serif;
+    font-size:27px;
+    font-weight:bold;
+    letter-spacing:2px;
 
-    color:#806e59;
+    border:3px solid rgba(155,25,25,.78);
+    padding:7px 18px;
 
-    font-size:12px;
-
+    transform:translate(-50%,-50%) rotate(-8deg) scale(1.55);
     opacity:0;
+    visibility:hidden;
 
-    transition:opacity .3s;
+    pointer-events:none;
+
+    text-shadow:0 1px 1px rgba(0,0,0,.35);
+
+    transition:
+        opacity .18s ease,
+        transform .18s ease,
+        visibility .18s;
 }
 
 .message.show{
     opacity:1;
+    visibility:visible;
+    transform:translate(-50%,-50%) rotate(-8deg) scale(1);
+    animation:stampImpact .42s ease;
+}
+
+@keyframes stampImpact{
+    0%{
+        transform:translate(-50%,-50%) rotate(-8deg) scale(1.6);
+        opacity:0;
+    }
+
+    45%{
+        transform:translate(-50%,-50%) rotate(-8deg) scale(.92);
+        opacity:1;
+    }
+
+    70%{
+        transform:translate(-50%,-50%) rotate(-8deg) scale(1.05);
+    }
+
+    100%{
+        transform:translate(-50%,-50%) rotate(-8deg) scale(1);
+    }
+}
+
+/* آثار مهرهای قبلی */
+
+.failed-stamps{
+    position:absolute;
+    inset:0;
+    z-index:6;
+    pointer-events:none;
+    overflow:hidden;
+}
+
+.failed-stamp{
+    position:absolute;
+
+    color:rgba(145,28,28,.42);
+    border:2px solid rgba(145,28,28,.34);
+
+    padding:4px 11px;
+
+    font-family:Georgia, "Times New Roman", serif;
+    font-size:14px;
+    font-weight:bold;
+    letter-spacing:1px;
+
+    opacity:.75;
+
+    transform:rotate(-8deg);
+    filter:blur(.15px);
+}
+
+/* =========================
+   SUCCESS STAMP
+========================= */
+
+.success-stamp{
+    position:fixed;
+    top:50%;
+    left:50%;
+    z-index:150;
+
+    color:rgba(45,145,70,.95);
+    border:3px solid rgba(45,145,70,.82);
+
+    padding:7px 18px;
+
+    font-family:Georgia, "Times New Roman", serif;
+    font-size:27px;
+    font-weight:bold;
+    letter-spacing:2px;
+
+    transform:translate(-50%,-50%) rotate(-8deg) scale(1.55);
+    opacity:0;
+    visibility:hidden;
+
+    pointer-events:none;
+
+    text-shadow:0 1px 1px rgba(0,0,0,.35);
+
+    transition:
+        opacity .18s ease,
+        transform .18s ease,
+        visibility .18s;
+}
+
+.success-stamp.show{
+    opacity:1;
+    visibility:visible;
+    transform:translate(-50%,-50%) rotate(-8deg) scale(1);
+    animation:successStampImpact .42s ease;
+}
+
+@keyframes successStampImpact{
+    0%{
+        transform:translate(-50%,-50%) rotate(-8deg) scale(1.6);
+        opacity:0;
+    }
+
+    45%{
+        transform:translate(-50%,-50%) rotate(-8deg) scale(.92);
+        opacity:1;
+    }
+
+    70%{
+        transform:translate(-50%,-50%) rotate(-8deg) scale(1.05);
+    }
+
+    100%{
+        transform:translate(-50%,-50%) rotate(-8deg) scale(1);
+    }
 }
 
 /* =========================
@@ -482,7 +630,8 @@ button:active{
 .success-overlay.active .success-box{
     transform:scale(1);
 }
-           .success-symbol{
+
+.success-symbol{
     font-size:34px;
     color:#b89b6a;
     margin-bottom:22px;
@@ -536,6 +685,11 @@ button:active{
     .footer{
         font-size:8px;
     }
+
+    .message{
+        font-size:22px;
+        padding:6px 14px;
+    }
 }
 
 </style>
@@ -544,7 +698,7 @@ button:active{
 <body>
 
 <!-- BACKGROUND -->
-<div class="background"></div>
+<div class="background" id="background"></div>
 
 <!-- VIGNETTE -->
 <div class="vignette"></div>
@@ -574,7 +728,10 @@ button:active{
 
 <div class="container">
 
-    <div class="case-panel">
+    <div class="case-panel" id="casePanel">
+
+        <!-- آثار شکست‌های قبلی -->
+        <div class="failed-stamps" id="failedStamps"></div>
 
         <div class="top-line">
             <span>بایگانی محرمانه ـ دسترسی محدود</span>
@@ -630,7 +787,7 @@ button:active{
         </button>
 
 
-        <div class="message" id="message"></div>
+        <div class="message" id="message">رد شد</div>
 
 
         <div class="footer">
@@ -651,6 +808,15 @@ button:active{
 
     </div>
 
+</div>
+
+
+<!-- =========================
+     SUCCESS STAMP
+========================= -->
+
+<div class="success-stamp" id="successStamp">
+    تأیید شد
 </div>
 
 
@@ -689,15 +855,39 @@ button:active{
 </div>
 
 
+<audio id="stampSound" src="stamp.mp3" preload="auto"></audio>
+
 <script>
 
 /* =========================
    ELEMENTS
-========================= */
+=========================
 
-const answerInput = document.getElementById("answer");
-const checkBtn = document.getElementById("checkBtn");
-const message = document.getElementById("message");
+
+
+const background =
+    document.getElementById("background");
+
+const casePanel =
+    document.getElementById("casePanel");
+
+const answerInput =
+    document.getElementById("answer");
+
+const checkBtn =
+    document.getElementById("checkBtn");
+
+const message =
+    document.getElementById("message");
+
+const successStamp =
+    document.getElementById("successStamp");
+
+const stampSound =
+    document.getElementById("stampSound");
+
+const failedStamps =
+    document.getElementById("failedStamps");
 
 const successOverlay =
     document.getElementById("successOverlay");
@@ -707,27 +897,58 @@ const continueBtn =
 
 
 /* =========================
-   WRONG ANSWERS
+   OPEN CASE ON CENTER TAP
 ========================= */
 
-const wrongMessages = [
+let caseOpened = false;
 
-    "این پاسخ با چیزی که در پرونده ثبت شده مطابقت ندارد.",
+function openCase(){
 
-    "نه... این همان چیزی نیست که دنبالش می‌گردیم.",
+    if(caseOpened){
+        return;
+    }
 
-    "یک بار دیگر به سرنخ نگاه کن.",
+    caseOpened = true;
 
-    "جواب اشتباه است... اما پرونده هنوز چیزی را پنهان کرده.",
+    casePanel.classList.add("active");
 
-    "این پاسخ درست نیست.",
+}
 
-    "کلانتر این جواب را در پرونده ثبت نکرده است.",
-           "دوباره فکر کن... یک جزئیات کوچک را از دست داده‌ای.",
 
-    "این سرنخ تو را به جای اشتباهی می‌برد."
+/*
+   فقط ناحیه مرکزی تصویر قابل کلیک است.
+   این ناحیه تقریباً 34% عرض و 34% ارتفاع صفحه را پوشش می‌دهد.
+*/
 
-];
+background.addEventListener("click", function(event){
+
+    const x = event.clientX;
+    const y = event.clientY;
+
+    const centerWidth =
+        window.innerWidth * 0.34;
+
+    const centerHeight =
+        window.innerHeight * 0.34;
+
+    const left =
+        (window.innerWidth - centerWidth) / 2;
+
+    const top =
+        (window.innerHeight - centerHeight) / 2;
+
+    if(
+        x >= left &&
+        x <= left + centerWidth &&
+        y >= top &&
+        y <= top + centerHeight
+    ){
+
+        openCase();
+
+    }
+
+});
 
 
 /* =========================
@@ -747,6 +968,89 @@ function normalizeText(text){
 
 
 /* =========================
+   ADD FAILED STAMP
+========================= */
+
+let failedCount = 0;
+
+function addFailedStamp(){
+
+    failedCount++;
+
+    const stamp =
+        document.createElement("div");
+
+    stamp.className =
+        "failed-stamp";
+
+    stamp.textContent =
+        "رد شد";
+
+    /*
+       مهرهای قبلی در نقاط مختلف پرونده
+       جمع می‌شوند تا شکست‌ها بخشی از داستان بمانند.
+    */
+
+    const positions = [
+        {top:"18%", left:"9%", rotate:"-7deg"},
+        {top:"32%", right:"8%", rotate:"9deg"},
+        {bottom:"22%", left:"13%", rotate:"-11deg"},
+        {bottom:"12%", right:"15%", rotate:"6deg"},
+        {top:"48%", left:"4%", rotate:"8deg"},
+        {top:"12%", right:"25%", rotate:"-5deg"}
+    ];
+
+    const position =
+        positions[
+            (failedCount - 1) % positions.length
+        ];
+
+    Object.keys(position).forEach(function(key){
+
+        if(key === "rotate"){
+            stamp.style.transform =
+                "rotate(" + position[key] + ")";
+        }
+
+        else{
+            stamp.style[key] =
+                position[key];
+        }
+
+    });
+
+    failedStamps.appendChild(stamp);
+
+}
+
+
+/* =========================
+   SHOW TEMPORARY RED STAMP
+========================= */
+
+function showRejectedStamp(){
+
+    message.classList.remove("show");
+
+    void message.offsetWidth;
+
+    message.classList.add("show");
+
+    /*
+       مهر اصلی بعد از مدتی محو می‌شود،
+       اما اثر کوچک آن در پرونده باقی می‌ماند.
+    */
+
+    setTimeout(function(){
+
+        message.classList.remove("show");
+
+    }, 1150);
+
+}
+
+
+/* =========================
    CHECK ANSWER
 ========================= */
 
@@ -759,28 +1063,29 @@ function checkAnswer(){
 
         message.classList.remove("show");
 
-        successOverlay.classList.add("active");
+        successStamp.classList.remove("show");
+
+        void successStamp.offsetWidth;
+
+        successStamp.classList.add("show");
+
+        stampSound.currentTime = 0;
+        stampSound.play().catch(function(){});
+
+        setTimeout(function(){
+
+            window.location.href =
+                "page2.html";
+
+        }, 1250);
 
     }
 
     else{
 
-        const randomMessage =
-            wrongMessages[
-                Math.floor(
-                    Math.random() *
-                    wrongMessages.length
-                )
-            ];
+        addFailedStamp();
 
-        message.textContent =
-            randomMessage;
-
-        message.classList.remove("show");
-
-        void message.offsetWidth;
-
-        message.classList.add("show");
+        showRejectedStamp();
 
         answerInput.focus();
 
@@ -834,4 +1139,4 @@ continueBtn.addEventListener(
 </script>
 
 </body>
-</html> 
+</html>
