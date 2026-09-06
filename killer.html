@@ -3,3243 +3,1567 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Deadwood — Final Verdict</title>
 
 <style>
-
 @import url('https://fonts.googleapis.com/css2?family=Rye&family=Special+Elite&display=swap');
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing:border-box; margin:0; padding:0; }
 
-html,
-body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
+html, body { width:100%; height:100%; overflow:hidden; }
 
 body {
-    background: #080605;
-    color: #ead8b5;
-    font-family: "Special Elite", monospace;
+    background:#080605;
+    color:#ead8b5;
+    font-family:"Special Elite", monospace;
 }
-
 
 /* =====================================================
    MAIN SCENE
 ===================================================== */
-
 .scene {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
     background-image:
-        linear-gradient(
-            rgba(5, 3, 2, 0.12),
-            rgba(5, 3, 2, 0.48)
-        ),
+        linear-gradient(rgba(5,3,2,.12),rgba(5,3,2,.48)),
         url("kill.png");
-
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    transition:
-        filter 1.5s ease,
-        opacity 1.5s ease;
-
-    overflow: hidden;
-    z-index: 1;
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    transition:filter 1.5s ease,opacity 1.5s ease;
+    overflow:hidden;
+    z-index:1;
 }
-
-.scene.dark {
-    filter:
-        brightness(0.08)
-        contrast(1.15);
-}
-
+.scene.dark { filter:brightness(.08) contrast(1.15); }
 .scene::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            transparent 30%,
-            rgba(0,0,0,.30) 65%,
-            rgba(0,0,0,.88) 100%
-        );
-
-    z-index: 2;
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,.30) 65%,rgba(0,0,0,.88) 100%);
+    z-index:2;
 }
-
 
 /* =====================================================
    OLD FILM GRAIN
 ===================================================== */
-
 .grain {
-    position: absolute;
-    inset: -50%;
-    width: 200%;
-    height: 200%;
-
-    opacity: .07;
-
-    background-image:
-        repeating-radial-gradient(
-            circle at 0 0,
-            transparent 0,
-            rgba(255,255,255,.18) 1px,
-            transparent 2px
-        );
-
-    animation:
-        grainMove .18s steps(2) infinite;
-
-    pointer-events: none;
-    z-index: 20;
+    position:absolute;
+    inset:-50%;
+    width:200%;
+    height:200%;
+    opacity:.07;
+    background-image:repeating-radial-gradient(circle at 0 0,transparent 0,rgba(255,255,255,.18) 1px,transparent 2px);
+    animation:grainMove .18s steps(2) infinite;
+    pointer-events:none;
+    z-index:20;
 }
-
 @keyframes grainMove {
-    0% {
-        transform: translate(0,0);
-    }
-
-    25% {
-        transform: translate(-2%,1%);
-    }
-
-    50% {
-        transform: translate(1%,-2%);
-    }
-
-    75% {
-        transform: translate(2%,2%);
-    }
-
-    100% {
-        transform: translate(-1%,-1%);
-    }
+    0%{transform:translate(0,0)}
+    25%{transform:translate(-2%,1%)}
+    50%{transform:translate(1%,-2%)}
+    75%{transform:translate(2%,2%)}
+    100%{transform:translate(-1%,-1%)}
 }
-
 
 /* =====================================================
    HEADER
 ===================================================== */
-
 .header {
-    position: absolute;
-    top: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    z-index: 10;
-    text-align: center;
-
-    color: #d7c09a;
-
-    text-shadow:
-        0 2px 5px #000,
-        0 0 15px rgba(0,0,0,.9);
-
-    transition: opacity 1s ease;
+    position:absolute;
+    top:24px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:10;
+    text-align:center;
+    color:#d7c09a;
+    text-shadow:0 2px 5px #000,0 0 15px rgba(0,0,0,.9);
+    transition:opacity 1s ease;
 }
-
 .header .location {
-    font-family: "Rye", serif;
-
-    font-size:
-        clamp(13px, 2vw, 21px);
-
-    letter-spacing: 4px;
+    font-family:"Rye",serif;
+    font-size:clamp(13px,2vw,21px);
+    letter-spacing:4px;
 }
-
 .header .year {
-    margin-top: 5px;
-
-    font-size: 9px;
-    letter-spacing: 4px;
-
-    opacity: .65;
+    margin-top:5px;
+    font-size:9px;
+    letter-spacing:4px;
+    opacity:.65;
 }
-
 
 /* =====================================================
    ANSWER AREA
 ===================================================== */
-
 .verdict-panel {
-    position: absolute;
-    z-index: 10;
-
-    width: min(430px, 75vw);
-
-    left: 50%;
-    top: 69%;
-
-    transform:
-        translate(-50%, -50%);
-
-    text-align: center;
-
-    transition:
-        opacity .8s ease,
-        transform .8s ease;
+    position:absolute;
+    z-index:10;
+    width:min(430px,75vw);
+    left:50%;
+    top:69%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    transition:opacity .8s ease,transform .8s ease;
 }
-
 .title {
-    font-family: "Rye", serif;
-
-    font-size:
-        clamp(19px, 4vw, 34px);
-
-    letter-spacing: 2px;
-
-    color: #291a11;
-
-    margin-bottom: 18px;
-
-    text-shadow:
-        0 1px rgba(255,255,255,.3);
+    font-family:"Rye",serif;
+    font-size:clamp(19px,4vw,34px);
+    letter-spacing:2px;
+    color:#291a11;
+    margin-bottom:18px;
+    text-shadow:0 1px rgba(255,255,255,.3);
 }
-
-.input-group {
-    width: 100%;
-    margin: 9px auto;
-    text-align: left;
-}
-
+.input-group { width:100%; margin:9px auto; text-align:left; }
 .input-label {
-    display: block;
-
-    margin:
-        0 0 5px 7px;
-
-    color: #2d1c12;
-
-    font-size: 11px;
-    font-weight: bold;
-    letter-spacing: 1px;
+    display:block;
+    margin:0 0 5px 7px;
+    color:#2d1c12;
+    font-size:11px;
+    font-weight:bold;
+    letter-spacing:1px;
 }
-
 .input-box {
-    width: 100%;
-    height: 44px;
-
-    padding: 0 14px;
-
-    border:
-        1px solid
-        rgba(67,39,22,.75);
-
-    border-radius: 2px;
-    outline: none;
-
-    background:
-        linear-gradient(
-            rgba(246,227,190,.91),
-            rgba(214,184,136,.91)
-        );
-
-    color: #21140d;
-
-    font-family:
-        "Special Elite",
-        monospace;
-
-    font-size: 16px;
-    text-align: center;
-
-    box-shadow:
-        inset 0 0 12px
-        rgba(50,28,12,.25),
-
-        0 3px 8px
-        rgba(0,0,0,.5);
-
-    transition: .25s;
+    width:100%;
+    height:44px;
+    padding:0 14px;
+    border:1px solid rgba(67,39,22,.75);
+    border-radius:2px;
+    outline:none;
+    background:linear-gradient(rgba(246,227,190,.91),rgba(214,184,136,.91));
+    color:#21140d;
+    font-family:"Special Elite",monospace;
+    font-size:16px;
+    text-align:center;
+    box-shadow:inset 0 0 12px rgba(50,28,12,.25),0 3px 8px rgba(0,0,0,.5);
+    transition:.25s;
 }
-
-.input-box::placeholder {
-    color: #604735;
-    opacity: .72;
-}
-
+.input-box::placeholder { color:#604735; opacity:.72; }
 .input-box:focus {
-    background: #ead6b0;
-
-    box-shadow:
-        inset 0 0 14px
-        rgba(60,30,10,.25),
-
-        0 0 0 2px
-        rgba(91,38,27,.35);
+    background:#ead6b0;
+    box-shadow:inset 0 0 14px rgba(60,30,10,.25),0 0 0 2px rgba(91,38,27,.35);
 }
-
 .submit-btn {
-    width: 100%;
-    height: 51px;
-
-    margin-top: 16px;
-
-    border:
-        1px solid
-        #6b3b2d;
-
-    background:
-        linear-gradient(
-            #3e2018,
-            #24100c
-        );
-
-    color: #e6d0a6;
-
-    font-family:
-        "Rye",
-        serif;
-
-    font-size: 14px;
-    letter-spacing: 2px;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 5px 13px
-        rgba(0,0,0,.65),
-
-        inset 0 0 10px
-        rgba(0,0,0,.7);
-
-    transition: .25s;
+    width:100%;
+    height:51px;
+    margin-top:16px;
+    border:1px solid #6b3b2d;
+    background:linear-gradient(#3e2018,#24100c);
+    color:#e6d0a6;
+    font-family:"Rye",serif;
+    font-size:14px;
+    letter-spacing:2px;
+    cursor:pointer;
+    box-shadow:0 5px 13px rgba(0,0,0,.65),inset 0 0 10px rgba(0,0,0,.7);
+    transition:.25s;
 }
-
 .submit-btn:hover {
-    background:
-        linear-gradient(
-            #54291e,
-            #2b120e
-        );
-
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0 7px 18px
-        rgba(0,0,0,.75),
-
-        0 0 15px
-        rgba(100,40,28,.25);
+    background:linear-gradient(#54291e,#2b120e);
+    transform:translateY(-2px);
+    box-shadow:0 7px 18px rgba(0,0,0,.75),0 0 15px rgba(100,40,28,.25);
 }
-
-.submit-btn:active {
-    transform:
-        translateY(1px);
-}
-
+.submit-btn:active { transform:translateY(1px); }
 .warning {
-    margin-top: 9px;
-
-    font-size: 8px;
-    letter-spacing: 1px;
-
-    color: #3c261a;
-    opacity: .75;
+    margin-top:9px;
+    font-size:8px;
+    letter-spacing:1px;
+    color:#3c261a;
+    opacity:.75;
 }
-
 
 /* =====================================================
    WRONG ANSWER
 ===================================================== */
-
 .wrong-message {
-    position: fixed;
-
-    left: 50%;
-    bottom: 25px;
-
-    transform:
-        translateX(-50%);
-
-    z-index: 50;
-
-    color: #9b382c;
-
-    font-family:
-        "Special Elite",
-        monospace;
-
-    font-size: 12px;
-    letter-spacing: 1px;
-
-    opacity: 0;
-    pointer-events: none;
-
-    transition: opacity .3s ease;
-
-    text-shadow:
-        0 2px 4px #000;
+    position:fixed;
+    left:50%;
+    bottom:25px;
+    transform:translateX(-50%);
+    z-index:50;
+    color:#9b382c;
+    font-family:"Special Elite",monospace;
+    font-size:12px;
+    letter-spacing:1px;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .3s ease;
+    text-shadow:0 2px 4px #000;
 }
-
-.wrong-message.show {
-    opacity: 1;
-}
-
-.shake {
-    animation:
-        shake .35s ease;
-}
-
+.wrong-message.show { opacity:1; }
+.shake { animation:shake .35s ease; }
 @keyframes shake {
-    0% {
-        transform:
-            translate(-50%, -50%);
-    }
-
-    20% {
-        transform:
-            translate(calc(-50% - 8px), -50%);
-    }
-
-    40% {
-        transform:
-            translate(calc(-50% + 8px), -50%);
-    }
-
-    60% {
-        transform:
-            translate(calc(-50% - 5px), -50%);
-    }
-
-    80% {
-        transform:
-            translate(calc(-50% + 5px), -50%);
-    }
-
-    100% {
-        transform:
-            translate(-50%, -50%);
-    }
+    0%{transform:translate(-50%,-50%)}
+    20%{transform:translate(calc(-50% - 8px),-50%)}
+    40%{transform:translate(calc(-50% + 8px),-50%)}
+    60%{transform:translate(calc(-50% - 5px),-50%)}
+    80%{transform:translate(calc(-50% + 5px),-50%)}
+    100%{transform:translate(-50%,-50%)}
 }
-
 
 /* =====================================================
    BLACKOUT
 ===================================================== */
-
 .blackout {
-    position: fixed;
-    inset: 0;
-
-    z-index: 100;
-
-    background: #000;
-
-    opacity: 0;
-    visibility: hidden;
-
-    transition:
-        opacity 1.4s ease;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
+    position:fixed;
+    inset:0;
+    z-index:100;
+    background:#000;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity 1.4s ease;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
 }
-
-.blackout.active {
-    opacity: 1;
-    visibility: visible;
-}
-
+.blackout.active { opacity:1; visibility:visible; }
 .whisper {
-    color: #cdbb9a;
-
-    font-family:
-        "Special Elite",
-        monospace;
-
-    font-size:
-        clamp(19px, 4vw, 31px);
-
-    letter-spacing: 2px;
-
-    opacity: 0;
-
-    transform:
-        translateY(8px);
-
-    transition:
-        opacity 1.3s ease,
-        transform 1.3s ease;
-
-    text-shadow:
-        0 0 20px
-        rgba(255,255,255,.12);
+    color:#cdbb9a;
+    font-family:"Special Elite",monospace;
+    font-size:clamp(19px,4vw,31px);
+    letter-spacing:2px;
+    opacity:0;
+    transform:translateY(8px);
+    transition:opacity 1.3s ease,transform 1.3s ease;
+    text-shadow:0 0 20px rgba(255,255,255,.12);
 }
-
-.whisper.show {
-    opacity: 1;
-
-    transform:
-        translateY(0);
-}
-
+.whisper.show { opacity:1; transform:translateY(0); }
 
 /* =====================================================
    FINAL RESULT
 ===================================================== */
-
 .result {
-    position: fixed;
-    inset: 0;
-
-    z-index: 120;
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            #21130e,
-            #080504 70%
-        );
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-
-    opacity: 0;
-    visibility: hidden;
-
-    transition:
-        opacity 1s ease;
+    position:fixed;
+    inset:0;
+    z-index:120;
+    background:radial-gradient(ellipse at center,#21130e,#080504 70%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity 1s ease;
 }
-
-.result.show {
-    opacity: 1;
-    visibility: visible;
-}
-
+.result.show { opacity:1; visibility:visible; }
 .result h1 {
-    font-family:
-        "Rye",
-        serif;
-
-    font-size:
-        clamp(35px, 9vw, 72px);
-
-    color: #a33a2c;
-
-    letter-spacing: 4px;
-
-    transform:
-        rotate(-4deg);
-
-    border:
-        4px solid #8d3025;
-
-    padding:
-        10px 25px;
-
-    text-shadow:
-        2px 2px 0 #35130f;
-
-    box-shadow:
-        0 0 0 2px
-        rgba(141,48,37,.25),
-
-        0 0 30px
-        rgba(0,0,0,.8);
+    font-family:"Rye",serif;
+    font-size:clamp(35px,9vw,72px);
+    color:#a33a2c;
+    letter-spacing:4px;
+    transform:rotate(-4deg);
+    border:4px solid #8d3025;
+    padding:10px 25px;
+    text-shadow:2px 2px 0 #35130f;
+    box-shadow:0 0 0 2px rgba(141,48,37,.25),0 0 30px rgba(0,0,0,.8);
 }
-
 .result p {
-    margin-top: 28px;
-
-    padding: 0 25px;
-
-    max-width: 600px;
-
-    color: #cdbb9d;
-
-    font-size: 14px;
-    line-height: 2;
+    margin-top:28px;
+    padding:0 25px;
+    max-width:600px;
+    color:#cdbb9d;
+    font-size:14px;
+    line-height:2;
 }
-
 
 /* =====================================================
    FINAL FILES SCREEN
 ===================================================== */
-
 .files-screen {
-    position: fixed;
-    inset: 0;
-
-    z-index: 200;
-
-    background: #090604;
-
-    opacity: 0;
-    visibility: hidden;
-
-    transition:
-        opacity 1.2s ease;
-
-    overflow: hidden;
+    position:fixed;
+    inset:0;
+    z-index:200;
+    background:#090604;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity 1.2s ease;
+    overflow:hidden;
 }
-
-.files-screen.show {
-    opacity: 1;
-    visibility: visible;
-}
-
+.files-screen.show { opacity:1; visibility:visible; }
 .files-background {
-    position: absolute;
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-    object-position: center;
-
-    filter:
-        brightness(.68)
-        contrast(1.08)
-        sepia(.12);
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    filter:brightness(.68) contrast(1.08) sepia(.12);
 }
-
 .files-screen::after {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    background:
-        linear-gradient(
-            rgba(10,6,3,.20),
-            rgba(10,6,3,.52)
-        );
-
-    pointer-events: none;
-
-    z-index: 2;
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(rgba(10,6,3,.20),rgba(10,6,3,.52));
+    pointer-events:none;
+    z-index:2;
 }
-
 .files-title {
-    position: absolute;
-
-    top: 7%;
-    left: 50%;
-
-    transform:
-        translateX(-50%);
-
-    z-index: 5;
-
-    width: 90%;
-
-    text-align: center;
-
-    color: #e1c99c;
-
-    text-shadow:
-        0 2px 6px #000,
-        0 0 15px #000;
+    position:absolute;
+    top:7%;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:5;
+    width:90%;
+    text-align:center;
+    color:#e1c99c;
+    text-shadow:0 2px 6px #000,0 0 15px #000;
 }
-
 .files-title .english {
-    font-family:
-        "Rye",
-        serif;
-
-    font-size:
-        clamp(18px, 5vw, 30px);
-
-    letter-spacing: 3px;
+    font-family:"Rye",serif;
+    font-size:clamp(18px,5vw,30px);
+    letter-spacing:3px;
 }
-
 .files-title .persian {
-    margin-top: 8px;
-
-    font-family:
-        Tahoma,
-        sans-serif;
-
-    font-size: 13px;
-
-    color: #cbb58f;
+    margin-top:8px;
+    font-family:Tahoma,sans-serif;
+    font-size:13px;
+    color:#cbb58f;
 }
-
 .file-button {
-    position: absolute;
-
-    z-index: 6;
-
-    border: none;
-    background: transparent;
-
-    cursor: pointer;
-    padding: 0;
-
-    color: transparent;
-
-    -webkit-tap-highlight-color: transparent;
-
-    transition:
-        transform .25s ease,
-        filter .25s ease;
+    position:absolute;
+    z-index:6;
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    padding:0;
+    color:transparent;
+    -webkit-tap-highlight-color:transparent;
+    transition:transform .25s ease,filter .25s ease;
 }
-
-.file-levi {
-    width: 43%;
-    height: 48%;
-
-    left: 5%;
-    top: 35%;
-}
-
-.file-dean {
-    width: 43%;
-    height: 48%;
-
-    right: 5%;
-    top: 35%;
-}
-
-.file-button:active {
-    transform: scale(.96);
-
-    filter: brightness(1.25);
-}
-
+.file-levi { width:43%; height:48%; left:5%; top:35%; }
+.file-dean { width:43%; height:48%; right:5%; top:35%; }
+.file-button:active { transform:scale(.96); filter:brightness(1.25); }
 .file-hint {
-    position: absolute;
-
-    left: 50%;
-    bottom: 6%;
-
-    transform:
-        translateX(-50%);
-
-    z-index: 7;
-
-    width: 90%;
-
-    text-align: center;
-
-    color: #d1bd96;
-
-    text-shadow:
-        0 2px 5px #000;
-
-    font-family:
-        "Special Elite",
-        monospace;
-
-    font-size: 10px;
-    letter-spacing: 1.5px;
-
-    animation:
-        hintPulse 2.2s ease-in-out infinite;
+    position:absolute;
+    left:50%;
+    bottom:6%;
+    transform:translateX(-50%);
+    z-index:7;
+    width:90%;
+    text-align:center;
+    color:#d1bd96;
+    text-shadow:0 2px 5px #000;
+    font-family:"Special Elite",monospace;
+    font-size:10px;
+    letter-spacing:1.5px;
+    animation:hintPulse 2.2s ease-in-out infinite;
 }
-
 @keyframes hintPulse {
-    0%,100% {
-        opacity: .55;
-    }
-
-    50% {
-        opacity: 1;
-    }
+    0%,100%{opacity:.55}
+    50%{opacity:1}
 }
-
 
 /* =====================================================
    STORY PAGES
 ===================================================== */
-
 .story-page {
-    position: fixed;
-    inset: 0;
-
-    z-index: 300;
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            #25170f,
-            #080504 75%
-        );
-
-    opacity: 0;
-    visibility: hidden;
-
-    transition:
-        opacity .8s ease;
-
-    overflow-y: auto;
-
-    padding:
-        28px 15px 45px;
-
-    scrollbar-width: thin;
-
-    scrollbar-color:
-        #6a4630
-        #120b07;
+    position:fixed;
+    inset:0;
+    z-index:300;
+    background:radial-gradient(ellipse at center,#25170f,#080504 75%);
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .8s ease;
+    overflow-y:auto;
+    padding:28px 15px 45px;
+    scrollbar-width:thin;
+    scrollbar-color:#6a4630 #120b07;
 }
-
-.story-page.show {
-    opacity: 1;
-    visibility: visible;
-}
-
+.story-page.show { opacity:1; visibility:visible; }
 
 /* =====================================================
    CASE PAPER
 ===================================================== */
-
 .story-paper {
-    width:
-        min(720px, 94vw);
-
-    min-height:
-        80vh;
-
-    margin:
-        0 auto;
-
-    padding:
-        30px 25px 38px;
-
-    background:
-        linear-gradient(
-            rgba(235,216,174,.98),
-            rgba(207,179,127,.98)
-        );
-
-    color: #27170e;
-
-    box-shadow:
-        0 10px 35px
-        rgba(0,0,0,.8),
-
-        inset 0 0 35px
-        rgba(72,42,19,.25);
-
-    border:
-        1px solid
-        rgba(67,39,22,.7);
-
-    position: relative;
+    width:min(720px,94vw);
+    min-height:80vh;
+    margin:0 auto;
+    padding:30px 25px 38px;
+    background:linear-gradient(rgba(235,216,174,.98),rgba(207,179,127,.98));
+    color:#27170e;
+    box-shadow:0 10px 35px rgba(0,0,0,.8),inset 0 0 35px rgba(72,42,19,.25);
+    border:1px solid rgba(67,39,22,.7);
+    position:relative;
 }
-
 .story-paper::before {
-    content: "";
-
-    position: absolute;
-
-    inset: 9px;
-
-    border:
-        1px solid
-        rgba(65,39,22,.35);
-
-    pointer-events: none;
+    content:"";
+    position:absolute;
+    inset:9px;
+    border:1px solid rgba(65,39,22,.35);
+    pointer-events:none;
 }
-
 .story-paper::after {
-    content:
-        "CONFIDENTIAL";
-
-    position: absolute;
-
-    top: 22px;
-    right: 25px;
-
-    padding:
-        5px 9px;
-
-    border:
-        2px solid
-        rgba(105,38,27,.72);
-
-    color:
-        rgba(105,38,27,.72);
-
-    font-family:
-        "Special Elite",
-        monospace;
-
-    font-size: 9px;
-
-    letter-spacing: 2px;
-
-    transform:
-        rotate(-8deg);
-
-    opacity: .8;
+    content:"CONFIDENTIAL";
+    position:absolute;
+    top:22px;
+    right:25px;
+    padding:5px 9px;
+    border:2px solid rgba(105,38,27,.72);
+    color:rgba(105,38,27,.72);
+    font-family:"Special Elite",monospace;
+    font-size:9px;
+    letter-spacing:2px;
+    transform:rotate(-8deg);
+    opacity:.8;
 }
-
 
 /* =====================================================
    CASE HEADER
 ===================================================== */
-
 .case-header {
-    position: relative;
-
-    text-align: center;
-
-    border-bottom:
-        2px solid
-        rgba(61,37,22,.55);
-
-    padding:
-        8px 55px 17px;
-
-    margin-bottom: 20px;
+    position:relative;
+    text-align:center;
+    border-bottom:2px solid rgba(61,37,22,.55);
+    padding:8px 55px 17px;
+    margin-bottom:20px;
 }
-
 .case-office {
-    font-family:
-        "Rye",
-        serif;
-
-    font-size:
-        clamp(13px, 3vw, 20px);
-
-    letter-spacing: 2px;
-
-    color: #3b2114;
+    font-family:"Rye",serif;
+    font-size:clamp(13px,3vw,20px);
+    letter-spacing:2px;
+    color:#3b2114;
 }
-
 .case-location {
-    margin-top: 5px;
-
-    font-family:
-        "Special Elite",
-        monospace;
-
-    font-size: 9px;
-
-    letter-spacing: 2px;
-
-    opacity: .72;
+    margin-top:5px;
+    font-family:"Special Elite",monospace;
+    font-size:9px;
+    letter-spacing:2px;
+    opacity:.72;
 }
-
 .case-classification {
-    margin-top: 10px;
-
-    font-size: 8px;
-
-    letter-spacing: 2px;
-
-    opacity: .7;
+    margin-top:10px;
+    font-size:8px;
+    letter-spacing:2px;
+    opacity:.7;
 }
-
 
 /* =====================================================
    STORY NUMBER
 ===================================================== */
-
 .story-number {
-    text-align: center;
-
-    font-family:
-        "Special Elite",
-        monospace;
-
-    font-size: 9px;
-
-    letter-spacing: 3px;
-
-    opacity: .7;
-
-    margin-bottom: 12px;
+    text-align:center;
+    font-family:"Special Elite",monospace;
+    font-size:9px;
+    letter-spacing:3px;
+    opacity:.7;
+    margin-bottom:12px;
 }
-
 .story-title {
-    text-align: center;
-
-    font-family:
-        "Rye",
-        serif;
-
-    font-size:
-        clamp(23px, 7vw, 40px);
-
-    color: #351c12;
-
-    letter-spacing: 2px;
+    text-align:center;
+    font-family:"Rye",serif;
+    font-size:clamp(23px,7vw,40px);
+    color:#351c12;
+    letter-spacing:2px;
 }
-
 .story-persian-title {
-    text-align: center;
-
-    direction: rtl;
-
-    font-family:
-        Tahoma,
-        sans-serif;
-
-    font-size: 15px;
-
-    margin-top: 8px;
-
-    color: #543324;
+    text-align:center;
+    direction:rtl;
+    font-family:Tahoma,sans-serif;
+    font-size:15px;
+    margin-top:8px;
+    color:#543324;
 }
-
 .story-divider {
-    width: 70%;
-    height: 1px;
-
-    margin: 22px auto;
-
-    background: #5c3928;
-
-    opacity: .5;
+    width:70%;
+    height:1px;
+    margin:22px auto;
+    background:#5c3928;
+    opacity:.5;
 }
-
 
 /* =====================================================
    DOCUMENT SYSTEM — POLICE STYLE
 ===================================================== */
-
 .document-counter {
-    text-align: center;
-
-    margin-bottom: 8px;
-
-    font-family:
-        "Special Elite",
-        monospace;
-
-    font-size: 10px;
-
-    letter-spacing: 3px;
-
-    color: #5b3927;
-
-    font-weight: bold;
-
-    opacity: .9;
+    text-align:center;
+    margin-bottom:8px;
+    font-family:"Special Elite",monospace;
+    font-size:10px;
+    letter-spacing:3px;
+    color:#5b3927;
+    font-weight:bold;
+    opacity:.9;
 }
-
-
-/* تیتر اصلی DOCUMENT */
-
 .document-label {
-    display: block;
-
-    text-align: center;
-
-    font-family:
-        "Special Elite",
-        monospace;
-
-    font-size:
-        clamp(24px, 7vw, 38px);
-
-    font-weight: 900;
-
-    letter-spacing: 4px;
-
-    color: #24140c;
-
-    margin-bottom: 7px;
-
-    text-transform: uppercase;
-
-    text-shadow:
-        1px 1px 0 rgba(255,255,255,.28);
-
-    position: relative;
+    display:block;
+    text-align:center;
+    font-family:"Special Elite",monospace;
+    font-size:clamp(24px,7vw,38px);
+    font-weight:900;
+    letter-spacing:4px;
+    color:#24140c;
+    margin-bottom:7px;
+    text-transform:uppercase;
+    text-shadow:1px 1px 0 rgba(255,255,255,.28);
+    position:relative;
 }
-
-
-/* خطوط پلیسی دو طرف DOCUMENT */
-
 .document-label::before,
 .document-label::after {
-    content: "";
-
-    display: inline-block;
-
-    vertical-align: middle;
-
-    width: 12%;
-
-    height: 2px;
-
-    margin: 0 12px;
-
-    background: #43291c;
-
-    opacity: .65;
+    content:"";
+    display:inline-block;
+    vertical-align:middle;
+    width:12%;
+    height:2px;
+    margin:0 12px;
+    background:#43291c;
+    opacity:.65;
 }
-
-
-/* شماره پرونده */
-
 .document-counter::before {
-    content: "CASE RECORD • ";
-    font-weight: bold;
+    content:"CASE RECORD • ";
+    font-weight:bold;
 }
-
-
-/* زیرتیتر */
-
 .document-subtitle {
-    display: block;
-
-    text-align: center;
-
-    direction: rtl;
-
-    font-family:
-        Tahoma,
-        sans-serif;
-
-    font-size: 13px;
-
-    font-weight: bold;
-
-    color: #543324;
-
-    margin-bottom: 24px;
-
-    padding-bottom: 10px;
-
-    border-bottom:
-        2px solid
-        rgba(70,43,26,.28);
+    display:block;
+    text-align:center;
+    direction:rtl;
+    font-family:Tahoma,sans-serif;
+    font-size:13px;
+    font-weight:bold;
+    color:#543324;
+    margin-bottom:24px;
+    padding-bottom:10px;
+    border-bottom:2px solid rgba(70,43,26,.28);
 }
-
-
-/* =====================================================
-   POLICE FILE STRIP
-===================================================== */
-
 .document-subtitle::before {
-    content: "EVIDENCE RECORD  •  ";
-
-    direction: ltr;
-
-    font-family:
-        "Special Elite",
-        monospace;
-
-    font-size: 8px;
-
-    letter-spacing: 2px;
-
-    color: #75452f;
-
-    opacity: .8;
+    content:"EVIDENCE RECORD  •  ";
+    direction:ltr;
+    font-family:"Special Elite",monospace;
+    font-size:8px;
+    letter-spacing:2px;
+    color:#75452f;
+    opacity:.8;
 }
-
 
 /* =====================================================
    STORY CONTENT
 ===================================================== */
-
 .story-content {
-    direction: rtl;
-
-    text-align: right;
-
-    font-family:
-        Tahoma,
-        sans-serif;
-
-    font-size: 15px;
-
-    line-height: 2.35;
-
-    color: #2d1a10;
-
-    min-height: 250px;
-
-    position: relative;
-
-    overflow: visible;
+    direction:rtl;
+    text-align:right;
+    font-family:Tahoma,sans-serif;
+    font-size:15px;
+    line-height:2.35;
+    color:#2d1a10;
+    min-height:250px;
+    position:relative;
+    overflow:visible;
 }
-
 .story-content p {
-    margin-bottom: 18px;
-
-    text-indent: 22px;
+    margin-bottom:18px;
+    text-indent:22px;
 }
-
-.story-content p:first-child {
-    text-indent: 0;
-}
-
+.story-content p:first-child { text-indent:0; }
 
 /* =====================================================
-   EVIDENCE PHOTO
+   EVIDENCE PHOTO — LARGE / CLEAN / CLICK TO ZOOM
 ===================================================== */
 
 .evidence-wrap {
-    direction: ltr;
-
-    width: 100px;
-
-    margin:
-        8px 8px 17px 14px;
-
-    float: left;
-
-    position: relative;
-
-    z-index: 3;
-
-    transform:
-        rotate(var(--evidence-rotation));
-
-    filter:
-        drop-shadow(
-            0 5px 5px
-            rgba(0,0,0,.35)
-        );
+    direction:ltr;
+    width:245px;
+    margin:8px 0 25px 25px;
+    float:right;
+    position:relative;
+    z-index:3;
+    transform:rotate(var(--evidence-rotation));
+    filter:drop-shadow(0 8px 10px rgba(0,0,0,.42));
+    cursor:zoom-in;
 }
-
-
-/* عکس واقعی 3×4 */
 
 .evidence-photo {
-    display: block;
-
-    width: 82px;
-    height: 110px;
-
-    object-fit: cover;
-
-    padding: 4px;
-
-    background: #eee1c5;
-
-    border:
-        1px solid
-        #3d2b20;
-
-    box-shadow:
-        inset 0 0 5px rgba(0,0,0,.25),
-        2px 3px 0 rgba(49,31,20,.25);
+    display:block;
+    width:230px;
+    height:auto;
+    max-width:100%;
+    max-height:430px;
+    object-fit:contain;
+    padding:0;
+    margin:0;
+    background:transparent;
+    border:0;
+    box-shadow:none;
+    cursor:zoom-in;
 }
-
-
-/* پونز */
-
-.evidence-wrap::before {
-    content: "";
-
-    position: absolute;
-
-    width: 12px;
-    height: 12px;
-
-    top: -7px;
-    left: 34px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle at 35% 30%,
-            #ead8b5 0 12%,
-            #8d7357 25%,
-            #4a382b 65%,
-            #251a14 100%
-        );
-
-    border:
-        1px solid
-        #302218;
-
-    box-shadow:
-        0 2px 3px rgba(0,0,0,.45);
-
-    z-index: 5;
-}
-
-
-/* سوراخ/اثر پونز */
-
-.evidence-wrap::after {
-    content: "";
-
-    position: absolute;
-
-    top: 1px;
-    left: 39px;
-
-    width: 3px;
-    height: 3px;
-
-    border-radius: 50%;
-
-    background: #1e120b;
-
-    opacity: .65;
-
-    z-index: 6;
-}
-
-
-/* برچسب مدرک */
 
 .evidence-caption {
-    width: 82px;
-
-    margin-top: 5px;
-
-    padding-top: 4px;
-
-    border-top:
-        1px solid
-        rgba(58,38,25,.55);
-
-    font-family:
-        "Special Elite",
-        monospace;
-
-    font-size: 6px;
-
-    line-height: 1.3;
-
-    letter-spacing: .8px;
-
-    text-align: center;
-
-    color: #503323;
-
-    background:
-        rgba(225,205,164,.55);
+    display:none;
 }
 
 .evidence-clear {
-    clear: both;
+    clear:both;
 }
 
+/* عکس طاعون: جدا از وسط متن، بزرگ و در ابتدای سند */
+.evidence-wrap[data-code="L-05"] {
+    float:none;
+    width:100%;
+    margin:0 0 28px 0;
+    text-align:center;
+    transform:rotate(-2deg);
+}
+
+.evidence-wrap[data-code="L-05"] .evidence-photo {
+    width:300px;
+    max-width:82%;
+    max-height:470px;
+    margin:0 auto;
+}
+
+/* عکس zani کامل و بدون برش */
+.evidence-wrap[data-code="D-02"] {
+    width:310px;
+    margin-left:22px;
+}
+
+.evidence-wrap[data-code="D-02"] .evidence-photo {
+    width:300px;
+    height:auto;
+    max-width:100%;
+    max-height:none;
+    object-fit:contain;
+}
+
+/* =====================================================
+   FULLSCREEN EVIDENCE ZOOM
+===================================================== */
+
+.evidence-zoom {
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:25px;
+    background:rgba(0,0,0,.94);
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:opacity .25s ease;
+}
+
+.evidence-zoom.show {
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+}
+
+.evidence-zoom img {
+    display:block;
+    max-width:94vw;
+    max-height:92vh;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    background:transparent;
+    border:0;
+    box-shadow:0 15px 45px rgba(0,0,0,.75);
+    transform:none !important;
+    cursor:zoom-out;
+}
+
+.evidence-zoom-close {
+    position:absolute;
+    top:17px;
+    right:22px;
+    width:42px;
+    height:42px;
+    border:1px solid rgba(225,205,164,.55);
+    background:rgba(25,15,9,.72);
+    color:#ead8b5;
+    font-family:"Special Elite",monospace;
+    font-size:24px;
+    line-height:38px;
+    text-align:center;
+    cursor:pointer;
+    z-index:2;
+}
+
+.evidence-zoom-label {
+    position:absolute;
+    bottom:17px;
+    left:50%;
+    transform:translateX(-50%);
+    color:#d8c29a;
+    font-family:"Special Elite",monospace;
+    font-size:9px;
+    letter-spacing:2px;
+    text-align:center;
+    text-shadow:0 2px 5px #000;
+}
 
 /* =====================================================
    ARCHIVE NOTE
 ===================================================== */
-
 .archive-note {
-    margin:
-        25px 0;
-
-    padding:
-        13px 15px;
-
-    border:
-        1px solid
-        rgba(76,48,30,.45);
-
-    border-left:
-        4px solid
-        rgba(91,53,35,.65);
-
-    background:
-        rgba(112,78,48,.09);
-
-    direction: rtl;
-
-    font-family:
-        Tahoma,
-        sans-serif;
-
-    font-size: 12px;
-
-    line-height: 2;
-
-    color: #543522;
-
-    position: relative;
+    margin:25px 0;
+    padding:13px 15px;
+    border:1px solid rgba(76,48,30,.45);
+    border-left:4px solid rgba(91,53,35,.65);
+    background:rgba(112,78,48,.09);
+    direction:rtl;
+    font-family:Tahoma,sans-serif;
+    font-size:12px;
+    line-height:2;
+    color:#543522;
+    position:relative;
 }
-
 .archive-note::before {
-    content:
-        "SHERIFF'S NOTE";
-
-    display: block;
-
-    direction: ltr;
-
-    text-align: left;
-
-    font-family:
-        "Special Elite",
-        monospace;
-
-    font-size: 8px;
-
-    letter-spacing: 2px;
-
-    margin-bottom: 5px;
-
-    color: #75452f;
-
-    opacity: .75;
+    content:"SHERIFF'S NOTE";
+    display:block;
+    direction:ltr;
+    text-align:left;
+    font-family:"Special Elite",monospace;
+    font-size:8px;
+    letter-spacing:2px;
+    margin-bottom:5px;
+    color:#75452f;
+    opacity:.75;
 }
-
 
 /* =====================================================
    FINAL STATEMENT
 ===================================================== */
-
 .final-statement {
-    margin-top: 30px;
-
-    padding:
-        18px 16px;
-
-    border-top:
-        1px solid
-        rgba(76,48,30,.5);
-
-    border-bottom:
-        1px solid
-        rgba(76,48,30,.5);
-
-    text-align: center;
-
-    direction: rtl;
-
-    font-family:
-        Tahoma,
-        sans-serif;
-
-    font-size: 15px;
-
-    line-height: 2.3;
-
-    font-style: italic;
-
-    color: #432719;
+    margin-top:30px;
+    padding:18px 16px;
+    border-top:1px solid rgba(76,48,30,.5);
+    border-bottom:1px solid rgba(76,48,30,.5);
+    text-align:center;
+    direction:rtl;
+    font-family:Tahoma,sans-serif;
+    font-size:15px;
+    line-height:2.3;
+    font-style:italic;
+    color:#432719;
 }
-
 
 /* =====================================================
    DOCUMENT NAVIGATION
 ===================================================== */
-
 .document-navigation {
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 12px;
-
-    margin-top: 30px;
-
-    position: relative;
-    z-index: 5;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    margin-top:30px;
+    position:relative;
+    z-index:5;
 }
-
 .document-btn {
-    min-width: 145px;
-
-    padding:
-        12px 16px;
-
-    border:
-        1px solid
-        #633729;
-
-    background:
-        linear-gradient(
-            #3b2017,
-            #24100c
-        );
-
-    color: #e0c89b;
-
-    font-family:
-        "Rye",
-        serif;
-
-    font-size: 10px;
-
-    letter-spacing: 1px;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 4px 10px rgba(0,0,0,.5);
-
-    transition:
-        .25s ease;
+    min-width:145px;
+    padding:12px 16px;
+    border:1px solid #633729;
+    background:linear-gradient(#3b2017,#24100c);
+    color:#e0c89b;
+    font-family:"Rye",serif;
+    font-size:10px;
+    letter-spacing:1px;
+    cursor:pointer;
+    box-shadow:0 4px 10px rgba(0,0,0,.5);
+    transition:.25s ease;
 }
-
 .document-btn:hover {
-    background:
-        linear-gradient(
-            #4c281d,
-            #2b120e
-        );
-
-    transform:
-        translateY(-1px);
+    background:linear-gradient(#4c281d,#2b120e);
+    transform:translateY(-1px);
 }
-
-.document-btn:active {
-    transform:
-        translateY(1px);
-}
-
-.document-btn.hidden {
-    visibility: hidden;
-
-    pointer-events: none;
-}
-
+.document-btn:active { transform:translateY(1px); }
+.document-btn.hidden { visibility:hidden; pointer-events:none; }
 
 /* =====================================================
    FILE MARKS
 ===================================================== */
-
 .file-mark {
-    margin-top: 22px;
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    direction: ltr;
-
-    font-family:
-        "Special Elite",
-        monospace;
-
-    font-size: 8px;
-
-    color: #654330;
-
-    opacity: .65;
+    margin-top:22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    direction:ltr;
+    font-family:"Special Elite",monospace;
+    font-size:8px;
+    color:#654330;
+    opacity:.65;
 }
-
 .back-files {
-    display: block;
-
-    margin:
-        24px auto 0;
-
-    padding:
-        12px 20px;
-
-    border:
-        1px solid
-        #633729;
-
-    background:
-        #321a12;
-
-    color: #e0c89b;
-
-    font-family:
-        "Rye",
-        serif;
-
-    font-size: 10px;
-
-    letter-spacing: 1px;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 4px 10px rgba(0,0,0,.5);
+    display:block;
+    margin:24px auto 0;
+    padding:12px 20px;
+    border:1px solid #633729;
+    background:#321a12;
+    color:#e0c89b;
+    font-family:"Rye",serif;
+    font-size:10px;
+    letter-spacing:1px;
+    cursor:pointer;
+    box-shadow:0 4px 10px rgba(0,0,0,.5);
 }
-
 
 /* =====================================================
    MOBILE
 ===================================================== */
+@media (max-width:600px) {
+    .header { top:13px; }
+    .header .location { font-size:11px; letter-spacing:2px; }
+    .header .year { font-size:7px; letter-spacing:2px; }
 
-@media (max-width: 600px) {
+    .verdict-panel { width:72vw; top:69%; }
+    .title { font-size:18px; margin-bottom:12px; }
+    .input-label { font-size:9px; }
+    .input-box { height:38px; font-size:14px; }
+    .submit-btn { height:43px; font-size:11px; }
+    .warning { font-size:6px; }
 
-    .header {
-        top: 13px;
-    }
-
-    .header .location {
-        font-size: 11px;
-        letter-spacing: 2px;
-    }
-
-    .header .year {
-        font-size: 7px;
-        letter-spacing: 2px;
-    }
-
-    .verdict-panel {
-        width: 72vw;
-        top: 69%;
-    }
-
-    .title {
-        font-size: 18px;
-        margin-bottom: 12px;
-    }
-
-    .input-label {
-        font-size: 9px;
-    }
-
-    .input-box {
-        height: 38px;
-        font-size: 14px;
-    }
-
-    .submit-btn {
-        height: 43px;
-        font-size: 11px;
-    }
-
-    .warning {
-        font-size: 6px;
-    }
-
-    .files-title {
-        top: 5%;
-    }
-
-    .files-title .english {
-        font-size: 17px;
-        letter-spacing: 2px;
-    }
-
-    .files-title .persian {
-        font-size: 11px;
-        margin-top: 5px;
-    }
+    .files-title { top:5%; }
+    .files-title .english { font-size:17px; letter-spacing:2px; }
+    .files-title .persian { font-size:11px; margin-top:5px; }
 
     .file-levi {
-        width: 46%;
-        height: 45%;
-        left: 2%;
-        top: 35%;
+        width:46%;
+        height:45%;
+        left:2%;
+        top:35%;
     }
-
     .file-dean {
-        width: 46%;
-        height: 45%;
-        right: 2%;
-        top: 35%;
+        width:46%;
+        height:45%;
+        right:2%;
+        top:35%;
     }
 
-    .file-hint {
-        bottom: 5%;
-        font-size: 8px;
-        letter-spacing: 1px;
-    }
+    .file-hint { bottom:5%; font-size:8px; letter-spacing:1px; }
 
-    .story-page {
-        padding:
-            15px 8px 35px;
-    }
-
-    .story-paper {
-        width: 96vw;
-        padding:
-            25px 17px 32px;
-    }
+    .story-page { padding:15px 8px 35px; }
+    .story-paper { width:96vw; padding:25px 17px 32px; }
 
     .story-paper::after {
-        top: 17px;
-        right: 18px;
-        font-size: 7px;
+        top:17px;
+        right:18px;
+        font-size:7px;
     }
 
-    .case-header {
-        padding:
-            5px 35px 14px;
-    }
-
-    .case-office {
-        font-size: 12px;
-    }
-
-    .case-location {
-        font-size: 7px;
-    }
-
-    .case-classification {
-        font-size: 7px;
-    }
+    .case-header { padding:5px 35px 14px; }
+    .case-office { font-size:12px; }
+    .case-location { font-size:7px; }
+    .case-classification { font-size:7px; }
 
     .story-content {
-        font-size: 14px;
-        line-height: 2.25;
+        font-size:14px;
+        line-height:2.25;
     }
-
     .story-content p {
-        margin-bottom: 16px;
-        text-indent: 17px;
+        margin-bottom:16px;
+        text-indent:17px;
     }
 
-    /* عکس‌های مدرک در موبایل */
-
+    /* عکس‌های مدرک — بزرگ، بدون قاب و بدون برش */
     .evidence-wrap {
-        width: 88px;
-
-        margin:
-            8px 6px 14px 10px;
+        width:205px;
+        margin:5px 0 22px 10px;
     }
 
     .evidence-photo {
-        width: 70px;
-        height: 94px;
+        width:195px;
+        height:auto;
+        max-width:100%;
+        max-height:none;
+        padding:0;
+        background:transparent;
+        border:0;
+        box-shadow:none;
     }
 
-    .evidence-caption {
-        width: 70px;
-        font-size: 5px;
+    .evidence-wrap[data-code="L-05"] {
+        width:100%;
+        margin:0 0 24px 0;
+        text-align:center;
     }
 
-    .evidence-wrap::before {
-        left: 29px;
+    .evidence-wrap[data-code="L-05"] .evidence-photo {
+        width:240px;
+        max-width:88%;
+        max-height:none;
+        margin:0 auto;
     }
 
-    .evidence-wrap::after {
-        left: 34px;
+    .evidence-wrap[data-code="D-02"] {
+        width:100%;
+        margin:8px 0 22px 0;
+        float:none;
+        text-align:center;
+    }
+
+    .evidence-wrap[data-code="D-02"] .evidence-photo {
+        width:245px;
+        max-width:90%;
+        height:auto;
+        max-height:none;
+        margin:0 auto;
+        object-fit:contain;
+    }
+
+    .evidence-zoom {
+        padding:12px;
+    }
+
+    .evidence-zoom img {
+        max-width:96vw;
+        max-height:88vh;
+    }
+
+    .evidence-zoom-close {
+        top:10px;
+        right:10px;
+        width:38px;
+        height:38px;
+        line-height:34px;
+        font-size:21px;
+    }
+
+    .evidence-zoom-label {
+        bottom:10px;
+        font-size:7px;
     }
 
     .document-label {
-        font-size: 23px;
-        letter-spacing: 2px;
+        font-size:23px;
+        letter-spacing:2px;
     }
-
     .document-label::before,
     .document-label::after {
-        width: 7%;
-        margin: 0 6px;
+        width:7%;
+        margin:0 6px;
     }
+    .document-subtitle { font-size:11px; }
 
-    .document-subtitle {
-        font-size: 11px;
-    }
-
-    .document-navigation {
-        gap: 7px;
-    }
-
+    .document-navigation { gap:7px; }
     .document-btn {
-        min-width: 125px;
-        padding:
-            11px 9px;
-        font-size: 8px;
+        min-width:125px;
+        padding:11px 9px;
+        font-size:8px;
     }
-
-    .back-files {
-        font-size: 9px;
-    }
-
+    .back-files { font-size:9px; }
 }
-
 </style>
 </head>
-
 
 <body>
 
 <div class="scene" id="scene">
-
     <div class="grain"></div>
 
     <div class="header">
-
-        <div class="location">
-            DEADWOOD SHERIFF'S OFFICE
-        </div>
-
-        <div class="year">
-            DEADWOOD • DAKOTA TERRITORY • 1887
-        </div>
-
+        <div class="location">DEADWOOD SHERIFF'S OFFICE</div>
+        <div class="year">DEADWOOD • DAKOTA TERRITORY • 1887</div>
     </div>
-
 
     <div class="verdict-panel" id="verdictPanel">
+        <div class="title">WHO DID IT?</div>
 
-        <div class="title">
-            WHO DID IT?
+        <div class="input-group">
+            <label class="input-label">THE KILLER</label>
+            <input id="killer" class="input-box" type="text" autocomplete="off" placeholder="نام قاتل را وارد کنید">
         </div>
 
         <div class="input-group">
-
-            <label class="input-label">
-                THE KILLER
-            </label>
-
-            <input
-                id="killer"
-                class="input-box"
-                type="text"
-                autocomplete="off"
-                placeholder="نام قاتل را وارد کنید"
-            >
-
+            <label class="input-label">THE ACCOMPLICE</label>
+            <input id="accomplice" class="input-box" type="text" autocomplete="off" placeholder="نام همدست را وارد کنید">
         </div>
 
-        <div class="input-group">
-
-            <label class="input-label">
-                THE ACCOMPLICE
-            </label>
-
-            <input
-                id="accomplice"
-                class="input-box"
-                type="text"
-                autocomplete="off"
-                placeholder="نام همدست را وارد کنید"
-            >
-
-        </div>
-
-        <button class="submit-btn" id="submitBtn">
-            SUBMIT THE VERDICT
-        </button>
-
-        <div class="warning">
-            YOUR VERDICT WILL BE RECORDED.
-        </div>
-
+        <button class="submit-btn" id="submitBtn">SUBMIT THE VERDICT</button>
+        <div class="warning">YOUR VERDICT WILL BE RECORDED.</div>
     </div>
-
 </div>
 
-
-<div class="wrong-message" id="wrongMessage">
-    THE VERDICT IS WRONG.
-</div>
-
+<div class="wrong-message" id="wrongMessage">THE VERDICT IS WRONG.</div>
 
 <div class="blackout" id="blackout">
-
-    <div class="whisper" id="whisper">
-        بالاخره فهمیدی...
-    </div>
-
+    <div class="whisper" id="whisper">بالاخره فهمیدی...</div>
 </div>
-
 
 <div class="result" id="result">
-
-    <h1>
-        CASE CLOSED
-    </h1>
-
-    <p>
-        نام‌ها ثبت شدند.<br>
-        پرونده وارد مرحله‌ی نهایی شد.
-    </p>
-
+    <h1>CASE CLOSED</h1>
+    <p>نام‌ها ثبت شدند.<br>پرونده وارد مرحله‌ی نهایی شد.</p>
 </div>
 
-
 <div class="files-screen" id="filesScreen">
-
-    <img
-        src="din.png"
-        class="files-background"
-        alt="Deadwood Case Files"
-    >
+    <img src="din.png" class="files-background" alt="Deadwood Case Files">
 
     <div class="files-title">
-
-        <div class="english">
-            FINAL CASE FILES
-        </div>
-
-        <div class="persian">
-            پرونده‌های نهایی — برای ادامه، یکی از پرونده‌ها را انتخاب کنید
-        </div>
-
+        <div class="english">FINAL CASE FILES</div>
+        <div class="persian">پرونده‌های نهایی — برای ادامه، یکی از پرونده‌ها را انتخاب کنید</div>
     </div>
 
-    <button
-        class="file-button file-levi"
-        id="leviFile"
-        aria-label="پرونده لیوای تامپسون"
-    >
+    <button class="file-button file-levi" id="leviFile" aria-label="پرونده لیوای تامپسون">
         FILE 01 — LEVI THOMPSON
     </button>
 
-    <button
-        class="file-button file-dean"
-        id="deanFile"
-        aria-label="پرونده دین اشفورد"
-    >
+    <button class="file-button file-dean" id="deanFile" aria-label="پرونده دین اشفورد">
         FILE 02 — DEAN ASHFORD
     </button>
 
-    <div class="file-hint">
-        SELECT A CASE FILE • انتخاب یک پرونده
-    </div>
-
+    <div class="file-hint">SELECT A CASE FILE • انتخاب یک پرونده</div>
 </div>
-
 
 <!-- =====================================================
      LEVI STORY
 ===================================================== -->
-
 <div class="story-page" id="leviPage">
-
     <div class="story-paper">
 
         <div class="case-header">
-
-            <div class="case-office">
-                DEADWOOD SHERIFF'S OFFICE
-            </div>
-
-            <div class="case-location">
-                DEADWOOD • DAKOTA TERRITORY • 1887
-            </div>
-
-            <div class="case-classification">
-                CONFIDENTIAL CASE RECORD • EVIDENCE FILE
-            </div>
-
+            <div class="case-office">DEADWOOD SHERIFF'S OFFICE</div>
+            <div class="case-location">DEADWOOD • DAKOTA TERRITORY • 1887</div>
+            <div class="case-classification">CONFIDENTIAL CASE RECORD • EVIDENCE FILE</div>
         </div>
 
-        <div class="story-number">
-            FILE 01 • SUBJECT: LEVI THOMPSON
-        </div>
-
-        <div class="story-title">
-            LEVI THOMPSON
-        </div>
-
-        <div class="story-persian-title">
-            لیوای تامپسون — قاتل
-        </div>
-
+        <div class="story-number">FILE 01 • SUBJECT: LEVI THOMPSON</div>
+        <div class="story-title">LEVI THOMPSON</div>
+        <div class="story-persian-title">لیوای تامپسون — قاتل</div>
         <div class="story-divider"></div>
 
         <div class="document-counter" id="leviCounter"></div>
-
         <div class="document-label" id="leviDocumentLabel"></div>
-
         <div class="document-subtitle" id="leviDocumentSubtitle"></div>
-
         <div class="story-content" id="leviContent"></div>
 
         <div class="file-mark">
-
-            <span>
-                DEADWOOD / 1887
-            </span>
-
-            <span>
-                L.T. / CONFIDENTIAL
-            </span>
-
+            <span>DEADWOOD / 1887</span>
+            <span>L.T. / CONFIDENTIAL</span>
         </div>
 
         <div class="document-navigation">
-
-            <button
-                class="document-btn"
-                id="leviPrev"
-            >
-                ← PREVIOUS
-            </button>
-
-            <button
-                class="document-btn"
-                id="leviNext"
-            >
-                NEXT DOCUMENT →
-            </button>
-
+            <button class="document-btn" id="leviPrev">← PREVIOUS</button>
+            <button class="document-btn" id="leviNext">NEXT DOCUMENT →</button>
         </div>
 
-        <button
-            class="back-files"
-            id="backFromLevi"
-        >
-            ← RETURN TO CASE FILES
-        </button>
-
+        <button class="back-files" id="backFromLevi">← RETURN TO CASE FILES</button>
     </div>
-
 </div>
-
 
 <!-- =====================================================
      DEAN STORY
 ===================================================== -->
-
 <div class="story-page" id="deanPage">
-
     <div class="story-paper">
 
         <div class="case-header">
-
-            <div class="case-office">
-                DEADWOOD SHERIFF'S OFFICE
-            </div>
-
-            <div class="case-location">
-                DEADWOOD • DAKOTA TERRITORY • 1887
-            </div>
-
-            <div class="case-classification">
-                CONFIDENTIAL CASE RECORD • EVIDENCE FILE
-            </div>
-
+            <div class="case-office">DEADWOOD SHERIFF'S OFFICE</div>
+            <div class="case-location">DEADWOOD • DAKOTA TERRITORY • 1887</div>
+            <div class="case-classification">CONFIDENTIAL CASE RECORD • EVIDENCE FILE</div>
         </div>
 
-        <div class="story-number">
-            FILE 02 • SUBJECT: DEAN ASHFORD
-        </div>
-
-        <div class="story-title">
-            DEAN ASHFORD
-        </div>
-
-        <div class="story-persian-title">
-            دین اشفورد — همدست
-        </div>
-
+        <div class="story-number">FILE 02 • SUBJECT: DEAN ASHFORD</div>
+        <div class="story-title">DEAN ASHFORD</div>
+        <div class="story-persian-title">دین اشفورد — همدست</div>
         <div class="story-divider"></div>
 
         <div class="document-counter" id="deanCounter"></div>
-
         <div class="document-label" id="deanDocumentLabel"></div>
-
         <div class="document-subtitle" id="deanDocumentSubtitle"></div>
-
         <div class="story-content" id="deanContent"></div>
 
         <div class="file-mark">
-
-            <span>
-                DEADWOOD / 1887
-            </span>
-
-            <span>
-                D.A. / CONFIDENTIAL
-            </span>
-
+            <span>DEADWOOD / 1887</span>
+            <span>D.A. / CONFIDENTIAL</span>
         </div>
 
         <div class="document-navigation">
-
-            <button
-                class="document-btn"
-                id="deanPrev"
-            >
-                ← PREVIOUS
-            </button>
-
-            <button
-                class="document-btn"
-                id="deanNext"
-            >
-                NEXT DOCUMENT →
-            </button>
-
+            <button class="document-btn" id="deanPrev">← PREVIOUS</button>
+            <button class="document-btn" id="deanNext">NEXT DOCUMENT →</button>
         </div>
 
-        <button
-            class="back-files"
-            id="backFromDean"
-        >
-            ← RETURN TO CASE FILES
-        </button>
-
+        <button class="back-files" id="backFromDean">← RETURN TO CASE FILES</button>
     </div>
-
 </div>
 
-
-<!-- =====================================================
-     AUDIO
-===================================================== -->
+<div class="evidence-zoom" id="evidenceZoom" onclick="closeEvidenceZoom(event)">
+    <button class="evidence-zoom-close" onclick="closeEvidenceZoom()">×</button>
+    <img id="evidenceZoomImage" src="" alt="Evidence enlarged" onclick="event.stopPropagation(); closeEvidenceZoom();">
+    <div class="evidence-zoom-label">EVIDENCE • TAP THE IMAGE OR × TO RETURN</div>
+</div>
 
 <audio id="gunSound" src="gan.mp3" preload="auto"></audio>
-
 <audio id="manVoice" src="mard.mp3" preload="auto"></audio>
-
 <audio id="stampSound" src="stamp.mp3" preload="auto"></audio>
-
 <audio id="pageSound" src="varagh.mp3" preload="auto"></audio>
 
-
 <script>
+const CORRECT_KILLER = "لیوای تامپسون";
+const CORRECT_ACCOMPLICE = "دین اشفورد";
 
+const killerInput = document.getElementById("killer");
+const accompliceInput = document.getElementById("accomplice");
+const submitBtn = document.getElementById("submitBtn");
+const gunSound = document.getElementById("gunSound");
+const manVoice = document.getElementById("manVoice");
+const stampSound = document.getElementById("stampSound");
+const pageSound = document.getElementById("pageSound");
+const scene = document.getElementById("scene");
+const verdictPanel = document.getElementById("verdictPanel");
+const blackout = document.getElementById("blackout");
+const whisper = document.getElementById("whisper");
+const result = document.getElementById("result");
+const wrongMessage = document.getElementById("wrongMessage");
 
-/* =====================================================
-   CORRECT ANSWERS
-===================================================== */
-
-const CORRECT_KILLER =
-    "لیوای تامپسون";
-
-const CORRECT_ACCOMPLICE =
-    "دین اشفورد";
-
-
-/* =====================================================
-   ELEMENTS
-===================================================== */
-
-const killerInput =
-    document.getElementById("killer");
-
-const accompliceInput =
-    document.getElementById("accomplice");
-
-const submitBtn =
-    document.getElementById("submitBtn");
-
-const gunSound =
-    document.getElementById("gunSound");
-
-const manVoice =
-    document.getElementById("manVoice");
-
-const stampSound =
-    document.getElementById("stampSound");
-
-const pageSound =
-    document.getElementById("pageSound");
-
-const scene =
-    document.getElementById("scene");
-
-const verdictPanel =
-    document.getElementById("verdictPanel");
-
-const blackout =
-    document.getElementById("blackout");
-
-const whisper =
-    document.getElementById("whisper");
-
-const result =
-    document.getElementById("result");
-
-const wrongMessage =
-    document.getElementById("wrongMessage");
-
-
-/* =====================================================
-   FINAL FILE ELEMENTS
-===================================================== */
-
-const filesScreen =
-    document.getElementById("filesScreen");
-
-const leviFile =
-    document.getElementById("leviFile");
-
-const deanFile =
-    document.getElementById("deanFile");
-
-const leviPage =
-    document.getElementById("leviPage");
-
-const deanPage =
-    document.getElementById("deanPage");
-
-const backFromLevi =
-    document.getElementById("backFromLevi");
-
-const backFromDean =
-    document.getElementById("backFromDean");
-
-
-/* =====================================================
-   NORMALIZE PERSIAN TEXT
-===================================================== */
+const filesScreen = document.getElementById("filesScreen");
+const leviFile = document.getElementById("leviFile");
+const deanFile = document.getElementById("deanFile");
+const leviPage = document.getElementById("leviPage");
+const deanPage = document.getElementById("deanPage");
+const backFromLevi = document.getElementById("backFromLevi");
+const backFromDean = document.getElementById("backFromDean");
 
 function normalizeText(text) {
-
-    return text
-        .trim()
-        .replace(/ي/g, "ی")
-        .replace(/ى/g, "ی")
-        .replace(/ك/g, "ک")
-        .replace(/ۀ/g, "ه")
-        .replace(/ة/g, "ه")
-        .replace(/\u200c/g, "")
-        .replace(/\s+/g, "")
+    return text.trim()
+        .replace(/ي/g,"ی")
+        .replace(/ى/g,"ی")
+        .replace(/ك/g,"ک")
+        .replace(/ۀ/g,"ه")
+        .replace(/ة/g,"ه")
+        .replace(/\u200c/g,"")
+        .replace(/\s+/g,"")
         .toLowerCase();
 }
 
-
-/* =====================================================
-   PLAY GUN
-===================================================== */
-
 function playGun() {
-
     gunSound.pause();
-
     gunSound.currentTime = 0;
-
     gunSound.volume = 1;
-
-    gunSound.play().catch(() => {});
-
+    gunSound.play().catch(()=>{});
 }
-
-
-/* =====================================================
-   PLAY PAGE
-===================================================== */
 
 function playPage() {
-
     pageSound.pause();
-
     pageSound.currentTime = 0;
-
-    pageSound.volume = 0.72;
-
-    pageSound.play().catch(() => {});
-
+    pageSound.volume = .72;
+    pageSound.play().catch(()=>{});
 }
-
-
-/* =====================================================
-   WRONG ANSWER
-===================================================== */
 
 function wrongAnswer() {
-
     playGun();
-
     verdictPanel.classList.remove("shake");
-
     void verdictPanel.offsetWidth;
-
     verdictPanel.classList.add("shake");
-
     wrongMessage.classList.remove("show");
-
     void wrongMessage.offsetWidth;
-
     wrongMessage.classList.add("show");
-
-    setTimeout(() => {
-
-        wrongMessage.classList.remove("show");
-
-    }, 1300);
-
+    setTimeout(()=>wrongMessage.classList.remove("show"),1300);
 }
-
-
-/* =====================================================
-   CORRECT ANSWER
-===================================================== */
 
 function correctAnswer() {
-
     submitBtn.disabled = true;
-
     killerInput.disabled = true;
-
     accompliceInput.disabled = true;
-
     verdictPanel.style.opacity = "0";
 
-    setTimeout(() => {
-        scene.classList.add("dark");
-    }, 150);
+    setTimeout(()=>scene.classList.add("dark"),150);
+    setTimeout(()=>blackout.classList.add("active"),800);
 
-    setTimeout(() => {
-        blackout.classList.add("active");
-    }, 800);
-
-    setTimeout(() => {
-
+    setTimeout(()=>{
         manVoice.pause();
-
         manVoice.currentTime = 0;
-
         manVoice.volume = 1;
-
-        manVoice.play().catch(() => {});
-
+        manVoice.play().catch(()=>{});
         whisper.classList.add("show");
+    },1900);
 
-    }, 1900);
-
-    setTimeout(() => {
-
+    setTimeout(()=>{
         result.classList.add("show");
-
         stampSound.pause();
-
         stampSound.currentTime = 0;
-
         stampSound.volume = 1;
+        stampSound.play().catch(()=>{});
+    },4800);
 
-        stampSound.play().catch(() => {});
-
-    }, 4800);
-
-    setTimeout(() => {
-
+    setTimeout(()=>{
         result.classList.remove("show");
-
         filesScreen.classList.add("show");
-
-    }, 7600);
-
+    },7600);
 }
 
-
-/* =====================================================
-   CHECK ANSWER
-===================================================== */
-
 function submitVerdict() {
-
-    const killer =
-        normalizeText(killerInput.value);
-
-    const accomplice =
-        normalizeText(accompliceInput.value);
+    const killer = normalizeText(killerInput.value);
+    const accomplice = normalizeText(accompliceInput.value);
 
     if (!killer || !accomplice) {
-
         wrongAnswer();
-
         return;
     }
 
-    const killerCorrect =
-        killer ===
-        normalizeText(CORRECT_KILLER);
+    const killerCorrect = killer === normalizeText(CORRECT_KILLER);
+    const accompliceCorrect = accomplice === normalizeText(CORRECT_ACCOMPLICE);
 
-    const accompliceCorrect =
-        accomplice ===
-        normalizeText(CORRECT_ACCOMPLICE);
-
-    if (
-        killerCorrect &&
-        accompliceCorrect
-    ) {
-
-        correctAnswer();
-
-    }
-
-    else {
-
-        wrongAnswer();
-
-    }
-
+    if (killerCorrect && accompliceCorrect) correctAnswer();
+    else wrongAnswer();
 }
 
-submitBtn.addEventListener(
-    "click",
-    submitVerdict
-);
+submitBtn.addEventListener("click",submitVerdict);
 
+document.addEventListener("keydown",function(event){
+    if(event.key==="Enter" && !submitBtn.disabled) submitVerdict();
+});
 
-document.addEventListener(
-    "keydown",
-    function(event) {
+leviFile.addEventListener("click",function(){
+    filesScreen.classList.remove("show");
+    setTimeout(()=>{
+        leviPage.classList.add("show");
+        showLeviDocument(0);
+    },500);
+});
 
-        if (
-            event.key === "Enter" &&
-            !submitBtn.disabled
-        ) {
+deanFile.addEventListener("click",function(){
+    filesScreen.classList.remove("show");
+    setTimeout(()=>{
+        deanPage.classList.add("show");
+        showDeanDocument(0);
+    },500);
+});
 
-            submitVerdict();
+backFromLevi.addEventListener("click",function(){
+    leviPage.classList.remove("show");
+    setTimeout(()=>filesScreen.classList.add("show"),500);
+});
 
-        }
-
-    }
-);
-
-
-/* =====================================================
-   OPEN LEVI FILE
-===================================================== */
-
-leviFile.addEventListener(
-    "click",
-    function() {
-
-        filesScreen.classList.remove("show");
-
-        setTimeout(() => {
-
-            leviPage.classList.add("show");
-
-            showLeviDocument(0);
-
-        }, 500);
-
-    }
-);
-
-
-/* =====================================================
-   OPEN DEAN FILE
-===================================================== */
-
-deanFile.addEventListener(
-    "click",
-    function() {
-
-        filesScreen.classList.remove("show");
-
-        setTimeout(() => {
-
-            deanPage.classList.add("show");
-
-            showDeanDocument(0);
-
-        }, 500);
-
-    }
-);
-
-
-/* =====================================================
-   RETURN FROM LEVI
-===================================================== */
-
-backFromLevi.addEventListener(
-    "click",
-    function() {
-
-        leviPage.classList.remove("show");
-
-        setTimeout(() => {
-
-            filesScreen.classList.add("show");
-
-        }, 500);
-
-    }
-);
-
-
-/* =====================================================
-   RETURN FROM DEAN
-===================================================== */
-
-backFromDean.addEventListener(
-    "click",
-    function() {
-
-        deanPage.classList.remove("show");
-
-        setTimeout(() => {
-
-            filesScreen.classList.add("show");
-
-        }, 500);
-
-    }
-);
-
+backFromDean.addEventListener("click",function(){
+    deanPage.classList.remove("show");
+    setTimeout(()=>filesScreen.classList.add("show"),500);
+});
 
 /* =====================================================
    EVIDENCE PHOTO HELPER
+   Same locations as your original code.
+   No pin/staple is generated.
 ===================================================== */
-
-function evidencePhoto(
-    src,
-    code,
-    rotation = "-2deg"
-) {
-
+function evidencePhoto(src,code,rotation="-2deg") {
     return `
-        <div
-            class="evidence-wrap"
-            style="--evidence-rotation:${rotation};"
-        >
-
-            <img
-                src="${src}"
-                class="evidence-photo"
-                alt="Evidence ${code}"
-            >
-
-            <div class="evidence-caption">
-                EVIDENCE ${code}<br>
-                DEADWOOD • 1887
-            </div>
-
+        <div class="evidence-wrap" data-code="${code}" style="--evidence-rotation:${rotation};">
+            <img src="${src}" class="evidence-photo" alt="Evidence ${code}" onclick="openEvidenceZoom(this)">
         </div>
-
         <div class="evidence-clear"></div>
     `;
 }
 
+function openEvidenceZoom(image) {
+    const zoom = document.getElementById("evidenceZoom");
+    const zoomImage = document.getElementById("evidenceZoomImage");
+
+    zoomImage.src = image.src;
+    zoomImage.alt = image.alt;
+    zoom.classList.add("show");
+    document.body.style.overflow = "hidden";
+}
+
+function closeEvidenceZoom(event) {
+    if (event && event.target && event.target.id === "evidenceZoomImage") return;
+
+    const zoom = document.getElementById("evidenceZoom");
+    const zoomImage = document.getElementById("evidenceZoomImage");
+
+    zoom.classList.remove("show");
+    zoomImage.src = "";
+    document.body.style.overflow = "hidden";
+}
+
+document.addEventListener("keydown",function(event){
+    if(event.key === "Escape") closeEvidenceZoom();
+});
 
 /* =====================================================
    LEVI DOCUMENTS
 ===================================================== */
-
 const leviDocuments = [
-
-    {
-        label: "DOCUMENT 01",
-        subtitle: "THE GIRL I LOVED — دختری که دوستش داشتم",
-
-        text: `
-
-            <p>
-                من از کودکی فقط یک چیز می‌خواستم. او را. دوشیزه وینچستر. من و او از کودکی با هم بزرگ شده بودیم. از همان سال‌ها به او وابسته بودم. اما او همیشه چیزی در وجودش داشت که بعدها فهمیدم چقدر در زندگی من اثر گذاشته بود. وسواس داشت. وسواس نسبت به پاکیزگی، نسبت به بیماری، نسبت به آدم‌هایی که اطرافمان بودند. آن زمان نمی‌فهمیدم. فقط می‌دانستم وقتی کنار او هستم، دنیا برایم امن‌تر است.
-            </p>
-
-            ${evidencePhoto("lo.png", "L-01", "-3deg")}
-
-            <p>
-                می‌دانستم خانواده‌اش ثروتمندند. می‌دانستم پدرش بازرگان بزرگی است و من در مقایسه با آن‌ها هیچم. اما عشق برای من هیچ‌وقت به پول و جایگاه ربط نداشت. برای رسیدن به او، همه‌چیز را تحمل کردم. حتی پدر و مادرم را. هر بار که می‌گفتند این دختر برای من نیست، هر بار که مرا تحقیر می‌کردند، باز هم به خودم می‌گفتم: یک روز به او می‌رسم.
-            </p>
-
-            <div class="archive-note">
-                <p>
-                    یادداشت پرونده: رابطه‌ی قدیمی میان لیوای تامپسون و خانواده‌ی وینچستر، پیش از وقایع اصلی پرونده شکل گرفته بود.
-                </p>
-            </div>
-        `
-    },
-
-    {
-        label: "DOCUMENT 02",
-        subtitle: "THE NIGHT BEFORE — شب پیش از عقد",
-
-        text: `
-
-            <p>
-                اما نرسیدم. دوشیزه وینچستر با مرد دیگری ازدواج کرد. مردی بسیار مسن‌تر از خودش. من غم را در چشمانش می‌دیدم. برای همین فکر کردم شاید هنوز مرا دوست دارد.
-            </p>
-
-            <p>
-                شب قبل از عقد، از پنجره به سراغش رفتم. از او خواستم با من فرار کند. از او التماس کردم. اما او مرا پس زد. سرد بود. آن‌قدر سرد که تمام چیزی که سال‌ها در قلبم ساخته بودم، همان شب فرو ریخت.
-            </p>
-
-            <p>
-                فکر کردم پول را انتخاب کرده است. فکر کردم من برایش کافی نبودم. و از آن شب به بعد، دیگر آن لیوای سابق نبودم.
-            </p>
-
-            <div class="archive-note">
-                <p>
-                    در این مرحله، برداشت لیوای از رفتار دوشیزه وینچستر بر پایه‌ی سوءتفاهم بود.
-                </p>
-            </div>
-        `
-    },
-
-    {
-        label: "DOCUMENT 03",
-        subtitle: "THE BETRAYAL — خیانتی که فراموش شده بود",
-
-        text: `
-
-            <p>
-                سال‌ها بعد فهمیدم چرا آن شب با من آن‌قدر سرد رفتار کرده بود. او فهمیده بود که من به او خیانت کرده‌ام.
-            </p>
-
-            <p>
-                خیانتی که حتی خودم سال‌ها حقیقتش را به یاد نمی‌آوردم، چون مست بودم. و آن شب، تمام آن سردی برای او معنایی داشت که من نمی‌فهمیدم.
-            </p>
-
-            <p>
-                سال‌ها طول کشید تا بفهمم چیزی که من آن را انتخاب‌کردنِ پول می‌دانستم، برای او زخمی از جنس دیگری بوده است.
-            </p>
-        `
-    },
-
-    {
-        label: "DOCUMENT 04",
-        subtitle: "EIGHT YEARS — هشت سال تبعید",
-
-        text: `
-
-            <p>
-                سال‌ها بعد، دوک را به دوئل دعوت کردم. می‌دانستم ممکن است بمیرم. اما دیگر برایم مهم نبود. دوک مرد. و من تبعید شدم.
-            </p>
-
-            <p>
-                هشت سال. هشت سال تمام از این روستا دور بودم. تا اینکه برگشتم.
-            </p>
-
-            <p>
-                اما چیزی در این هشت سال در من تغییر کرده بود. از تمام مردم این روستا متنفر بودم. در ذهن من، آدم‌های اینجا کثیف و بیمار بودند. همیشه احساس می‌کردم بیماری در وجودشان است و اگر به من نزدیک شوند، مرا هم بیمار خواهند کرد.
-            </p>
-        `
-    },
-
-    {
-        label: "DOCUMENT 05",
-        subtitle: "THE MASK — نقاب",
-
-        text: `
-
-            <p>
-                شاید ریشه‌ی این فکر از همان کودکی آمده بود. از همان سال‌هایی که کنار دوشیزه وینچستر بزرگ شده بودم و وسواس او، آرام‌آرام وارد ذهن من شده بود. اما برای من دیگر فقط یک وسواس نبود. به یک باور تبدیل شده بود.
-            </p>
-
-            ${evidencePhoto("ta.png", "L-05", "2deg")}
-
-            <p>
-                برای همین، پیش از آنکه کسی را قربانی کنم، ماسک طاعون می‌زدم. نه برای اینکه کسی مرا نشناسد. برای اینکه باور داشتم باید خودم را از بیماری آن‌ها حفظ کنم.
-            </p>
-
-            <div class="archive-note">
-                <p>
-                    یادداشت افسر: ماسک برای پنهان کردن هویت استفاده نمی‌شده؛ در ذهن متهم، بخشی از باور او درباره‌ی «بیماری» بوده است.
-                </p>
-            </div>
-        `
-    },
-
-    {
-        label: "DOCUMENT 06",
-        subtitle: "GRACE — حقیقت درباره‌ی دخترم",
-
-        text: `
-
-            <p>
-                اولین جایی که رفتم، خانه‌ی وینچسترها بود. اما چیزی دیدم که خونم را به جوش آورد. او یک کودک داشت. اول فکر کردم این هم یکی دیگر از چیزهایی است که زندگی از من گرفته.
-            </p>
-
-            ${evidencePhoto("dokhtar.png", "L-06", "-2deg")}
-
-            <p>
-                می‌خواستم انتقام بگیرم. از خانواده‌اش. از خودش. از تمام سال‌هایی که فکر می‌کردم مرا فراموش کرده است.
-            </p>
-
-            <p>
-                اما بعد حقیقت را فهمیدم.
-            </p>
-
-            <p>
-                آن کودک... فرزند من بود.
-            </p>
-
-            <p>
-                نمی‌دانستم باید گریه کنم یا فریاد بزنم. فرزندی داشتم که هشت سال از او بی‌خبر بودم. هشت سالی که می‌توانستم پدرش باشم. هشت سالی که هیچ‌وقت برنمی‌گردد.
-            </p>
-
-            <div class="final-statement">
-                آن‌ها را دوست داشتم. و همین، بدترین شکنجه بود.
-            </div>
-        `
-    },
-
-    {
-        label: "DOCUMENT 07",
-        subtitle: "THE VILLAGE — نفرت از فاصله‌ی طبقاتی",
-
-        text: `
-
-            <p>
-                از آن‌ها متنفر بودم. اما هنوز دوستشان داشتم. و همین، بدترین شکنجه بود.
-            </p>
-
-            <p>
-                اما نفرت من فقط از خانواده‌ی وینچستر نبود. از تمام آن فاصله‌ی طبقاتی خسته شده بودم. تمام عمرم به من گفته بودند که بعضی آدم‌ها بالاتر از بعضی دیگرند. و اولین چیزی که این فاصله‌ی طبقاتی از من گرفته بود، دوشیزه وینچستر بود.
-            </p>
-
-            <p>
-                همیشه می‌دانستم چرا نمی‌توانم او را داشته باشم. چون من، لیوای تامپسون، برای خانواده‌ای مثل آن‌ها کافی نبودم. و همین، اولین دلیل نفرت من از فاصله‌ی طبقاتی شد.
-            </p>
-        `
-    },
-
-    {
-        label: "DOCUMENT 08",
-        subtitle: "THE CHILDREN — نجاتی که در ذهن من شکل گرفت",
-
-        text: `
-
-            <p>
-                بعدها این نفرت بزرگ‌تر شد. حتی بچه‌های روستا را هم نمی‌توانستم ببخشم. من از آن‌ها متنفر بودم، چون باور داشتم وقتی بزرگ شوند، درست مثل مادر و پدرشان خواهند شد.
-            </p>
-
-            <p>
-                در ذهنم، آن‌ها هنوز فرصتی داشتند. فرصتی برای اینکه شبیه بزرگ‌ترهایشان نشوند. و بر این باور بودم که با از بین بردن آن‌ها دارم نجاتشان می‌دهم.
-            </p>
-
-            <p>
-                می‌خواستم قبل از اینکه بزرگ شوند و تبدیل به همان آدم‌هایی شوند که از آن‌ها متنفر بودم، نجاتشان بدهم.
-            </p>
-        `
-    },
-
-    {
-        label: "DOCUMENT 09",
-        subtitle: "TWO WOUNDS — دو زخم",
-
-        text: `
-
-            <p>
-                برای همین سراغ تنها کسی رفتم که از کودکی می‌شناختم. دین اشفورد.
-            </p>
-
-            <p>
-                همه‌چیز را برایش تعریف کردم. او گوش داد و سکوت کرد... و من خیلی زود فهمیدم که او هم چیزی برای انتقام گرفتن دارد.
-            </p>
-
-            <p>
-                درد من، درد او را بیدار کرده بود. درد او، خشم مرا بیشتر می‌کرد. پس با هم متحد شدیم.
-            </p>
-
-            <div class="final-statement">
-                دو مرد. دو زخم. یک هدف. یک انتقام.
-            </div>
-        `
-    },
-
-    {
-        label: "DOCUMENT 10",
-        subtitle: "GRACE — جایی که نتوانستم ادامه دهم",
-
-        text: `
-
-            <p>
-                اما من در آخر نتوانستم کاری را که شروع کرده بودم تمام کنم. هر بار که به دوشیزه وینچستر نگاه می‌کردم، گذشته‌مان جلوی چشمانم زنده می‌شد.
-            </p>
-
-            <p>
-                و وقتی گریس را می‌دیدم... می‌دانستم او بی‌گناه است.
-            </p>
-
-            <p>
-                من نمی‌توانستم دختر خودم را قربانی نفرتی کنم که سال‌ها در قلبم ساخته بودم. پس عقب کشیدم.
-            </p>
-
-            <p>
-                اما دین عقب نکشید.
-            </p>
-
-            <div class="archive-note">
-                <p>
-                    نقطه‌ی اختلاف دو همدست: لیوای هنوز پیوندهایی داشت که نمی‌توانست از آن‌ها بگذرد.
-                </p>
-            </div>
-        `
-    },
-
-    {
-        label: "DOCUMENT 11",
-        subtitle: "THE DIFFERENCE — تفاوت میان ما",
-
-        text: `
-
-            <p>
-                او دیگر مثل من نبود. او عشقش را سال‌ها پیش از دست داده بود.
-            </p>
-
-            <p>
-                من هنوز دو چیز داشتم که می‌توانستم از آن‌ها محافظت کنم: دوشیزه‌ام و گریس.
-            </p>
-
-            <p>
-                اما دین... دین چیزی برای از دست دادن نداشت.
-            </p>
-
-            <p>
-                و شاید بزرگ‌ترین اشتباه من این بود که فکر کردم کسی که دردش شبیه درد من است، حتماً مثل من هم فکر می‌کند.
-            </p>
-
-            <p>
-                اشتباه می‌کردم.
-            </p>
-        `
-    },
-
-    {
-        label: "DOCUMENT 12",
-        subtitle: "FINAL STATEMENT — آخرین اظهارات",
-
-        text: `
-
-            <p>
-                من دنبال انتقام بودم. اما او دنبال چیزی بیشتر از انتقام بود.
-            </p>
-
-            <p>
-                او می‌خواست مطمئن شود... هیچ‌کس در این روستا دوباره خوشبختی‌ای را که خودش از دست داده، تجربه نکند.
-            </p>
-
-            <p>
-                و بعد از دوئل من با دوک، دیگر هیچ‌کس در ددوود مرا مثل قبل نمی‌دید. دوک برای آن‌ها فقط یک مرد نبود. بخشی از جایگاه و نظمی بود که من تمام عمر از آن متنفر بودم.
-            </p>
-
-            <p>
-                و من کسی بودم که او را کشته بود.
-            </p>
-
-            <p>
-                برای همین مردم ددوود از من متنفر شدند. آن‌ها دیگر لیوای تامپسون را نمی‌دیدند. فقط مردی را می‌دیدند که دوک را کشته بود.
-            </p>
-
-            <p>
-                و شاید حق داشتند از من متنفر باشند. چون من هم سال‌ها بود که از خودم فرار می‌کردم. از پسری که فقط می‌خواست دوشیزه وینچستر را داشته باشد... تا مردی که فکر می‌کرد می‌تواند با نفرت، گذشته‌اش را تغییر دهد.
-            </p>
-
-            <div class="final-statement">
-                گذشته هیچ‌وقت تغییر نمی‌کند.<br>
-                فقط گاهی، آن‌قدر دیر حقیقتش را می‌فهمی که دیگر چیزی برای جبران باقی نمانده است.
-            </div>
-        `
-    }
-
+{
+label:"DOCUMENT 01",
+subtitle:"THE GIRL I LOVED — دختری که دوستش داشتم",
+text:`
+<p>من از کودکی فقط یک چیز می‌خواستم. او را. دوشیزه وینچستر. من و او از کودکی با هم بزرگ شده بودیم. از همان سال‌ها به او وابسته بودم. اما او همیشه چیزی در وجودش داشت که بعدها فهمیدم چقدر در زندگی من اثر گذاشته بود. وسواس داشت. وسواس نسبت به پاکیزگی، نسبت به بیماری، نسبت به آدم‌هایی که اطرافمان بودند. آن زمان نمی‌فهمیدم. فقط می‌دانستم وقتی کنار او هستم، دنیا برایم امن‌تر است.</p>
+${evidencePhoto("lo.png","L-01","-3deg")}
+<p>می‌دانستم خانواده‌اش ثروتمندند. می‌دانستم پدرش بازرگان بزرگی است و من در مقایسه با آن‌ها هیچم. اما عشق برای من هیچ‌وقت به پول و جایگاه ربط نداشت. برای رسیدن به او، همه‌چیز را تحمل کردم. حتی پدر و مادرم را. هر بار که می‌گفتند این دختر برای من نیست، هر بار که مرا تحقیر می‌کردند، باز هم به خودم می‌گفتم: یک روز به او می‌رسم.</p>
+<div class="archive-note"><p>یادداشت پرونده: رابطه‌ی قدیمی میان لیوای تامپسون و خانواده‌ی وینچستر، پیش از وقایع اصلی پرونده شکل گرفته بود.</p></div>
+`
+},
+{
+label:"DOCUMENT 02",
+subtitle:"THE NIGHT BEFORE — شب پیش از عقد",
+text:`
+<p>اما نرسیدم. دوشیزه وینچستر با مرد دیگری ازدواج کرد. مردی بسیار مسن‌تر از خودش. من غم را در چشمانش می‌دیدم. برای همین فکر کردم شاید هنوز مرا دوست دارد.</p>
+<p>شب قبل از عقد، از پنجره به سراغش رفتم. از او خواستم با من فرار کند. از او التماس کردم. اما او مرا پس زد. سرد بود. آن‌قدر سرد که تمام چیزی که سال‌ها در قلبم ساخته بودم، همان شب فرو ریخت.</p>
+<p>فکر کردم پول را انتخاب کرده است. فکر کردم من برایش کافی نبودم. و از آن شب به بعد، دیگر آن لیوای سابق نبودم.</p>
+<div class="archive-note"><p>در این مرحله، برداشت لیوای از رفتار دوشیزه وینچستر بر پایه‌ی سوءتفاهم بود.</p></div>
+`
+},
+{
+label:"DOCUMENT 03",
+subtitle:"THE BETRAYAL — خیانتی که فراموش شده بود",
+text:`
+<p>سال‌ها بعد فهمیدم چرا آن شب با من آن‌قدر سرد رفتار کرده بود. او فهمیده بود که من به او خیانت کرده‌ام.</p>
+<p>خیانتی که حتی خودم سال‌ها حقیقتش را به یاد نمی‌آوردم، چون مست بودم. و آن شب، تمام آن سردی برای او معنایی داشت که من نمی‌فهمیدم.</p>
+<p>سال‌ها طول کشید تا بفهمم چیزی که من آن را انتخاب‌کردنِ پول می‌دانستم، برای او زخمی از جنس دیگری بوده است.</p>
+`
+},
+{
+label:"DOCUMENT 04",
+subtitle:"EIGHT YEARS — هشت سال تبعید",
+text:`
+<p>سال‌ها بعد، دوک را به دوئل دعوت کردم. می‌دانستم ممکن است بمیرم. اما دیگر برایم مهم نبود. دوک مرد. و من تبعید شدم.</p>
+<p>هشت سال. هشت سال تمام از این روستا دور بودم. تا اینکه برگشتم.</p>
+<p>اما چیزی در این هشت سال در من تغییر کرده بود. از تمام مردم این روستا متنفر بودم. در ذهن من، آدم‌های اینجا کثیف و بیمار بودند. همیشه احساس می‌کردم بیماری در وجودشان است و اگر به من نزدیک شوند، مرا هم بیمار خواهند کرد.</p>
+`
+},
+{
+label:"DOCUMENT 05",
+subtitle:"THE MASK — نقاب",
+text:`
+<p>شاید ریشه‌ی این فکر از همان کودکی آمده بود. از همان سال‌هایی که کنار دوشیزه وینچستر بزرگ شده بودم و وسواس او، آرام‌آرام وارد ذهن من شده بود. اما برای من دیگر فقط یک وسواس نبود. به یک باور تبدیل شده بود.</p>
+${evidencePhoto("ta.png","L-05","2deg")}
+<p>برای همین، پیش از آنکه کسی را قربانی کنم، ماسک طاعون می‌زدم. نه برای اینکه کسی مرا نشناسد. برای اینکه باور داشتم باید خودم را از بیماری آن‌ها حفظ کنم.</p>
+<div class="archive-note"><p>یادداشت افسر: ماسک برای پنهان کردن هویت استفاده نمی‌شده؛ در ذهن متهم، بخشی از باور او درباره‌ی «بیماری» بوده است.</p></div>
+`
+},
+{
+label:"DOCUMENT 06",
+subtitle:"GRACE — حقیقت درباره‌ی دخترم",
+text:`
+<p>اولین جایی که رفتم، خانه‌ی وینچسترها بود. اما چیزی دیدم که خونم را به جوش آورد. او یک کودک داشت. اول فکر کردم این هم یکی دیگر از چیزهایی است که زندگی از من گرفته.</p>
+${evidencePhoto("dokhtar.png","L-06","-2deg")}
+<p>می‌خواستم انتقام بگیرم. از خانواده‌اش. از خودش. از تمام سال‌هایی که فکر می‌کردم مرا فراموش کرده است.</p>
+<p>اما بعد حقیقت را فهمیدم.</p>
+<p>آن کودک... فرزند من بود.</p>
+<p>نمی‌دانستم باید گریه کنم یا فریاد بزنم. فرزندی داشتم که هشت سال از او بی‌خبر بودم. هشت سالی که می‌توانستم پدرش باشم. هشت سالی که هیچ‌وقت برنمی‌گردد.</p>
+<div class="final-statement">آن‌ها را دوست داشتم. و همین، بدترین شکنجه بود.</div>
+`
+},
+{
+label:"DOCUMENT 07",
+subtitle:"THE VILLAGE — نفرت از فاصله‌ی طبقاتی",
+text:`
+<p>از آن‌ها متنفر بودم. اما هنوز دوستشان داشتم. و همین، بدترین شکنجه بود.</p>
+<p>اما نفرت من فقط از خانواده‌ی وینچستر نبود. از تمام آن فاصله‌ی طبقاتی خسته شده بودم. تمام عمرم به من گفته بودند که بعضی آدم‌ها بالاتر از بعضی دیگرند. و اولین چیزی که این فاصله‌ی طبقاتی از من گرفته بود، دوشیزه وینچستر بود.</p>
+<p>همیشه می‌دانستم چرا نمی‌توانم او را داشته باشم. چون من، لیوای تامپسون، برای خانواده‌ای مثل آن‌ها کافی نبودم. و همین، اولین دلیل نفرت من از فاصله‌ی طبقاتی شد.</p>
+`
+},
+{
+label:"DOCUMENT 08",
+subtitle:"THE CHILDREN — نجاتی که در ذهن من شکل گرفت",
+text:`
+<p>بعدها این نفرت بزرگ‌تر شد. حتی بچه‌های روستا را هم نمی‌توانستم ببخشم. من از آن‌ها متنفر بودم، چون باور داشتم وقتی بزرگ شوند، درست مثل مادر و پدرشان خواهند شد.</p>
+<p>در ذهنم، آن‌ها هنوز فرصتی داشتند. فرصتی برای اینکه شبیه بزرگ‌ترهایشان نشوند. و بر این باور بودم که با از بین بردن آن‌ها دارم نجاتشان می‌دهم.</p>
+<p>می‌خواستم قبل از اینکه بزرگ شوند و تبدیل به همان آدم‌هایی شوند که از آن‌ها متنفر بودم، نجاتشان بدهم.</p>
+`
+},
+{
+label:"DOCUMENT 09",
+subtitle:"TWO WOUNDS — دو زخم",
+text:`
+<p>برای همین سراغ تنها کسی رفتم که از کودکی می‌شناختم. دین اشفورد.</p>
+<p>همه‌چیز را برایش تعریف کردم. او گوش داد و سکوت کرد... و من خیلی زود فهمیدم که او هم چیزی برای انتقام گرفتن دارد.</p>
+<p>درد من، درد او را بیدار کرده بود. درد او، خشم مرا بیشتر می‌کرد. پس با هم متحد شدیم.</p>
+<div class="final-statement">دو مرد. دو زخم. یک هدف. یک انتقام.</div>
+`
+},
+{
+label:"DOCUMENT 10",
+subtitle:"GRACE — جایی که نتوانستم ادامه دهم",
+text:`
+<p>اما من در آخر نتوانستم کاری را که شروع کرده بودم تمام کنم. هر بار که به دوشیزه وینچستر نگاه می‌کردم، گذشته‌مان جلوی چشمانم زنده می‌شد.</p>
+<p>و وقتی گریس را می‌دیدم... می‌دانستم او بی‌گناه است.</p>
+<p>من نمی‌توانستم دختر خودم را قربانی نفرتی کنم که سال‌ها در قلبم ساخته بودم. پس عقب کشیدم.</p>
+<p>اما دین عقب نکشید.</p>
+<div class="archive-note"><p>نقطه‌ی اختلاف دو همدست: لیوای هنوز پیوندهایی داشت که نمی‌توانست از آن‌ها بگذرد.</p></div>
+`
+},
+{
+label:"DOCUMENT 11",
+subtitle:"THE DIFFERENCE — تفاوت میان ما",
+text:`
+<p>او دیگر مثل من نبود. او عشقش را سال‌ها پیش از دست داده بود.</p>
+<p>من هنوز دو چیز داشتم که می‌توانستم از آن‌ها محافظت کنم: دوشیزه‌ام و گریس.</p>
+<p>اما دین... دین چیزی برای از دست دادن نداشت.</p>
+<p>و شاید بزرگ‌ترین اشتباه من این بود که فکر کردم کسی که دردش شبیه درد من است، حتماً مثل من هم فکر می‌کند.</p>
+<p>اشتباه می‌کردم.</p>
+`
+},
+{
+label:"DOCUMENT 12",
+subtitle:"FINAL STATEMENT — آخرین اظهارات",
+text:`
+<p>من دنبال انتقام بودم. اما او دنبال چیزی بیشتر از انتقام بود.</p>
+<p>او می‌خواست مطمئن شود... هیچ‌کس در این روستا دوباره خوشبختی‌ای را که خودش از دست داده، تجربه نکند.</p>
+<p>و بعد از دوئل من با دوک، دیگر هیچ‌کس در ددوود مرا مثل قبل نمی‌دید. دوک برای آن‌ها فقط یک مرد نبود. بخشی از جایگاه و نظمی بود که من تمام عمر از آن متنفر بودم.</p>
+<p>و من کسی بودم که او را کشته بود.</p>
+<p>برای همین مردم ددوود از من متنفر شدند. آن‌ها دیگر لیوای تامپسون را نمی‌دیدند. فقط مردی را می‌دیدند که دوک را کشته بود.</p>
+<p>و شاید حق داشتند از من متنفر باشند. چون من هم سال‌ها بود که از خودم فرار می‌کردم. از پسری که فقط می‌خواست دوشیزه وینچستر را داشته باشد... تا مردی که فکر می‌کرد می‌تواند با نفرت، گذشته‌اش را تغییر دهد.</p>
+<div class="final-statement">گذشته هیچ‌وقت تغییر نمی‌کند.<br>فقط گاهی، آن‌قدر دیر حقیقتش را می‌فهمی که دیگر چیزی برای جبران باقی نمانده است.</div>
+`
+}
 ];
-
 
 /* =====================================================
    DEAN DOCUMENTS
 ===================================================== */
-
 const deanDocuments = [
-
-    {
-        label: "DOCUMENT 01",
-        subtitle: "THE LIFE I HAD — زندگی‌ای که داشتم",
-
-        text: `
-
-            <p>
-                من همیشه فکر می‌کردم آدم خوش‌شانسی هستم. همسرم را داشتم؛ زنی زیبا، مهربان و آرام. و کودکی که قرار بود به‌زودی به دنیا بیاید.
-            </p>
-
-            ${evidencePhoto("zan.png", "D-01", "-3deg")}
-
-            <p>
-                فکر می‌کردم زندگی بالاخره چیزی را که لیاقتش را داشتم، به من داده است. اما زندگی هیچ‌وقت آن‌قدرها هم مهربان نیست.
-            </p>
-
-            <p>
-                آن روز همسرم به من گفت حالش عجیب است. گفت احساس می‌کند بچه می‌خواهد به دنیا بیاید. اما من باورش نکردم.
-            </p>
-        `
-    },
-
-    {
-        label: "DOCUMENT 02",
-        subtitle: "THE DAY EVERYTHING ENDED — روزی که همه‌چیز تمام شد",
-
-        text: `
-
-            <p>
-                یک جلسه‌ی مهم در شهر داشتم. نمی‌توانستم آن را از دست بدهم. برای خودم هزار دلیل آوردم که چرا باید بروم و چرا چیزی نمی‌شود.
-            </p>
-
-            ${evidencePhoto("zani.png", "D-02", "2deg")}
-
-            <p>
-                در را مثل همیشه قفل کردم. من همیشه به آدم‌ها بدبین بودم. فکر می‌کردم اگر در را قفل کنم، می‌توانم جلوی اتفاقات بد را بگیرم.
-            </p>
-
-            <p>
-                اما آن روز فهمیدم بعضی اتفاقات، پشت هیچ دری متوقف نمی‌شوند.
-            </p>
-
-            <p>
-                وقتی برگشتم... همسرم را از دست داده بودم. و فرزندم نیز دیگر زنده نبود.
-            </p>
-
-            <div class="final-statement">
-                اگر آن روز می‌ماندم، شاید زنده بودند.
-            </div>
-        `
-    },
-
-    {
-        label: "DOCUMENT 03",
-        subtitle: "THE PROMISE — قول",
-
-        text: `
-
-            <p>
-                می‌دانید اولین چیزی که به ذهنم رسید چه بود؟ اینکه اگر آن روز می‌ماندم، شاید زنده بودند.
-            </p>
-
-            <p>
-                اما من نمی‌توانستم با این حقیقت زندگی کنم.
-            </p>
-
-            <p>
-                تقصیرها گردن تقدیر بود و من تقدیر بعدی را نوشتم.
-            </p>
-
-            <p>
-                به همسرم قول دادم. گفتم اگر قرار نیست من و تو مادر و پدر شویم، هیچ زن دیگری هم در این روستا نباید طعم مادری را بچشد.
-            </p>
-
-            <p>
-                شاید به نظرتان دیوانگی باشد. اما من اسمش را دیوانگی نمی‌گذارم.
-            </p>
-        `
-    },
-
-    {
-        label: "DOCUMENT 04",
-        subtitle: "THE FEELING — آن ترس",
-
-        text: `
-
-            <p>
-                من فقط می‌خواستم کسی همان چیزی را احساس کند که من احساس کردم.
-            </p>
-
-            <p>
-                آن ترس.
-            </p>
-
-            <p>
-                آن خالی شدن دنیا.
-            </p>
-
-            <p>
-                آن لحظه‌ای که می‌فهمی همه‌چیز تمام شده و دیگر هیچ کاری از دستت برنمی‌آید.
-            </p>
-
-            <div class="archive-note">
-                <p>
-                    از این نقطه، انگیزه‌ی دین دیگر فقط درباره‌ی یک فقدان شخصی نبود؛ او شروع به تعمیم دادن درد خودش به زندگی دیگران کرد.
-                </p>
-            </div>
-        `
-    },
-
-    {
-        label: "DOCUMENT 05",
-        subtitle: "YEARS OF REVENGE — سال‌های انتقام",
-
-        text: `
-
-            <p>
-                سال‌ها گذشت.
-            </p>
-
-            <p>
-                من یکی‌یکی زندگی‌هایی را که فکر می‌کردم سزاوار خوشبختی هستند، از هم پاشیدم.
-            </p>
-
-            <p>
-                نه به خاطر اینکه از آن آدم‌ها متنفر بودم. بلکه چون نمی‌توانستم ببینم دیگران چیزی را دارند که من برای همیشه از دست داده‌ام.
-            </p>
-        `
-    },
-
-    {
-        label: "DOCUMENT 06",
-        subtitle: "LEVI — بازگشت لیوای",
-
-        text: `
-
-            <p>
-                اما بعد... لیوای برگشت.
-            </p>
-
-            <p>
-                و من فهمیدم بالاخره کسی را پیدا کرده‌ام که دردش شبیه درد من است.
-            </p>
-
-            <p>
-                او هم چیزی را از دست داده بود. عشق. فرزند. سال‌های زندگی.
-            </p>
-
-            <p>
-                من و لیوای یک هدف مشترک داشتیم.
-            </p>
-
-            <div class="final-statement">
-                انتقام.
-            </div>
-        `
-    },
-
-    {
-        label: "DOCUMENT 07",
-        subtitle: "THE DIFFERENCE — تفاوت",
-
-        text: `
-
-            <p>
-                اما یک تفاوت میان ما بود.
-            </p>
-
-            <p>
-                لیوای هنوز چیزی برای دوست داشتن داشت. من نداشتم.
-            </p>
-
-            <p>
-                و همین تفاوت، همه‌چیز را تغییر داد.
-            </p>
-
-            <p>
-                او نتوانست دستش را روی کسانی بلند کند که هنوز دوستشان داشت.
-            </p>
-
-            <p>
-                اما من... من سال‌ها پیش همه‌چیزم را از دست داده بودم.
-            </p>
-
-            <div class="final-statement">
-                و وقتی چیزی برای از دست دادن نداشته باشی... دیگر هیچ‌چیز نمی‌تواند جلویت را بگیرد.
-            </div>
-        `
-    }
-
+{
+label:"DOCUMENT 01",
+subtitle:"THE LIFE I HAD — زندگی‌ای که داشتم",
+text:`
+<p>من همیشه فکر می‌کردم آدم خوش‌شانسی هستم. همسرم را داشتم؛ زنی زیبا، مهربان و آرام. و کودکی که قرار بود به‌زودی به دنیا بیاید.</p>
+${evidencePhoto("zan.png","D-01","-3deg")}
+<p>فکر می‌کردم زندگی بالاخره چیزی را که لیاقتش را داشتم، به من داده است. اما زندگی هیچ‌وقت آن‌قدرها هم مهربان نیست.</p>
+<p>آن روز همسرم به من گفت حالش عجیب است. گفت احساس می‌کند بچه می‌خواهد به دنیا بیاید. اما من باورش نکردم.</p>
+`
+},
+{
+label:"DOCUMENT 02",
+subtitle:"THE DAY EVERYTHING ENDED — روزی که همه‌چیز تمام شد",
+text:`
+<p>یک جلسه‌ی مهم در شهر داشتم. نمی‌توانستم آن را از دست بدهم. برای خودم هزار دلیل آوردم که چرا باید بروم و چرا چیزی نمی‌شود.</p>
+${evidencePhoto("zani.jpg","D-02","2deg")}
+<p>در را مثل همیشه قفل کردم. من همیشه به آدم‌ها بدبین بودم. فکر می‌کردم اگر در را قفل کنم، می‌توانم جلوی اتفاقات بد را بگیرم.</p>
+<p>اما آن روز فهمیدم بعضی اتفاقات، پشت هیچ دری متوقف نمی‌شوند.</p>
+<p>وقتی برگشتم... همسرم را از دست داده بودم. و فرزندم نیز دیگر زنده نبود.</p>
+<div class="final-statement">اگر آن روز می‌ماندم، شاید زنده بودند.</div>
+`
+},
+{
+label:"DOCUMENT 03",
+subtitle:"THE PROMISE — قول",
+text:`
+<p>می‌دانید اولین چیزی که به ذهنم رسید چه بود؟ اینکه اگر آن روز می‌ماندم، شاید زنده بودند.</p>
+<p>اما من نمی‌توانستم با این حقیقت زندگی کنم.</p>
+<p>تقصیرها گردن تقدیر بود و من تقدیر بعدی را نوشتم.</p>
+<p>به همسرم قول دادم. گفتم اگر قرار نیست من و تو مادر و پدر شویم، هیچ زن دیگری هم در این روستا نباید طعم مادری را بچشد.</p>
+<p>شاید به نظرتان دیوانگی باشد. اما من اسمش را دیوانگی نمی‌گذارم.</p>
+`
+},
+{
+label:"DOCUMENT 04",
+subtitle:"THE FEELING — آن ترس",
+text:`
+<p>من فقط می‌خواستم کسی همان چیزی را احساس کند که من احساس کردم.</p>
+<p>آن ترس.</p>
+<p>آن خالی شدن دنیا.</p>
+<p>آن لحظه‌ای که می‌فهمی همه‌چیز تمام شده و دیگر هیچ کاری از دستت برنمی‌آید.</p>
+<div class="archive-note"><p>از این نقطه، انگیزه‌ی دین دیگر فقط درباره‌ی یک فقدان شخصی نبود؛ او شروع به تعمیم دادن درد خودش به زندگی دیگران کرد.</p></div>
+`
+},
+{
+label:"DOCUMENT 05",
+subtitle:"YEARS OF REVENGE — سال‌های انتقام",
+text:`
+<p>سال‌ها گذشت.</p>
+<p>من یکی‌یکی زندگی‌هایی را که فکر می‌کردم سزاوار خوشبختی هستند، از هم پاشیدم.</p>
+<p>نه به خاطر اینکه از آن آدم‌ها متنفر بودم. بلکه چون نمی‌توانستم ببینم دیگران چیزی را دارند که من برای همیشه از دست داده‌ام.</p>
+`
+},
+{
+label:"DOCUMENT 06",
+subtitle:"LEVI — بازگشت لیوای",
+text:`
+<p>اما بعد... لیوای برگشت.</p>
+<p>و من فهمیدم بالاخره کسی را پیدا کرده‌ام که دردش شبیه درد من است.</p>
+<p>او هم چیزی را از دست داده بود. عشق. فرزند. سال‌های زندگی.</p>
+<p>من و لیوای یک هدف مشترک داشتیم.</p>
+<div class="final-statement">انتقام.</div>
+`
+},
+{
+label:"DOCUMENT 07",
+subtitle:"THE DIFFERENCE — تفاوت",
+text:`
+<p>اما یک تفاوت میان ما بود.</p>
+<p>لیوای هنوز چیزی برای دوست داشتن داشت. من نداشتم.</p>
+<p>و همین تفاوت، همه‌چیز را تغییر داد.</p>
+<p>او نتوانست دستش را روی کسانی بلند کند که هنوز دوستشان داشت.</p>
+<p>اما من... من سال‌ها پیش همه‌چیزم را از دست داده بودم.</p>
+<div class="final-statement">و وقتی چیزی برای از دست دادن نداشته باشی... دیگر هیچ‌چیز نمی‌تواند جلویت را بگیرد.</div>
+`
+}
 ];
 
-
-/* =====================================================
-   LEVI DOCUMENT SYSTEM
-===================================================== */
-
 let currentLeviDocument = 0;
-
-const leviCounter =
-    document.getElementById("leviCounter");
-
-const leviDocumentLabel =
-    document.getElementById("leviDocumentLabel");
-
-const leviDocumentSubtitle =
-    document.getElementById("leviDocumentSubtitle");
-
-const leviContent =
-    document.getElementById("leviContent");
-
-const leviPrev =
-    document.getElementById("leviPrev");
-
-const leviNext =
-    document.getElementById("leviNext");
-
+const leviCounter = document.getElementById("leviCounter");
+const leviDocumentLabel = document.getElementById("leviDocumentLabel");
+const leviDocumentSubtitle = document.getElementById("leviDocumentSubtitle");
+const leviContent = document.getElementById("leviContent");
+const leviPrev = document.getElementById("leviPrev");
+const leviNext = document.getElementById("leviNext");
 
 function showLeviDocument(index) {
-
     currentLeviDocument = index;
+    const documentData = leviDocuments[index];
 
-    const documentData =
-        leviDocuments[index];
+    leviCounter.textContent = `${index+1} / ${leviDocuments.length}`;
+    leviDocumentLabel.textContent = documentData.label;
+    leviDocumentSubtitle.textContent = documentData.subtitle;
+    leviContent.innerHTML = documentData.text;
 
-    leviCounter.textContent =
-        `${index + 1} / ${leviDocuments.length}`;
+    if (index === 4) {
+        const plaguePhoto = leviContent.querySelector('[data-code="L-05"]');
+        if (plaguePhoto) {
+            leviContent.prepend(plaguePhoto);
+            const clear = leviContent.querySelector(".evidence-clear");
+            if (clear) plaguePhoto.after(clear);
+        }
+    }
 
-    leviDocumentLabel.textContent =
-        documentData.label;
+    leviPrev.classList.toggle("hidden",index===0);
+    leviNext.classList.toggle("hidden",index===leviDocuments.length-1);
 
-    leviDocumentSubtitle.textContent =
-        documentData.subtitle;
-
-    leviContent.innerHTML =
-        documentData.text;
-
-    leviPrev.classList.toggle(
-        "hidden",
-        index === 0
-    );
-
-    leviNext.classList.toggle(
-        "hidden",
-        index === leviDocuments.length - 1
-    );
-
-    leviPage.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
+    leviPage.scrollTo({top:0,behavior:"smooth"});
 }
 
-
-/* =====================================================
-   LEVI NEXT
-===================================================== */
-
-leviNext.addEventListener(
-    "click",
-    function() {
-
-        if (
-            currentLeviDocument <
-            leviDocuments.length - 1
-        ) {
-
-            playPage();
-
-            showLeviDocument(
-                currentLeviDocument + 1
-            );
-
-        }
-
+leviNext.addEventListener("click",function(){
+    if(currentLeviDocument < leviDocuments.length-1) {
+        playPage();
+        showLeviDocument(currentLeviDocument+1);
     }
-);
+});
 
-
-/* =====================================================
-   LEVI PREVIOUS
-===================================================== */
-
-leviPrev.addEventListener(
-    "click",
-    function() {
-
-        if (
-            currentLeviDocument > 0
-        ) {
-
-            playPage();
-
-            showLeviDocument(
-                currentLeviDocument - 1
-            );
-
-        }
-
+leviPrev.addEventListener("click",function(){
+    if(currentLeviDocument > 0) {
+        playPage();
+        showLeviDocument(currentLeviDocument-1);
     }
-);
-
-
-/* =====================================================
-   DEAN DOCUMENT SYSTEM
-===================================================== */
+});
 
 let currentDeanDocument = 0;
-
-const deanCounter =
-    document.getElementById("deanCounter");
-
-const deanDocumentLabel =
-    document.getElementById("deanDocumentLabel");
-
-const deanDocumentSubtitle =
-    document.getElementById("deanDocumentSubtitle");
-
-const deanContent =
-    document.getElementById("deanContent");
-
-const deanPrev =
-    document.getElementById("deanPrev");
-
-const deanNext =
-    document.getElementById("deanNext");
-
+const deanCounter = document.getElementById("deanCounter");
+const deanDocumentLabel = document.getElementById("deanDocumentLabel");
+const deanDocumentSubtitle = document.getElementById("deanDocumentSubtitle");
+const deanContent = document.getElementById("deanContent");
+const deanPrev = document.getElementById("deanPrev");
+const deanNext = document.getElementById("deanNext");
 
 function showDeanDocument(index) {
-
     currentDeanDocument = index;
+    const documentData = deanDocuments[index];
 
-    const documentData =
-        deanDocuments[index];
+    deanCounter.textContent = `${index+1} / ${deanDocuments.length}`;
+    deanDocumentLabel.textContent = documentData.label;
+    deanDocumentSubtitle.textContent = documentData.subtitle;
+    deanContent.innerHTML = documentData.text;
 
-    deanCounter.textContent =
-        `${index + 1} / ${deanDocuments.length}`;
+    deanPrev.classList.toggle("hidden",index===0);
+    deanNext.classList.toggle("hidden",index===deanDocuments.length-1);
 
-    deanDocumentLabel.textContent =
-        documentData.label;
-
-    deanDocumentSubtitle.textContent =
-        documentData.subtitle;
-
-    deanContent.innerHTML =
-        documentData.text;
-
-    deanPrev.classList.toggle(
-        "hidden",
-        index === 0
-    );
-
-    deanNext.classList.toggle(
-        "hidden",
-        index === deanDocuments.length - 1
-    );
-
-    deanPage.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
+    deanPage.scrollTo({top:0,behavior:"smooth"});
 }
 
-
-/* =====================================================
-   DEAN NEXT
-===================================================== */
-
-deanNext.addEventListener(
-    "click",
-    function() {
-
-        if (
-            currentDeanDocument <
-            deanDocuments.length - 1
-        ) {
-
-            playPage();
-
-            showDeanDocument(
-                currentDeanDocument + 1
-            );
-
-        }
-
+deanNext.addEventListener("click",function(){
+    if(currentDeanDocument < deanDocuments.length-1) {
+        playPage();
+        showDeanDocument(currentDeanDocument+1);
     }
-);
+});
 
-
-/* =====================================================
-   DEAN PREVIOUS
-===================================================== */
-
-deanPrev.addEventListener(
-    "click",
-    function() {
-
-        if (
-            currentDeanDocument > 0
-        ) {
-
-            playPage();
-
-            showDeanDocument(
-                currentDeanDocument - 1
-            );
-
-        }
-
+deanPrev.addEventListener("click",function(){
+    if(currentDeanDocument > 0) {
+        playPage();
+        showDeanDocument(currentDeanDocument-1);
     }
-);
-
+});
 </script>
 
 </body>
