@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>کابوس خاموش | Evidence 02</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Rye&family=Special+Elite&display=swap');
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{background:#211710;color:#e5d2ad;font-family:Amiri,serif}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:20;background:radial-gradient(ellipse at center,transparent 42%,rgba(0,0,0,.72) 100%),repeating-linear-gradient(0deg,rgba(255,255,255,.012) 0 1px,transparent 1px 4px)}
+.scene{width:100%;height:100%;position:relative;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(90deg,#2a1b12 0 90px,#23160f 91px 94px)}
+.wall{position:absolute;inset:0;opacity:.4;background:repeating-linear-gradient(0deg,transparent 0 105px,rgba(0,0,0,.35) 106px 109px)}
+.desk{position:absolute;left:-5%;right:-5%;bottom:-7%;height:34%;background:repeating-linear-gradient(90deg,#4a2c1a 0 115px,#382217 116px 121px);box-shadow:0 -18px 45px rgba(0,0,0,.65)}
+.lamp{position:absolute;top:12%;left:9%;width:95px;height:130px;filter:drop-shadow(0 0 18px rgba(235,165,68,.35))}
+.glow{position:absolute;width:210px;height:210px;left:-58px;top:-28px;border-radius:50%;background:radial-gradient(circle,rgba(255,178,68,.22),transparent 67%)}
+.lamp .cap{position:absolute;top:28px;left:15px;width:65px;height:35px;border-radius:50% 50% 15% 15%;background:#17110d;border:2px solid #6c4929}
+.lamp .glass{position:absolute;top:53px;left:29px;width:38px;height:54px;border-radius:9px;background:linear-gradient(90deg,rgba(255,190,80,.08),rgba(255,215,120,.55),rgba(255,190,80,.08));border:2px solid #8c6335}
+.lamp .base{position:absolute;bottom:0;left:19px;width:58px;height:18px;border-radius:50%;background:#17110d;border:2px solid #6c4929}
+.header{position:absolute;top:5%;left:50%;transform:translateX(-50%);text-align:center;z-index:5;width:90%}
+.kicker{font-family:"Special Elite",monospace;letter-spacing:4px;font-size:11px;color:#a8875a;margin-bottom:7px;direction:ltr}
+h1{margin:0;font-family:Rye,serif;font-size:clamp(27px,7vw,58px);letter-spacing:3px;color:#d6bc91;text-shadow:3px 4px 0 #120c08,0 0 22px #000;direction:ltr}
+.subtitle{font-size:14px;color:#9d8668;margin-top:5px}
+.evidence{position:relative;z-index:8;width:min(88vw,650px);height:min(63vh,470px);display:flex;align-items:center;justify-content:center}
+.envelope{position:absolute;width:min(78vw,500px);height:min(52vw,310px);max-height:310px;background:linear-gradient(145deg,rgba(255,255,255,.07),transparent 35%),#9b7044;border:2px solid #55351f;box-shadow:0 30px 55px rgba(0,0,0,.65),inset 0 0 35px rgba(54,27,10,.45);transform:rotate(-2deg);transition:transform 1s cubic-bezier(.2,.8,.2,1);cursor:pointer}
+.envelope:before{content:"";position:absolute;inset:0;background:linear-gradient(35deg,transparent 49%,rgba(48,27,14,.5) 50%,transparent 51%),linear-gradient(145deg,transparent 49%,rgba(48,27,14,.4) 50%,transparent 51%);opacity:.8}
+.flap{position:absolute;left:0;right:0;top:0;height:55%;background:#a77a4b;clip-path:polygon(0 0,100% 0,50% 100%);border-bottom:2px solid #5b3921;transform-origin:top;transition:transform 1s cubic-bezier(.2,.8,.2,1);z-index:3}
+.paper{position:absolute;left:50%;top:50%;width:88%;height:90%;transform:translate(-50%,-43%) rotate(1.5deg) translateY(70px);background:transparent;box-shadow:none;opacity:0;transition:transform 1.2s .35s,opacity .7s .25s;overflow:visible}
+.paper img{width:100%;height:100%;object-fit:contain;display:block;filter:none;}
+.seal{position:absolute;z-index:6;left:50%;top:54%;width:76px;height:76px;transform:translate(-50%,-50%) rotate(-8deg);border-radius:50%;background:#542019;border:5px double #31110d;box-shadow:0 5px 15px rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;transition:transform .8s,opacity .5s}
+.seal span{font-family:Rye,serif;font-size:14px;color:#c69a70;direction:ltr}
+.label{position:absolute;z-index:5;left:30px;bottom:26px;font-family:"Special Elite",monospace;font-size:10px;letter-spacing:2px;color:#4c2d1a;direction:ltr;transform:rotate(-3deg)}
+.instruction{position:absolute;bottom:3%;left:50%;transform:translateX(-50%);z-index:10;text-align:center;font-size:15px;color:#c0a37a;animation:pulse 2s infinite}
+.instruction b{color:#e4c28e}
+body.stamp-gone .success{opacity:0;visibility:hidden;}
+.success{position:absolute;z-index:15;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .7s}
+.stamp{border:5px solid #741f17;color:#8e291f;font-family:"Special Elite",monospace;font-size:clamp(22px,6vw,42px);padding:12px 24px;letter-spacing:3px;transform:rotate(-7deg);box-shadow:inset 0 0 0 2px rgba(116,31,23,.3)}
+.reveal{position:absolute;bottom:5%;z-index:16;opacity:0;pointer-events:none;font-family:"Special Elite",monospace;direction:ltr;letter-spacing:2px;color:#b68d5d;font-size:11px;transition:opacity 1s 1s}
+body.opened .flap{transform:rotateX(178deg)}
+body.opened .seal{transform:translate(-50%,-50%) scale(.15) rotate(30deg);opacity:0}
+body.opened .envelope{transform:rotate(0deg) translateY(18px)}
+body.opened .paper{opacity:1;transform:translate(-50%,-43%) rotate(0deg) translateY(-25px)}
+body.opened .instruction{opacity:0}body.opened .success{opacity:1}body.opened .reveal{opacity:1}
+@keyframes pulse{50%{opacity:.45}}
+@media(max-width:600px){.lamp{transform:scale(.72);transform-origin:top left;top:11%;left:4%}.header{top:4%}.subtitle{font-size:12px}.evidence{height:57vh}.envelope{width:82vw;height:53vw}.instruction{bottom:5%;font-size:13px}}
+</style>
+</head>
+<body>
+<div class="scene">
+<div class="wall"></div>
+<div class="lamp"><div class="glow"></div><div class="cap"></div><div class="glass"></div><div class="base"></div></div>
+<header class="header"><div class="kicker">DEADWOOD SHERIFF OFFICE // 1887</div><h1>EVIDENCE 02</h1><div class="subtitle">پرونده‌ای که نباید پیدا می‌شد...</div></header>
+<main class="evidence">
+<div class="envelope" onclick="openEvidence()">
+<div class="paper"><img src="nar.jpg" alt="Recovered Evidence"></div>
+<div class="flap"></div><div class="seal"><span>DN</span></div>
+<div class="label">RECOVERED // DO NOT DESTROY</div>
+</div>
+</main>
+<div class="instruction">برای کشف مدرک، روی <b>مهر قرمز</b> کلیک کن</div>
+<div class="reveal">EVIDENCE RECOVERED — IMAGE 01</div>
+<div class="success"><div class="stamp">EVIDENCE FOUND</div></div>
+</div>
+<script>
+let opened=false;
+function openEvidence(){
+ if(opened)return;
+ opened=true;
+ document.body.classList.add('opened');
+ setTimeout(()=>document.body.classList.add('stamp-gone'),2500);
+ const audio=new Audio('hal.mp3');
+ audio.volume=.55;
+ audio.play().catch(()=>{});
+}
+</script>
+</body>
+</html>
