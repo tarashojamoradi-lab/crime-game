@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080808">
+<title>پرونده ۰۸ مهر | پیرمرد</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
+
+:root{
+    --bg:#080808;
+    --panel:#11100f;
+    --panel2:#171513;
+    --paper:#d7c5a6;
+    --paper-dark:#8e7a5d;
+    --text:#eee7dc;
+    --muted:#9d968c;
+    --red:#8f1717;
+    --red2:#b52a2a;
+    --line:rgba(215,197,166,.18);
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:
+        radial-gradient(circle at 20% 10%,rgba(120,20,20,.10),transparent 30%),
+        radial-gradient(circle at 80% 40%,rgba(255,255,255,.025),transparent 30%),
+        #080808;
+    color:var(--text);
+    font-family:"Vazirmatn",Tahoma,sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+body:before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:100;
+    opacity:.045;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button{
+    font-family:inherit;
+}
+
+/* ---------------- HERO ---------------- */
+
+.hero{
+    min-height:650px;
+    position:relative;
+    display:flex;
+    align-items:flex-end;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+}
+
+.hero-image{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    filter:
+        brightness(.58)
+        contrast(1.08)
+        saturate(.75);
+}
+
+.hero:after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(to top,
+            #080808 2%,
+            rgba(8,8,8,.78) 22%,
+            rgba(8,8,8,.15) 65%,
+            rgba(8,8,8,.25));
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+    width:min(1200px,92%);
+    margin:auto;
+    padding:90px 0 65px;
+}
+
+.case-label{
+    display:inline-block;
+    border:1px solid rgba(215,197,166,.55);
+    padding:7px 13px;
+    font-size:12px;
+    letter-spacing:2px;
+    color:var(--paper);
+    margin-bottom:20px;
+    background:rgba(0,0,0,.35);
+}
+
+.hero h1{
+    font-size:clamp(42px,8vw,92px);
+    line-height:1;
+    font-weight:800;
+    margin-bottom:16px;
+    text-shadow:0 5px 25px #000;
+}
+
+.hero h1 span{
+    color:#a72020;
+}
+
+.hero-sub{
+    color:#ddd4c6;
+    max-width:620px;
+    line-height:2;
+    font-size:15px;
+}
+
+.hero-note{
+    margin-top:22px;
+    display:inline-block;
+    color:var(--paper);
+    font-size:13px;
+    border-right:3px solid var(--red);
+    padding-right:13px;
+}
+
+/* ---------------- NAV ---------------- */
+
+.nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(8,8,8,.93);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+}
+
+.nav-inner{
+    width:min(1100px,95%);
+    margin:auto;
+    display:flex;
+    justify-content:center;
+    gap:5px;
+    overflow-x:auto;
+}
+
+.nav a{
+    white-space:nowrap;
+    padding:18px 18px;
+    font-size:12px;
+    color:#aaa39a;
+    transition:.25s;
+}
+
+.nav a:hover{
+    color:white;
+    background:#151312;
+}
+
+/* ---------------- GENERAL ---------------- */
+
+.container{
+    width:min(1150px,92%);
+    margin:auto;
+}
+
+.section{
+    padding:90px 0;
+}
+
+.section-title{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-bottom:40px;
+}
+
+.section-title:before{
+    content:"";
+    width:35px;
+    height:2px;
+    background:var(--red2);
+}
+
+.section-title h2{
+    font-size:25px;
+}
+
+.section-title span{
+    font-family:monospace;
+    font-size:10px;
+    color:#716a61;
+    direction:ltr;
+}
+
+.paper{
+    background:
+        linear-gradient(135deg,rgba(255,255,255,.04),transparent),
+        #171513;
+    border:1px solid rgba(215,197,166,.18);
+    position:relative;
+}
+
+.paper:before{
+    content:"";
+    position:absolute;
+    inset:7px;
+    border:1px dashed rgba(215,197,166,.08);
+    pointer-events:none;
+}
+
+/* ---------------- WELCOME ---------------- */
+
+.welcome{
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:25px;
+}
+
+.welcome-main{
+    padding:45px;
+}
+
+.stamp{
+    display:inline-block;
+    color:#b33131;
+    border:2px solid #8b2222;
+    padding:5px 12px;
+    transform:rotate(-3deg);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:1px;
+    margin-bottom:25px;
+}
+
+.welcome-main h2{
+    font-size:32px;
+    margin-bottom:20px;
+}
+
+.welcome-main p{
+    color:#bcb4a9;
+    line-height:2.3;
+    font-size:14px;
+}
+
+.side-note{
+    padding:38px 30px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.side-note .small{
+    color:#777068;
+    font-size:11px;
+    margin-bottom:15px;
+}
+
+.side-note strong{
+    color:var(--paper);
+    font-size:19px;
+    line-height:2;
+}
+
+.side-note em{
+    display:block;
+    margin-top:20px;
+    color:#a52a2a;
+    font-style:normal;
+}
+
+.side-note-image{
+    width:100%;
+    height:210px;
+    object-fit:cover;
+    margin-bottom:22px;
+    border:1px solid rgba(215,197,166,.18);
+    filter:brightness(.8) contrast(1.05);
+}
+
+/* ---------------- CARDS ---------------- */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:12px;
+}
+
+.card{
+    min-height:230px;
+    padding:20px 17px;
+    background:#11100f;
+    border:1px solid rgba(215,197,166,.13);
+    cursor:pointer;
+    transition:.3s;
+    position:relative;
+    overflow:hidden;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(181,42,42,.55);
+    background:#171514;
+}
+
+.card-number{
+    font-family:monospace;
+    color:#70685d;
+    font-size:10px;
+    direction:ltr;
+}
+
+.card-icon{
+    font-size:30px;
+    margin:20px 0;
+}
+
+.card h3{
+    font-size:15px;
+    margin-bottom:12px;
+}
+
+.card p{
+    color:#817a71;
+    line-height:1.9;
+    font-size:11px;
+}
+
+.card .arrow{
+    position:absolute;
+    bottom:17px;
+    left:17px;
+    color:#9c2929;
+}
+
+/* ---------------- MEMORY ---------------- */
+
+.memory-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.memory{
+    min-height:240px;
+    background:#141210;
+    border:1px solid var(--line);
+    padding:22px;
+    position:relative;
+}
+
+.memory:nth-child(2){
+    transform:rotate(1deg);
+}
+
+.memory:nth-child(3){
+    transform:rotate(-1deg);
+}
+
+.memory-photo{
+    height:145px;
+    background:
+        linear-gradient(135deg,#29231d,#0e0e0e);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:15px;
+    color:#6e665c;
+    font-size:11px;
+    overflow:hidden;
+}
+
+.memory-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.memory h3{
+    font-size:14px;
+    margin-bottom:8px;
+}
+
+.memory p{
+    font-size:11px;
+    color:#817970;
+    line-height:1.9;
+}
+
+/* ---------------- CAT ---------------- */
+
+.cat-section{
+    display:grid;
+    grid-template-columns:.8fr 1.2fr;
+    gap:25px;
+    align-items:stretch;
+}
+
+.cat-photo{
+    min-height:450px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    background:#0d0d0d;
+}
+
+.cat-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.cat-text{
+    padding:45px;
+}
+
+.cat-text .evidence{
+    color:#a72a2a;
+    font-family:monospace;
+    font-size:11px;
+    margin-bottom:25px;
+    direction:ltr;
+}
+
+.cat-text h2{
+    font-size:30px;
+    margin-bottom:20px;
+}
+
+.cat-text p{
+    color:#aaa198;
+    line-height:2.3;
+    font-size:14px;
+}
+
+.cat-quote{
+    margin-top:30px;
+    padding:20px;
+    border-right:2px solid var(--red);
+    background:#0d0d0d;
+    color:var(--paper);
+    line-height:2;
+}
+
+/* ---------------- LETTER ---------------- */
+
+.letter-wrap{
+    display:flex;
+    justify-content:center;
+}
+
+.letter{
+    width:min(750px,100%);
+    background:#cbb997;
+    color:#241f19;
+    padding:55px 50px;
+    position:relative;
+    box-shadow:0 15px 50px #000;
+}
+
+.letter:after{
+    content:"";
+    position:absolute;
+    inset:13px;
+    border:1px solid rgba(45,35,25,.25);
+}
+
+.letter .top{
+    display:flex;
+    justify-content:space-between;
+    color:#625646;
+    font-size:10px;
+    margin-bottom:35px;
+    direction:ltr;
+}
+
+.letter h2{
+    font-family:Georgia,serif;
+    font-size:25px;
+    margin-bottom:25px;
+}
+
+.letter p{
+    line-height:2.5;
+    font-size:14px;
+    position:relative;
+    z-index:1;
+}
+
+.letter .signature{
+    margin-top:35px;
+    text-align:left;
+    font-size:12px;
+}
+
+/* ---------------- WISH ---------------- */
+
+.wish{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.wish-box{
+    padding:40px;
+    min-height:280px;
+}
+
+.wish-box.red{
+    background:
+        linear-gradient(135deg,rgba(130,20,20,.25),transparent),
+        #120d0d;
+    border:1px solid rgba(150,35,35,.35);
+}
+
+.wish-box h3{
+    font-size:11px;
+    color:#777069;
+    margin-bottom:25px;
+    direction:ltr;
+}
+
+.wish-box p{
+    font-size:22px;
+    line-height:2.1;
+}
+
+.approved{
+    display:inline-block;
+    border:2px solid #922727;
+    color:#a52d2d;
+    padding:6px 13px;
+    transform:rotate(-4deg);
+    font-weight:800;
+    margin-top:25px;
+}
+
+/* ---------------- RULES ---------------- */
+
+.rules{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.rule{
+    display:flex;
+    gap:18px;
+    padding:22px;
+    border-bottom:1px solid var(--line);
+}
+
+.rule-num{
+    color:#922727;
+    font-family:monospace;
+}
+
+.rule p{
+    color:#a49c91;
+    font-size:13px;
+    line-height:2;
+}
+
+/* ---------------- FINAL ---------------- */
+
+.final{
+    min-height:500px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.final:before{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    background:radial-gradient(circle,rgba(120,20,20,.2),transparent 65%);
+}
+
+.final-content{
+    position:relative;
+    z-index:1;
+}
+
+.final-small{
+    color:#777068;
+    font-family:monospace;
+    font-size:11px;
+    margin-bottom:25px;
+    direction:ltr;
+}
+
+.final h2{
+    font-size:clamp(35px,7vw,75px);
+    margin-bottom:20px;
+}
+
+.final h2 span{
+    color:#922727;
+}
+
+.final p{
+    color:#aaa198;
+    line-height:2;
+}
+
+.final-button{
+    margin-top:30px;
+    display:inline-block;
+    border:1px solid #665b50;
+    padding:12px 25px;
+    color:#c7bba9;
+    transition:.3s;
+    cursor:pointer;
+}
+
+.final-button:hover{
+    border-color:#9d2929;
+    background:#170c0c;
+}
+
+/* ---------------- FOOTER ---------------- */
+
+footer{
+    border-top:1px solid var(--line);
+    padding:35px 5%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:#666058;
+    font-size:11px;
+}
+
+footer .heart{
+    color:#9b2828;
+}
+
+/* ---------------- MODAL ---------------- */
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:200;
+    background:rgba(0,0,0,.82);
+    backdrop-filter:blur(8px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(650px,100%);
+    max-height:85vh;
+    overflow:auto;
+    background:#151311;
+    border:1px solid rgba(215,197,166,.25);
+    padding:40px;
+    position:relative;
+}
+
+.close{
+    position:absolute;
+    top:12px;
+    left:15px;
+    background:none;
+    border:0;
+    color:#aaa;
+    font-size:25px;
+    cursor:pointer;
+}
+
+.modal-box h2{
+    margin-bottom:20px;
+}
+
+.modal-box p{
+    color:#aaa198;
+    line-height:2.3;
+    font-size:14px;
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+
+@media(max-width:900px){
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .welcome,
+    .cat-section,
+    .wish{
+        grid-template-columns:1fr;
+    }
+
+    .memory-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+    .hero{
+        min-height:600px;
+    }
+
+    .hero-content{
+        padding-bottom:45px;
+    }
+
+    .hero h1{
+        font-size:50px;
+    }
+
+    .nav a{
+        padding:15px 11px;
+        font-size:11px;
+    }
+
+    .section{
+        padding:65px 0;
+    }
+
+    .cards{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .card{
+        min-height:210px;
+    }
+
+    .welcome-main,
+    .side-note,
+    .cat-text,
+    .wish-box{
+        padding:28px;
+    }
+
+    .letter{
+        padding:40px 27px;
+    }
+
+    .rules{
+        grid-template-columns:1fr;
+    }
+
+    footer{
+        flex-direction:column;
+        gap:15px;
+        text-align:center;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= HERO ================= -->
+
+<header class="hero">
+
+    <img src="gorbe.jpg" class="hero-image" alt="ما و گربه">
+
+    <div class="hero-content">
+
+        <div class="case-label">
+            CASE #08 — MEHR
+        </div>
+
+        <h1>
+            پرونده‌ی <span>پیرمرد</span>
+        </h1>
+
+        <p class="hero-sub">
+            یک پرونده‌ی کاملاً محرمانه، که به طرز مشکوکی
+            شامل یک دختر بامزه، یک پیرمرد، چندین خاطره،
+            یک گربه‌ی بی‌گناه‌نما و مقدار قابل توجهی سلیطه‌بازی است.
+        </p>
+
+        <div class="hero-note">
+            پرونده فقط برای یک نفر ساخته شده است.
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ================= NAV ================= -->
+
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="#home">⌂ خانه</a>
+        <a href="#memories">▣ خاطرات</a>
+        <a href="#cat">♞ شاهد اصلی</a>
+        <a href="#letter">✉ نامه</a>
+        <a href="#things">♡ چیزهایی که دوستت دارم</a>
+        <a href="#final">★ مدرک نهایی</a>
+    </div>
+</nav>
+
+
+<main>
+
+
+<!-- ================= HOME ================= -->
+
+<section class="section" id="home">
+
+    <div class="container">
+
+        <div class="welcome">
+
+            <div class="paper welcome-main">
+
+                <div class="stamp">
+                    TOP SECRET
+                </div>
+
+                <h2>
+                    خوش اومدی، پیرمرد.
+                </h2>
+
+                <p>
+                    نمی‌دونم دقیقاً از کجا باید شروع کنم،
+                    پس مثل همیشه ترجیح دادم به جای حرف‌های خیلی
+                    عاشقانه و عجیب، یه چیز درست و حسابی برات بسازم.
+                    <br><br>
+                    این سایت برای یک نفر ساخته شده.
+                    همون یک نفری که احتمالاً الان نشسته و
+                    نمی‌دونه چرا باید به یک سایت مشکوک اعتماد کنه.
+                    <br><br>
+                    جواب کوتاه:
+                    چون من ساختمش.
+                    جواب بلندتر:
+                    چون تولدته، پیرمرد.
+                </p>
+
+            </div>
+
+            <div class="paper side-note">
+
+                <img src="pir.jpg" class="side-note-image" alt="پیرمرد">
+
+                <div class="small">
+                    ARCHIVE NOTE / 08 MEHR
+                </div>
+
+                <strong>
+                    مظنون اصلی پرونده:
+                    <br>
+                    یک عدد پیرمرد دوست‌داشتنی
+                </strong>
+
+                <em>
+                    وضعیت: هنوز قابل تحمل.
+                </em>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CARDS ================= -->
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-title">
+            <h2>فهرست پرونده</h2>
+            <span>CASE CONTENTS</span>
+        </div>
+
+        <div class="cards">
+
+            <div class="card" onclick="openModal('memoriesModal')">
+                <div class="card-number">01 / FILE</div>
+                <div class="card-icon">▣</div>
+                <h3>خاطرات</h3>
+                <p>
+                    تعدادی مدرک تصویری از اتفاقاتی
+                    که somehow هنوز ازشون جان سالم به در بردیم.
+                </p>
+                <div class="arrow">←</div>
+            </div>
+
+            <div class="card" onclick="scrollToId('cat')">
+                <div class="card-number">02 / WITNESS</div>
+                <div class="card-icon">♞</div>
+                <h3>شاهد شماره ۱</h3>
+                <p>
+                    گربه‌ای که احتمالاً بیشتر از همه‌مون
+                    از این رابطه اطلاعات داره.
+                </p>
+                <div class="arrow">←</div>
+            </div>
+
+            <div class="card" onclick="scrollToId('letter')">
+                <div class="card-number">03 / DOCUMENT</div>
+                <div class="card-icon">✉</div>
+                <h3>نامه</h3>
+                <p>
+                    چند جمله که قرار نبود خیلی
+                    احساساتی باشن. احتمالاً.
+                </p>
+                <div class="arrow">←</div>
+            </div>
+
+            <div class="card" onclick="scrollToId('things')">
+                <div class="card-number">04 / EVIDENCE</div>
+                <div class="card-icon">♡</div>
+                <h3>چیزهایی که دوستت دارم</h3>
+                <p>
+                    نه، قرار نیست اینجا «چشمانت مثل...» بخونی.
+                    خیالت راحت.
+                </p>
+                <div class="arrow">←</div>
+            </div>
+
+            <div class="card" onclick="scrollToId('final')">
+                <div class="card-number">05 / FINAL</div>
+                <div class="card-icon">★</div>
+                <h3>مدرک نهایی</h3>
+                <p>
+                    آخرین صفحه‌ی پرونده.
+                    شاید مهم‌ترینش.
+                </p>
+                <div class="arrow">←</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= MEMORIES ================= -->
+
+<section class="section" id="memories">
+
+    <div class="container">
+
+        <div class="section-title">
+            <h2>خاطرات</h2>
+            <span>MEMORY ARCHIVE</span>
+        </div>
+
+        <div class="memory-grid">
+
+            <div class="memory">
+                <div class="memory-photo">
+                    <img src="abe.jpg" alt="خاطره آب">
+                </div>
+                <h3>از آب نترسیدیم...</h3>
+                <p>
+                    پرونده ثبت می‌کند: یک نفر باعث شد ترس من از آب بریزه؛
+                    و از اون روز به بعد، این یکی از خاطره‌هایی شد که
+                    نمی‌ذارم از دستم در بره.
+                </p>
+            </div>
+
+            <div class="memory">
+                <div class="memory-photo">
+                    <img src="ham.jpg" alt="خاطره همبرگر">
+                </div>
+                <h3>پرونده‌ی همبرگر</h3>
+                <p>
+                    من خمیر همبرگر بلد نبودم، تو هم طبق معمول
+                    هم اذیتم می‌کردی هم دلت همبرگر می‌خواست؛
+                    نتیجه؟ یک همبرگر که تاوان غرغرهای تو رو داد.
+                </p>
+            </div>
+
+            <div class="memory">
+                <div class="memory-photo">
+                    <img src="nap.jpg" alt="خاطره ناپلئونی و باقلوا">
+                </div>
+                <h3>مدرک شیرین</h3>
+                <p>
+                    ناپلئونی و باقلوا بخری، به عمرت اضافه میشه.
+                    این یک قانون علمی نیست؛
+                    ولی چون من گفتم، در پرونده ثبت شده.
+                </p>
+            </div>
+
+            <div class="memory">
+                <div class="memory-photo">
+                    <img src="ch.jpg" alt="خاطره عکس گرفتن">
+                </div>
+                <h3>مجرمِ فراری از دوربین</h3>
+                <p>
+                    از اونجایی که از عکس انداختن خوشت نمیاد،
+                    خودم با هوش مصنوعی برات مدرک ساختم.
+                    فقط امسال باهام عکس نگیر؛ کلّه‌تو می‌کنم.
+                </p>
+            </div>
+
+            <div class="memory">
+                <div class="memory-photo">
+                    <img src="golee.jpg" alt="آفتابگردان">
+                </div>
+                <h3>مدرک شماره ۰۵</h3>
+                <p>
+                    نیاز بود دوباره یادآوری کنم که طلسم
+                    کول خریدن برای منو شکوندی.
+                </p>
+            </div>
+
+            <div class="memory">
+                <div class="memory-photo">
+                    <img src="af.jpg" alt="خاطره کابویی">
+                </div>
+                <h3>پرونده‌ی کابویی</h3>
+                <p>
+                    تو با استایل کابویی، منم با استایل خودم؛
+                    چون ظاهراً یکی از ما باید بالاخره
+                    نقش کابوی مورد علاقه‌ی منو بازی کنه.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CAT ================= -->
+
+<section class="section" id="cat">
+
+    <div class="container">
+
+        <div class="section-title">
+            <h2>شاهد شماره ۱</h2>
+            <span>PRIMARY WITNESS</span>
+        </div>
+
+        <div class="cat-section">
+
+            <div class="cat-photo">
+                <img src="gorbe.jpg" alt="گربه و صاحبانش">
+            </div>
+
+            <div class="paper cat-text">
+
+                <div class="evidence">
+                    EVIDENCE #001 — CAT
+                </div>
+
+                <h2>
+                    متهم اصلی: گربه
+                </h2>
+
+                <p>
+                    این موجود از تمام اتفاقات خبر دارد.
+                    <br>
+                    هیچ‌وقت چیزی نمی‌گوید.
+                    <br>
+                    احتمالاً عمداً.
+                    <br><br>
+                    با این حال طبق شواهد موجود،
+                    حضور ایشان در این رابطه غیرقابل انکار است.
+                </p>
+
+                <div class="cat-quote">
+                    «من چیزی ندیدم.
+                    <br>
+                    من چیزی نشنیدم.
+                    <br>
+                    غذا رو کی می‌دید؟»
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= LETTER ================= -->
+
+<section class="section" id="letter">
+
+    <div class="container">
+
+        <div class="section-title">
+            <h2>نامه‌ی محرمانه</h2>
+            <span>PERSONAL DOCUMENT</span>
+        </div>
+
+        <div class="letter-wrap">
+
+            <article class="letter">
+
+                <div class="top">
+                    <span>PRIVATE DOCUMENT</span>
+                    <span>08 MEHR</span>
+                </div>
+
+                <h2>
+                    پیرمرد،
+                </h2>
+
+                <p>
+                    تولدت مبارک.
+                    <br><br>
+
+                    راستش رو بخوای من آدم این نیستم که بشینم
+                    یه نامه‌ی خیلی طولانی بنویسم و هی بگم
+                    «تو بهترین اتفاق زندگی منی» و از این حرفا.
+                    خودت هم می‌دونی احتمالاً وسطش حوصله‌ت سر می‌ره.
+                    <br><br>
+
+                    فقط می‌خوام بدونی که از داشتن تو توی زندگی‌م
+                    خوشحالم. با تمام مسخره‌بازی‌ها، بحث‌ها،
+                    خنده‌ها، لحظه‌های عجیب و اتفاقاتی که فقط
+                    خودمون می‌فهمیم.
+                    <br><br>
+
+                    امیدوارم سال جدید زندگیت پر باشه از چیزهایی
+                    که واقعاً دوستشون داری و آدم‌هایی که واقعاً
+                    حالت رو خوب می‌کنن.
+                    <br><br>
+
+                    و البته...
+                    <br>
+                    <strong>
+                    ایشالله پیرت کنم،
+                    هاف‌هافوتر از اینی که هستی شی.
+                    </strong>
+                    <br><br>
+
+                    تولدت مبارک، پیرمرد.
+                </p>
+
+                <div class="signature">
+                    از طرف همون دختر بامزه،
+                    <br>
+                    در عین حال سلیطه و کیوتت.
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= THINGS ================= -->
+
+<section class="section" id="things">
+
+    <div class="container">
+
+        <div class="section-title">
+            <h2>چیزهایی که دوستت دارم</h2>
+            <span>EVIDENCE OF AFFECTION</span>
+        </div>
+
+        <div class="wish">
+
+            <div class="paper wish-box">
+
+                <h3>01 — NO CHEESY STUFF</h3>
+
+                <p>
+                    دوستت دارم چون باهات می‌تونم
+                    همزمان هم جدی باشم،
+                    هم چرت و پرت بگم،
+                    هم خود واقعی خودم باشم.
+                </p>
+
+            </div>
+
+            <div class="paper wish-box red">
+
+                <h3>02 — OFFICIAL STATEMENT</h3>
+
+                <p>
+                    تحمل کردن من کار راحتی نیست.
+                    <br>
+                    تحمل کردن تو هم نیست.
+                    <br><br>
+                    پس ظاهراً جفتمون یه مقدار
+                    دیوونه‌ایم.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= RULES ================= -->
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-title">
+            <h2>قوانین رابطه</h2>
+            <span>OFFICIAL REGULATIONS</span>
+        </div>
+
+        <div class="paper rules">
+
+            <div class="rule">
+                <div class="rule-num">01</div>
+                <p>
+                    پیرمرد موظف است هر سال پیرتر شود.
+                </p>
+            </div>
+
+            <div class="rule">
+                <div class="rule-num">02</div>
+                <p>
+                    دختر پرونده حق دارد هر از گاهی سلیطه‌بازی دربیاورد.
+                </p>
+            </div>
+
+            <div class="rule">
+                <div class="rule-num">03</div>
+                <p>
+                    گربه همیشه طرف خودش را می‌گیرد.
+                </p>
+            </div>
+
+            <div class="rule">
+                <div class="rule-num">04</div>
+                <p>
+                    دعواها قابل ثبت هستند ولی استفاده از آنها
+                    به عنوان مدرک علیه طرف مقابل ممنوع است.
+                </p>
+            </div>
+
+            <div class="rule">
+                <div class="rule-num">05</div>
+                <p>
+                    خندیدن به چیزهای بی‌مزه همچنان مجاز است.
+                </p>
+            </div>
+
+            <div class="rule">
+                <div class="rule-num">06</div>
+                <p>
+                    این پرونده تا اطلاع ثانوی بسته نمی‌شود.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= WISH ================= -->
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="paper wish-box" style="max-width:850px;margin:auto;text-align:center;">
+
+            <h3>ARCHIVE WISH — 08 MEHR</h3>
+
+            <p>
+                ایشالله پیرت کنم.
+                <br>
+                هاف‌هافوتر از اینی که هستی شی :)
+            </p>
+
+            <div class="approved">
+                APPROVED
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FINAL ================= -->
+
+<section class="section final" id="final">
+
+    <div class="final-content">
+
+        <div class="final-small">
+            CASE STATUS — STILL OPEN
+        </div>
+
+        <h2>
+            پرونده <span>بسته نشد.</span>
+        </h2>
+
+        <p>
+            چون هنوز کلی خاطره مونده که باید با هم بسازیم.
+            <br>
+            متأسفانه مجبوریم ادامه بدیم.
+        </p>
+
+        <div class="final-button" onclick="showFinal()">
+            باز کردن مدرک نهایی
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div>
+        CASE #08 — 08 MEHR
+    </div>
+
+    <div>
+        Me + You + Cat
+        <span class="heart">♥</span>
+    </div>
+
+    <div>
+        پرونده همچنان باز است.
+    </div>
+
+</footer>
+
+
+<!-- ================= MODAL ================= -->
+
+<div class="modal" id="memoriesModal">
+
+    <div class="modal-box">
+
+        <button class="close" onclick="closeModal('memoriesModal')">
+            ×
+        </button>
+
+        <div class="stamp">
+            CONFIDENTIAL
+        </div>
+
+        <h2>
+            پرونده‌ی خاطرات
+        </h2>
+
+        <p>
+            بعضی خاطره‌ها عکس دارن،
+            بعضی‌ها فقط یه جمله‌ان،
+            بعضی‌ها هم بهتره هیچ‌وقت مکتوب نشن.
+            <br><br>
+            ولی همه‌شون یه وجه مشترک دارن:
+            <br>
+            یه جایی توشون تو هستی.
+        </p>
+
+        <br>
+
+        <p style="color:#a52a2a;">
+            این بخش بعداً می‌تونه با عکس‌های واقعی
+            خودتون پر بشه.
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function scrollToId(id){
+    document.getElementById(id).scrollIntoView({
+        behavior:"smooth"
+    });
+}
+
+function openModal(id){
+    document.getElementById(id).classList.add("show");
+    document.body.style.overflow="hidden";
+}
+
+function closeModal(id){
+    document.getElementById(id).classList.remove("show");
+    document.body.style.overflow="";
+}
+
+document.querySelectorAll(".modal").forEach(function(modal){
+    modal.addEventListener("click",function(e){
+        if(e.target === modal){
+            modal.classList.remove("show");
+            document.body.style.overflow="";
+        }
+    });
+});
+
+function showFinal(){
+
+    const message = `
+    🎂 مدرک نهایی پیدا شد.
+
+    تولدت مبارک پیرمرد.
+
+    ایشالله پیرت کنم،
+    هاف‌هافوتر از اینی که هستی شی.
+
+    از طرف:
+    همون دختر بامزه،
+    سلیطه،
+    کیوت،
+    و کمی مشکوک.
+
+    پرونده همچنان باز است.
+    `;
+
+    alert(message);
+}
+
+</script>
+
+</body>
+</html>
