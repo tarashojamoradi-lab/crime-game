@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -396,17 +397,7 @@ button{
     width:100%;
     height:100%;
     object-fit:cover;
-}
-
-.memory h3{
-    font-size:14px;
-    margin-bottom:8px;
-}
-
-.memory p{
-    font-size:11px;
-    color:#817970;
-    line-height:1.9;
+    cursor:zoom-in;
 }
 
 /* ---------------- CAT ---------------- */
@@ -783,8 +774,6 @@ footer .heart{
 
 <body>
 
-<!-- ================= HERO ================= -->
-
 <header class="hero">
 
     <img src="gorbe.jpg" class="hero-image" alt="ما و گربه">
@@ -813,9 +802,6 @@ footer .heart{
 
 </header>
 
-
-<!-- ================= NAV ================= -->
-
 <nav class="nav">
     <div class="nav-inner">
         <a href="#home">⌂ خانه</a>
@@ -827,11 +813,7 @@ footer .heart{
     </div>
 </nav>
 
-
 <main>
-
-
-<!-- ================= HOME ================= -->
 
 <section class="section" id="home">
 
@@ -891,9 +873,6 @@ footer .heart{
     </div>
 
 </section>
-
-
-<!-- ================= CARDS ================= -->
 
 <section class="section">
 
@@ -966,9 +945,6 @@ footer .heart{
     </div>
 
 </section>
-
-
-<!-- ================= MEMORIES ================= -->
 
 <section class="section" id="memories">
 
@@ -1058,9 +1034,6 @@ footer .heart{
 
 </section>
 
-
-<!-- ================= CAT ================= -->
-
 <section class="section" id="cat">
 
     <div class="container">
@@ -1112,9 +1085,6 @@ footer .heart{
     </div>
 
 </section>
-
-
-<!-- ================= LETTER ================= -->
 
 <section class="section" id="letter">
 
@@ -1184,9 +1154,6 @@ footer .heart{
 
 </section>
 
-
-<!-- ================= THINGS ================= -->
-
 <section class="section" id="things">
 
     <div class="container">
@@ -1231,9 +1198,6 @@ footer .heart{
     </div>
 
 </section>
-
-
-<!-- ================= RULES ================= -->
 
 <section class="section">
 
@@ -1295,9 +1259,6 @@ footer .heart{
 
 </section>
 
-
-<!-- ================= WISH ================= -->
-
 <section class="section">
 
     <div class="container">
@@ -1321,9 +1282,6 @@ footer .heart{
     </div>
 
 </section>
-
-
-<!-- ================= FINAL ================= -->
 
 <section class="section final" id="final">
 
@@ -1353,9 +1311,6 @@ footer .heart{
 
 </main>
 
-
-<!-- ================= FOOTER ================= -->
-
 <footer>
 
     <div>
@@ -1372,9 +1327,6 @@ footer .heart{
     </div>
 
 </footer>
-
-
-<!-- ================= MODAL ================= -->
 
 <div class="modal" id="memoriesModal">
 
@@ -1412,7 +1364,6 @@ footer .heart{
     </div>
 
 </div>
-
 
 <script>
 
@@ -1463,7 +1414,54 @@ function showFinal(){
     alert(message);
 }
 
+
+/* ---------------- MEMORY IMAGE ZOOM ---------------- */
+
+document.querySelectorAll(".memory-photo img").forEach(function(img){
+
+    img.addEventListener("click",function(){
+
+        const overlay = document.createElement("div");
+
+        overlay.style.position = "fixed";
+        overlay.style.inset = "0";
+        overlay.style.background = "rgba(0,0,0,.92)";
+        overlay.style.zIndex = "9999";
+        overlay.style.display = "flex";
+        overlay.style.alignItems = "center";
+        overlay.style.justifyContent = "center";
+        overlay.style.padding = "30px";
+        overlay.style.cursor = "zoom-out";
+
+        const bigImage = document.createElement("img");
+
+        bigImage.src = this.src;
+        bigImage.alt = this.alt;
+
+        bigImage.style.maxWidth = "95%";
+        bigImage.style.maxHeight = "92vh";
+        bigImage.style.width = "auto";
+        bigImage.style.height = "auto";
+        bigImage.style.objectFit = "contain";
+        bigImage.style.border = "1px solid rgba(215,197,166,.3)";
+        bigImage.style.boxShadow = "0 10px 50px #000";
+
+        overlay.appendChild(bigImage);
+        document.body.appendChild(overlay);
+
+        document.body.style.overflow = "hidden";
+
+        overlay.addEventListener("click",function(){
+            overlay.remove();
+            document.body.style.overflow = "";
+        });
+
+    });
+
+});
+
 </script>
 
 </body>
 </html>
+```
