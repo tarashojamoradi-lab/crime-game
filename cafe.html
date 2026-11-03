@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f8e8ef">
+<title>The Little Date Club</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
+:root{--font:"Vazirmatn",Tahoma,sans-serif;--pink:#e889ad;--pink-dark:#a94d76;--cream:#fff8f4;--ink:#3d2934;--navy:#172434;--gold:#d8bb82}
+*{box-sizing:border-box}body{margin:0;font-family:var(--font);background:#f8f1ed;color:#382d32}button,input,textarea,select{font:inherit}button{cursor:pointer}
+.site{min-height:100vh;overflow:hidden}.topbar{display:flex;align-items:center;justify-content:space-between;padding:18px clamp(16px,4vw,54px);background:#fffaf7;border-bottom:1px solid #eaded9;position:sticky;top:0;z-index:10}.brand{font-weight:900;letter-spacing:.04em;color:#805264}.brand small{display:block;font-size:10px;letter-spacing:.18em;color:#a68a91;font-weight:600}.top-actions{display:flex;gap:8px;align-items:center}.pill{border:1px solid #e7d8d9;background:#fff;border-radius:99px;padding:9px 14px;color:#684e59;font-size:12px}.hero{max-width:1150px;margin:28px auto;padding:clamp(22px,5vw,56px);border-radius:30px;background:linear-gradient(135deg,#fff7f1,#f4dce6);position:relative;text-align:center;box-shadow:0 18px 55px #63404a12}.hero .eyebrow{font-size:11px;letter-spacing:.22em;color:#9b6c7d;font-weight:800}.hero h1{font-size:clamp(32px,6vw,66px);line-height:1.1;margin:12px 0;color:#72495a}.hero p{max-width:620px;margin:12px auto 25px;color:#866a75;line-height:2}.doors{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:900px;margin:28px auto 0;text-align:right}.door{border:0;border-radius:24px;padding:22px;text-align:right;min-height:230px;display:flex;flex-direction:column;justify-content:space-between;transition:.25s;box-shadow:0 10px 25px #00000010}.door:hover{transform:translateY(-5px)}
+.door-image-wrap{height:145px;display:grid;place-items:center;margin:-4px -4px 10px;border-radius:19px;overflow:hidden;background:#ffffff55}
+.door-image{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;object-position:center;filter:drop-shadow(0 7px 8px #0002)}
+.girls .door-image-wrap{background:linear-gradient(135deg,#fff8fc,#f8d7e7)}
+.boys .door-image-wrap{background:linear-gradient(135deg,#31465b,#182536)}
+.section.girls{background:radial-gradient(circle at 8% 0%,#ffe1ee 0,transparent 32%),radial-gradient(circle at 95% 35%,#dff5d9 0,transparent 25%),linear-gradient(145deg,#fff8fb 0%,#f1f9e9 48%,#fff0f6 100%)}
+.girls .food-card{border-radius:27px;box-shadow:0 10px 25px #d879a51c,inset 0 0 0 2px #fff}
+.girls .food-art{position:relative;background:linear-gradient(145deg,#fff0f6,#e5f5df 55%,#fff5d9)}
+.girls .food-art:after{content:"✦  ♡  ✦";position:absolute;top:9px;right:13px;color:#e99ab8;font-size:17px;animation:twinkle 2s infinite alternate}
+.girls .food-info h3{color:#a84e78}
+.girls .add{background:linear-gradient(135deg,#f8c8dc,#f3aeca);box-shadow:0 4px 0 #e6a0bd}
+.girls .welcome{border:1px dashed #e9a9c4;border-radius:24px;box-shadow:0 8px 24px #e6a3bf20}
+@keyframes twinkle{from{opacity:.45;transform:scale(.9) rotate(-8deg)}to{opacity:1;transform:scale(1.12) rotate(8deg)}}
+.stock{font-size:11px;font-weight:900;border-radius:99px;padding:5px 8px;white-space:nowrap}
+.stock.low{background:#ffe5e5;color:#b83232}.stock.medium{background:#e5f6e9;color:#237b43}.stock.out{background:#eee;color:#777}
+.food-bottom{flex-wrap:wrap}
+.success-mark{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;margin:10px auto 14px;background:#e4f8e9;color:#159447;font-size:48px;font-weight:900;box-shadow:0 0 0 8px #e4f8e955}
+.receipt-success{text-align:center;color:#168344;font-weight:900;font-size:18px}
+.pending-tag{display:inline-block;padding:5px 9px;border-radius:99px;background:#fff0d7;color:#9b641b;font-size:11px;font-weight:800}.door.girls{background:linear-gradient(145deg,#fff0f5,#f7cddd);color:#9d4e70}.door.boys{background:linear-gradient(145deg,#24384b,#101b29);color:#f0d6a0}.door .door-icon{font-size:42px}.door h2{font-size:25px;margin:8px 0}.door p{margin:0;line-height:1.8;font-size:13px}.door strong{align-self:flex-start;margin-top:18px;border-radius:99px;padding:10px 17px;background:#ffffffa8;font-size:12px}.boys strong{background:#d8bb82;color:#172434}
+.section{display:none;min-height:100vh}.section.active{display:block}.section.girls{background:radial-gradient(circle at 8% 0%,#ffe3ee 0,transparent 32%),#fff8f7;color:#593b49}.section.boys{background:radial-gradient(circle at 90% 0%,#344c60 0,transparent 30%),#121f2d;color:#f4ead8}.section-head{padding:30px clamp(16px,5vw,65px) 22px;display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap}.section-title h1{font-size:clamp(28px,5vw,46px);margin:0}.section-title p{margin:6px 0 0;opacity:.75}.section.girls .section-title h1{color:#b65c83}.section.boys .section-title h1{color:#e1c58f}.back{border:1px solid currentColor;background:transparent;color:inherit;border-radius:99px;padding:10px 16px}.welcome{margin:0 clamp(16px,5vw,65px) 25px;padding:20px 24px;border-radius:20px;line-height:2}.girls .welcome{background:linear-gradient(110deg,#ffe6f0,#e8f7df,#ffeaf1);color:#765064;border:1px solid #d9ebce}.boys .welcome{background:#1d3042;color:#e8d5ae;border:1px solid #415266}
+.content{max-width:1180px;margin:auto;padding:0 clamp(16px,4vw,45px) 70px}.menu-label{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:25px 0 16px}.menu-label h2{margin:0;font-size:24px}.menu-label span{font-size:12px;opacity:.65}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}.food-card{border-radius:22px;overflow:hidden;position:relative;transition:.2s}.girls .food-card{background:#fff;border:1px solid #f1dce5;box-shadow:0 8px 24px #9b567315}.boys .food-card{background:#1b2c3c;border:1px solid #35495c;box-shadow:0 8px 24px #0003}.food-card:hover{transform:translateY(-4px)}.food-art{height:180px;display:grid;place-items:center;overflow:hidden}.girls .food-art{background:linear-gradient(145deg,#fff0f5,#fce2e9)}.boys .food-art{background:linear-gradient(145deg,#293e51,#172536)}.food-art svg{width:92%;height:95%;max-width:270px}.food-photo{width:100%;height:100%;object-fit:cover;display:block}.food-info{padding:16px}.food-info h3{margin:0 0 5px;font-size:17px}.food-info p{font-size:12px;line-height:1.9;min-height:46px;margin:0 0 12px;opacity:.78}.girls .food-info .tease{color:#ad557b}.boys .food-info .tease{color:#e1c58f}.food-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px}.price{font-size:13px;font-weight:800}.add{border:0;border-radius:99px;padding:9px 14px;font-size:12px;font-weight:800}.girls .add{background:#f5c5d8;color:#8d3f62}.boys .add{background:#d8bb82;color:#172434}
+.order-panel{display:none;margin-top:34px;padding:24px;border-radius:24px}.girls .order-panel{background:linear-gradient(145deg,#fff0f6,#eef8e8);border:1px solid #d8ebd0}.boys .order-panel{background:#1b2d3e;border:1px solid #394d60}.order-panel h2{margin:0 0 5px}.muted{font-size:12px;opacity:.7}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:17px}.field{display:flex;flex-direction:column;gap:6px;font-size:12px}.field input,.field textarea,.field select{border:1px solid #d9c8ce;border-radius:12px;padding:11px 12px;background:#fff;color:#342b30;outline:none;width:100%}.boys .field input,.boys .field textarea,.boys .field select{background:#122131;border-color:#536477;color:#f6ebd7}.field textarea{min-height:75px;resize:vertical}.field select{min-height:44px}.wide{grid-column:1/-1}.locations{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:14px}.location{border:1px solid #dfcbd3;border-radius:15px;padding:13px 8px;background:#fff;color:#664b58;text-align:center;font-size:12px;min-height:76px}.location span{display:block;font-size:22px;margin-bottom:5px}.boys .location{background:#142537;border-color:#516174;color:#f1dfbc}.location.selected{outline:3px solid #e8a6c1;border-color:transparent;background:#ffe4ee}.boys .location.selected{outline-color:#d8bb82;background:#2d4154}.location.surprise{border-style:dashed}.location.surprise:hover{transform:rotate(-1deg)}.submit{border:0;border-radius:14px;padding:14px 20px;font-weight:900;width:100%;margin-top:16px}.girls .submit{background:#d96f9a;color:white}.boys .submit{background:#d8bb82;color:#142333}
+.cart-fab{position:fixed;bottom:18px;left:18px;z-index:12;border:0;border-radius:99px;padding:13px 18px;box-shadow:0 8px 30px #0003;font-weight:800}.girls .cart-fab{background:#d96f9a;color:white}.boys .cart-fab{background:#d8bb82;color:#172434}.cart-drawer{position:fixed;inset:0;background:#0007;z-index:30;display:none;align-items:flex-end;justify-content:center}.cart-drawer.open{display:flex}.cart-box{background:#fffaf8;color:#3b2d34;border-radius:25px 25px 0 0;width:min(650px,100%);max-height:85vh;overflow:auto;padding:22px}.cart-head{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:#f2e4e8;border-radius:50%;width:36px;height:36px}.cart-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #eee}.qty{display:flex;align-items:center;gap:8px}.qty button{border:0;border-radius:50%;width:27px;height:27px;background:#f5dce6}.cart-total{font-size:18px;font-weight:900;text-align:left;padding:16px 0}.empty{text-align:center;padding:25px;color:#987f89}.receipt{position:fixed;inset:0;background:#0009;z-index:40;display:none;place-items:center;padding:15px}.receipt.show{display:grid}.receipt-paper{background:#fffdf9;color:#392d32;border-radius:20px;padding:25px;width:min(470px,100%);max-height:90vh;overflow:auto;box-shadow:0 20px 70px #0005}.receipt-paper h2{text-align:center;color:#a94d76;margin:0}.receipt-paper .line{border-top:1px dashed #d6c4c9;margin:14px 0}.receipt-actions{display:flex;gap:8px}.receipt-actions button{flex:1;border:0;border-radius:12px;padding:11px;background:#f3dce5;color:#71465a;font-weight:800}.public-orders{max-width:1180px;margin:20px auto 30px;padding:20px clamp(16px,4vw,45px);background:#fff;border:1px solid #eadde1;border-radius:20px;color:#44343c}.public-orders h2{margin:0 0 5px}.public-order{padding:13px 15px;margin-top:10px;border:1px solid #eadde1;border-radius:14px;background:#fffafc}.public-order-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.public-orders .pending-tag{background:#fff0d7;color:#9b641b}.admin{max-width:1180px;margin:30px auto;padding:0 18px 50px}.admin details{background:#fff;border:1px solid #eadde1;border-radius:18px;padding:16px;color:#44343c}.admin summary{font-weight:900;cursor:pointer}.admin input{padding:10px;border:1px solid #ddd;border-radius:9px}.admin button{border:0;border-radius:9px;padding:9px 13px;background:#735163;color:#fff}.admin-list{overflow:auto;margin-top:12px}.admin table{border-collapse:collapse;width:100%;font-size:12px;min-width:650px}.admin th,.admin td{padding:10px;border-bottom:1px solid #eee;text-align:right}.toast{position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:50;background:#3f3040;color:white;border-radius:99px;padding:12px 18px;box-shadow:0 8px 30px #0003;display:none;font-size:13px}.toast.show{display:block;animation:pop .25s}@keyframes pop{from{transform:translate(-50%,-10px);opacity:0}to{transform:translate(-50%,0);opacity:1}}.footer{text-align:center;padding:25px;font-size:11px;opacity:.6}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.locations{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:560px){.doors{grid-template-columns:1fr}.door{min-height:180px}.grid{grid-template-columns:1fr 1fr;gap:10px}.food-art{height:135px}.food-info{padding:11px}.food-info h3{font-size:14px}.food-info p{font-size:11px;min-height:58px}.food-bottom{align-items:flex-start;flex-direction:column}.add{width:100%}.form-grid{grid-template-columns:1fr}.locations{grid-template-columns:repeat(2,minmax(0,1fr))}.section-head{align-items:flex-start}.topbar{padding:13px}.brand{font-size:14px}}@media(max-width:370px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="site" id="home">
+<header class="topbar"><div class="brand">THE LITTLE DATE CLUB <small>ONE WEEKEND · TWO LITTLE WORLDS</small></div><div class="top-actions"><button class="pill" onclick="showAdmin()">مدیریت سفارش‌ها</button></div></header>
+<section class="hero">
+<div class="eyebrow">A LITTLE SURPRISE IS WAITING</div>
+<h1>به قرار خوشمزه‌تون خوش اومدید!</h1>
+<p>اینجا هر میزبان، منوی مخصوص خودش رو داره. یکی از درها رو انتخاب کنید و اجازه بدید سفارش امشب با کمی عشق و کلی سلیقه ثبت بشه.</p>
+<div class="doors">
+<button class="door girls" onclick="openSection('girls')"><div class="door-image-wrap"><img class="door-image" src="girl.jpg" alt="دنیای دخترها"></div><div><div class="door-icon">🎀 🍓 ✨</div><h2>دنیای دخترها</h2><p>خانم‌ها میزبان‌اند؛ آقایون مهمون ویژه‌ی این رستورانن.</p></div><strong>ورود به رستوران دخترها ←</strong></button>
+<button class="door boys" onclick="openSection('boys')"><div class="door-image-wrap"><img class="door-image" src="boy.jpg" alt="دنیای جنتلمن‌ها"></div><div><div class="door-icon">♟️ 🥂</div><h2>دنیای جنتلمن‌ها</h2><p>آقایون میزبان‌اند؛ بانوها مهمون ویژه‌ی این رستورانن.</p></div><strong>ورود به رستوران آقایان ←</strong></button>
+</div>
+</section>
+<section class="public-orders" id="publicOrders">
+<h2>🧾 سفارش‌های ثبت‌شده و در انتظار</h2>
+<p class="muted">سفارش‌هایی که ثبت می‌شوند اینجا نمایش داده می‌شوند.</p>
+<div id="publicOrdersList"><div class="empty">هنوز سفارشی ثبت نشده است.</div></div>
+</section>
+<div class="admin" id="adminArea" style="display:none">
+<details open><summary>پنل مدیریت خصوصی · سفارش‌های در انتظار</summary><p class="muted">رمز ورود مدیر را وارد کنید. سفارش‌ها در این نسخه روی همین مرورگر ذخیره می‌شوند.</p><input id="adminPass" type="password" placeholder="رمز مدیریت"><button onclick="unlockAdmin()">ورود</button><div id="adminData"></div></details>
+</div>
+<footer class="footer">Made with a little love · The Little Date Club</footer>
+</div>
+
+<section class="section girls" id="girls">
+<div class="section-head"><div class="section-title"><h1>🎀 Girls' Little Kitchen</h1><p>امشب شما میزبانید؛ آقای خوش‌سلیقه‌تون منتظر منوی شماست.</p></div><button class="back" onclick="goHome()">← برگشت به ورودی</button></div>
+<div class="welcome">«خب آقای خوش‌سلیقه! امشب من قراره ازت پذیرایی کنم؛ پس منو رو با دقت ببین، چون انتخابت قراره حال دوتامون رو خوب کنه. 💗»</div>
+<div class="content"><div class="menu-label"><h2>منوی مخصوص مهمون خوش‌قدم</h2><span>هرچی دلت خواست انتخاب کن!</span></div><div class="grid" id="girlsGrid"></div>
+<div class="order-panel"><h2>🧁 جزئیات سفارش</h2><div class="muted">چندتا چیز کوچولو مونده تا سفارشت ثبت بشه.</div>
+<div class="form-grid"><label class="field">اسم میزبان (دختر)<input id="gHost" placeholder="اسم شما"></label><label class="field">اسم مهمون (پسر)<input id="gGuest" placeholder="اسم پارتنرت"></label><label class="field wide">درخواست‌های ویژه<textarea id="gRequest" placeholder="مثلاً غذا بدون فلفل باشه یا نوشیدنی خاصی کنارش باشه..."></textarea></label><label class="field wide">پیشنهادها و حرف‌های آخر<textarea id="gSuggestion" placeholder="هر پیشنهاد بامزه‌ای برای بهتر شدن این قرار داری بنویس..."></textarea></label><label class="field wide">یادداشت برای سفارش<textarea id="gNote" placeholder="یه یادداشت کوچولو برای میزبان..."></textarea></label></div>
+<div class="menu-label"><h2>🍽️ محل سرو سفارش</h2><span>یه جای دنج انتخاب کن</span></div><label class="field"><select id="gLocationSelect" onchange="selectPlaceFromMenu('girls',this.value)"><option value="">محل دنج قرار رو انتخاب کن...</option></select></label><div class="menu-label"><h2>💳 مراحل تسویه حساب بامزه</h2><span>یکی از روش‌های پرداخت نمایشی رو انتخاب کن</span></div><label class="field"><select id="gPayment"><option value="">روش تسویه رو انتخاب کن...</option><option>پرداخت درب محل</option><option>پرداخت به طور آنلاین</option></select></label><button class="submit" onclick="checkout('girls')">ثبت نهایی سفارش و دریافت رسید 🎀</button></div>
+</div><section class="public-orders"><h2>🧾 سفارش‌های ثبت‌شده و در انتظار</h2><p class="muted">سفارش‌های ثبت‌شده برای همه قابل مشاهده‌اند.</p><div id="girlsPublicOrdersList"></div></section><button class="cart-fab" onclick="openCart('girls')">🛍️ سبد سفارش <span id="gCount">۰</span></button>
+</section>
+
+<section class="section boys" id="boys">
+<div class="section-head"><div class="section-title"><h1>♛ The Gentlemen's Table</h1><p>جناب، امشب افتخار پذیرایی با شماست؛ بانو منتظر پیشنهادهای شماست.</p></div><button class="back" onclick="goHome()">← بازگشت به ورودی</button></div>
+<div class="welcome">«بانو، به میز امشب خوش آمدید. منوی اختصاصی آماده‌ست؛ با خیال راحت انتخاب بفرمایید. امشب قرار نیست چیزی از قلم بیفته.»</div>
+<div class="content"><div class="menu-label"><h2>منوی انتخاب بانو</h2><span>انتخابی در شأن مهمان ویژه</span></div><div class="grid" id="boysGrid"></div>
+<div class="order-panel"><h2>🥂 ثبت سفارش بانو</h2><div class="muted">لطفاً جزئیات سفارش را تکمیل بفرمایید.</div>
+<div class="form-grid"><label class="field">نام میزبان (آقا)<input id="bHost" placeholder="نام شما"></label><label class="field">نام مهمان (بانو)<input id="bGuest" placeholder="نام پارتنرتان"></label><label class="field wide">درخواست‌های ویژه<textarea id="bRequest" placeholder="اگر غذای خاصی رو با تغییراتی می‌پسندید، اینجا بنویسید..."></textarea></label><label class="field wide">پیشنهادها<textarea id="bSuggestion" placeholder="پیشنهاد شما برای بهتر شدن پذیرایی چیست؟..."></textarea></label><label class="field wide">یادداشت سفارش<textarea id="bNote" placeholder="پیام یا توضیح تکمیلی برای میزبان..."></textarea></label></div>
+<div class="menu-label"><h2>🍽️ محل سرو</h2><span>محل پذیرایی را انتخاب بفرمایید</span></div><label class="field"><select id="bLocationSelect" onchange="selectPlaceFromMenu('boys',this.value)"><option value="">محل پذیرایی را انتخاب بفرمایید...</option></select></label><div class="menu-label"><h2>♛ تسویه‌حساب مخصوص بانو</h2><span>یکی از مراحل بانمک زیر رو انتخاب بفرمایید</span></div><label class="field"><select id="bPayment"><option value="">مرحله‌ی تسویه را انتخاب کنید...</option><option>بغل نامحدود</option><option>بوسه فرانسوی</option><option>اتاق خواب</option></select></label><button class="submit" onclick="checkout('boys')">تأیید سفارش و صدور رسید ♛</button></div>
+</div><section class="public-orders"><h2>🧾 سفارش‌های ثبت‌شده و در انتظار</h2><p class="muted">سفارش‌های ثبت‌شده برای همه قابل مشاهده‌اند.</p><div id="boysPublicOrdersList"></div></section><button class="cart-fab" onclick="openCart('boys')">🛍️ سبد سفارش <span id="bCount">۰</span></button>
+</section>
+
+<div class="cart-drawer" id="cartDrawer" onclick="if(event.target===this)closeCart()"><div class="cart-box"><div class="cart-head"><h2>سبد سفارش</h2><button class="close" onclick="closeCart()">×</button></div><div id="cartItems"></div><div class="cart-total" id="cartTotal"></div><button class="submit" style="background:#a94d76;color:white" onclick="continueCheckout()">ادامه و تکمیل اطلاعات</button></div></div>
+<div class="receipt" id="receipt"><div class="receipt-paper" id="receiptPaper"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const girlsFoods=[
+{id:'curry',stock:3,name:'خورشت کاری',price:0,desc:'خورشت کاری خوش‌عطر با ادویه‌های گرم و طعمی که تا آخرین قاشق دلت می‌خواد ادامه داشته باشه.',tease:'یه قاشق ازش کافیه تا عاشق عطر و طعمش بشی؛ البته من جای تو بودم ته‌دیگشم می‌خواستم!',img:'curry.jpg'},
+{id:'beef',stock:2,name:'بیف استراگانف',price:0,desc:'تکه‌های لطیف گوشت در سس خامه‌ای قارچ؛ ترکیبی نرم، غنی و حسابی دلبر.',tease:'خامه و قارچ و گوشت کنار هم؟ فکر کنم لازم نیست بیشتر از این وسوسه‌ات کنم!',img:'beef.jpg'},
+{id:'chicken',stock:3,name:'استیک مرغ با سس قارچ',price:0,desc:'مرغ گریل‌شده و آبدار با سس قارچ خامه‌ای و عطر سبزی‌های تازه.',tease:'این یکی رو با عشق آماده کردم؛ فقط قول بده سس قارچش رو تا آخر بخوری!',img:'chicken2.jpg'},
+{id:'spaghetti',stock:2,name:'اسپاگتی قلقلی',price:0,desc:'اسپاگتی خوش‌پیچ با کوفته‌قلقلی‌های کوچولو و سس گوجه خوش‌رنگ.',tease:'قلقلی‌ها کوچولون، ولی خوشمزگیشون اصلاً کوچولو نیست؛ امتحانش کن!',img:'spaghetti.jpg'},
+{id:'pancake',stock:4,name:'پنکیک',price:0,desc:'پنکیک‌های نرم و پفکی با توت‌فرنگی و شیرینی دلنشین؛ انتخابی برای یک حال خوب.',tease:'یه لقمه شیرین برای مهمون شیرین‌تر من؛ با شربت اضافه یا بدون اون؟',img:'pancake.jpg'},
+{id:'salad',stock:3,name:'سالاد سیب‌زمینی مخصوص',price:0,desc:'سالاد سیب‌زمینی خامه‌ای و خوش‌طعم با تخم‌مرغ و سبزی‌های تازه.',tease:'سبک، خنک و خوشمزه؛ از اون مزه‌ها که آدم بی‌هوا دوباره سراغش می‌ره!',img:'salad.jpg'}
+];
+const boysFoods=[
+{id:'alfredo',stock:2,name:'پاستا آلفردو',price:0,desc:'پاستای لطیف با سس آلفردوی خامه‌ای.',tease:'انتخابی کلاسیک برای بانویی با سلیقه خاص.',img:'alferdo.jpg'},
+{id:'noodle',stock:3,name:'نودل',price:0,desc:'نودل گرم و خوش‌عطر با ترکیب دلخواه.',tease:'یک کاسه حال خوب؛ ساده، گرم و دوست‌داشتنی.',img:'noodle.jpg'},
+{id:'fried',stock:2,name:'سوخاری',price:0,desc:'لقمه‌های سوخاری ترد و طلایی.',tease:'صدای تردیش خودش بهترین دعوت‌نامه‌ست.',img:'sokha.jpg'},
+{id:'tomato',stock:3,name:'پاستا گوجه خامه‌ای',price:0,desc:'پاستا با سس گوجه و خامه؛ لطیف و خوش‌رنگ.',tease:'کمی گوجه، کمی خامه و کلی خوشمزگی؛ انتخاب دلبرانه‌ایه.',img:'goje.jpg'},
+{id:'corn',stock:4,name:'ذرت مکزیکی',price:0,desc:'ذرت داغ با چاشنی‌های خوش‌طعم.',tease:'برای وقت‌هایی که یه خوراکی گرم و بانمک می‌چسبه.',img:'zorat.jpg'},
+{id:'eggplant',stock:2,name:'اسپاگتی بادمجان',price:0,desc:'اسپاگتی با بادمجان و سس خوش‌عطر.',tease:'یه انتخاب متفاوت برای کسی که طعم‌های خاص رو دوست داره.',img:'badem.jpg'},
+{id:'fajita',stock:3,name:'چیکن فاهیتا',price:0,desc:'مرغ مزه‌دارشده با فلفل دلمه‌ای و ادویه‌های فاهیتا.',tease:'خوش‌عطر، رنگارنگ و پر از شخصیت؛ درست مثل مهمون امشب.',img:'chicken.jpg'}
+];
+const places=[['terrace','🌿','تراس'],['movie','🍿','مبل همراه فیلم'],['dining','🍽️','ناهار خوری'],['bed','🛏️','توی اتاق خواب'],['korean','🍱','روی میز به سبک کره‌ای']];
+const carts={girls:[],boys:[]};const selectedPlace={girls:'',boys:''};let activeCart='girls';
+const fmt=n=>new Intl.NumberFormat('fa-IR').format(n);
+const priceText=p=>p>0?fmt(p)+' تومان':'بدون قیمت';
+function stockText(f){return f.stock<=0?'<span class="stock out">ناموجود</span>':f.stock<=2?`<span class="stock low">● فقط ${fmt(f.stock)} عدد مانده</span>`:`<span class="stock medium">● ${fmt(f.stock)} عدد موجود</span>`;}
+function dishArt(type){
+const common=`<defs><linearGradient id="plate" x2="0" y2="1"><stop stop-color="#fff" /><stop offset="1" stop-color="#f4dfe5"/></linearGradient><linearGradient id="sauce" x2="1" y2="1"><stop stop-color="#f5c66c"/><stop offset="1" stop-color="#d98c42"/></linearGradient></defs><ellipse cx="130" cy="145" rx="105" ry="18" fill="#d8aabd" opacity=".22"/><ellipse cx="130" cy="120" rx="103" ry="39" fill="#fff" stroke="#e9cbd7" stroke-width="5"/><ellipse cx="130" cy="116" rx="84" ry="29" fill="url(#plate)"/>`;
+let food='';
+if(type==='curry')food=`<path d="M57 112 Q75 65 125 78 Q174 57 204 111 Q175 144 85 139Z" fill="#d9953c"/><g fill="#f5d58c"><circle cx="94" cy="101" r="10"/><circle cx="143" cy="94" r="12"/><circle cx="174" cy="117" r="10"/></g><path d="M78 84 Q100 67 118 80" stroke="#7b9a58" stroke-width="5" fill="none"/>`;
+if(type==='beef')food=`<path d="M55 115 Q72 71 120 80 Q176 68 203 112 Q177 145 82 139Z" fill="#b46b50"/><path d="M69 106 Q105 75 175 98" stroke="#f3d6b4" stroke-width="12" fill="none" stroke-linecap="round"/><g fill="#f7e7d1"><ellipse cx="104" cy="94" rx="13" ry="7"/><ellipse cx="156" cy="119" rx="15" ry="8"/></g>`;
+if(type==='chicken')food=`<path d="M67 122 Q53 88 92 80 Q145 59 184 93 Q201 116 163 137 Q101 151 67 122Z" fill="#d89a56"/><path d="M72 106 Q125 76 181 108" stroke="#f5d9a2" stroke-width="7" fill="none"/><g fill="#e9c7a4"><circle cx="185" cy="94" r="12"/><circle cx="195" cy="108" r="8"/></g><g stroke="#7a9d66" stroke-width="4"><path d="M84 80l8-12m10 12 8-12"/></g>`;
+if(type==='spaghetti')food=`<g fill="none" stroke="#e6a94f" stroke-width="6" stroke-linecap="round"><path d="M64 112q20-43 45-5t50-7t34 10"/><path d="M72 123q30-35 52-2t53-5"/><path d="M82 99q24 27 49-1t48 13"/></g><g fill="#a94e42"><circle cx="92" cy="96" r="12"/><circle cx="151" cy="105" r="13"/><circle cx="178" cy="91" r="10"/></g>`;
+if(type==='pancake')food=`<g><ellipse cx="130" cy="121" rx="69" ry="18" fill="#d89b51"/><ellipse cx="130" cy="105" rx="67" ry="18" fill="#f0c27e"/><ellipse cx="130" cy="89" rx="64" ry="17" fill="#f7d493"/><path d="M105 74q24 5 44 0l-8 17h-28Z" fill="#fff1d5"/><path d="M130 64q-7 13-1 25" stroke="#c98b4a" stroke-width="4" fill="none"/><g fill="#e56d8d"><circle cx="103" cy="71" r="9"/><circle cx="153" cy="70" r="9"/></g></g>`;
+if(type==='salad')food=`<ellipse cx="130" cy="113" rx="72" ry="26" fill="#e9d9a9"/><g fill="#f3d78a"><rect x="79" y="91" width="28" height="24" rx="6"/><rect x="119" y="103" width="27" height="22" rx="6"/><rect x="153" y="87" width="27" height="25" rx="6"/></g><g fill="#fff9e7"><circle cx="108" cy="88" r="12"/><circle cx="163" cy="119" r="10"/></g><g fill="#78a66c"><path d="M85 80l14 8-11 8zM145 82l13 8-11 9zM177 99l12 8-14 6z"/></g>`;
+return `<svg viewBox="0 0 260 170" role="img" aria-label="${type}">${common}${food}<g fill="#fff" opacity=".95"><circle cx="115" cy="127" r="3"/><circle cx="144" cy="127" r="3"/></g><path d="M115 133q15 11 30 0" fill="none" stroke="#a76c69" stroke-width="2.5" stroke-linecap="round"/><circle cx="106" cy="119" r="4" fill="#e99bab"/><circle cx="154" cy="119" r="4" fill="#e99bab"/></svg>`;
+}
+function renderMenu(type){
+const data=type==='girls'?girlsFoods:boysFoods,el=document.getElementById(type+'Grid');
+el.innerHTML=data.map(f=>`<article class="food-card"><div class="food-art"><img class="food-photo" src="${f.img}" alt="${f.name}" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=&quot;text-align:center;padding:45px 8px;color:#9d6b82;font-size:13px&quot;>عکس ${f.name}<br>با نام مشخص‌شده کنار فایل HTML قرار بگیرد</div>'"></div><div class="food-info"><h3>${f.name}</h3><p>${f.desc}<br><span class="tease">«${f.tease}»</span></p><div class="food-bottom"><span class="price">${stockText(f)}</span><button class="add" ${f.stock<=0?'disabled':''} onclick="addItem('${type}','${f.id}')">افزودن به سفارش +</button></div></div></article>`).join('');
+}
+function renderPlaces(type){
+const select=document.getElementById(type==='girls'?'gLocationSelect':'bLocationSelect');
+if(!select)return;
+const first=type==='girls'?'محل دنج قرار رو انتخاب کن...':'محل پذیرایی را انتخاب بفرمایید...';
+select.innerHTML=`<option value="">${first}</option>`+places.map(([id,icon,label])=>`<option value="${id}">${icon} ${label}</option>`).join('');
+select.value=selectedPlace[type]||'';
+}
+function selectPlaceFromMenu(type,id){
+selectedPlace[type]=id;
+if(id==='bed'&&type==='girls')toast('عه جدا درخواست دیگه‌ای نداری؟ 😳💗');
+else if(id==='bed'&&type==='boys')toast('اتاق خواب برای پذیرایی انتخاب شد. ♛');
+}
+function bedSurprise(type){selectedPlace[type]='bed';renderPlaces(type);toast(type==='girls'?'عه جدا درخواست دیگه‌ای نداری؟ 😳💗':'اتاق خواب برای پذیرایی انتخاب شد. ♛');}
+function selectPlace(type,id){selectedPlace[type]=id;renderPlaces(type)}
+function openSection(type){document.getElementById('home').style.display='none';document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById(type).classList.add('active');window.scrollTo(0,0)}
+function goHome(){document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById('home').style.display='block';window.scrollTo(0,0)}
+function foods(type){return type==='girls'?girlsFoods:boysFoods}
+function addItem(type,id){const f=foods(type).find(x=>x.id===id),c=carts[type],old=c.find(x=>x.id===id),inCart=old?old.qty:0;if(inCart>=f.stock){toast('این تعداد از این غذا موجود نیست!');return}if(old)old.qty++;else c.push({...f,qty:1});updateCount(type);renderMenu(type);toast(type==='girls'?'به سبد خوشمزه‌ات اضافه شد! 🎀':'به فهرست سفارش افزوده شد، بانو.')}
+function updateCount(type){document.getElementById(type[0]==='g'?'gCount':'bCount').textContent=fmt(carts[type].reduce((s,x)=>s+x.qty,0))}
+function openCart(type){activeCart=type;const drawer=document.getElementById('cartDrawer');drawer.classList.add('open');const c=carts[type];document.getElementById('cartItems').innerHTML=c.length?c.map(x=>`<div class="cart-row"><div><b>${x.name}</b><div style="font-size:11px;color:#917d85">${priceText(x.price)}</div></div><div class="qty"><button onclick="changeQty('${type}','${x.id}',-1)">−</button><b>${fmt(x.qty)}</b><button onclick="changeQty('${type}','${x.id}',1)">+</button></div></div>`).join(''):'<div class="empty">سبدت هنوز خالیه! برو یه چیز خوشمزه انتخاب کن. 🍓';const total=c.reduce((s,x)=>s+x.price*x.qty,0);document.getElementById('cartTotal').textContent='جمع کل: '+(total?fmt(total)+' تومان':'قیمت‌ها هنوز وارد نشده‌اند')}
+function closeCart(){document.getElementById('cartDrawer').classList.remove('open')}
+function continueCheckout(){closeCart();const panel=document.querySelector('#'+activeCart+' .order-panel');panel.style.display='block';panel.scrollIntoView({behavior:'smooth',block:'start'});}
+function changeQty(type,id,n){const c=carts[type],i=c.findIndex(x=>x.id===id);if(i<0)return;c[i].qty+=n;if(c[i].qty<=0)c.splice(i,1);updateCount(type);openCart(type)}
+function checkout(type){
+const c=carts[type],host=document.getElementById(type==='girls'?'gHost':'bHost').value.trim(),guest=document.getElementById(type==='girls'?'gGuest':'bGuest').value.trim(),note=document.getElementById(type==='girls'?'gNote':'bNote').value.trim(),request=document.getElementById(type==='girls'?'gRequest':'bRequest').value.trim(),suggestion=document.getElementById(type==='girls'?'gSuggestion':'bSuggestion').value.trim(),payment=document.getElementById(type==='girls'?'gPayment':'bPayment').value;
+if(!c.length){toast('اول از منو حداقل یک غذا انتخاب کن!');return}if(!host||!guest){toast('اسم میزبان و مهمون رو هم وارد کن لطفاً.');return}if(!selectedPlace[type]){toast('محل سرو رو هم انتخاب کن.');return}if(!payment){toast('مرحله‌ی تسویه‌حساب رو هم انتخاب کن!');return}
+const order={id:'LDC-'+Date.now().toString().slice(-7),type,host,guest,note,request,suggestion,payment,place:places.find(x=>x[0]===selectedPlace[type])[2],items:c.map(x=>({...x})),total:c.reduce((s,x)=>s+x.price*x.qty,0),date:new Date().toLocaleString('fa-IR'),status:'در انتظار آماده‌سازی'};
+ c.forEach(item=>{const original=foods(type).find(f=>f.id===item.id);if(original)original.stock=Math.max(0,original.stock-item.qty)});
+const all=JSON.parse(localStorage.getItem('ldc_orders')||'[]');all.push(order);localStorage.setItem('ldc_orders',JSON.stringify(all));renderPublicOrders();showReceipt(order);carts[type]=[];selectedPlace[type]='';updateCount(type);renderPlaces(type);renderMenu(type);
+}
+function showReceipt(o){const isGirl=o.type==='girls';document.getElementById('receiptPaper').innerHTML=`<div class="success-mark">✓</div><div class="receipt-success">✓ سفارش شما با موفقیت ثبت شد!</div><p style="text-align:center;background:#eaf8ed;color:#187a3d;border-radius:12px;padding:11px;font-weight:800">📸 لطفاً از این رسید اسکرین‌شات بگیرید و به مدیریت نشان بدهید.</p><h2>${isGirl?'🎀 رسید رستوران دخترها':'♛ رسید میز جنتلمن‌ها'}</h2><p style="text-align:center;font-size:12px">THE LITTLE DATE CLUB</p><div class="line"></div><p>شماره سفارش: <b>${o.id}</b></p><p>میزبان: ${o.host}</p><p>مهمان: ${o.guest}</p><p>محل سرو: ${o.place}</p><p>زمان ثبت: ${o.date}</p><div class="line"></div>${o.items.map(x=>`<p>${x.name} × ${x.qty}<span style="float:left">${x.price>0?fmt(x.price*x.qty)+' تومان':'قیمت هماهنگ می‌شود'}</span></p>`).join('')}<div class="line"></div><h3>${o.total>0?'مبلغ کل: '+fmt(o.total)+' تومان':'مبلغ نهایی: بعداً هماهنگ می‌شود'}</h3><p>روش تسویه: ${o.payment}</p>${o.request?`<p>درخواست ویژه: ${o.request}</p>`:''}${o.suggestion?`<p>پیشنهاد: ${o.suggestion}</p>`:''}${o.note?`<p>یادداشت: ${o.note}</p>`:''}<p style="text-align:center;color:#a94d76;font-weight:800">در نهایت سفارش شما ثبت شد! ${isGirl?'🎀 نوش جان آقای خوش‌سلیقه!':'♛ بانو، از انتخاب شما سپاسگزاریم.'}</p><p style="text-align:center;font-size:11px;color:#99868c">وضعیت سفارش: ${o.status}</p><div class="receipt-actions"><button onclick="window.print()">چاپ رسید</button><button onclick="document.getElementById('receipt').classList.remove('show')">بستن</button></div>`;document.getElementById('receipt').classList.add('show')}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),2800)}
+function showAdmin(){document.getElementById('adminArea').style.display='block';document.getElementById('adminArea').scrollIntoView({behavior:'smooth'})}
+function unlockAdmin(){if(document.getElementById('adminPass').value!=='2468'){toast('رمز مدیریت اشتباهه.');return}const all=JSON.parse(localStorage.getItem('ldc_orders')||'[]');const area=document.getElementById('adminData');area.innerHTML=`<h3>سفارش‌های در انتظار (${fmt(all.length)})</h3><p class="muted">سفارش‌های ثبت‌شده اینجا با وضعیت انتظار آماده‌سازی نمایش داده می‌شوند.</p>`+(all.length?`<div class="admin-list"><table><thead><tr><th>شماره</th><th>بخش</th><th>میزبان</th><th>مهمان</th><th>غذاها</th><th>محل</th><th>تسویه</th><th>درخواست/پیشنهاد</th><th>مبلغ</th><th>وضعیت</th></tr></thead><tbody>${all.map(o=>`<tr><td>${o.id}</td><td>${o.type==='girls'?'دخترها':'آقایان'}</td><td>${o.host}</td><td>${o.guest}</td><td>${o.items.map(x=>x.name+' ×'+x.qty).join('، ')}</td><td>${o.place}</td><td>${o.payment||'—'}</td><td>${[o.request,o.suggestion].filter(Boolean).join(' / ')||'—'}</td><td>${o.total?fmt(o.total):'هماهنگ می‌شود'}</td><td><span class="pending-tag">${o.status}</span></td></tr>`).join('')}</tbody></table></div><button onclick="exportOrders()" style="margin-top:12px">خروجی سفارش‌ها (JSON)</button><button onclick="clearOrders()" style="margin:12px 8px 0;background:#9d4141">پاک کردن سفارش‌ها</button>`:'<p>هنوز سفارشی ثبت نشده است.</p>')}
+function renderPublicOrders(){
+const all=JSON.parse(localStorage.getItem('ldc_orders')||'[]');
+const targets=['publicOrdersList','girlsPublicOrdersList','boysPublicOrdersList'].map(id=>document.getElementById(id)).filter(Boolean);
+if(!targets.length)return;
+const content=!all.length?'<div class="empty">هنوز سفارشی ثبت نشده است. 💗</div>':all.slice().reverse().map(o=>`<article class="public-order">
+<div class="public-order-head"><b>${o.type==='girls'?'🎀 سفارش دنیای دخترها':'♛ سفارش دنیای جنتلمن‌ها'} · ${o.id}</b><span class="pending-tag">در انتظار آماده‌سازی</span></div>
+<p><b>میزبان:</b> ${o.host}　 <b>مهمان:</b> ${o.guest}</p>
+<p><b>غذاها:</b> ${o.items.map(x=>x.name+' × '+x.qty).join('، ')}</p>
+<p><b>محل قرار:</b> ${o.place}　 <b>زمان:</b> ${o.date}</p>
+<p><b>روش پرداخت:</b> ${o.payment}</p>
+${o.request?`<p><b>درخواست ویژه:</b> ${o.request}</p>`:''}
+${o.suggestion?`<p><b>پیشنهاد:</b> ${o.suggestion}</p>`:''}
+${o.note?`<p><b>یادداشت:</b> ${o.note}</p>`:''}
+</article>`).join('');
+targets.forEach(el=>el.innerHTML=content);
+}
+function exportOrders(){const blob=new Blob([localStorage.getItem('ldc_orders')||'[]'],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='little-date-orders.json';a.click();URL.revokeObjectURL(a.href)}
+function clearOrders(){if(confirm('همه سفارش‌های ذخیره‌شده در این مرورگر پاک شوند؟')){localStorage.removeItem('ldc_orders');unlockAdmin()}}
+const savedStock=JSON.parse(localStorage.getItem('ldc_stock')||'null');
+if(savedStock){[...girlsFoods,...boysFoods].forEach(f=>{if(savedStock[f.id]!==undefined)f.stock=savedStock[f.id]})}
+const saveStock=()=>localStorage.setItem('ldc_stock',JSON.stringify(Object.fromEntries([...girlsFoods,...boysFoods].map(f=>[f.id,f.stock]))));
+const originalShowReceipt=showReceipt;
+showReceipt=function(o){saveStock();originalShowReceipt(o)};
+renderMenu('girls');renderMenu('boys');renderPlaces('girls');renderPlaces('boys');renderPublicOrders();
+</script>
+</body></html>
